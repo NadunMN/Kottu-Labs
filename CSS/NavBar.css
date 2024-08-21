@@ -1,0 +1,132 @@
+* {
+    font-family: 'Roboto', sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+.main-div {
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    padding: 5px 0;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* width: 100%; */
+    height: 60px;
+}
+
+/* .logo-img{
+    width: 50px;
+    height: 50px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('/Photo/icon/timeline-02.png');
+    background-position:center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: aliceblue;
+    border-radius: 50px;
+} */
+
+/* .logo-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+} */
+
+.logo-para{
+    font-weight: bold;
+    font-size: 30px;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.logo span{
+    color: rgb(110, 2, 2);
+    font-family:'Times New Roman', Times, serif;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    /* gap: 45px; */
+    background-color: rgb(255, 255, 255);
+    /* margin-left: 200px; */
+}
+
+.nav-links li {
+    margin: 0;
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    border-radius:50px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* font-weight: bold; */
+    
+}
+.nav-links li:hover {
+    margin: 0;
+    background-color: rgb(244, 244, 244);
+    /* padding: 5px; */
+}
+
+
+.nav-links a {
+    text-decoration: none;
+    color: #000;
+    font-size: 16px;
+    background-color: white;
+    /* font-family: 'Times New Roman', Times, serif; */
+    /* font-weight: bold; */
+
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+
+
+.logo img {
+    height: 20px;
+    /* margin-left: -20px; */
+}
+
+.icon-box {
+    display: flex;
+    gap: 20px;
+    background-color: white;
+    /* margin-left: 250px; */
+}
+
+
+.icon-box a {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    border-radius: 50px;
+}
+
+.icon-box a:hover {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background-color: rgb(244, 244, 244);
+}
+
+
+.icon-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: white;
+}
