@@ -1,0 +1,165 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+
+.card{
+  height: 500px;
+  margin: 50px;
+  box-shadow: 5px 5px 20px black;
+  overflow: hidden;
+}
+
+#MidSec{
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  align-items: center;
+  
+}
+#MidSec .card{
+  display: flex;
+  background: whitesmoke;
+}
+#MidSec .card:hover{
+  cursor: pointer;
+}
+#MidSec .card h1{
+  margin: 10px;
+  font-size: 40px;
+}
+#MidSec .card p{
+  margin: 20px;
+  font-size: 20px;
+  visibility: hidden;
+}
+#MidSec .card span{
+  font-weight: bold;
+}
+
+img{
+  height: 500px;
+  width: 350px;
+  border-radius: 3px;
+
+}
+
+.intro{
+  height: 200px;
+  width: 350px;
+  padding: 6px;
+  box-sizing: border-box;
+  position: absolute;
+  background: rgb(27, 27, 27, .5);
+  color: white;
+  bottom: 240px;
+}
+
+body {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 17px;
+  
+  color: #fff;
+}
+
+
+h2 {
+  font-size: 30px;
+  line-height: 42px;
+  font-family: 'Times New Roman', Times, serif;
+  text-transform: capitalize;
+}
+
+p {
+  font-size: 14px;
+  line-height: 28px;
+  letter-spacing: 0.05em;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+a, a:hover, a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container1 {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.pClr {
+  color: #000000;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 150%;
+}
+
+#aboutHeader {
+  height: 450px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: #000;
+}
+#aboutHeader::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: url("../Photo/Thirani_pics/dinein_pic.jpg") no-repeat center center;
+  background-size: cover;
+  filter: blur(20px);
+}
+#aboutHeader .title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#aboutHeader .title h2 {
+  font-size: 45px;
+}
+
+#aboutPageSec {
+  position: relative;
+  padding: 80px 0;
+  text-align: center;
+  background: #fff;
+  color: #000;
+}
+#aboutPageSec .container {
+  max-width: 800px;
+}
+#aboutPageSec h2 {
+  margin-bottom: 25px;
+  
+}
+#aboutPageSec p {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+#iDo {
+  background: #f9f9fc;
+  padding: 80px 0;
+  color: #000;
+}
+#iDo h4 {
+  max-width: 500px;
+  text-align: center;
+}
+#iDo li {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
