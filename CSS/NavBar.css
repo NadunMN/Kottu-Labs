@@ -9,26 +9,26 @@
     justify-content:space-around;
     align-items: center;
     padding: 5px 0;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     /* width: 100%; */
     height: 60px;
 }
 
-/* .logo-img{
-    width: 50px;
+.logo-img{
+    width: 200px;
     height: 50px;
     
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('/Photo/icon/timeline-02.png');
+    background-image: url('/Photo/icon/logonew.jpg');
     background-position:center;
-    background-size: cover;
+    background-size:contain;
     background-repeat: no-repeat;
-    background-color: aliceblue;
-    border-radius: 50px;
-} */
+    background-color: rgb(0, 0, 0);
+    /* border-radius: 50px; */
+}
 
 /* .logo-img img{
     width: 100%;
@@ -36,7 +36,7 @@
     object-fit: cover;
 } */
 
-.logo-para{
+/* .logo-para{
     font-weight: bold;
     font-size: 30px;
     color: rgb(0, 0, 0);
@@ -47,19 +47,19 @@
 .logo span{
     color: rgb(110, 2, 2);
     font-family:'Times New Roman', Times, serif;
-}
+} */
 
 .nav-links {
     list-style: none;
     display: flex;
     /* gap: 45px; */
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
     /* margin-left: 200px; */
 }
 
 .nav-links li {
     margin: 0;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
     padding: 10px;
     border-radius:50px;
     width: 100px;
@@ -71,14 +71,14 @@
 }
 .nav-links li:hover {
     margin: 0;
-    background-color: rgb(244, 244, 244);
+    background-color: rgb(35, 35, 35);
     /* padding: 5px; */
 }
 
 
 .nav-links a {
     text-decoration: none;
-    color: #000;
+    color: #ffffff;
     font-size: 16px;
     background-color: white;
     /* font-family: 'Times New Roman', Times, serif; */
@@ -102,7 +102,7 @@
 .icon-box {
     display: flex;
     gap: 20px;
-    background-color: white;
+    background-color: rgb(0, 0, 0);
     /* margin-left: 250px; */
 }
 
@@ -111,16 +111,17 @@
     display: block;
     width: 24px;
     height: 24px;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
     padding: 10px;
     border-radius: 50px;
+    
 }
 
 .icon-box a:hover {
     display: block;
     width: 24px;
     height: 24px;
-    background-color: rgb(244, 244, 244);
+    background-color: rgb(35, 35, 35);
 }
 
 
