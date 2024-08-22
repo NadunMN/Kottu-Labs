@@ -1,0 +1,141 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    text-align: center; 
+    background-color: rgb(212, 217, 217);
+}
+
+.headline {
+    font-size: 50px;
+    margin-bottom: 20px;
+    color: #333333;
+}
+
+.banner {
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    overflow: hidden;
+    max-width: 70%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.card-img {
+    flex: 1;
+    max-width: 50%; 
+}
+
+.card-img img {
+    width: 100%;
+    height: 100%;
+    border-right: 1px solid #dddddd;
+}
+
+.card-content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-content h3 {
+    font-size: 22px;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.submit-button{
+    padding: 10px 20px;
+    font-size: 18px;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    margin-right: 50px;
+    margin-left: 50px;
+    text-decoration:none;
+}
+
+.submit-button:hover {
+    background-color: 0 0 0 3px rgba(72, 74, 76, 0.5);
+    transform: scale(1.05);
+}
+
+.submit-button:active {
+    background-color: 0 0 0 3px rgba(72, 74, 76, 0.5);
+    transform: scale(0.95);
+}
+
+.submit-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(72, 74, 76, 0.5);
+}
+
+.form-row,
+.form-row1 {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+select,
+input[type="text"],
+input[type="tel"],
+input[type="number"],
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #938d8d;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+select:focus,
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: #333;
+}
+
+input[type="submit"] {
+    background-color: #333;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #555;
+}
+
