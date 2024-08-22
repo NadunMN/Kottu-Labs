@@ -59,68 +59,6 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px 0;
-    background-color: rgb(255, 255, 255);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-
-.logo img {
-    height: 50px;
-    margin-left: -20px;
-}
-
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 45px;
-    background-color: rgb(255, 255, 255);
-    margin-left: 200px;
-}
-
-.nav-links li {
-    margin: 0;
-    background-color: white;
-}
-
-
-.nav-links a {
-    text-decoration: none;
-    color: #000;
-    font-size: 15px;
-    background-color: white;
-}
-
-
-.icon-box {
-    display: flex;
-    gap: 20px;
-    background-color: white;
-    margin-left: 250px;
-}
-
-
-.icon-box a {
-    display: block;
-    width: 24px;
-    height: 24px;
-    background-color: white;
-}
-
-
-.icon-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    background-color: white;
-}
-
-
 .button-container {
     text-align: center;
     justify-content: center;
