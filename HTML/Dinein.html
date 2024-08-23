@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DineIn</title>
+    <link rel="stylesheet" href="../CSS/dinein.css">
+    
+</head>
+
+<body>
+
+    <div id="NavBar" style="position: sticky; top: 0;"></div>
+    
+    <h2 class="headline">Reserve your Spot & Enjoy!</h2>
+    
+    
+        <div class="card-content">
+            <img src="../Photos/KottuLabs_logo.png" alt="Kottu Labs Logo" class="Logo">
+            <h1>Add Reservation</h1>
+                <form>
+                    <label for="name">Enter Full Name: </label>
+                    <input type="text" id="name" placeholder="Full Name" required>
+                    <label for="number">Enter Phone Number: </label>
+                    <input type="tel" placeholder="Phone Number" pattern="[0-9]{10}" required>
+              
+
+                    <div class="form-row1">
+                        <label for="reservation-date">Select Date: </label>
+                        <input type="date" id="reservation-date" required> 
+
+                        <label for="reservation-time">Select Time: </label>
+                        <select name="hours" required>
+                            <option value="hour-select">Select Time</option>
+                            <option value="3">3pm - 4pm</option>
+                            <option value="4">4pm - 5pm</option>
+                            <option value="5">5pm - 6pm</option>
+                            <option value="6">6pm - 7pm</option>
+                            <option value="7">7pm - 8pm</option>
+                            <option value="8">8pm - 9pm</option>
+                            <option value="9">9pm - 10pm</option>
+                            <option value="10">10pm - 11pm</option>
+                        </select>
+                    </div>
+
+                    <label for="reservation-amount">Number of seats: </label>
+                    <input type="number" placeholder="How many persons to dine in?" min="1" required>
+
+                    <button type="proceed">Add Reservation</button>
+
+                </form>
+            </div>
+       
+    <div id="footer"></div>
+</body>
+    <script src="/JavaScript/Home.js"></script>
+    <script src="/JavaScript/footer.js"></script>
+    <script src="/JavaScript/dinein.js"></script>
+</html>
