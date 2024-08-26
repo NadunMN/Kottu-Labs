@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 * {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Playfair Display', serif;
     padding: 0;
     margin: 0;
 }
@@ -14,7 +14,20 @@
     width: 100%;
     height: 700px;
     background-size: cover;
+    /* animation: fadeOut 2s forwards;
+    animation-timeline: scroll(); */
 }
+
+/* @keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+} */
+
+
 
 
 .first-background-img img {
@@ -32,11 +45,11 @@
     text-align: center;
     margin-top: 50px;
     display: inline-block;
-    /* white-space: nowrap;
-    overflow: hidden; Hide overflow content */
-    width: 100%; /* Initial width for typing effect */
-    /* animation: typing 2s steps(40),
-    cursor .75s step-end alternate; */
+    /* white-space: nowrap; */
+    /*overflow: hidden; Hide overflow content */
+   /* width: 100%; Initial width for typing effect */
+    /* animation: typing 2s steps(40), */
+    /*cursor .75s step-end alternate*/;
 }
 
 /* Cursor blinking effect */
@@ -83,7 +96,8 @@
 
 .card-head-topic{
     text-align: center;
-    font-size: 50px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 30px;
 
 }
 
@@ -97,91 +111,54 @@
     display: flex;
     flex-direction: column;
 
-
-
-
-
 }
 
-.card-container{
-    /* background-color: aqua; */
+.offers-section .topic-head{
     display: flex;
-    max-width:fit-content;
+    /* background-color: #0056b3; */
+    align-items: center;
+    justify-content: space-between;
+    width:90%;
+}
 
+.offers-section .topic-head button{
+    width: 150px;
+    height: 40px;
+    font-size: 20px;
+    background-color: #0b0002;
+    color: white;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
 
 }
 
-.card-component{
-    width: 360px;
-    height: 487px;
-    border: 1px solid black;
-    margin-left: 30px;
-    margin-bottom: 30px;
-    margin-top: 30px;
-
-    background-color: white;
+.offers-section .topic-head button:hover{
+    transform: translateY(-3px);
+    background-color:#830000;
 }
 
-.offer-img{
-    width: 360px;
-    height: 240px;
-    background-image: url('/Photo/fast-food-menu-flyer-design-template-5ca94e3ef764ba1786a8a6a40c487b0c_screen.jpg');
-    background-size: cover; /* Adjust to fit the entire div */
-    background-position: center; /* Center the image */
-    /* justify-content: center; */
-    /* text-align: center; */
-    object-fit: cover;
-}
 
-.image-topic{
-    text-align: center;
-    margin-top: 5px;
-    font-size: 25px;
 
-}
 
-.offer-type{
-    text-align: center;
-    margin-top: 5px;
-}
-
-.Sub-text{
-    text-align: center;
-    margin-top: 20px;
-}
-
-.Sub-text-2{
-    text-align: center;
-    margin-top: 35px;
-    font-size: 12px;
-    margin-bottom: 15px;
-}
-
-.content-con{
-    justify-content: center;
-    text-align: center;
-    margin-top: 5px;
-}
-
-.link-btn{
-    border: 1px solid black;
-    /* margin-top: 20px; */
-    text-decoration: none;
-    color: black;
-    padding: 5px;
-    transition: all 0.3s ease;
-}
-
-.discover-section{
-    /* border: 1px solid black; */
+/* .discover-section{
+  
     background-color: none;
     margin-top: 2em;
     padding: 2em;
 }
 
+.discover-section p{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 30px;
+}
+
 .discover-topic{
     text-align: center;
-    font-size: 50px;
+    font-size: 30px;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .main-content{
@@ -215,15 +192,135 @@
 
     max-width: 600px;
     margin-top: 100px;
-    font-size: 18px;
+
     margin-bottom: 25px;
     display:flex;
     flex-direction: column;
 }
+.discover-para span{
+
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 30px;
+}
 
 .discover-section a{
-    /* margin-left: 75px; */
+
     margin-top: 50px;
     max-width: 100px;
+    height: initial;
     border: 1px solid black ;
+    text-align: center;
 }
+ */
+
+
+/*carousel part*/
+.carousel-container {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    overflow: hidden;
+    position: relative; /* Position buttons relative to this container */
+    /* background-color: #0056b3; */
+
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 95%;
+    
+}
+
+.card {
+    min-width: 280px;
+    /* background-color: #fff; */
+    padding: 20px;
+    margin: 10px;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    border-radius: 10px;
+    text-align: center;
+    display: grid;
+    place-content: center;
+}
+
+.prev-btn, .next-btn {
+    background-color: #000000; /* Ensure the buttons have a visible color */
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 100%;
+    position: absolute; /* Ensure the buttons are positioned absolutely within the container */
+    top: 50%; /* Center the buttons vertically */
+    transform: translateY(-50%);
+    z-index: 100; /* Bring the buttons above all other elements */
+
+}
+
+.prev-btn {
+    left: 10px; /* Position the button inside the left edge of the container */
+}
+
+.next-btn {
+    right: 20px; /* Position the button inside the right edge of the container */
+}
+
+.prev-btn:hover, .next-btn:hover {
+    background-color: #080021;
+}
+
+
+
+/* card css*/
+.card-wapper {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    /* box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); */
+}
+
+.card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 22px;
+    margin: 0 0 10px;
+    color: #333;
+}
+
+.card-text {
+    font-size: 16px;
+    color: #777;
+    margin: 0 0 20px;
+}
+
+.card-btn {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.card-btn:hover {
+    background-color: #0056b3;
+}
+
