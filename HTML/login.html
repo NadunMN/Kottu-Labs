@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="../CSS/styles.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <h1>User Login</h1>
+        <form id="login-form">
+            <div class="input-group">
+                <label for="username">Phone Number</label>
+                <input placeholder="07XXXXXXXX" type="text" id="Phone" name="Phone" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <p id="error-message" style="color: red;"></p>
+            <button type="submit" class="login-button">Login</button>
+            <a href="forgot-password.html" class="forgot-password">Forgot Password?</a>
+            <div class="divider">OR</div>
+            <button type="button" class="guest-button" onclick="window.location.href='guest-login.html'">Login As Guest</button>
+        </form>
+        
+        <a href="signup.html" class="create-account">Create Account »</a>
+    </div>
+    <script src="../JavaScript/login.js"></script>
+</body>
+</html>
