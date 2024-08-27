@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="../CSS/styles.css">
+</head>
+<body>
+    <div class="signup-container">
+        <h2>Create Your Account</h2>
+        <form id="signup-form" method="post">
+            <div class="input-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="input-group">
+                <label for="phone-number">Phone Number</label>
+                <input type="text" id="phone-number" name="phone-number" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <input type="checkbox" id="show-password"> 
+                <label for="show-password" style="color: blue; font-size: x-small;">Show Password</label>
+            </div>
+            <div class="input-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+            </div>
+            <button type="submit" class="submit-button">Register</button>
+        </form>
+        <p id="error-message" style="color: red"></p>
+        <a href="login.html" class="back-to-login">Back to Login</a>
+    </div>
+    <script src="../JavaScript/signup.js"></script>
+</body>
+</html>
