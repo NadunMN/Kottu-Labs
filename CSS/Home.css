@@ -8,6 +8,7 @@
 
 .first-background-img {
     background: url('/Photo/shutterstock_237882754.jpg') no-repeat center center;
+    
     display: grid;
     justify-content: center;
     align-items: center;
