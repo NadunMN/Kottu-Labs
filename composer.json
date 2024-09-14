@@ -1,0 +1,16 @@
+{
+    "name": "user/php",
+    
+    "authors": [
+        {
+            "name": "Nadun Madusanka",
+            "email": "140165855+NadunMN@users.noreply.github.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "require": {}
+}
