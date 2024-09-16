@@ -1,12 +1,29 @@
 <?php
 
-require_once __DIR__.'/../vendor/autoload.php';
-
 use app\core\Application;
 use app\controllers\SiteController;
 use app\controllers\AuthController;
 
-$app = new Application(dirname(__DIR__));
+require_once __DIR__.'/../vendor/autoload.php';
+
+
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
+
+if (!isset($_ENV['DB_DSN'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'])) {
+    throw new Exception('Database configuration is incomplete.');
+}
+
+
+$config = [
+    'db' => [
+        'dsn' => $_ENV['DB_DSN'],
+        'user' => $_ENV['DB_USER'],
+        'password' => $_ENV['DB_PASSWORD'],
+    ]
+];
+
+$app = new Application(dirname(__DIR__), $config);
 $siteController = new SiteController();
 $authController = new AuthController();
 
