@@ -2,6 +2,7 @@
 namespace app\core;
 
 use app\core\Response;
+use app\core\Session;
 
 class Application
 {
@@ -9,7 +10,10 @@ class Application
     public Router $router;
     public Request $request;
     public Database $db;
+    public Session $session;
     public Response $response;
+
+
     public static Application $app;
     public Controller $controller;
 
@@ -19,6 +23,7 @@ class Application
         self::$app = $this;
         $this->request = new Request();
         $this->response = new Response();
+        $this->session = new Session();
         $this->router = new Router($this->request, $this->response);
 
         $this->db = new Database($config['db']);
