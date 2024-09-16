@@ -12,11 +12,12 @@ class Database
         $user = $config['user'] ?? '';
         $password = $config['password'] ?? '';
         
-        try {
-            $this->pdo = new \PDO($dsn, $user, $password);
-        } catch (\PDOException $e) {
-            throw new \Exception('Database connection failed: ' . $e->getMessage());
-        }
+        // try {
+        //     $this->pdo = new \PDO($dsn, $user, $password);
+        // } catch (\PDOException $e) {
+        //     throw new \Exception('Database connection failed: ' . $e->getMessage());
+        // }
+        $this->pdo = new \PDO($dsn, $user, $password);
         $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
