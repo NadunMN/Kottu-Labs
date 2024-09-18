@@ -38,5 +38,7 @@ $app->router->post('/login', [$authController, 'login']);
 $app->router->get('/register', [$authController, 'register']);
 $app->router->post('/register', [$authController, 'register']);
 
+$app->router->get('/profile', [$siteController, 'userProfile']);
+
 // Run the application
 $app->run();

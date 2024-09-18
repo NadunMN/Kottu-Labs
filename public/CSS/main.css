@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+* {
+    font-family: 'Roboto', sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+.first-background-img {
+    background: url('/Photo/shutterstock_237882754.jpg') no-repeat center center;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 700px;
+    background-size: cover;
+}
+
+.first-background-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.first-background-img .Header-text {
+    background-color: transparent;
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 80px;
+    text-align: center;
+    margin-top: 50px;
+    display: inline-block;
+}
+
+.first-background-img .Sub-text {
+    color: white;
+    justify-content: center;
+    align-items: center;
+    margin-top: -220px;
+    text-align: center;
+    font-size: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.button-container {
+    text-align: center;
+    justify-content: center;
+    margin-top: -350px;
+}
+
+.button-container button {
+    padding: 5px 30px;
+    height: auto;
+    font-size: 25px;
+    font-weight: 450;
+    cursor: pointer;
+    border-radius: 20px;
+    border: none;
+}
+
+.button-container button:first-child {
+    margin-right: 15px;
+}
+
+.card-head-topic {
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 30px;
+}
+
+.offers-section {
+    margin-top: 3em;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.offers-section .topic-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+}
+
+.offers-section .topic-head button {
+    width: 150px;
+    height: 40px;
+    font-size: 20px;
+    background-color: #0b0002;
+    color: white;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+}
+
+.offers-section .topic-head button:hover {
+    transform: translateY(-3px);
+    background-color: #830000;
+}
+
+.carousel-container {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 95%;
+}
+
+.card {
+    min-width: 280px;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    text-align: center;
+    display: grid;
+    place-content: center;
+}
+
+.prev-btn, .next-btn {
+    background-color: #000000;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+}
+
+.prev-btn {
+    left: 10px;
+}
+
+.next-btn {
+    right: 20px;
+}
+
+.prev-btn:hover, .next-btn:hover {
+    background-color: #080021;
+}
+
+.card-wapper {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 22px;
+    margin: 0 0 10px;
+    color: #333;
+}
+
+.card-text {
+    font-size: 16px;
+    color: #777;
+    margin: 0 0 20px;
+}
+
+.card-btn {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.card-btn:hover {
+    background-color: #0056b3;
+}

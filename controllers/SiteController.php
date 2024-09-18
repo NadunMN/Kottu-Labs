@@ -25,5 +25,13 @@ class SiteController extends Controller
         $body = $request->getBody();
         return 'handling submitting data';
     }
+
+    public function userProfile()
+    {
+        $params = [
+            'name' => "Nadun"
+        ];
+        return $this->render('userProfile', $params);
+    }
 }
 ?>
