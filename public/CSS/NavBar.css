@@ -54,7 +54,8 @@ body {
 }
 
 .nav-links li:hover {
-    background-color: #61dafb;
+    /* background-color: #61dafb; */
+    box-shadow: (0 0 5px #61dafb);
 }
 
 .nav-links a {
@@ -72,6 +73,7 @@ body {
 .icon-box {
     display: flex;
     gap: 15px;
+
 }
 
 .icon-box a {
@@ -87,7 +89,10 @@ body {
 }
 
 .icon-box a:hover {
-    background-color: #61dafb;
+    filter: drop-shadow(0 0 2px #61dafb);  /* Remove the 5px spread value */
+    color: black;
+    transition: background-color 0.3s ease;
+
 }
 
 .icon-box img {
@@ -103,12 +108,12 @@ body {
         position: absolute;
         top: 65px; /* Position below navbar */
         right: 0;
-        width: 40%;
+        width: 100%;
         background-color: #000000;
         max-height: 0; /* Initially hidden */
-        border-bottom-left-radius: 10px; /* Adjust the value as needed */
-        border-bottom-right-radius: 10px;
-        
+        border-bottom-left-radius: 20px; /* Adjust the value as needed */
+        border-bottom-right-radius: 20px;
+        margin-bottom: 10px;        
         
         overflow: hidden; /* Hide overflowing content */
     }
@@ -124,9 +129,15 @@ body {
     }
 
     .nav-links li {
-        padding: 15px; /* Adjust padding for dropdown items */
+        padding: 2px; /* Adjust padding for dropdown items */
         text-align: right; /* Center text */
         padding-right: 30px;
+       
+    }
+
+    .nav-links li:last-child {
+        padding-bottom: 30px;
+       
     }
 
     .nav-links a {
