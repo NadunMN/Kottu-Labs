@@ -21,11 +21,15 @@
             <li><a href="#">OUR STAFF</a></li>
             <li><a href="#">CONTACT</a></li>
         </ul>
+        <div class="menu-iconbox">
         <div class="icon-box">
             <a href="#"><img src="/Photo/icon/search.png" alt="Search"></a>
             <a href="#"><img src="/Photo/icon/shopping-cart.png" alt="Cart"></a>
             <a href="#"><img src="/Photo/icon/user.png" alt="Profile"></a>
         </div>
+        <button class="menu-icon" onclick="toggleMenu()">&#9776;</button> <!-- Menu Icon -->
+        </div>
     </div>
+    <script src="/JavaScript/NavBar.js"></script>
 </body>
 </html>

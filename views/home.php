@@ -13,12 +13,14 @@
 
 
     <div class="first-background-img">
+        <div class="first-background-overlay">
         <p class="Header-text">Enjoy our, <br/>Delicious Meal kottu</p>
         <p class="Sub-text"><i>We help companies develop the strongest tech teams around. We help<br/> candidates sharpen their tech 
             skills and pursue job opportunities.</i></p>
         <div class="button-container">
         <button>Booking</button>
         <button>Sign up</button>
+        </div>
     </div>
     </div>
 
