@@ -1,0 +1,117 @@
+/*carousel-css*/
+.carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 1260px;
+    overflow: hidden;
+    position: relative;
+    /* background-color: #333; */
+}
+
+.carousel {
+    display: flex;
+    justify-content: flex-start;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+    gap: 20px;
+    
+
+}
+
+.card {
+    width: 300px;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+    text-align: center;
+    display: grid;
+    place-content: center;
+}
+
+.prev-btn, .next-btn {
+    background-color:transparent;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    width: 40px;
+    height: 397.2px;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.prev-btn {
+    left: 0px;
+    border-bottom-left-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+.next-btn {
+    right: 0px;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.prev-btn:hover, .next-btn:hover {
+    background-color: #0000001a;
+}
+
+.card-wapper {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    transition:transform 0.3s ease;
+}
+
+.card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 22px;
+    margin: 0 0 10px;
+    color: #333;
+}
+
+.card-text {
+    font-size: 16px;
+    color: #777;
+    margin: 0 0 20px;
+}
+
+.card-btn {
+    display: inline-block;
+    background-color: #5cb85c;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.card-btn:hover {
+    background-color: #0056b3;
+}

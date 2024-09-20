@@ -55,7 +55,7 @@ body {
 
 .nav-links li:hover {
     /* background-color: #61dafb; */
-    box-shadow: (0 0 5px #61dafb);
+    box-shadow: (0 0 5px #EE3E3F);
 }
 
 .nav-links a {
@@ -89,9 +89,10 @@ body {
 }
 
 .icon-box a:hover {
-    filter: drop-shadow(0 0 2px #61dafb);  /* Remove the 5px spread value */
+    filter: drop-shadow(0 0 2px #EE3E3F);  /* Remove the 5px spread value */
     color: black;
     transition: background-color 0.3s ease;
+    transform: scale(1.05);
 
 }
 
