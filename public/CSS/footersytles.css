@@ -1,13 +1,20 @@
-body {
+body{
     margin: 0;
-    font-family: Arial, sans-serif;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+;
 }
 
 .footer {
     background-color: #000000;
     color: white;
     padding: 50px 5vw;
+    
+    bottom: 0; /* Stick to the bottom */
+    width: 100%; /* Full width */
 }
+
+
 
 .footer-content {
     display: flex;

@@ -13,8 +13,8 @@
             <div class="first-background-overlay">
                 <p class="Header-text">Enjoy our,<br/> Delicious Meal Kottu</p>
                 <p class="Sub-text">
-                    <i>We help companies develop the strongest tech teams around. We help<br/>
-                    candidates sharpen their tech skills and pursue job opportunities.</i>
+                    We help companies develop the strongest tech teams around. We help<br/>
+                    candidates sharpen their tech skills and pursue job opportunities.
                 </p>
                 <div class="button-container">
                     <button>Booking</button>

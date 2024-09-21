@@ -15,7 +15,7 @@
             <!-- <p class="logo-para">KOTTU <span>LABS</span></p> -->
         </div>
         <ul class="nav-links">
-            <li><a href="#">HOME</a></li>
+            <li><a href="/">HOME</a></li>
             <li><a href="#">MENU</a></li>
             <li><a href="#">ABOUT</a></li>
             <li><a href="#">OUR STAFF</a></li>
@@ -25,7 +25,7 @@
         <div class="icon-box">
             <a href="#"><img src="/Photo/icon/search.png" alt="Search"></a>
             <a href="#"><img src="/Photo/icon/shopping-cart.png" alt="Cart"></a>
-            <a href="#"><img src="/Photo/icon/user.png" alt="Profile"></a>
+            <a href="/profile"><img src="/Photo/icon/user.png" alt="Profile"></a>
         </div>
         <button class="menu-icon" onclick="toggleMenu()">&#9776;</button> <!-- Menu Icon -->
         </div>

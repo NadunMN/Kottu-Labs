@@ -4,6 +4,25 @@
     font-family: 'Roboto', sans-serif;
     padding: 0;
     margin: 0;
+    
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Ensure the body and HTML take the full height */
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Minimum height is the full viewport height */
+}
+
+main {
+    flex: 1; /* Takes up remaining space */
 }
 
 .home-top-main{
@@ -53,7 +72,8 @@
     color: white;
     text-align: center;
     font-size: 20px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+    font-family: Arial, Helvetica, sans-serif;
     margin-top: -10px;
 
 }
@@ -73,6 +93,8 @@
     cursor: pointer;
     border-radius: 20px;
     border: none;
+    color: black;
+    font-weight: bold;
 }
 
 .button-container button:first-child {
@@ -138,7 +160,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 3em 0;
+    margin: 1em 0;
     /* background-color: #7d7474; */
     
 
@@ -256,7 +278,7 @@
     
     /* justify-content: flex-start; */
     /* background-color: #EE3E3F; */
-    transition: transform 2s ease;
+    transition: transform 4s ease;
     transform: rotate(360deg);
     /* transform: scale(1.05); */
     cursor: pointer;
