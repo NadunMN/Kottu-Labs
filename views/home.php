@@ -16,9 +16,14 @@
                     We help companies develop the strongest tech teams around. We help<br/>
                     candidates sharpen their tech skills and pursue job opportunities.
                 </p>
+                <div class="button-div">
                 <div class="button-container">
-                    <button>Booking</button>
-                    <button>Sign up</button>
+                    <button>BOOKING</button>
+                    <button>SIGN UP</button>
+                </div>
+                <div class="button-container button-container-second">
+                    <button >VIEW MENU</button>
+                </div>
                 </div>
             </div>
         </div>
@@ -46,7 +51,9 @@
                 </div>
 
                 <div class="topic-head">
-                    <button>View our menu</button>
+                    <button>DINE IN</button>
+                    <button>TAKE AWAY</button>
+                    <!-- <button>VIEW MENU</button> -->
                 </div>
             </div>
 
@@ -96,7 +103,7 @@
                     or catering an event, our goal is to provide you with delicious food and a memorable experience.</p>
                 </div>
                 <div class="topic-head">
-                    <button>Learn More</button>
+                    <button>LEARN MORE</button>
                 </div>
             </div>
             

@@ -101,6 +101,21 @@ main {
     font-weight: bold;
 }
 
+.button-container-second button{
+    width: 420px;
+    margin-top: 30px;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+}
+
+.button-container-second button:hover{
+    border: none;
+}
+
+
+
+
 .button-container button:hover {
     background-color: #EE3E3F;
     color: white;
@@ -133,6 +148,19 @@ main {
     align-items: center;
     justify-content: space-between;
     width: 1260px;
+}
+
+.offers-section .topic-head button{
+    background-color:transparent;
+    border: 1px solid black;
+    color: black;
+}
+.offers-section .topic-head button:hover{
+    background-color: #EE3E3F;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    transform: scale(1.05);
+    border: none;
+    color: white;
 }
 
 .topic-head button {
@@ -319,6 +347,19 @@ main {
     object-fit: cover;
 }
 
+.description-section-second .topic-head{
+    display: flex;
+    /* flex-direction: column; */
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    /* background-color: #EE3E3F; */
+    
+
+}
+
+
 /* Responsive Design */
 
 @media (max-width: 1260px) {
@@ -502,8 +543,12 @@ main {
 
     .button-container button{
             height: 40px;
-            width: 150px;
+            width: 200px;
             font-size: 25px;
+    }
+    .button-container-second button{
+            margin-top: 20px;
+            
     }
 }
 
