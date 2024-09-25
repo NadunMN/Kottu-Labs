@@ -544,7 +544,9 @@ main {
     .button-container button{
             height: 40px;
             width: 200px;
-            font-size: 25px;
+            padding: 5px 20px;
+            font-size: 15px;
+            
     }
     .button-container-second button{
             margin-top: 20px;
@@ -566,10 +568,7 @@ main {
         top: 0px
         
     }
-    .button-container button {
-        padding: 5px 20px;
-        font-size: 15px;
-    }
+    
     .description-card-section-second .text-of-image{
         width: 120px;
         height: 45px;
@@ -581,5 +580,12 @@ main {
     .description-card-section-second .text-of-image2{
         top: 70%;
         left: 60%;
+    }
+
+    .button-container button {
+        height: 30px;
+        width: 150px;
+        padding: 5px 20px;
+        font-size: 10px;
     }
 }
