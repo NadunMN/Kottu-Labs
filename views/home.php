@@ -19,13 +19,13 @@
                     candidates sharpen their tech skills and pursue job opportunities.
                 </p>
                 <div class="button-div">
-                <div class="button-container">
+                <div class="button-container button-container-second">
                     <button>BOOKING</button>
                     <button>SIGN UP</button>
                 </div>
-                <div class="button-container button-container-second">
+                <!-- <div class="button-container button-container-second">
                     <button >VIEW MENU</button>
-                </div>
+                </div> -->
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@
             </div>
 
             <div class="description-card-section description-card-section-second">
-              <div class="text-of-image">
+              <div class="text-of-image whatever">
                 <p>"Feel the Heat with Spicy Kottu!🌶️"</p>
               </div>
               <div class="text-of-image text-of-image2">
@@ -112,6 +112,15 @@
         </div>
     </div>
 
+
+    <div class="poster">
+        <div class="container-poster">
+
+        <p class="p1">Where Taste Meets Perfection! 🍽️</p>
+        <p class="p2">Discover a wide range of mouth-watering dishes, specially crafted for every taste.</p>
+
+        </div>
+    </div>
 
     
 
