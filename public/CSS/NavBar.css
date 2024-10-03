@@ -17,7 +17,7 @@ body {
     background: #000000;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     height: 65px;
-    position: sticky;
+    /* position: sticky; */
     top: 0;
     z-index: 1000;
 }
@@ -114,7 +114,8 @@ body {
         max-height: 0; /* Initially hidden */
         border-bottom-left-radius: 20px; /* Adjust the value as needed */
         border-bottom-right-radius: 20px;
-        margin-bottom: 10px;        
+        margin-bottom: 10px;  
+        z-index: 1000;      
         
         overflow: hidden; /* Hide overflowing content */
     }
@@ -123,10 +124,14 @@ body {
         justify-content: flex-end;
         align-items: center;
         gap: 15px;
+        /* z-index: 1000; */
     }
 
     .nav-links.show {
         max-height: 300px; /* Show menu when toggled */
+        transition: max-height 0.3s ease;
+        z-index: 1000;
+
     }
 
     .nav-links li {

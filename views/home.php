@@ -40,6 +40,20 @@
         <?php include __DIR__ . '../carousel.php'; ?>
     </div>
 
+    <!-- <div class="poster">
+
+        <div class="container-poster">
+        <img src="/Photo/chef.png"/>
+        </div>
+        <div class="container-poster">
+        <img src="/Photo/chef.png"/>
+        </div>
+        <div class="container-poster">
+        <img src="/Photo/chef.png"/>
+        </div>
+    </div> -->
+
+
     <div class="description-section description-section-second">
         <div class="description-section-part description-section-part-second">
         <div class="description-text-section description-text-section-second">
@@ -53,9 +67,9 @@
                 </div>
 
                 <div class="topic-head">
-                    <button>DINE IN</button>
+                    <!-- <button>LEARN MORE</button> -->
                     <button>TAKE AWAY</button>
-                    <!-- <button>VIEW MENU</button> -->
+                    <button>DINE IN</button>
                 </div>
             </div>
 
@@ -113,14 +127,7 @@
     </div>
 
 
-    <div class="poster">
-        <div class="container-poster">
 
-        <p class="p1">Where Taste Meets Perfection! 🍽️</p>
-        <p class="p2">Discover a wide range of mouth-watering dishes, specially crafted for every taste.</p>
-
-        </div>
-    </div>
 
     
 
