@@ -1,49 +1,59 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const carousel = document.querySelector('.carousel');
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
-    let currentIndex = 0;
-    let maxVisibleCards = getVisibleCardsCount();
+document.addEventListener("DOMContentLoaded", function() {
+    const carousels = document.querySelectorAll('.carousel-container');
 
-    function getVisibleCardsCount() {
-        const screenWidth = window.innerWidth;
-        if (screenWidth <= 620) {
-            return 1; // Mobile screens
-        } else if (screenWidth <= 940) {
-            return 2; // Tablet screens
-        } else if (screenWidth <= 1260) {
-            return 3; // Desktop screens
-        } else {
-            return 4; // Large desktop screens
+    carousels.forEach(carousel => {
+        const prevBtn = carousel.querySelector('.prev-btn');
+        const nextBtn = carousel.querySelector('.next-btn');
+        const carouselInner = carousel.querySelector('.carousel');
+        const cards = carouselInner.querySelectorAll('.card');
+
+        let currentIndex = 0;
+        let maxVisibleCards = getVisibleCardsCount();
+
+        // Function to calculate how many cards should be visible based on screen width
+        function getVisibleCardsCount() {
+            const screenWidth = window.innerWidth;
+            if (screenWidth <= 620) {
+                return 1; // For mobile
+            } else if (screenWidth <= 940) {
+                return 2; // For tablets
+            } else if (screenWidth <= 1260) {
+                return 3; // For desktops
+            } else {
+                return 4; // For large desktops
+            }
         }
-    }
 
-    function updateCarousel() {
-        const cardWidth = document.querySelector('.card').offsetWidth + 20; // Adjust based on gap or margin
-        const newTransformValue = -(currentIndex * cardWidth);
-        carousel.style.transform = `translateX(${newTransformValue}px)`;
-    }
-
-    nextBtn.addEventListener('click', () => {
-        if (currentIndex < document.querySelectorAll('.card').length - maxVisibleCards) {
-            currentIndex++;
-            updateCarousel();
+        // Update the carousel when the current index changes
+        function updateCarousel() {
+            const cardWidth = cards[0].offsetWidth + 20; // Assuming margin/gap
+            const newTransformValue = -(currentIndex * cardWidth);
+            carouselInner.style.transform = `translateX(${newTransformValue}px)`;
         }
-    });
 
-    prevBtn.addEventListener('click', () => {
-        if (currentIndex > 0) {
-            currentIndex--;
-            updateCarousel();
-        }
-    });
+        // Handle next button click
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex < cards.length - maxVisibleCards) {
+                currentIndex++;
+                updateCarousel();
+            }
+        });
 
-    // Update card count and size on window resize
-    window.addEventListener('resize', () => {
-        maxVisibleCards = getVisibleCardsCount();
-        currentIndex = 0; // Reset index
-        updateCarousel();
-    });
+        // Handle previous button click
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCarousel();
+            }
+        });
 
-    updateCarousel();
+        // Handle screen resize
+        window.addEventListener('resize', () => {
+            maxVisibleCards = getVisibleCardsCount(); // Recalculate based on new window size
+            currentIndex = 0; // Reset index to avoid out-of-bound errors
+            updateCarousel(); // Update the view
+        });
+
+        updateCarousel(); // Initialize the carousel view
+    });
 });

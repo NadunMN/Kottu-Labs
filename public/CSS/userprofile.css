@@ -1,0 +1,10 @@
+.user-top{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 20px 0;
+    background-color: aqua;
+    width: 100%;
+    height: 200px;
+}

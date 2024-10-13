@@ -15,8 +15,8 @@
             <div class="first-background-overlay">
                 <p class="Header-text">Enjoy our,<br/> Delicious Meal Kottu</p>
                 <p class="Sub-text">
-                    We help companies develop the strongest tech teams around. We help<br/>
-                    candidates sharpen their tech skills and pursue job opportunities.
+                Experience the authentic taste of Sri Lanka with our signature Kottu dishes!</br>
+                we’re ready to serve you with freshly made Kottu that's packed with flavor.
                 </p>
                 <div class="button-div">
                 <div class="button-container button-container-second">
