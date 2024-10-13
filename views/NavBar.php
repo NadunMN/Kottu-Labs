@@ -19,7 +19,7 @@
             <li><a href="#">MENU</a></li>
             <li><a href="#">ABOUT</a></li>
             <li><a href="#">OUR STAFF</a></li>
-            <li><a href="#">CONTACT</a></li>
+            <li><a href="contact">CONTACT</a></li>
         </ul>
         <div class="menu-iconbox">
         <div class="icon-box">
