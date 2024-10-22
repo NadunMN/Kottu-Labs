@@ -196,6 +196,7 @@
 }
 
 .profile-content-box-content-img img:hover{
+    background-color: #5cb85c;
     transition: transform 0.3s ,background-color 0.3s ease;
     transform: scale(1.05);
 }
@@ -419,7 +420,7 @@
 
     .number{
         font-weight: 100;
-        font-size: 10px;
+        font-size: 13px;
     }
 
 

@@ -16,6 +16,7 @@ if (!isset($_ENV['DB_DSN'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'])) {
 
 
 $config = [
+    'userClass' => \app\models\User::class,
     'db' => [
         'dsn' => $_ENV['DB_DSN'],
         'user' => $_ENV['DB_USER'],
@@ -38,6 +39,7 @@ $app->router->post('/login', [$authController, 'login']);
 $app->router->get('/register', [$authController, 'register']);
 $app->router->post('/register', [$authController, 'register']);
 
+$app->router->get('/logout', [$authController, 'logout']);
 $app->router->get('/profile', [$siteController, 'userProfile']);
 
 // Run the application
