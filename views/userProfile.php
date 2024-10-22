@@ -44,33 +44,33 @@
                 <div class="grid-header grid-header-price">Current Price</div>
                 <div class="grid-header">View</div>
                 
-                <div class="grid-cell">1</div>
-                <div class="grid-cell grid-cell-time">13:04</div>
-                <div class="grid-cell">Dine in</div>
-                <div class="grid-cell grid-cell-price">Rs.2000.00</div>
+                <div class="grid-cell">456f</div>
+                <div class="grid-cell grid-cell-time">14:04</div>
+                <div class="grid-cell">Take away</div>
+                <div class="grid-cell grid-cell-price">Rs.2200.00</div>
                 <div class="grid-cell"><button>Status</button></div>
 
-                <div class="grid-cell">1</div>
-                <div class="grid-cell grid-cell-time">13:04</div>
+                <div class="grid-cell">32ew</div>
+                <div class="grid-cell grid-cell-time">10:04</div>
                 <div class="grid-cell">Dine in</div>
-                <div class="grid-cell grid-cell-price">Rs.2000.00</div>
+                <div class="grid-cell grid-cell-price">Rs.2100.00</div>
                 <div class="grid-cell"><button>Status</button></div>
 
-                <div class="grid-cell">1</div>
+                <div class="grid-cell">33q2</div>
                 <div class="grid-cell grid-cell-time">13:04</div>
-                <div class="grid-cell">Dine in</div>
-                <div class="grid-cell grid-cell-price">Rs.2000.00</div>
+                <div class="grid-cell">Take away</div>
+                <div class="grid-cell grid-cell-price">Rs.5000.00</div>
                 <div class="grid-cell"><button>Status</button></div>
 
-                <div class="grid-cell">1</div>
-                <div class="grid-cell grid-cell-time">13:04</div>
+                <div class="grid-cell">qww3</div>
+                <div class="grid-cell grid-cell-time">9:04</div>
                 <div class="grid-cell">Dine in</div>
-                <div class="grid-cell grid-cell-price">Rs.2000.00</div>
+                <div class="grid-cell grid-cell-price">Rs.3300.00</div>
                 <div class="grid-cell"><button>Status</button></div>
 
 
-                <div class="grid-cell">1</div>
-                <div class="grid-cell grid-cell-time">13:04</div>
+                <div class="grid-cell">2wq1</div>
+                <div class="grid-cell grid-cell-time">11:04</div>
                 <div class="grid-cell">Dine in</div>
                 <div class="grid-cell grid-cell-price">Rs.2000.00</div>
                 <div class="grid-cell"><button>Status</button></div>

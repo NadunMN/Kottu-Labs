@@ -7,11 +7,15 @@ use app\core\Session;
 class Application
 {
     public static string $ROOT_DIR;
+
+
+    public string $userClass;
     public Router $router;
     public Request $request;
-    public Database $db;
-    public Session $session;
     public Response $response;
+    public Session $session;
+    public Database $db;
+    public ?DbModel $user;
 
 
     public static Application $app;
@@ -19,6 +23,7 @@ class Application
 
     public function __construct($rootPath, array $config)
     {
+        $this->userClass = $config['userClass'];
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;
         $this->request = new Request();
@@ -27,7 +32,25 @@ class Application
         $this->router = new Router($this->request, $this->response);
 
         $this->db = new Database($config['db']);
+        
+        
+        $primaryValue = $this->session->get('user');
+        if($primaryValue){
+            $primaryKey = $this->userClass::primaryKey();
+            $this->user = $this->userClass::findOne([$primaryKey => $primaryValue]);
+        } else {
+            $this->user = null;
+        }
+        $this->userClass::findOne(['id' => $this->session->get('user')]);
+
+        
     }
+
+    public static function isGuest()
+    {
+        return !self::$app->user;
+    }
+
 
     public function run()
     {
@@ -43,4 +66,21 @@ class Application
     {
         $this->controller = $controller;
     }
+
+    public function login(DbModel $user)
+    {
+        $this->user = $user;
+        $primaryKey = $user->primaryKey();
+        $primaryValue = $user->{$primaryKey};
+        $this->session->set('user', $primaryValue);
+        return true;
+    }
+
+
+    public function logout()
+    {
+        $this->user = null;
+        $this->session->remove('user');
+    }
+    
 }
