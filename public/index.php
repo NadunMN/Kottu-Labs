@@ -31,7 +31,7 @@ $authController = new AuthController();
 // Define routes
 $app->router->get('/', [$siteController, 'home']);
 $app->router->get('/contact', [$siteController, 'contact']);
-$app->router->post('/contact', [$siteController, 'handleContact']);
+$app->router->post('/contact', [$siteController, 'contact']);
 
 $app->router->get('/login', [$authController, 'login']);
 $app->router->post('/login', [$authController, 'login']);
