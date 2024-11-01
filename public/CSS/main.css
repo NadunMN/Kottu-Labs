@@ -13,6 +13,7 @@ body, html {
     height: 100%; /* Ensure the body and HTML take the full height */
     display: flex;
     flex-direction: column;
+    scroll-behavior: smooth;
 }
 
 body {

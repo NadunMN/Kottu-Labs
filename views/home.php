@@ -8,7 +8,9 @@
 </head>
 <body>
 
-
+<script>
+    console.log("Hello World");
+</script>
 
     <div class="home-top-main">
         <div class="first-background-img">
@@ -20,12 +22,18 @@
                 </p>
                 <div class="button-div">
                 <div class="button-container button-container-second">
-                    <button>BOOKING</button>
-                    <button>SIGN UP</button>
+
+                <?php if (\app\core\Application::isGuest()): ?>
+                        <button onclick="window.location.href='#topic-head'">BOOKING</button>
+                        <button onclick="window.location.href='/login'">SIGN UP</button>
+                    <?php else: ?>
+                        <button onclick="window.location.href='#topic-head'">BOOKING</button>
+                        <button onclick="window.location.href='/logout'">VIEW MENU</button>
+                        <?php endif; ?>
+                    
+                    <!-- <button onclick="window.location.href='/login'">SIGN UP</button> -->
                 </div>
-                <!-- <div class="button-container button-container-second">
-                    <button >VIEW MENU</button>
-                </div> -->
+               
                 </div>
             </div>
         </div>
@@ -54,7 +62,7 @@
     </div> -->
 
 
-    <div class="description-section description-section-second">
+    <div class="description-section description-section-second" id="topic-head">
         <div class="description-section-part description-section-part-second">
         <div class="description-text-section description-text-section-second">
                 <div class="description-head-topic description-head-topic-second">
@@ -68,7 +76,7 @@
 
                 <div class="topic-head">
                     <!-- <button>LEARN MORE</button> -->
-                    <button>TAKE AWAY</button>
+                    <button >TAKE AWAY</button>
                     <button>DINE IN</button>
                 </div>
             </div>
