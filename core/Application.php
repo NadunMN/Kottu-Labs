@@ -4,8 +4,7 @@ namespace app\core;
 use app\core\Response;
 use app\core\Session;
 use app\core\db\Database;
-use app\core\db\DbModel;
-use app\models\User;
+use app\core\Router;
 
 class Application
 {

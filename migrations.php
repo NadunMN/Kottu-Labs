@@ -16,7 +16,8 @@ $config = [
         'dsn' => $_ENV['DB_DSN'],
         'user' => $_ENV['DB_USER'],
         'password' => $_ENV['DB_PASSWORD'],
-    ]
+    ],
+    'userClass' => \app\models\User::class // Add this line
 ];
 
 $app = new Application(__DIR__, $config);
