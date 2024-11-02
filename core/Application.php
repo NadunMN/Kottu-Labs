@@ -1,10 +1,12 @@
 <?php
+
 namespace app\core;
 
+use app\core\db\Database;
 use app\core\Response;
 use app\core\Session;
-use app\core\db\Database;
 use app\core\Router;
+use app\core\View;
 
 class Application
 {
@@ -18,8 +20,7 @@ class Application
     public Session $session;
     public Database $db;
     public ?UserModel $user;
-    public view $view;
-
+    public View $view;
 
     public static Application $app;
     public ?Controller $controller = null;
@@ -33,27 +34,22 @@ class Application
         $this->response = new Response();
         $this->session = new Session();
         $this->router = new Router($this->request, $this->response);
-        $this->view = new view();
+        $this->view = new View();
         $this->db = new Database($config['db']);
         
-        
         $primaryValue = $this->session->get('user');
-        if($primaryValue){
+        if ($primaryValue) {
             $primaryKey = $this->userClass::primaryKey();
             $this->user = $this->userClass::findOne([$primaryKey => $primaryValue]);
         } else {
             $this->user = null;
         }
-        $this->userClass::findOne(['id' => $this->session->get('user')]);
-
-        
     }
 
-    public static function isGuest()
+    public static function isGuest(): bool
     {
         return !self::$app->user;
     }
-
 
     public function run()
     {
@@ -77,20 +73,22 @@ class Application
         $this->controller = $controller;
     }
 
-    public function login(UserModel $user)
+    public function login(UserModel $user): bool
     {
         $this->user = $user;
         $primaryKey = $user->primaryKey();
         $primaryValue = $user->{$primaryKey};
+        
         $this->session->set('user', $primaryValue);
+
+        
+    
         return true;
     }
 
-
-    public function logout()
+    public function logout(): void
     {
         $this->user = null;
         $this->session->remove('user');
     }
-    
 }

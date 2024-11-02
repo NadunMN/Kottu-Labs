@@ -42,5 +42,12 @@ $app->router->post('/register', [$authController, 'register']);
 $app->router->get('/logout', [$authController, 'logout']);
 $app->router->get('/profile', [$siteController, 'userProfile']);
 
+// if (Application::$app->user && Application::$app->user->type == 'admin') {
+//     $app->router->get('/profile', [$siteController, 'adminDashboard']);
+// } else {
+//     $app->router->get('/profile', [$siteController, 'userProfile']);
+// }
+
+
 // Run the application
 $app->run();

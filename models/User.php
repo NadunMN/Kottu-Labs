@@ -2,12 +2,10 @@
 
 namespace app\models;
 
-use app\core\Model;
 use app\core\UserModel;
 
 class User extends UserModel
 {
-
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 2;
@@ -18,6 +16,7 @@ class User extends UserModel
     public int $status = self::STATUS_INACTIVE;
     public string $password = '';
     public string $confirmPassword = '';
+    public string $type = 'customer'; // Default type
 
     public static function tableName(): string
     {
@@ -34,7 +33,6 @@ class User extends UserModel
         $this->status = self::STATUS_INACTIVE;
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         return parent::save();
-
     }
 
     public function rules(): array
@@ -60,25 +58,22 @@ class User extends UserModel
 
     public function attributes(): array
     {
-        return ['firstname','lastname','email', 'password', 'status'];
+        return ['firstname', 'lastname', 'email', 'password', 'status', 'type'];
     }
 
     public function labels(): array
     {
-        return  [
+        return [
             'firstname' => 'First Name',
             'lastname' => 'Last Name',
             'email' => 'Your Email',
             'password' => 'Password',
-            'confirmPassword' => 'Confirm password',
-
+            'confirmPassword' => 'Confirm Password',
         ];
     }
 
     public function getDisplayName(): string
     {
-        return $this->firstname.' '.$this->lastname;
+        return $this->firstname . ' ' . $this->lastname;
     }
-
- 
 }

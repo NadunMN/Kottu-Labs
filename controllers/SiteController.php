@@ -35,18 +35,18 @@ class SiteController extends Controller
         ]);
     }
 
-    // public function handleContact(Request $request)
-    // {
-    //     $body = $request->getBody();
-    //     return 'handling submitting data';
-    // }
-
     public function userProfile()
     {
         $params = [
             'name' => "Nadun"
         ];
         return $this->render('userProfile', $params);
+    }
+
+    public function admindashboard()
+    {
+        $this->setLayout('profile');
+        return $this->render('admindashboard');
     }
 }
 ?>

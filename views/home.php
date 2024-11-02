@@ -10,6 +10,7 @@
 
 <script>
     console.log("Hello World");
+    console.log();
 </script>
 
     <div class="home-top-main">
@@ -23,7 +24,7 @@
                 <div class="button-div">
                 <div class="button-container button-container-second">
 
-                <?php if (\app\core\Application::isGuest()): ?>
+                <?php if (\app\core\Application::$app->user ==null): ?>
                         <button onclick="window.location.href='#topic-head'">BOOKING</button>
                         <button onclick="window.location.href='/login'">SIGN UP</button>
                     <?php else: ?>

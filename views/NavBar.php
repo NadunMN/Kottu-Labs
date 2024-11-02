@@ -25,7 +25,16 @@
         <div class="icon-box">
             <a href="#"><img src="/Photo/icon/search.png" alt="Search"></a>
             <a href="#"><img src="/Photo/icon/shopping-cart.png" alt="Cart"></a>
-            <a href="/profile"><img src="/Photo/icon/user.png" alt="Profile"></a>
+
+            <div class="drop-down">
+                <a href="#" onclick="toggleMenuprofile()"><img src="/Photo/icon/user.png" alt="Profile"></a>
+                <div class="dropdown-content">
+                    <a>DashBoard</a>
+                    <a>My Account</a>
+                    <a>Sing In</a>
+                    <a>Log Out</a>
+                </div>
+            </div>
         </div>
         <button class="menu-icon" onclick="toggleMenu()">&#9776;</button> <!-- Menu Icon -->
         </div>

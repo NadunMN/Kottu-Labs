@@ -37,30 +37,30 @@ class AuthController extends Controller
         ]);
     }
 
-    public function register(Request $request)
+
+    public function register(Request $request, Response $response)
     {
         $user = new User();
 
-        if($request->isPost()){
+        if ($request->isPost()) {
             $user->loadData($request->getBody());
 
-
-            if($user->validate() && $user->save()){
-
-                Application::$app->session->setFlash('success', 'Thanks for registering');
-                Application::$app->response->redirect('/');
-                exit;
+            if ($user->validate() && $user->save()) {
+                if (Application::$app->login($user)) {
+                    // Application::$app->session->setFlash('success', 'Thanks for registering');
+                    $response->redirect('/login');
+                    return;
+                } else {
+                    // Debugging statement
+                    echo "Failed to log in the user.";
+                }
             }
-
-            return $this->render('register', [
-                'model' => $user
-            ]);
         }
-        
+
         $this->setLayout('auth');
         return $this->render('register', [
             'model' => $user
-        ]);    
+        ]);
     }
 
     public function logout(Request $request, Response $response)
