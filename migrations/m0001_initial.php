@@ -14,10 +14,12 @@ class m0001_initial
             lastname VARCHAR(255) NOT NULL,
             status TINYINT NOT NULL DEFAULT 0,
             password VARCHAR(512) NOT NULL,
-            type VARCHAR(20) NOT NULL,
+            position VARCHAR(20) NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);
+
+       
     }
 
     public function down()
@@ -25,5 +27,7 @@ class m0001_initial
         $db = Application::$app->db;
         $SQL = "DROP TABLE IF EXISTS users;";
         $db->pdo->exec($SQL);
+
+       
     }
 }

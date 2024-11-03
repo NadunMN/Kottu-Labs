@@ -16,7 +16,7 @@ class User extends UserModel
     public int $status = self::STATUS_INACTIVE;
     public string $password = '';
     public string $confirmPassword = '';
-    public string $type = 'customer'; // Default type
+    public string $position = 'customer'; // Default position
 
     public static function tableName(): string
     {
@@ -58,7 +58,7 @@ class User extends UserModel
 
     public function attributes(): array
     {
-        return ['firstname', 'lastname', 'email', 'password', 'status', 'type'];
+        return ['firstname', 'lastname', 'email', 'password', 'status', 'position'];
     }
 
     public function labels(): array
