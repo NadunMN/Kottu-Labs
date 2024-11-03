@@ -4,8 +4,7 @@ use app\core\Application;
 use app\controllers\SiteController;
 use app\controllers\AuthController;
 
-require_once __DIR__.'/../vendor/autoload.php';
-
+require_once __DIR__ . '/../vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
@@ -13,7 +12,6 @@ $dotenv->load();
 if (!isset($_ENV['DB_DSN'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'])) {
     throw new Exception('Database configuration is incomplete.');
 }
-
 
 $config = [
     'userClass' => \app\models\User::class,
@@ -40,14 +38,13 @@ $app->router->get('/register', [$authController, 'register']);
 $app->router->post('/register', [$authController, 'register']);
 
 $app->router->get('/logout', [$authController, 'logout']);
-$app->router->get('/profile', [$siteController, 'userProfile']);
+// $app->router->get('/profile', [$siteController, 'userProfile']);
 
-// if (Application::$app->user && Application::$app->user->type == 'admin') {
-//     $app->router->get('/profile', [$siteController, 'adminDashboard']);
-// } else {
-//     $app->router->get('/profile', [$siteController, 'userProfile']);
-// }
-
+if (Application::$app->user && Application::$app->user->position == 'admin') {
+    $app->router->get('/profile', [$siteController, 'adminDashboard']);
+} else {
+    $app->router->get('/profile', [$siteController, 'userProfile']);
+}
 
 // Run the application
 $app->run();

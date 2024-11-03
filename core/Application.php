@@ -40,7 +40,7 @@ class Application
         $primaryValue = $this->session->get('user');
         if ($primaryValue) {
             $primaryKey = $this->userClass::primaryKey();
-            $this->user = $this->userClass::findOne([$primaryKey => $primaryValue]);
+            $this->user = $this->userClass::findOne([$primaryKey => $primaryValue]) ?: null;
         } else {
             $this->user = null;
         }
@@ -56,7 +56,8 @@ class Application
         try {
             echo $this->router->resolve();
         } catch (\Exception $e) {
-            $this->response->setStatusCode($e->getCode());
+            $statusCode = is_int($e->getCode()) ? $e->getCode() : 500;
+            $this->response->setStatusCode($statusCode);
             echo $this->view->renderView('_error', [
                 'exception' => $e
             ]);
@@ -78,11 +79,7 @@ class Application
         $this->user = $user;
         $primaryKey = $user->primaryKey();
         $primaryValue = $user->{$primaryKey};
-        
         $this->session->set('user', $primaryValue);
-
-        
-    
         return true;
     }
 
