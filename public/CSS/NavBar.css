@@ -102,16 +102,22 @@ body {
     object-fit: cover;
 }
 
+.drop-down{
+    background-color:none !important;
+}
+
   
 .dropdown-content {
     position: absolute;
     top: 65px;
     right: 0;
-    font-size: 18px;
-    background-color: #000000;
-    width: 200px;
-    border-radius: 0 0 20px 20px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    background: transparent; /* Semi-transparent background */
+    backdrop-filter: blur(10px);          /* Blurs content behind the element */
+    -webkit-backdrop-filter: blur(10px);
+    width: 350px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Blur effect on box borders */
+    border: none;
     z-index: 10000;
     overflow: hidden;
     max-height: 0;
@@ -129,25 +135,24 @@ body {
     margin: 10px 0px;
     width: 100%;
     border-radius: 0;
-    /* background-color: #EE3E3F; */
     text-align: right;
     font-weight: bold;
   }
 
-  .dropdown-content.show {
+  .dropdown-content.show1  {
     max-height: 300px;
     opacity: 1;
     transform: translateY(0);
 }
 
 .dropdown-content a:last-child {
-    margin-bottom: 20px; 
+    margin-bottom: 10px; 
 }
   
 
 .dropdown-content a:hover {
     color: #272727;
-    background-color: #000000;
+    /* background-color: #000000; */
     transition: color 0.3s ease;
     
 }
@@ -161,10 +166,10 @@ body {
         top: 65px; /* Position below navbar */
         right: 0;
         width: 100%;
-        background-color: #000000;
+        background: transparent; /* Semi-transparent background */
+    backdrop-filter: blur(10px);          /* Blurs content behind the element */
+    -webkit-backdrop-filter: blur(10px);
         max-height: 0; /* Initially hidden */
-        border-bottom-left-radius: 20px; /* Adjust the value as needed */
-        border-bottom-right-radius: 20px;
         margin-bottom: 10px;  
         z-index: 1000;      
         
@@ -214,6 +219,12 @@ body {
     .icon-box {
         display: flex; /* Hide icon box on smaller screens */
     }
+
+    .dropdown-content {
+        
+        width: 100%;
+        
+    }
 }
 
 @media  (max-width: 990px) {
@@ -239,6 +250,19 @@ body {
         width: 15px;
         height: 15px;
     }
+
+    .dropdown-content {
+        
+        font-size: 12px;
+        
+    }
+
+    .dropdown-content a {
+        
+        padding-right: 20px;
+        margin: 5px 0px;
+        
+      }
     
 }
 

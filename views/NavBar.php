@@ -29,10 +29,14 @@
             <div class="drop-down">
                 <a href="#" onclick="toggleMenuprofile()"><img src="/Photo/icon/user.png" alt="Profile"></a>
                 <div class="dropdown-content">
-                    <a>DashBoard</a>
-                    <a>My Account</a>
-                    <a>Sing In</a>
-                    <a>Log Out</a>
+                    <a href="#">DASHBOARD</a>
+                    <a href="#">MY ACCOUNT</a>
+                    <a href="#">WHY CREATE AN ACCOUNT?</a>
+                    <?php if (\app\core\Application::$app->user ==null): ?>
+                        <a href="/login">LOG IN</a>
+                        <?php else: ?>
+                            <a href="/logout">LOG OUT</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
