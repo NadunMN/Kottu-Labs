@@ -89,10 +89,10 @@ body {
 }
 
 .icon-box a:hover {
-    filter: drop-shadow(0 0 2px #EE3E3F);  /* Remove the 5px spread value */
+    /* filter: drop-shadow(0 0 2px #EE3E3F);  Remove the 5px spread value */
     color: black;
     transition: background-color 0.3s ease;
-    transform: scale(1.05);
+    /* transform: scale(1.05); */
 
 }
 
@@ -102,6 +102,62 @@ body {
     object-fit: cover;
 }
 
+.drop-down{
+    background-color:none !important;
+}
+
+  
+.dropdown-content {
+    position: absolute;
+    top: 65px;
+    right: 0;
+    font-size: 16px;
+    background: transparent; /* Semi-transparent background */
+    backdrop-filter: blur(10px);          /* Blurs content behind the element */
+    -webkit-backdrop-filter: blur(10px);
+    width: 350px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Blur effect on box borders */
+    border: none;
+    z-index: 10000;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: max-height 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
+}
+
+.dropdown-content a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+    padding-right: 20px;
+    margin: 10px 0px;
+    width: 100%;
+    border-radius: 0;
+    text-align: right;
+    font-weight: bold;
+  }
+
+  .dropdown-content.show1  {
+    max-height: 300px;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-content a:last-child {
+    margin-bottom: 10px; 
+}
+  
+
+.dropdown-content a:hover {
+    color: #272727;
+    /* background-color: #000000; */
+    transition: color 0.3s ease;
+    
+}
+
+
 /* Responsive Design */
 @media (max-width: 830px) {
     .nav-links {
@@ -110,10 +166,10 @@ body {
         top: 65px; /* Position below navbar */
         right: 0;
         width: 100%;
-        background-color: #000000;
+        background: transparent; /* Semi-transparent background */
+    backdrop-filter: blur(10px);          /* Blurs content behind the element */
+    -webkit-backdrop-filter: blur(10px);
         max-height: 0; /* Initially hidden */
-        border-bottom-left-radius: 20px; /* Adjust the value as needed */
-        border-bottom-right-radius: 20px;
         margin-bottom: 10px;  
         z-index: 1000;      
         
@@ -163,6 +219,12 @@ body {
     .icon-box {
         display: flex; /* Hide icon box on smaller screens */
     }
+
+    .dropdown-content {
+        
+        width: 100%;
+        
+    }
 }
 
 @media  (max-width: 990px) {
@@ -188,6 +250,19 @@ body {
         width: 15px;
         height: 15px;
     }
+
+    .dropdown-content {
+        
+        font-size: 12px;
+        
+    }
+
+    .dropdown-content a {
+        
+        padding-right: 20px;
+        margin: 5px 0px;
+        
+      }
     
 }
 

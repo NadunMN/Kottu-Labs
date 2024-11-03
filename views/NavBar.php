@@ -25,7 +25,20 @@
         <div class="icon-box">
             <a href="#"><img src="/Photo/icon/search.png" alt="Search"></a>
             <a href="#"><img src="/Photo/icon/shopping-cart.png" alt="Cart"></a>
-            <a href="/profile"><img src="/Photo/icon/user.png" alt="Profile"></a>
+
+            <div class="drop-down">
+                <a href="#" onclick="toggleMenuprofile()"><img src="/Photo/icon/user.png" alt="Profile"></a>
+                <div class="dropdown-content">
+                    <a href="#">DASHBOARD</a>
+                    <a href="#">MY ACCOUNT</a>
+                    <a href="#">WHY CREATE AN ACCOUNT?</a>
+                    <?php if (\app\core\Application::$app->user ==null): ?>
+                        <a href="/login">LOG IN</a>
+                        <?php else: ?>
+                            <a href="/logout">LOG OUT</a>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
         <button class="menu-icon" onclick="toggleMenu()">&#9776;</button> <!-- Menu Icon -->
         </div>
