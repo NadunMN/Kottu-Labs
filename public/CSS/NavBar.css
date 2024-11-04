@@ -116,7 +116,7 @@ body {
     backdrop-filter: blur(10px);          /* Blurs content behind the element */
     -webkit-backdrop-filter: blur(10px);
     width: 350px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Blur effect on box borders */
+    /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); Blur effect on box borders */
     border: none;
     z-index: 10000;
     overflow: hidden;

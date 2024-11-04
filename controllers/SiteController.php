@@ -42,6 +42,7 @@ class SiteController extends Controller
         $params = [
             'name' => "Nadun"
         ];
+        $this->setLayout('profile');
         return $this->render('userProfile', $params);
     }
 
