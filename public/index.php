@@ -42,8 +42,12 @@ $app->router->get('/logout', [$authController, 'logout']);
 
 if (Application::$app->user && Application::$app->user->position == 'admin') {
     $app->router->get('/profile', [$siteController, 'adminDashboard']);
-} else {
+} else if(Application::$app->user && Application::$app->user->position == 'customer') {
     $app->router->get('/profile', [$siteController, 'userProfile']);
+}else if(Application::$app->user && Application::$app->user->position == 'chef') {
+    $app->router->get('/profile', [$siteController, 'chefDashboard']);
+}else if(Application::$app->user && Application::$app->user->position == 'steward') {
+    $app->router->get('/profile', [$siteController, 'stewardDashboard']);
 }
 
 // Run the application
