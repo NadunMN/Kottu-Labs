@@ -12,7 +12,7 @@
             <div class="logo-img">
                 
             </div>
-            <!-- <p class="logo-para">KOTTU <span>LABS</span></p> -->
+           
         </div>
         <ul class="nav-links">
             <li><a href="/">HOME</a></li>
