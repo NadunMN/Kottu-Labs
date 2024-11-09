@@ -55,54 +55,6 @@
 
             <div class="horizontal-line"></div>
 
-
-            <!-- <div class="user-numbers-container">
-            <div class="user-numbers-wrapper">
-                <div>
-                    <video autoplay loop muted width="100px">
-                        <source src="/Photo/Animations/5.webm" type="video/webm">
-                        <source src="/Photo/Animations/5.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                <div>
-                    <h3>Order Number</h3>
-                    <h3>0234</h3>
-                </div>
-            </div>
-
-
-            <div class="user-numbers-wrapper">
-                <div>
-                    <video autoplay loop muted width="120px">
-                        <source src="/Photo/Animations/4.webm" type="video/webm">
-                        <source src="/Photo/Animations/4.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                <div>
-                    <h3>Table Number</h3>
-                    <h3>0234</h3>
-                </div>
-            </div>
-
-
-            <div class="user-numbers-wrapper">
-                <div>
-                    <video autoplay loop muted width="100px">
-                        <source src="/Photo/Animations/2.webm" type="video/webm">
-                        <source src="/Photo/Animations/2.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                <div>
-                    <h3>Current Orders</h3>
-                    <h3>0234</h3>
-                </div>
-            </div>
-            </div> -->
-
-
             <div class="order-list-container">
                 <h2>Current Order List</h2>
                 <div class="order-list-button">
@@ -154,6 +106,83 @@
    
     
 </div>
+
+
+<!--Add reviews -->
+<div class="review-list-container">
+
+    <div class="add-review-list-topic">
+        <h2>Add Reviews</h2>
+        <div class="review-list-button">
+        </div>
+    </div>
+    <form class="form" action="" method="POST">
+    <div class="add-reviews-body-container">
+
+    <div class="add-review-header">
+                <div class="review-name">
+                    
+                    <input type="text" id="add-review-name" placeholder="Untitled">
+                </div>
+                <div class="review-rate">
+                    <div class="starts">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-review-body">
+                <textarea id="review-content" placeholder="Write your review here..."></textarea>
+            </div>
+
+                    <div class="review-subject add-review-subject">
+
+                        <div>
+                            <!-- <h5>4.0</h5> -->
+                            <h5>cleanliness</h5>
+                        </div>
+
+                        <div>
+                            <!-- <h5>4.0</h5> -->
+                            <h5>safety & security</h5>
+                        </div>
+
+                        <div>
+                            <!-- <h5>4.0</h5> -->
+                            <h5>staff</h5>
+                        </div>
+
+                        <div>
+                            <!-- <h5>4.0</h5> -->
+                            <h5>amenties</h5>
+                        </div>
+
+                        <div>
+                            <!-- <h5>4.0</h5> -->
+                            <h5>location</h5>
+                        </div>
+                    </div>
+                    
+    </div>
+
+    <div class="add-review-submit">
+                <div class="order-list-button add-review-cancel" >
+                    <button>cancel</button>
+                    <input type="submit" id="submit" value="Submit">
+                </div>
+            </div>
+
+    </form>
+    
+
+</div>
+
+
+
 
 
 <!-- reviews -->
