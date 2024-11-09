@@ -215,7 +215,8 @@ body{
 
 /* Header styling */
 .table-header {
-    background-color: #ee3e3e;
+    background-color: #000000;
+    color: #ffffff;
     font-weight: bold;
     text-align: center;
     /* border-radius: 20px; */
@@ -394,6 +395,7 @@ body{
 .review-subject div:hover{
     background-color: #ee3e3e;
     color: white;
+    border: none;
     transition: transform 0.3s ,background-color 0.3s ease;
     transform: scale(1.05);
 }
@@ -499,4 +501,193 @@ body{
     font-size: 15px;
     font-weight: 500;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+.form{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #ee3e3e; */
+    margin-top: 20px;
+}
+
+
+.add-reviews-body-container{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    padding-top: 20px;
+    /* margin-top: 20px; */
+}
+
+.add-review-list-topic{
+    width: 90%;
+    height: 60px;
+    /* background-color: #ee3e3e; */
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    /* border-radius: 20px 20px 0 0; */
+    /* border-bottom: 1px solid #d0d0d0; */
+    
+}
+
+.add-review-header{
+    width: 90%;
+    height: auto;
+    /* background-color: #4b3a3a; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #d0d0d0;
+}
+
+.review-name input {
+    width: 50vw;                /* Full width to fit container */
+    /* padding: 10px 15px;         Padding for spacing inside */
+    font-size:30px;            /* Text size */
+    color: #333;                /* Text color */
+    border:none;
+    border-radius: 5px;         /* Rounded corners */
+    outline: none;              /* Remove default outline */
+    /* background-color: #905454; */
+    
+}
+
+.review-name input::placeholder {
+    color: #8d8d8d;                
+    opacity: 0.8;               /* Adjust opacity of placeholder */
+}
+
+.review-name input:focus {
+    border: none;
+}
+
+
+.add-review-body{
+    width: 90%;
+    height: auto;
+    /* background-color: #4b3a3a; */
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    padding-bottom: 15px;
+    /* border-bottom: 1px solid #d0d0d0; */
+}
+
+.add-review-body textarea {
+    width: 100%;                /* Full width to fit container */
+    height: 100px;              /* Set height */
+    padding: 10px 0;         
+    font-size: 16px;            /* Text size */
+    color: #333;                /* Text color */
+    border: none;               /* Remove border */
+    outline: none;              /* Remove default outline */
+    resize:none;               /* Disable resizing */
+    /* background-color: aquamarine; */
+}
+
+.add-review-body textarea::placeholder {
+    color: #8d8d8d;                
+    opacity: 0.8;               /* Adjust opacity of placeholder */
+}
+
+.add-review-submit{
+    width: 90%;
+    height: auto;
+    /* background-color: #ff0000; */
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#submit{
+    width: 120px;
+    height: 30px;
+    border-radius: 50px;
+    border:none;
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.add-review-cancel button {
+    font-weight: bold;
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+
+}
+
+#submit:hover{
+    background-color: #EE3E3F;
+    color: white;
+    transition: transform 0.3s ,background-color 0.3s ease;
+    transform: scale(1.05);
+    border: none;
+}
+
+.add-review-subject{
+    /* background-color: aqua; */
+    margin-top: -30px;
+    margin-bottom: 30px;
+    /* border: 1px solid #d0d0d0; */
+}
+
+.add-review-subject div{
+    
+    border: 1px solid #b8b8b8;
+}
+
+
+/* responsive design */
+
+@media (max-width: 990px) {
+
+    .userprofile-backcover{
+        height: 120px;  
+    }
+
+    .circle {
+        width: 150px;        
+        height: 150px;        
+    }
+
+
+    .circle-name-wrapper h1{
+        font-size: 24px;
+    }
+
+    .circle-name-wrapper h4{
+        font-size: 12px;
+    }
+
+    .userprofile-profile-name button{
+        
+        width: 90px;
+        height: 30px;
+        font-size: 10px;
+    }
+
+    .userprofile-profile-name-content .ON-wrapper{
+        width: 90px;
+        height: 30px;
+        font-size: 10px;
+         
+    }
 }
