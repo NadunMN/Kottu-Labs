@@ -28,7 +28,7 @@ body{
     width: 100%;
     height: 170px;
     /* background-color: #000000; */
-    background-image: url(/Photo/329-01.jpg);
+    background-image: url(/Photo/329-02.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -79,18 +79,38 @@ body{
     top: -50px;
 }
 
+.circle-name-numbers{
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.userprofile-profile-name-content .ON-wrapper{
+    width: 150px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #EE3E3F;
+    border-radius: 20px;
+    color: white;    
+}
+
 .userprofile-profile-name{
     position: relative;
     top: -50px;
 }
 
 .userprofile-profile-name button{
-    background-color:transparent;
+    background-color:black;
+    /* color:white; */
     width: 120px;
     height: 30px;
     border-radius: 50px;
     border: 1px solid #000000;
-    color: #000000;
+    color: #ffffff;
     font-size: 15px;
     cursor: pointer;
 }
@@ -103,3 +123,380 @@ body{
     border: none;
 }
 
+.user-numbers-container{
+    width: 80%;
+    height: auto;
+    /* background-color: #ff0000; */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.user-numbers-wrapper{
+    width: 300px;
+    height: 150px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.user-numbers-wrapper div{
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.user-numbers-wrapper div:first-child{
+    /* background-color: #ff0000; */
+    width: 120px;
+    height: 120px;
+}
+
+.order-list-container{
+    width: 80%;
+    height: auto;
+    /* background-color: #ff0000; */
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.order-list-button{
+    display: flex;
+    gap:10px;
+}
+
+.order-list-button button{
+    background-color:transparent;
+    width: 120px;
+    height: 30px;
+    border-radius: 50px;
+    border: 1px solid #000000;
+    color: #000000;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.order-list-button button:hover{
+    background-color: #EE3E3F;
+    color: white;
+    transition: transform 0.3s ,background-color 0.3s ease;
+    transform: scale(1.05);
+    border: none;
+}
+
+   /* Container styling for the table */
+   .table-container {
+    width: 80%;
+    margin: 20px auto;
+    background-color:transparent;
+    border-radius: 20px;
+    padding: 10px;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+/* Grid layout for the table headers */
+.table-header,
+.table-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    padding: 20px 0;
+}
+
+/* Header styling */
+.table-header {
+    background-color: #ee3e3e;
+    font-weight: bold;
+    text-align: center;
+    /* border-radius: 20px; */
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.081);
+
+    
+}
+
+/* Row styling */
+.table-row {
+    /* background-color: #ee3e3e0e; */
+    border-bottom: 1px solid #d0d0d0;
+    text-align: center;
+}
+
+/* Hover effect for rows */
+.table-row:hover {
+    background-color: #ee3e3e51;
+    /* border-radius: 20px; */
+}
+.review-list-container {
+    width: 80%;
+    background-color: #e2e2e2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px 0;
+    border-radius: 20px;
+    height: auto; /* or just remove the height property */
+}
+
+
+.review-list-topic{
+    width: 90%;
+    height: 70px;
+    /* background-color: #ee3e3e; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* border-radius: 20px 20px 0 0; */
+    border-bottom: 1px solid #d0d0d0;
+    
+}
+
+.review-list-button button{
+    background-color:transparent;
+    width: 120px;
+    height: 30px;
+    border-radius: 50px;
+    border: 1px solid #000000;
+    color: #000000;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.review-list-button button:hover{
+    background-color: #EE3E3F;
+    color: white;
+    transition: transform 0.3s ,background-color 0.3s ease;
+    transform: scale(1.05);
+    border: none;
+}
+
+.review-list-number{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #ee3e3e; */
+    margin-top: 20px;
+}
+
+.first-part{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #927373; */
+    border-right: 1px solid #d0d0d0;
+}
+
+.second-part{
+
+    width: 150%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #927373; */
+    gap:10px
+
+
+}
+
+.second-part .part{
+    width: 100%;
+    height: auto;
+    /* background-color: #ffffff; */
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.second-part .part h5{
+    opacity: 0.5;
+}
+
+.second-part .part h4{
+    font-weight:bolder;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.second-part .part div{
+    width: 65%;
+    height: 10px;
+    border-radius: 50px;
+    background-color: rgb(255, 255, 255);
+}
+
+.first-part .starts{
+    width: 100%;
+    height:auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    /* background-color: aqua; */
+    margin: 10px;
+}
+
+.first-part h1{
+    font-size: 50px;
+    font-weight: bold;
+    /* margin: 10px; */
+}
+
+.first-part .starts div{
+    width: 20px;
+    height: 20px;
+    /* background-color: #ff0000; */
+    background-image: url(/Photo/icon/star.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.review-subject{
+    width: 80%;
+    height: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    /* background-color: #ee3e3e; */
+    margin-top: 30px;
+    gap: 20px;
+}
+
+.review-subject div{
+    width: auto;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    gap: 10px;
+    padding: 0 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.review-subject div:hover{
+    background-color: #ee3e3e;
+    color: white;
+    transition: transform 0.3s ,background-color 0.3s ease;
+    transform: scale(1.05);
+}
+
+.reviews-content{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #ee3e3e; */
+    margin-top: 20px;
+}
+
+.reviews-content .review{
+    width: 95%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    border-radius: none;
+    padding: 10px;
+    /* margin: 10px 0; */
+    border-top: 1px solid #d0d0d0b1;
+    
+}
+
+
+.review-header{
+    width: 95%;
+    height: auto;
+    /* background-color: #4b3a3a; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-top: 20px; */
+}
+
+
+.review-header .review-name{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.review-header .review-name div{
+    width: 50px;
+    height: 50px;
+    background-color: #8f5c5c;
+    background-image: url(/Photo/OE612P0.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    border-radius: 50%;
+    
+}
+
+.review-rate{
+    /* background-color: #8f5c5c; */
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.review-rate .starts{
+    gap: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.review-rate .starts div{
+    width: 15px;
+    height: 15px;
+    /* background-color: #8f5c5c; */
+    background-image: url(/Photo/icon/star.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.review-body{
+    width: 90%;
+    height: auto;
+    /* background-color: #4b3a3a; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    /* margin-left: 10px; */
+    padding-bottom: 15px;
+    /* border-bottom: 1px solid #d0d0d0; */
+}
+
+.review-body p{
+    font-size: 15px;
+    font-weight: 500;
+    font-family: Arial, Helvetica, sans-serif;
+}

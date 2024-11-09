@@ -7,6 +7,8 @@
 </head>
 <body>
 <?php include __DIR__ . '/../NavBar.php'; ?>
-   {{content}} 
+   {{content}}
+   <?php include __DIR__ . '/../footer.php'; ?>
+
 </body>
 </html>
