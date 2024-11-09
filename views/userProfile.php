@@ -13,6 +13,7 @@
     <div class="userprofile-main">
 
         <div class="content-wapper">
+
             <div class="userprofile-backcover">
 
             </div>
@@ -38,8 +39,6 @@
                             
                         </div>
 
-                        
-
                     </div>
 
                     <div class="userprofile-profile-name">
@@ -55,6 +54,7 @@
 
             <div class="horizontal-line"></div>
 
+<!-- order list -->
             <div class="order-list-container">
                 <h2>Current Order List</h2>
                 <div class="order-list-button">
@@ -109,7 +109,7 @@
 
 
 <!--Add reviews -->
-<div class="review-list-container">
+<div class="add-review-list-container">
 
     <div class="add-review-list-topic">
         <h2>Add Reviews</h2>
@@ -171,7 +171,7 @@
 
     <div class="add-review-submit">
                 <div class="order-list-button add-review-cancel" >
-                    <button>cancel</button>
+                    <button id="submit">Cancel</button>
                     <input type="submit" id="submit" value="Submit">
                 </div>
             </div>
@@ -190,10 +190,9 @@
 
     <div class="review-list-topic">
         <h2>Reviews</h2>
-        <div class="review-list-button">
-            <!-- <button>View More</button> -->
+        <!-- <div class="review-list-button">
             <button>Add Review</button>
-        </div>
+        </div> -->
     </div>
 
 
