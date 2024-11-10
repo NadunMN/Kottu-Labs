@@ -5,62 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/CSS/userdashboard.css">
 </head>
 
 <body>
-
-    <div class="userprofile-main">
-
-        <div class="content-wapper">
-
-            <div class="userprofile-backcover">
-
-            </div>
-
-            <div class="userprofile-profile">
-                <div class="userprofile-profile-wrapper">
-
-                    <div class="userprofile-profile-name-content">
-                        <div class="circle"></div>
-                        <div class="circle-name-wrapper">
-                            <h1>Nadun Madusankan</h1>
-                            <h4>nadunmadusanka@gmail.com</h4>
-                            <div class="circle-name-numbers">
-                                <div class="ON-wrapper">
-                                    <h4>ON:</h4>
-                                    <h4>0234</h4>
-                                </div>
-                                <div class="ON-wrapper">
-                                    <h4>TN:</h4>
-                                    <h4>0234</h4>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="userprofile-profile-name">
-
-                        <button>View Profile</button>
-
-                    </div>
-
-                </div>
-            </div>
-
-
 
             <div class="horizontal-line"></div>
         <div class="order-history">
             <!-- order list -->
             <div class="order-list-container">
                 <h2>Order History</h2>
-                <div class="order-list-button">
+                <!-- <div class="order-list-button">
                     <button>View More</button>
                     <button>Add Reservation</button>
-                </div>
+                </div> -->
             </div>
 
 
@@ -103,6 +60,14 @@
                     <div>$18.00</div>
                 </div>
 
+            </div>
+
+            <div class="order-list-container order-list-container-down">
+                <!-- <h2>Order History</h2> -->
+                <div class="order-list-button">
+                    <button>View More</button>
+                    <button>Add Reservation</button>
+                </div>
             </div>
 
         </div>

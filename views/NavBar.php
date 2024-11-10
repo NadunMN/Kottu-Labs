@@ -30,7 +30,7 @@
                 <a href="#" onclick="toggleMenuprofile()"><img src="/Photo/icon/user.png" alt="Profile"></a>
                 <div class="dropdown-content">
                     <a href="/profile">DASHBOARD</a>
-                    <a href="#">MY ACCOUNT</a>
+                    <a href="/myaccount">MY ACCOUNT</a>
                     <a href="#">WHY CREATE AN ACCOUNT?</a>
                     <?php if (\app\core\Application::$app->user ==null): ?>
                         <a href="/login">LOG IN</a>

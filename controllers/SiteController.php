@@ -44,6 +44,13 @@ class SiteController extends Controller
         return $this->render('userdashboard');
     }
 
+    public function userProfile()
+    {
+        
+        $this->setLayout('profile');
+        return $this->render('userprofile');
+    }
+
     public function adminDashboard(Request $request,Response $response)
     {
         $this->setLayout('auth');
