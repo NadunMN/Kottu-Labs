@@ -44,6 +44,7 @@ if (Application::$app->user && Application::$app->user->position == 'admin') {
     $app->router->get('/profile', [$siteController, 'adminDashboard']);
 } else if(Application::$app->user && Application::$app->user->position == 'customer') {
     $app->router->get('/profile', [$siteController, 'userDashboard']);
+    $app->router->get('/myaccount', [$siteController, 'userProfile']);
 }else if(Application::$app->user && Application::$app->user->position == 'chef') {
     $app->router->get('/profile', [$siteController, 'chefDashboard']);
 }else if(Application::$app->user && Application::$app->user->position == 'steward') {
