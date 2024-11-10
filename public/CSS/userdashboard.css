@@ -178,11 +178,11 @@ body{
 }
 
 .order-list-button button{
-    background-color:transparent;
-    width: 120px;
-    height: 30px;
-    border-radius: 50px;
-    border: 1px solid #000000;
+    background-color:#e2e2e2;
+    width: 130px;
+    height: 35px;
+    border-radius: 10px;;
+    border:none;
     color: #000000;
     font-size: 15px;
     cursor: pointer;
@@ -196,15 +196,31 @@ body{
     border: none;
 }
 
+.order-history{
+    width: 90%;
+    height: auto;
+    /* background-color: #ff0000; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* margin-top: 20px; */
+    border: 1px solid #d0d0d0;
+    border-radius: 10px;
+}
+
    /* Container styling for the table */
    .table-container {
-    width: 90%;
+    /* background-color: #e2e2e2; */
+    width: 95%;
     margin: 20px auto;
     background-color:transparent;
-    border-radius: 20px;
-    padding: 10px;
+    border-radius: 10px;
+    /* padding: 10px; */
     overflow: hidden;
     font-family: Arial, sans-serif;
+    /* z-index: 100; */
+    border: 1px solid #d0d0d0;
 }
 
 /* Grid layout for the table headers */
@@ -217,12 +233,13 @@ body{
 
 /* Header styling */
 .table-header {
-    background-color: #000000;
-    color: #ffffff;
+    background-color: #e2e2e2;
+    color: #000000;
     font-weight: bold;
     text-align: center;
-    /* border-radius: 20px; */
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.081);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.081); */
 
     
 }
@@ -230,7 +247,7 @@ body{
 /* Row styling */
 .table-row {
     /* background-color: #ee3e3e0e; */
-    border-bottom: 1px solid #d0d0d0;
+    border-bottom: 1px solid #d0d0d053;
     text-align: center;
 }
 
@@ -240,20 +257,6 @@ body{
     /* border-radius: 20px; */
 }
 .review-list-container {
-    width: 100%;
-    background-color: #e2e2e2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-
-    /* border-radius: 20px; */
-    height: auto; /* or just remove the height property */
-    padding-top: 10px;
-}
-
-.add-review-list-container {
     width: 90%;
     background-color: #e2e2e2;
     display: flex;
@@ -261,7 +264,24 @@ body{
     align-items: center;
     justify-content: center;
     margin-top: 20px;
-    border-radius: 20px;
+    margin-bottom: 20px;
+
+    border-radius: 10px;
+    height: auto; /* or just remove the height property */
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.add-review-list-container {
+    width: 90%;
+    background-color: transparent;
+    border: 1px solid #d0d0d0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    border-radius: 10px;
     height: auto; /* or just remove the height property */
     padding-top: 10px;
 }
@@ -476,6 +496,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    /* background-color:#333; */
 }
 
 .review-rate .starts div{
@@ -486,6 +507,37 @@ body{
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.add{
+    /* background-color: #943535; */
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+
+.add .s{
+    gap: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color:#333; */
+}
+
+
+.add .s div{
+    width: 35px;
+    height: 35px;
+    /* background-color: #8f5c5c; */
+    background-image: url(/Photo/icon/star.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.8;
 }
 
 .review-body{
@@ -520,14 +572,15 @@ body{
 
 
 .add-reviews-body-container{
-    width: 100%;
+    width: 95%;
     height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #ffffff;
+    background-color: #e2e2e2;
     padding-top: 20px;
+    border-radius: 10px;
     /* margin-top: 20px; */
 }
 
@@ -541,39 +594,6 @@ body{
 
     
 }
-
-.add-review-header{
-    width: 90%;
-    height: auto;
-    /* background-color: #4b3a3a; */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #d0d0d0;
-}
-
-.review-name input {
-    width: 50vw;                /* Full width to fit container */
-    /* padding: 10px 15px;         Padding for spacing inside */
-    font-size:30px;            /* Text size */
-    color: #333;                /* Text color */
-    border:none;
-    border-radius: 5px;         /* Rounded corners */
-    outline: none;              /* Remove default outline */
-    /* background-color: #905454; */
-    
-}
-
-.review-name input::placeholder {
-    color: #8d8d8d;                
-    opacity: 0.8;               /* Adjust opacity of placeholder */
-}
-
-.review-name input:focus {
-    border: none;
-}
-
 
 .add-review-body{
     width: 90%;
@@ -597,7 +617,7 @@ body{
     border: none;               /* Remove border */
     outline: none;              /* Remove default outline */
     resize:none;               /* Disable resizing */
-    /* background-color: aquamarine; */
+    background-color: #e2e2e2;
 }
 
 .add-review-body textarea::placeholder {
@@ -618,12 +638,12 @@ body{
 }
 
 #submit{
-    width: 120px;
-    height: 30px;
-    border-radius: 50px;
+    width: 130px;
+    height: 35px;
+    border-radius: 10px;
     border:none;
-    background-color: #000000;
-    color: #ffffff;
+    background-color: #d0d0d0;
+    color: #000000;
     font-size: 15px;
     font-weight: bold;
     cursor: pointer;
@@ -710,16 +730,13 @@ body{
 
     .table-container {
         margin: 15px auto;
-        padding: 5px;
-    }
-
-    .table-header,
-    .table-row {
-    padding: 15px 0;
+        /* padding: 5px; */
+        
     }
 
     .table-header {
-        font-size: 12px;   
+        font-size: 12px;  
+        
     }
 
     .table-row {
@@ -819,6 +836,16 @@ body{
        
     }
 
+    .add .s{
+        gap: 20px;
+    }
+    
+    
+    .add .s div{
+        width: 25px;
+        height: 25px;
+    }
+
     .review-body p{
         font-size: 10px;
         font-weight: 500;
@@ -829,6 +856,11 @@ body{
 
 @media (max-width: 700px) {
 
+    .userprofile-profile{
+        height: auto;
+        /* margin-bottom: 10px; */
+    }
+
     .userprofile-profile-wrapper{
         width: 100%;
         height: auto;
@@ -837,7 +869,7 @@ body{
         justify-content: center;
         align-items: center;
         gap: 10px;
-        margin-bottom: 30px;
+        /* margin-bottom: 10px; */
         /* background-color: aqua; */
     }
 
@@ -847,7 +879,7 @@ body{
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 10px;
+        gap: 20px;
         /* background-color: rgb(100, 84, 64); */
     }
 
@@ -862,7 +894,7 @@ body{
     .userprofile-profile-name button{
        
         width: 300px;
-        height: 30px;
+        height: 40px;
         border-radius: 50px;
         border: 1px solid #000000;
         color: #ffffff;
@@ -881,7 +913,7 @@ body{
 
     .userprofile-profile-name-content .ON-wrapper{
         width: 145px;
-        height: 30px;
+        height: 40px;
         
     }
 
@@ -915,9 +947,17 @@ body{
 
         width: 80%;        
         gap:5px
+    } 
+    
+    .add .s{
+        gap: 20px;
+    }
     
     
-    }   
+    .add .s div{
+        width: 20px;
+        height: 20px;
+    }
 }
 
 @media (max-width:550px){
@@ -930,16 +970,16 @@ body{
     }
 
     .order-list-button button{
-        width: 70px;
-        height: 20px;
-        font-size: 8px;
+        width: 90px;
+        height: 30px;
+        font-size: 10px;
     }
 
         .table-header,
     .table-row {
 
         grid-template-columns: repeat(3, 1fr);
-        padding: 20px 0;
+        /* padding: 20px 0; */
     }
 
     .table-header div:nth-child(1),.table-header div:nth-child(3), .table-header div:nth-child(6),
@@ -970,6 +1010,16 @@ body{
    display: none;
 }
 
+.add .s{
+    display: flex;
 
+    gap: 10px;
+}
+
+
+.add .s div{
+    width: 20px;
+    height: 20px;
+}
 
 }

@@ -43,7 +43,7 @@ $app->router->get('/logout', [$authController, 'logout']);
 if (Application::$app->user && Application::$app->user->position == 'admin') {
     $app->router->get('/profile', [$siteController, 'adminDashboard']);
 } else if(Application::$app->user && Application::$app->user->position == 'customer') {
-    $app->router->get('/profile', [$siteController, 'userProfile']);
+    $app->router->get('/profile', [$siteController, 'userDashboard']);
 }else if(Application::$app->user && Application::$app->user->position == 'chef') {
     $app->router->get('/profile', [$siteController, 'chefDashboard']);
 }else if(Application::$app->user && Application::$app->user->position == 'steward') {

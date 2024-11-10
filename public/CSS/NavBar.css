@@ -112,9 +112,9 @@ body {
     top: 65px;
     right: 0;
     font-size: 16px;
-    background: transparent; /* Semi-transparent background */
-    backdrop-filter: blur(10px);          /* Blurs content behind the element */
-    -webkit-backdrop-filter: blur(10px);
+    background: black; /* Semi-transparent background */
+    /* backdrop-filter: blur(10px);       */
+    /* -webkit-backdrop-filter: blur(10px); */
     width: 350px;
     /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); Blur effect on box borders */
     border: none;
@@ -124,6 +124,8 @@ body {
     opacity: 0;
     transform: translateY(-10px);
     transition: max-height 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 .dropdown-content a {
@@ -166,12 +168,14 @@ body {
         top: 65px; /* Position below navbar */
         right: 0;
         width: 100%;
-        background: transparent; /* Semi-transparent background */
-    backdrop-filter: blur(10px);          /* Blurs content behind the element */
-    -webkit-backdrop-filter: blur(10px);
+        background-color: black; /* Semi-transparent background */
+    /* backdrop-filter: blur(10px);          
+    -webkit-backdrop-filter: blur(10px); */
         max-height: 0; /* Initially hidden */
         margin-bottom: 10px;  
         z-index: 1000;      
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
         
         overflow: hidden; /* Hide overflowing content */
     }

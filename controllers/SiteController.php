@@ -37,13 +37,11 @@ class SiteController extends Controller
         ]);
     }
 
-    public function userProfile()
+    public function userDashboard()
     {
-        $params = [
-            'name' => "Nadun"
-        ];
+        
         $this->setLayout('profile');
-        return $this->render('userProfile', $params);
+        return $this->render('userdashboard');
     }
 
     public function adminDashboard(Request $request,Response $response)
