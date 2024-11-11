@@ -17,6 +17,11 @@ class User extends UserModel
     public string $password = '';
     public string $confirmPassword = '';
     public string $position = 'customer'; // Default position
+    public ?string $date_of_birth = '';
+    public string $mobile_number = '';
+    public string $gender = '';
+    public string $address = '';
+    public string $nationality = '';
 
     public static function tableName(): string
     {
@@ -43,6 +48,10 @@ class User extends UserModel
             'email' => [self::RULE_REQUIRED, self::RULE_EMAIL, [self::RULE_UNIQUE, 'class' => self::class]],
             'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 8], [self::RULE_MAX, 'max' => 16]],
             'confirmPassword' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']],
+            'mobile_number' => [self::RULE_MOBILE, [self::RULE_UNIQUE, 'class' => self::class]],
+            // 'gender' => [self::RULE_REQUIRED],
+            // 'address' => [self::RULE_REQUIRED],
+            // 'nationality' => [self::RULE_REQUIRED],
         ];
     }
 
@@ -58,7 +67,7 @@ class User extends UserModel
 
     public function attributes(): array
     {
-        return ['firstname', 'lastname', 'email', 'password', 'status', 'position'];
+        return ['firstname', 'lastname', 'email', 'password', 'status', 'position', 'date_of_birth', 'mobile_number', 'gender', 'address', 'nationality'];
     }
 
     public function labels(): array
@@ -69,6 +78,10 @@ class User extends UserModel
             'email' => 'Your Email',
             'password' => 'Password',
             'confirmPassword' => 'Confirm Password',
+            'mobile_number' => 'Mobile Number',
+            // 'gender' => 'Gender',
+            // 'address' => 'Address',
+            // 'nationality' => 'Nationality',
         ];
     }
 

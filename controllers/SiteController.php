@@ -6,8 +6,6 @@ use app\core\Controller;
 use app\core\Request;
 use app\core\Response;
 use app\models\ContactForm;
-use app\models\Employee;
-use app\models\User;
 
 class SiteController extends Controller
 {
