@@ -6,10 +6,12 @@ use app\core\UserModel;
 
 class User extends UserModel
 {
+
+
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 2;
-
+    public string $id = '';
     public string $firstname = '';
     public string $lastname = '';
     public string $email = '';
@@ -22,7 +24,9 @@ class User extends UserModel
     public string $gender = '';
     public string $address = '';
     public string $nationality = '';
+    public string $created_at = '';
 
+    public static User $use;
     public static function tableName(): string
     {
         return 'users';
@@ -49,9 +53,6 @@ class User extends UserModel
             'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 8], [self::RULE_MAX, 'max' => 16]],
             'confirmPassword' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']],
             'mobile_number' => [self::RULE_MOBILE, [self::RULE_UNIQUE, 'class' => self::class]],
-            // 'gender' => [self::RULE_REQUIRED],
-            // 'address' => [self::RULE_REQUIRED],
-            // 'nationality' => [self::RULE_REQUIRED],
         ];
     }
 
@@ -67,7 +68,7 @@ class User extends UserModel
 
     public function attributes(): array
     {
-        return ['firstname', 'lastname', 'email', 'password', 'status', 'position', 'date_of_birth', 'mobile_number', 'gender', 'address', 'nationality'];
+        return ['id','firstname', 'lastname', 'email', 'password', 'status', 'position', 'date_of_birth', 'mobile_number', 'gender', 'address', 'nationality', 'created_at'];
     }
 
     public function labels(): array
@@ -88,5 +89,22 @@ class User extends UserModel
     public function getDisplayName(): string
     {
         return $this->firstname . ' ' . $this->lastname;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'firstname' => $this->firstname,
+            'lastname' => $this->lastname,
+            'email' => $this->email,
+            'mobile_number' => $this->mobile_number,
+            'status' => $this->status,
+            'position' => $this->position,
+            'date_of_birth' => $this->date_of_birth,
+            'gender' => $this->gender,
+            'address' => $this->address,
+            'nationality' => $this->nationality,
+            'created_at' => $this->created_at,
+        ];
     }
 }

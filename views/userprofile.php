@@ -7,6 +7,28 @@
   <link rel="stylesheet" href="/CSS/userprofile.css">
 </head>
 <body>
+
+<script>
+        // Fetch user data from the backend
+        fetch('/user/data')
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error(data.error);
+                } else {
+                    // Display user data in the frontend
+                    document.getElementById('fname').placeholder = data.firstname;
+                    document.getElementById('lname').placeholder = data.lastname;
+                    document.getElementById('phone').placeholder = data.mobile_number;
+                    document.getElementById('email').placeholder = data.email;
+                }
+            })
+            .catch(error => console.error('Error fetching user data:', error));
+    </script>
+
+
+
+
 <div class="personal-information">
             <!-- order list -->
             <div class="personal-information-container">
@@ -23,12 +45,12 @@
                   <div class="personal-information-name">
                     <div>
                       <label for="fname">Frist Name</label>
-                      <input type="text" id="fname" name="fname" placeholder="Nadun">
+                      <input type="text" id="fname" name="fname" placeholder="">
                     </div>
 
                     <div>
                       <label for="lname">Last Name</label>
-                      <input type="text" id="lname" name="lname" placeholder="Madusanka">
+                      <input type="text" id="lname" name="lname" placeholder="">
                     </div>
 
                   </div>
@@ -37,7 +59,7 @@
                   <div class="personal-information-name">
                     <div>
                     <label for="phone">Mobile Number</label>
-                    <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="0764658456" required>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter Your Phone Number">
 
                     </div>
                   </div>
@@ -46,7 +68,7 @@
                   <div class="personal-information-name">
                     <div>
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email"  placeholder="nadunmadusanka@gmail.com" required>
+                    <input type="email" id="email" name="email"  placeholder="nadunmadusanka@gmail.com">
 
                     </div>
                   </div>
@@ -67,7 +89,7 @@
                 <div class="personal-information-name">
                     <div>
                       <label for="date">Date of Birth</label>
-                      <input type="date" id="date" name="date" placeholder="Nadun">
+                      <input type="date" id="date" name="date" value="00-00-00">
                     </div>
 
                     <div>
