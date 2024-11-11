@@ -159,6 +159,30 @@ body {
     
 }
 
+.login-button-special{
+    background-color: transparent;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    border: 1px solid white;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: none;
+    width: auto;
+    height: auto;
+    padding: 5px 15px;
+}
+
+.login-button-special:hover {
+    background-color: #EE3E3F;
+    color: #f0f0f0;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    transform: scale(1.05);
+    border: none;
+}
+
 
 /* Responsive Design */
 @media (max-width: 830px) {

@@ -39,6 +39,11 @@
                     <?php endif; ?>
                 </div>
             </div>
+
+                <?php if (\app\core\Application::$app->user ==null): ?>
+                    <button class="login-button-special">SIGN IN</button>           
+                <?php endif; ?>
+
         </div>
         <button class="menu-icon" onclick="toggleMenu()">&#9776;</button> <!-- Menu Icon -->
         </div>
