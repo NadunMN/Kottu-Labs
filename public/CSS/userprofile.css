@@ -106,6 +106,7 @@
     border-radius: 5px;
     padding-left: 10px;
     background-color: transparent;
+    background-color: #ffffff;
 }
 
 .personal-information-name div input::placeholder{
@@ -132,9 +133,10 @@
     width: 100%;
     height: 40px;
     border: 1px solid #d0d0d0;
+
     border-radius: 5px;
     padding-left: 10px;
-    background-color: transparent;
+    background-color: white;
 }
 
 .personal-information-name div select::placeholder{
@@ -196,8 +198,8 @@
 }
 
 #cancel{
-    background-color: transparent;
-    color: black;
+    background-color: black;
+    color: rgb(255, 255, 255);
     font-weight: 500;
     border: 1px solid #d0d0d0;
 

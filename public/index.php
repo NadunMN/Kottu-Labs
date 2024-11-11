@@ -3,6 +3,8 @@
 use app\core\Application;
 use app\controllers\SiteController;
 use app\controllers\AuthController;
+use app\controllers\UserController;
+use app\models\User;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -25,6 +27,7 @@ $config = [
 $app = new Application(dirname(__DIR__), $config);
 $siteController = new SiteController();
 $authController = new AuthController();
+$userController = new UserController();
 
 // Define routes
 $app->router->get('/', [$siteController, 'home']);
@@ -50,6 +53,11 @@ if (Application::$app->user && Application::$app->user->position == 'admin') {
 }else if(Application::$app->user && Application::$app->user->position == 'steward') {
     $app->router->get('/profile', [$siteController, 'stewardDashboard']);
 }
+
+
+
+// Define route for getting user data
+$app->router->get('/user/data', [$userController, 'getUserData']);
 
 // Run the application
 $app->run();
