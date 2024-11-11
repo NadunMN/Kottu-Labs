@@ -8,10 +8,7 @@
 </head>
 <body>
 
-<script>
-    console.log("Hello World");
-    console.log();
-</script>
+
 
     <div class="home-top-main">
         <div class="first-background-img">
@@ -47,20 +44,6 @@
         <hr class="styled-hr">
         <?php include __DIR__ . '../carousel.php'; ?>
     </div>
-
-    <!-- <div class="poster">
-
-        <div class="container-poster">
-        <img src="/Photo/chef.png"/>
-        </div>
-        <div class="container-poster">
-        <img src="/Photo/chef.png"/>
-        </div>
-        <div class="container-poster">
-        <img src="/Photo/chef.png"/>
-        </div>
-    </div> -->
-
 
     <div class="description-section description-section-second" id="topic-head">
         <div class="description-section-part description-section-part-second">

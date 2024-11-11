@@ -33,16 +33,35 @@ main {
 }
 
 .first-background-img {
-    background: url('/Photo/shutterstock_237882754.jpg') no-repeat center center;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100vh;
-    background-size: cover;
-    
+    overflow: hidden;
+    background-color: #000000c4;
 }
+
+.first-background-img::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/Photo/oliver-rouse-ma0eUZgMmYw-unsplash.jpg') no-repeat center center;
+    background-size: cover;
+    /* filter: blur(10px); */
+    z-index: -1; /* Places the blurred background behind the content */
+}
+
+.first-background-overlay {
+    position: relative;
+    z-index: 1; /* Keeps content above the blurred background */
+}
+
 
 .first-background-overlay{
     background-color: rgba(0, 0, 0, 0.347);
@@ -157,7 +176,13 @@ main {
     background-color:transparent;
     border: 1px solid black;
     color: black;
-    border-radius: 50px;
+    /* border-radius: 20px; */
+    width: auto;
+    height: 30px;
+    padding:  0 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    /* border: none; */
 }
 .offers-section .topic-head button:hover{
     background-color: #EE3E3F;
@@ -177,7 +202,7 @@ main {
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    border-radius: 50px;
+    border-radius: 10px;
 
 }
 
@@ -622,9 +647,10 @@ main {
     }
 
     .offers-section .topic-head button {
-        width: 100px;
+        width: auto;
         height: 30px;
         font-size: 15px;
+        padding: 0 20px;
     }
 
     .description-text-section{
@@ -669,13 +695,13 @@ main {
     }
 
     .first-background-img {
-        background: url('/Photo/shutterstock_237882754.jpg') no-repeat center center;
+       
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         width: 100%;
-        height: 45vh;
+        height: 300px;
         background-size: cover;
         position: relative;
         
@@ -748,7 +774,7 @@ main {
     .description-section-second .topic-head button, .description-section .topic-head button{
         font-size: 15px;
         width: 120px;
-        height: 30px;
+        height: 40px;
     
     }
 }
@@ -757,17 +783,6 @@ main {
 
 @media (max-width: 422px) {
 
-    .first-background-img {
-        background: url('/Photo/shutterstock_237882754.jpg') no-repeat center center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 45vh;
-        background-size: cover;
-        
-    }
     .first-background-overlay{
         background-color: rgba(0, 0, 0, 0.347);
         width: 100%;
