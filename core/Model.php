@@ -10,10 +10,7 @@ abstract class Model
     public const RULE_MAX = 'max';
     public const RULE_MATCH = 'match';
     public const RULE_UNIQUE = 'unique';
-
-
-
-
+    public const RULE_MOBILE = 'mobile_number'; // Add this line
 
     public function loadData($data)
     {
@@ -84,6 +81,10 @@ abstract class Model
                         $this->addErrorForRule($attribute, self::RULE_UNIQUE, ['field' => $this->getLabels($attribute)]);
                     }
                 }
+
+                if($ruleName === self::RULE_MOBILE && !preg_match('/^\+?[1-9]\d{1,14}$/', $value)){
+                    $this->addErrorForRule($attribute, self::RULE_MOBILE);
+                }
             }
         }
 
@@ -116,6 +117,7 @@ abstract class Model
             self::RULE_MAX => 'Max length of this field must be {max}',
             self::RULE_MATCH => 'This field must be the same as {match}',
             self::RULE_UNIQUE => 'Reacord with this {field} already exists',
+            self::RULE_MOBILE => 'This field must be a valid mobile number',
         ];
     }
 

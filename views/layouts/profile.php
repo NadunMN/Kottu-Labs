@@ -1,3 +1,8 @@
+<!-- <?php
+/** @var $user \app\models\User */
+$currentPath = $_SERVER['REQUEST_URI'];
+?> -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,7 +49,7 @@
 
             <div class="userprofile-profile-name">
 
-                <button onclick="window.location.href='/myaccount'">View Profile</button>
+                <button id="view-profile">View Profile</button>
 
             </div>
 
@@ -53,6 +58,7 @@
 
    {{content}}
    <?php include __DIR__ . '/../footer.php'; ?>
+   <script src="/JavaScript/profile.js"></script>
 
 </body>
 </html>

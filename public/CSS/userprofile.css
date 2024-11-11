@@ -39,13 +39,12 @@
 .personal-information-form-information{
     width: 100%;
     height: auto;
-    /* background-color: #953c3c; */
+    /* background-color: #ff0000; */
     display: flex;
-    /* flex-wrap: wrap; */
+    margin-top: -20px;
     justify-content: center;
     align-items: flex-start;
-    /* margin-top: 20px; */
-    /* margin-bottom: 20px; */
+    margin-bottom: -20px;
     gap: 20px;
 }
 
@@ -264,6 +263,11 @@
     .personal-information-form-information{
         
         flex-wrap: wrap;
+        
+    }
+
+    .Danger-zone-body-first p{
+        font-size: 0.8rem;
         
     }
     

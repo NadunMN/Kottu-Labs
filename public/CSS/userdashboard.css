@@ -76,7 +76,7 @@ body{
 
 .circle-name-wrapper{
     position: relative;
-    top: -50px;
+    top: -20px;
 }
 
 .circle-name-numbers{
@@ -706,6 +706,9 @@ body{
     }
 
 
+    .circle-name-wrapper{
+        top: -40px;
+    }
     .circle-name-wrapper h1{
         font-size: 24px;
     }
@@ -903,11 +906,13 @@ body{
         /* background-color: rgb(100, 84, 64); */
     }
 
+
     .circle-name-wrapper{
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        top: -50px;
     }
     
 
