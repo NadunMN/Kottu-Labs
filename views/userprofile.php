@@ -8,27 +8,6 @@
 </head>
 <body>
 
-<script>
-        // Fetch user data from the backend
-        fetch('/user/data')
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    console.error(data.error);
-                } else {
-                    // Display user data in the frontend
-                    document.getElementById('fname').placeholder = data.firstname;
-                    document.getElementById('lname').placeholder = data.lastname;
-                    document.getElementById('phone').placeholder = data.mobile_number;
-                    document.getElementById('email').placeholder = data.email;
-                }
-            })
-            .catch(error => console.error('Error fetching user data:', error));
-    </script>
-
-
-
-
 <div class="personal-information">
             <!-- order list -->
             <div class="personal-information-container">
@@ -175,7 +154,7 @@
 
         </div>
 
-
+<script src="/JavaScript/profile.js"></script>
 
 </body>
 </html>
