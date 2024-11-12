@@ -59,5 +59,7 @@ if (Application::$app->user && Application::$app->user->position == 'admin') {
 // Define route for getting user data
 $app->router->get('/user/data', [$userController, 'getUserData']);
 
+$app->router->post('/user/delete', [$userController, 'deleteUser']);
+
 // Run the application
 $app->run();

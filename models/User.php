@@ -94,6 +94,7 @@ class User extends UserModel
     public function toArray(): array
     {
         return [
+            'id' => $this->id,
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
             'email' => $this->email,
@@ -107,4 +108,30 @@ class User extends UserModel
             'created_at' => $this->created_at,
         ];
     }
+
+    public function delete()
+    {
+        $tableName = static::tableName();
+        $primaryKey = static::primaryKey();
+        $sql = "DELETE FROM $tableName WHERE $primaryKey = :$primaryKey";
+        $statement = self::prepare($sql);
+        $statement->bindValue(":$primaryKey", $this->{$primaryKey});
+        return $statement->execute();
+    }
+
+    public static function findOne($where)
+    {
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+        $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+        $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
+        foreach ($where as $key => $item) {
+            $statement->bindValue(":$key", $item);
+        }
+        $statement->execute();
+        return $statement->fetchObject(static::class);
+    }
+
+    
+
 }

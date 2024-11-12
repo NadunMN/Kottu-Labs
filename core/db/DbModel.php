@@ -40,6 +40,7 @@ abstract class DbModel extends Model
         return $statement->fetchObject(static::class);
     }
 
+
     
     public static function findAll()
     {
