@@ -62,16 +62,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-wapper">
-                        <img src="/Photo/Thirani_pics/Kelaniya.jpg" alt="Card image" class="card-img">
-                        <div class="card-content">
-                            <h3 class="card-title">Card Title</h3>
-                            <p class="card-text">This is a brief description of the card content. It gives a quick overview of what the card is about.</p>
-                            <a href="#" class="card-btn">Learn More</a>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
             <button class="next-btn">></button>
         </div>

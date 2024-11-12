@@ -127,7 +127,7 @@
             <div class="review-list-container">
 
                 <div class="review-list-topic">
-                    <h2>Reviews</h2>
+                    <h2>My Reviews</h2>
                     <!-- <div class="review-list-button">
             <button>Add Review</button>
         </div> -->
@@ -284,6 +284,8 @@
 
                 </div>
             </div>
+
+
 
         </div>
     </div>

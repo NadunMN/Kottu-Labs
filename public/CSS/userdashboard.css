@@ -28,11 +28,13 @@ body{
     width: 100%;
     height: 170px;
     /* background-color: #000000; */
-    background-image: url('/Photo/oliver-rouse-ma0eUZgMmYw-unsplash1.jpg');
+    background-image: url('/Photo/bundo-kim-Pb9bUzH1nD8-unsplash.jpg');
     background-size: cover;
-    background-position: center;
+    background-position:bottom;
     background-repeat: no-repeat;
-    background-color: #000000bd;
+    background-color: #000000;
+    filter: blur(20px);
+    z-index: -100;
 }
 
 .userprofile-profile{
@@ -94,10 +96,11 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #EE3E3F;
+    background-color: #4976ba;
     border-radius: 10px;
     padding: 0 40px;
-    color: white;    
+    color: white;  
+    cursor: pointer;  
 }
 
 .userprofile-profile-name{

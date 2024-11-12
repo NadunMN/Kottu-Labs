@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NavBar</title>
     <link rel="stylesheet" href="/CSS/NavBar.css">
+    <link rel="stylesheet" href="/CSS/userdashboard.css">
 </head>
 <body>
 
@@ -116,6 +117,173 @@
             
         </div>
     </div>
+
+
+
+    <div class="main-review-wrapper">
+    <div class="review-list-container">
+
+                <div class="review-list-topic">
+                    <h2>Reviews</h2>
+                    <!-- <div class="review-list-button">
+            <button>Add Review</button>
+        </div> -->
+                </div>
+
+
+                <div class="review-list-number">
+                    <!-- first part -->
+                    <div class="first-part">
+                        <h1>4.5</h1>
+                        <div class="starts">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <h4>35K reviews</h4>
+
+                    </div>
+                    <!-- second part -->
+                    <div class="second-part">
+                        <div class="part">
+                            <div></div>
+                            <h4>4.0</h4>
+                            <h5>35K reviews</h5>
+                        </div>
+
+
+                        <div class="part">
+                            <div></div>
+                            <h4>4.0</h4>
+                            <h5>35K reviews</h5>
+                        </div>
+
+
+                        <div class="part">
+                            <div></div>
+                            <h4>4.0</h4>
+                            <h5>35K reviews</h5>
+                        </div>
+
+
+                        <div class="part">
+                            <div></div>
+                            <h4>4.0</h4>
+                            <h5>35K reviews</h5>
+                        </div>
+
+
+                        <div class="part">
+                            <div></div>
+                            <h4>4.0</h4>
+                            <h5>35K reviews</h5>
+                        </div>
+
+
+                        <div class="part">
+                            <div></div>
+                            <h4>4.0</h4>
+                            <h5>35K reviews</h5>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="review-subject">
+
+                    <div>
+                        <h5>4.0</h5>
+                        <h5>cleanliness</h5>
+                    </div>
+
+                    <div>
+                        <h5>4.0</h5>
+                        <h5>safety & security</h5>
+                    </div>
+
+                    <div>
+                        <h5>4.0</h5>
+                        <h5>staff</h5>
+                    </div>
+
+                    <div>
+                        <h5>4.0</h5>
+                        <h5>amenties</h5>
+                    </div>
+
+                    <div>
+                        <h5>4.0</h5>
+                        <h5>location</h5>
+                    </div>
+
+                </div>
+
+                <div class="reviews-content">
+
+                    <div class="review">
+                        <div class="review-header">
+                            <div class="review-name">
+                                <div></div>
+                                <h4>Nadun Madusankan</h4>
+                                <h6>4 months ago</h6>
+                            </div>
+
+                            <div class="review-rate">
+                                <h5>4.5</h5>
+                                <div class="starts">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="review-body">
+                            <p>I had an amazing experience at this restaurant! The ambiance was warm and inviting,
+                                and the staff was incredibly attentive and friendly. Each dish was beautifully presented and bursting with flavor
+                                you can tell they use fresh, quality ingredients. From appetizers to dessert, everything was perfect.
+                                I highly recommend this place for anyone looking for a memorable dining experience. Can't wait to come back!</p>
+                        </div>
+
+                    </div>
+
+                    <div class="review">
+                        <div class="review-header">
+                            <div class="review-name">
+                                <div></div>
+                                <h4>Ranuga Lekawasam</h4>
+                                <h6>4 months ago</h6>
+                            </div>
+
+                            <div class="review-rate">
+                                <h5>3.8</h5>
+                                <div class="starts">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="review-body">
+                            <p>"The food here is fantastic! Every dish is fresh, full of flavor, and presented with care. The menu has something for everyone,
+                                from classic favorites to unique options that surprise and delight. Perfect for anyone who loves a great meal!"</p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            </div>
+
 
 
 

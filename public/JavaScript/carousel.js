@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
         function getVisibleCardsCount() {
             const screenWidth = window.innerWidth;
             if (screenWidth <= 620) {
-                return 1; // For mobile
+                return 2; 
             } else if (screenWidth <= 940) {
                 return 2; // For tablets
             } else if (screenWidth <= 1260) {
