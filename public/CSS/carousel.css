@@ -79,7 +79,7 @@
 }
 
 .card:hover {
-    transform: translateY(-10px);
+    /* transform: translateY(-10px); */
     transition:transform 0.3s ease;
 }
 

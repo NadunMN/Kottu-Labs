@@ -115,6 +115,11 @@
     color: #7d7d7d;
 }
 
+#fname, #lname, #email, #phone, #address, #password, #date, #gender, #nationality, #accountc{
+    font-size: 1rem;
+    font-weight: 300;
+}
+
 .personal-information-name div input:focus{
     outline: none;
     font-size: 1rem;
