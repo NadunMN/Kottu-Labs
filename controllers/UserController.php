@@ -62,6 +62,8 @@ class UserController extends Controller
                 throw new \Exception('No user is logged in');
             }
 
+            
+
             $userData = $request->getBody();
             $user->loadData($userData);
 
