@@ -134,8 +134,50 @@ class User extends UserModel
     
     }
 
+    private function isEmailUnique()
+    {
+        $tableName = static::tableName();
+        $primaryKey = static::primaryKey();
+        $sql = "SELECT COUNT(*) FROM $tableName WHERE email = :email AND $primaryKey != :$primaryKey";
+        $statement = self::prepare($sql);
+        $statement->bindValue(':email', $this->email);
+        $statement->bindValue(":$primaryKey", $this->{$primaryKey});
+        $statement->execute();
+        return $statement->fetchColumn() == 0;
+    }
+
+
+
+
+    private function isPhoneNumberUnique()
+    {
+        $tableName = static::tableName();
+        $primaryKey = static::primaryKey();
+        $sql = "SELECT COUNT(*) FROM $tableName WHERE mobile_number = :mobile_number AND $primaryKey != :$primaryKey";
+        $statement = self::prepare($sql);
+        $statement->bindValue(':mobile_number', $this->mobile_number);
+        $statement->bindValue(":$primaryKey", $this->{$primaryKey});
+        $statement->execute();
+        return $statement->fetchColumn() == 0;
+    }
+
+
     public function update()
     {
+
+           // Check if email is unique
+    if (!$this->isEmailUnique()) {
+        throw new \Exception("Update failed: Email already in use") ;
+        return false;
+    }
+
+    // Check if phone number is unique
+    if (!$this->isPhoneNumberUnique()) {
+        echo "Update failed: Phone number already in use";
+        return false;
+    }
+
+
         $tableName = static::tableName();
         $attributes = $this->attributes();
         $params = array_map(fn($attr) => "$attr = :$attr", $attributes);
