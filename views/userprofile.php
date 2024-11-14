@@ -8,27 +8,6 @@
 </head>
 <body>
 
-<script>
-        // Fetch user data from the backend
-        fetch('/user/data')
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    console.error(data.error);
-                } else {
-                    // Display user data in the frontend
-                    document.getElementById('fname').placeholder = data.firstname;
-                    document.getElementById('lname').placeholder = data.lastname;
-                    document.getElementById('phone').placeholder = data.mobile_number;
-                    document.getElementById('email').placeholder = data.email;
-                }
-            })
-            .catch(error => console.error('Error fetching user data:', error));
-    </script>
-
-
-
-
 <div class="personal-information">
             <!-- order list -->
             <div class="personal-information-container">
@@ -39,18 +18,18 @@
 
 
 
-            <form class="personal-information-form-wrapper" action="">
+            <form class="personal-information-form-wrapper" id="update-form" action="">
               <div class="personal-information-form-information">
                 <div class="personal-information-container-first">
                   <div class="personal-information-name">
                     <div>
-                      <label for="fname">Frist Name</label>
-                      <input type="text" id="fname" name="fname" placeholder="">
+                      <label for="firstname">Frist Name</label>
+                      <input type="text" id="fname" name="firstname" placeholder="Frist Name" required>
                     </div>
 
                     <div>
-                      <label for="lname">Last Name</label>
-                      <input type="text" id="lname" name="lname" placeholder="">
+                      <label for="lastname">Last Name</label>
+                      <input type="text" id="lname" name="lastname" placeholder="Last Name" required>
                     </div>
 
                   </div>
@@ -58,8 +37,8 @@
 
                   <div class="personal-information-name">
                     <div>
-                    <label for="phone">Mobile Number</label>
-                    <input type="tel" id="phone" name="phone" placeholder="Enter Your Phone Number">
+                    <label for="mobile_number">Mobile Number</label>
+                    <input type="tel" id="phone" name="mobile_number" placeholder="Mobile Number" required>
 
                     </div>
                   </div>
@@ -68,7 +47,7 @@
                   <div class="personal-information-name">
                     <div>
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email"  placeholder="nadunmadusanka@gmail.com">
+                    <input type="email" id="email" name="email"  placeholder="Enter your email!">
 
                     </div>
                   </div>
@@ -76,7 +55,7 @@
                   <div class="personal-information-name">
                     <div>
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password"  placeholder="api meka krnna one 123" required>
+                    <input type="password" id="password" name="password"  placeholder="Password!" disabled>
 
                     </div>
                   </div>
@@ -88,26 +67,27 @@
 
                 <div class="personal-information-name">
                     <div>
-                      <label for="date">Date of Birth</label>
-                      <input type="date" id="date" name="date" value="00-00-00">
+                      <label for="date_of_birth">Date of Birth</label>
+                      <input type="date" id="date" name="date_of_birth" placeholder="Enter your Date of Birth">
+
                     </div>
 
                     <div>
                     <label for="gender">Gender</label>
-                        <select id="gender" name="gender" required>
-                          <option value="">Select Gender</option>
-                          <option value="male">Male</option>
-                          <option value="female">Female</option>
-                          <option value="other">Other</option>
-                        </select>
+                    <select id="gender" name="gender">
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
                     </div>
 
                   </div>
 
                   <div class="personal-information-name">
                   <div>
-                      <label for="adress">Adress</label>
-                      <input type="text" id="adress" name="adress" placeholder="Enter your Adress..">
+                      <label for="address">Address</label>
+                      <input type="text" id="address" name="address" placeholder="Enter your Adress!.">
                     </div>
                   </div>
 
@@ -115,9 +95,9 @@
                   <div class="personal-information-name">
                   <div>
                     <label for="nationality">Nationality</label>
-                        <select id="nationality" name="nationality" required>
+                        <select id="nationality" name="nationality">
                           <option value="">Select Nationality</option>
-                          <option value="male">Sri Lanka</option>
+                          <option value="Sri Lanka">Sri Lanka</option>
                           <option value="other">Other</option>
                         </select>
                     </div>
@@ -125,8 +105,8 @@
 
                   <div class="personal-information-name">
                     <div>
-                      <label for="accountc">Account Creation</label>
-                      <input type="date" id="accountc" name="accountc" placeholder="2024/10/23" disabled>
+                      <label for="created_at">Account Creation</label>
+                      <input type="text" id="accountc" name="created_at" value="" disabled>
                     </div>
 
                   </div>
@@ -139,7 +119,7 @@
               <div class="personal-information-form-button">
                 <div>
                 <button id="save" type="submit">Save Change</button>
-                <button id="cancel" type="submit">Cancel</button>
+                <button id="cancel" type="" disabled>Cancel</button>
 
                 </div>
 
@@ -175,7 +155,27 @@
 
         </div>
 
+<script>
 
+  fetch('/user/data')
+          .then(response => response.json())
+          .then(data => {
+              if (data.error) {
+                  console.error(data.error);
+              } else {
+                  document.getElementById('gender').value = data.gender;
+                  document.getElementById('nationality').value = data.nationality;
+                  document.getElementById('accountc').value = data.created_at;
+                  document.getElementById('date').value = data.date_of_birth;
+                  document.getElementById('address').value = data.address;
+
+
+              }
+          })
+          .catch(error => console.error('Error fetching user data:', error));
+</script>
+
+<script src="/JavaScript/profile.js"></script>
 
 </body>
 </html>

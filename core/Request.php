@@ -37,21 +37,27 @@ class Request
 
     public function getBody()
     {
-        $body =[];
-        if($this->method() === 'get'){
-            foreach($_GET as $key => $value){
+        $body = [];
+
+        if ($this->isGet()) {
+            foreach ($_GET as $key => $value) {
                 $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
 
-        if($this->method() === 'post'){
-            foreach($_POST as $key => $value){
-                $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+        if ($this->isPost()) {
+            $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
+            if (stripos($contentType, 'application/json') !== false) {
+                $input = file_get_contents('php://input');
+                $body = json_decode($input, true);
+            } else {
+                foreach ($_POST as $key => $value) {
+                    $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+                }
             }
         }
 
         return $body;
-
     }
 
 

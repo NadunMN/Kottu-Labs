@@ -68,7 +68,8 @@ class User extends UserModel
 
     public function attributes(): array
     {
-        return ['id','firstname', 'lastname', 'email', 'password', 'status', 'position', 'date_of_birth', 'mobile_number', 'gender', 'address', 'nationality', 'created_at'];
+        return ['id','firstname', 'lastname', 'email', 'password', 'status', 'position',
+         'mobile_number', 'gender', 'address', 'nationality',  'date_of_birth'];
     }
 
     public function labels(): array
@@ -94,6 +95,7 @@ class User extends UserModel
     public function toArray(): array
     {
         return [
+            'id' => $this->id,
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
             'email' => $this->email,
@@ -107,4 +109,102 @@ class User extends UserModel
             'created_at' => $this->created_at,
         ];
     }
+
+    public function delete()
+    {
+        $tableName = static::tableName();
+        $primaryKey = static::primaryKey();
+        $sql = "DELETE FROM $tableName WHERE $primaryKey = :$primaryKey";
+        $statement = self::prepare($sql);
+        $statement->bindValue(":$primaryKey", $this->{$primaryKey});
+        return $statement->execute();
+    }
+
+    public static function findOne($where)
+    {
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+        $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+        $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
+        foreach ($where as $key => $item) {
+            $statement->bindValue(":$key", $item);
+        }
+        $statement->execute();
+        return $statement->fetchObject(static::class);
+    
+    }
+
+    private function isEmailUnique()
+    {
+        $tableName = static::tableName();
+        $primaryKey = static::primaryKey();
+        $sql = "SELECT COUNT(*) FROM $tableName WHERE email = :email AND $primaryKey != :$primaryKey";
+        $statement = self::prepare($sql);
+        $statement->bindValue(':email', $this->email);
+        $statement->bindValue(":$primaryKey", $this->{$primaryKey});
+        $statement->execute();
+        return $statement->fetchColumn() == 0;
+    }
+
+
+
+
+    private function isPhoneNumberUnique()
+    {
+        $tableName = static::tableName();
+        $primaryKey = static::primaryKey();
+        $sql = "SELECT COUNT(*) FROM $tableName WHERE mobile_number = :mobile_number AND $primaryKey != :$primaryKey";
+        $statement = self::prepare($sql);
+        $statement->bindValue(':mobile_number', $this->mobile_number);
+        $statement->bindValue(":$primaryKey", $this->{$primaryKey});
+        $statement->execute();
+        return $statement->fetchColumn() == 0;
+    }
+
+
+    public function update()
+    {
+
+           // Check if email is unique
+    if (!$this->isEmailUnique()) {
+        throw new \Exception("Update failed: Email already in use") ;
+        return false;
+    }
+
+    // Check if phone number is unique
+    if (!$this->isPhoneNumberUnique()) {
+        echo "Update failed: Phone number already in use";
+        return false;
+    }
+
+
+        $tableName = static::tableName();
+        $attributes = $this->attributes();
+        $params = array_map(fn($attr) => "$attr = :$attr", $attributes);
+        
+        // Assuming primaryKey() returns a string key name
+        $primaryKey = static::primaryKey();
+        $sql = "UPDATE $tableName SET " . implode(', ', $params) . " WHERE $primaryKey = :$primaryKey";
+        
+        // Ensure prepare method is available and connects to PDO
+        $statement = self::prepare($sql);  // Ensure `prepare` is implemented correctly
+        
+        // Bind attribute values
+        foreach ($attributes as $attribute) {
+            $statement->bindValue(":$attribute", $this->{$attribute});
+        }
+        $statement->bindValue(":$primaryKey", $this->{$primaryKey});
+    
+        // Execute statement and return result
+        try {
+            return $statement->execute();
+        } catch (\Exception $e) {
+            // Error handling here
+            echo "Update failed: " . $e->getMessage();
+            return false;
+        }
+    }
+    
+    
+
 }

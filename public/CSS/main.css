@@ -51,7 +51,7 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('/Photo/oliver-rouse-ma0eUZgMmYw-unsplash.jpg') no-repeat center center;
+    background: url('/Photo/bundo-kim-Pb9bUzH1nD8-unsplash.jpg') no-repeat center center;
     background-size: cover;
     /* filter: blur(10px); */
     z-index: -1; /* Places the blurred background behind the content */
@@ -422,6 +422,15 @@ main {
     width: 100%;
 }
 
+.main-review-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    width: 100%;
+    height: auto;
+}
+
 
 
 
@@ -635,7 +644,8 @@ main {
 @media (max-width: 620px) {
 
     .carousel-container {
-        width: 300px;
+        width: 360px;
+        height: auto;
     }
 
     .offers-section .topic-head{
