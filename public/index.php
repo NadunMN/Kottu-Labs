@@ -55,6 +55,9 @@ if (Application::$app->user && Application::$app->user->position == 'admin') {
 }
 
 
+$app->router->get('/about',[$siteController, 'about']);
+$app->router->get('/cancelReserve',[$siteController, 'cancelReserve']);
+$app->router->get('/dinein',[$siteController, 'dinein']);
 
 // Define route for getting user data
 $app->router->get('/user/data', [$userController, 'getUserData']);

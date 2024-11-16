@@ -1,0 +1,112 @@
+body {
+    background-color: rgb(212, 217, 217);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.headline {
+    font-size: 50px;
+    margin-top: 90px;
+    margin-bottom: 5px;
+    color: #333333;
+    text-align: center;
+    font-family:cursive
+}
+
+.Logo {
+    width: 200px; /* Increased logo size */
+    margin-bottom: 20px;
+}
+
+.card-content {
+    text-align: center;
+    border: 1px solid #cccccc;
+    background: #ffffff;
+    padding: 50px; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 700px; /* Set a maximum width */
+    height: 550px;
+    margin: 80px auto 80px; 
+}
+
+.card-content h1 {
+    color: #333333;
+    margin-bottom: 20px;
+    font-size: 34px; /* Increased font size */
+    margin-top: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+
+}
+
+button {
+    padding: 10px 30px; /* Increased padding */
+    background-color: #333333;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px; /* Increased font size */
+    margin-top: 40px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #555555;
+    transform: scale(1.05);
+}
+
+
+
+/* .submit-button:active {
+    background-color: 0 0 0 3px rgba(72, 74, 76, 0.5);
+    transform: scale(0.95);
+}
+
+.submit-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(72, 74, 76, 0.5);
+} */
+
+
+.form-row1 {
+    display: flex;
+    justify-content: space-between;
+    grid-gap: 60px;
+}
+
+label {
+    text-align: left;
+    font-weight: bold;
+    font-size: 18px; /* Increased font size */
+    margin-top: 10px;
+}
+
+select,
+input[type="text"],
+input[type="tel"],
+input[type="number"]{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #938d8d;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+select:focus,
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: #333;
+}
