@@ -61,7 +61,7 @@
                 <div class="topic-head">
                     <!-- <button>LEARN MORE</button> -->
                     <button >TAKE AWAY</button>
-                    <button>DINE IN</button>
+                    <button onclick="window.location.href='/dinein'">DINE IN</button>
                 </div>
             </div>
 

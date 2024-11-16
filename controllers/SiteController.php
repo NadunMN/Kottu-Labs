@@ -66,5 +66,25 @@ class SiteController extends Controller
         $this->setLayout('auth');
         return $this->render('stewarddashboard');
     }
+
+
+    public function about(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('about');
+    }
+
+    public function cancelReserve(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('cancelReserve');
+    }
+
+    public function dinein(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('dinein');
+    }
+   
 }
 ?>

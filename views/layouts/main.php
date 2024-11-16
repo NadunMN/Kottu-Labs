@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo $this->title; ?></title>
     <link rel="stylesheet" href="/CSS/main.css">
+
     </head>
   <body>
 
