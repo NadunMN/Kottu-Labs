@@ -107,6 +107,7 @@ class User extends UserModel
             'address' => $this->address,
             'nationality' => $this->nationality,
             'created_at' => $this->created_at,
+            'password' => $this->password,
         ];
     }
 

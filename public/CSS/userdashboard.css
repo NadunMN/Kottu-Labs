@@ -1,5 +1,8 @@
 *{
     font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+
 }
 body{
     margin: 0;
@@ -28,12 +31,12 @@ body{
     width: 100%;
     height: 170px;
     /* background-color: #000000; */
-    background-image: url('/Photo/bundo-kim-Pb9bUzH1nD8-unsplash.jpg');
+    background-image: url('/Photo/blurred-city-lights.jpg');
     background-size: cover;
     background-position:bottom;
     background-repeat: no-repeat;
     background-color: #000000;
-    filter: blur(20px);
+    /* filter: blur(20px); */
     z-index: -100;
 }
 
@@ -54,17 +57,32 @@ body{
     /* background-color: aqua; */
 }
 
-.circle {
+.circle1 {
     position: relative;
     width: 220px;        
     height: 220px;        
+    background-color: #efefef; 
+    display: flex; /* Enable flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+    
+    border-radius: 50%;
+    top:-50px
+
+  }
+
+.circle {
+    /* position: absolute; */
+    width: 200px;        
+    height: 200px; 
+          
     /* background-color: #ff0000;  */
-    background-image: url(/Photo/OE612P0.jpg); 
+    background-image: url(/Photo/1454.jpg); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     border-radius: 50%;
-    top:-50px
+    
 
   }
 
@@ -219,7 +237,7 @@ body{
 .order-history{
     width: 90%;
     height: auto;
-    /* background-color: #ff0000; */
+    /* background-color: #ffffff; */
     display: flex;
     flex-direction: column;
     justify-content: center;
