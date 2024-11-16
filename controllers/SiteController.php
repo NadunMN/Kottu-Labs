@@ -76,7 +76,7 @@ class SiteController extends Controller
 
     public function cancelReserve(Request $request,Response $response)
     {
-        $this->setLayout('auth');
+        // $this->setLayout('auth');
         return $this->render('cancelReserve');
     }
 
