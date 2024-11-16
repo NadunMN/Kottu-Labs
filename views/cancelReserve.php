@@ -10,7 +10,7 @@
 <body>
 
     <div class="container">
-        <img src="../Photos/KottuLabs_logo.png" alt="Kottu Labs Logo" class="logo">
+        <img src="/Photos/KottuLabs_logo.png" alt="Kottu Labs Logo" class="logo">
         <h1>Cancel your Reservation </h1>
         <form>
 
@@ -21,7 +21,7 @@
                 <input type="tel" pattern="[0-9]{10}" required>
             </div>
 
-            <button type="proceed">Cancel Reservation</button>
+            <button type="submit">Cancel Reservation</button>
         </form>
     </div>
 

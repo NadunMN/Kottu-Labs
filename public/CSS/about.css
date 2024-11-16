@@ -1,165 +1,199 @@
-/* body {
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 17px;
-  color: #fff;
-} */
+/* Global variables for consistent theming */
+:root {
+  --primary-color: #000000;
+  --secondary-color: #e0bd91;
+  --text-light: #ffffff;
+  --text-dark: #000000;
+  --bg-light: #f8f8f8;
+  --bg-dark: rgba(27, 27, 27, 0.7);
+  --shadow-regular: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  --shadow-strong: 5px 5px 20px rgba(0, 0, 0, 0.3);
+  --transition-speed: 0.3s;
+  --max-width-container: 1480px;
+  --font-primary: 'Times New Roman', Times, serif;
+  --font-secondary: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
 
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Hero Section */
 .container1 {
-    height: 450px;
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    background: #000;
-  }
-  /* #aboutHeader::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    /* background: url("../Photo/Thirani_pics/dinein_pic.jpg") no-repeat center center; 
-    background-size: cover;
-    filter: blur(8px);
-  } */
-  .container1 .title {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    
-  }
-  .container1 .title h2 {
-    font-size: 60px;
-    font-family: 'Times New Roman', Times, serif;
-  }
-  
-  .container2 {
-    display: flex;
-    justify-content: center; /* Horizontally centers the container1 */
-    align-items: center;     /* Vertically centers the container1 */
-    height: 60vh;           /* Full viewport height */
-    padding: 0;              /* Remove padding to ensure full centering */
-    background-color: rgb(212, 217, 217);
-    color: #000;
-    max-width: 1000px;
-    text-align: center; 
-    margin: 0 auto;
-    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  .container2 h2 {
-    margin-bottom: 25px;
-    font-size: 30px;
-    line-height: 60px;
-    font-family: 'Times New Roman', Times, serif;
-  }
-  
-  .container3{
-    display: flex;
-    justify-content: space-around; /* Evenly spaces cards */
-    align-items: center;
-    padding: 20px; /* Adjust as needed for spacing */
-    background: #f8f8f8;
-    flex-wrap: wrap; /* Allows cards to wrap to the next line on smaller screens */
-    max-width: 1480px;
-    width: 100%;
-    margin: 0 auto;
-  }
-  
-  .container3 .card{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: whitesmoke;
-    height: 500px;
-    width: 350px;
-    margin: 20px;
-    box-shadow: 5px 5px 20px black;
-    overflow: hidden;
-    position: relative;
-  }
-  .container3 .card img {
-    height: 500px; /* Adjust to match the aspect ratio */
-    width: 100%;
-    object-fit: cover; /* Ensures image covers the area without distortion */
-    border-radius: 3px 3px 0 0;
-    transition: .5s;
-  }
-  .container3 .intro {
-    padding: 5px;
-    box-sizing: border-box;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background: rgba(27, 27, 27, .7);
-    color: white;
-    transition: .5s;
-    text-align: center;
-    height: 65px;
-  }
-  .container3 .card:hover{
-    cursor: pointer;
-  }
-  .container3 .card:hover .intro{
-    height: 50%;
-    bottom: 0;
-  }
-  .container3 .card:hover p{
-    opacity: 1;
-    visibility: visible;
-  }
-  .container3 .card:hover img{
-    transform: scale(1.1) rotate(-3deg);
-  }
-  .container3 .card h1{
-    margin: 0px 0px;
-    font-size: 30px;
-  }
-  .container3 .card p{
-    font-size: 16px;
-    line-height: 1.5;
-    margin: 10px 0;
-    visibility: hidden;
+  height: 450px;
+  width: 100%;
+  position: relative;
+  background: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.container1 .title {
+  text-align: center;
+  color: var(--text-light);
+  padding: 0 20px;
+}
+
+.container1 .title h2 {
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  font-family: var(--font-primary);
+  opacity: 0;
+  animation: fadeIn 1s ease-in forwards;
+}
+
+/* Main Content Section */
+.container2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  background-color: rgb(212, 217, 217);
+  color: var(--text-dark);
+  max-width: var(--max-width-container);
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow-regular);
+}
+
+.container2 h2 {
+  margin-bottom: 1.5rem;
+  font-size: clamp(1.5rem, 3vw, 1.875rem);
+  line-height: 1.5;
+  font-family: var(--font-primary);
+}
+
+/* Cards Section */
+.container3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  background: var(--bg-light);
+  max-width: var(--max-width-container);
+  margin: 0 auto;
+}
+
+.container3 .card {
+  height: 500px;
+  background: var(--text-light);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: var(--shadow-regular);
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.container3 .card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-strong);
+}
+
+.container3 .card img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-speed) ease;
+}
+
+.container3 .intro {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 1.5rem;
+  background: var(--bg-dark);
+  color: var(--text-light);
+  transform: translateY(calc(100% - 65px));
+  transition: transform var(--transition-speed) ease;
+}
+
+.container3 .card:hover .intro {
+  transform: translateY(0);
+}
+
+.container3 .card:hover img {
+  transform: scale(1.05);
+}
+
+.container3 .card h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.container3 .card p {
+  line-height: 1.6;
+  opacity: 0;
+  transition: opacity var(--transition-speed) ease;
+}
+
+.container3 .card:hover p {
+  opacity: 1;
+}
+
+/* Name Styling */
+.Name {
+  color: var(--primary-color);
+  font-family: var(--font-secondary);
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  border-bottom: 3px solid var(--secondary-color);
+  padding: 0.75rem 1rem;
+  background-color: var(--bg-light);
+  border-radius: 5px;
+  display: inline-block;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
     opacity: 0;
-    transition: visibility 0s, opacity 0.5s linear;
+    transform: translateY(20px);
   }
-  .container3 .card span{
-    font-weight: bold;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  
-  
-  /* h2 {
-    line-height: 60px;
-    font-family: 'Times New Roman', Times, serif;
-  } */
-  
-  /* .container13 {
-    display: flex;
-    flex-wrap: wrap; /* Allows cards to wrap to the next line on smaller screens 
-    justify-content: space-around; /* Evenly spaces cards 
-    max-width: 1280px;
-    width: 100%;
-    margin: 0 auto;
-  } */
-  
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .container1 {
+    height: 350px;
+  }
+
+  .container2 {
+    padding: 1rem;
+    margin: 1rem;
+  }
+
+  .container3 {
+    padding: 1rem;
+  }
+
+  .container3 .card {
+    height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container1 {
+    height: 250px;
+  }
+
+  .container2 h2 {
+    line-height: 1.4;
+  }
+
   .Name {
-    color: #000000; /* Text color */
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-size: 150%;
-    font-weight: bold; /* Makes the text bolder */
-    text-transform: uppercase; /* Transforms text to uppercase */
-    letter-spacing: 2px; /* Adds spacing between letters */
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow for depth */
-    border-bottom: 3px solid #e0bd91; /* Adds a bottom border to underline the text */
-    padding-bottom: 5px; /* Adds space between the text and the border */
-    background-color: #f4f4f4; /* Adds a background color */
-    padding: 10px 15px; /* Adds padding inside the element */
-    border-radius: 5px; /* Rounds the corners of the background */
+    padding: 0.5rem 0.75rem;
   }
-  
-  
-  
-  
+}

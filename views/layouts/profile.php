@@ -49,7 +49,13 @@ $currentPath = $_SERVER['REQUEST_URI'];
         <div class="userprofile-profile-wrapper">
 
             <div class="userprofile-profile-name-content">
+
+                <div class="circle1">
                 <div class="circle"></div>
+                </div>
+
+
+
                 <div class="circle-name-wrapper">
                     <h1 id="user-name"></h1>
                     <h4 id="user-email"></h4>

@@ -168,6 +168,7 @@
                   document.getElementById('accountc').value = data.created_at;
                   document.getElementById('date').value = data.date_of_birth;
                   document.getElementById('address').value = data.address;
+                  document.getElementById('password').value = data.password;
 
 
               }
