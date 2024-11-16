@@ -70,7 +70,7 @@ class SiteController extends Controller
 
     public function about(Request $request,Response $response)
     {
-        $this->setLayout('auth');
+        // $this->setLayout('auth');
         return $this->render('about');
     }
 
