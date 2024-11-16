@@ -4,20 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DineIn</title>
-    <link rel="stylesheet" href="../CSS/navbar.css">
-    <link rel="stylesheet" href="../CSS/dinein.css">
-    <link rel="stylesheet" href="../CSS/footer.css">
+    <link rel="stylesheet" href="/CSS/dinein.css">
     
 </head>
 
 <body>
-    <?php //include 'navbar.php'; ?>
     
     <h2 class="headline">Reserve your Spot & Enjoy!</h2>
     <section class="banner">
         <div class="card-container">
             <div class="card-img">
-                <img src="../Photo/Thirani_pics/dinein_pic.jpg" alt="pic1">
+                <img src="/Photo/Thirani_pics/dinein_pic.jpg" alt="pic1">
             </div>
 
             <div class="card-content">
@@ -57,8 +54,7 @@
         </div>
     </section>
 
-    <script src="../JavaScript/dinein.js" defer></script>
-    <?php //include 'footer.php'; ?>
+    <script src="/JavaScript/dinein.js" defer></script>
 
 </body>
 </html>
