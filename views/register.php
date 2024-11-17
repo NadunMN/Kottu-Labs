@@ -1,5 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>register</title>
+    <link rel="stylesheet" href="/CSS/login.css">
+</head>
+<body>
 
-<h1>Register</h1>
+<div class="form-login">
+        
+
+        <div class="second-part">
+
+<h1>Join Kottu Labs!</h1>
+<h3>Sign up for exclusive perks and experiences.</h3>
 
 <?php $form = \app\core\form\Form::begin('', 'post')?>
 
@@ -14,3 +29,11 @@
 
 
 <?php echo \app\core\form\Form::end()?>
+
+</div>
+</div>
+
+    
+</body>
+</html>
+
