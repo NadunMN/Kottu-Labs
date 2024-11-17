@@ -9,7 +9,7 @@ class Form
 {
     public static function begin($action, $method)
     {
-       echo sprintf('<form action="%s" method="%s">', $action, $method );
+       echo sprintf('<form action="%s" method="%s" class="form">', $action, $method );
        return new Form();
     }
 

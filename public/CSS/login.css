@@ -1,0 +1,141 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.form-login{
+    width:100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: tomato; */
+}
+
+
+
+.form-login .second-part{
+    padding: 50px 0;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    
+    box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-login .second-part h1{
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-align: left;
+    width: 80%;
+}
+
+.form-login .second-part h3{
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-align: left;
+    width: 80%;
+    opacity: 0.5;
+    /* background-color: turquoise; */
+}
+
+form{
+    width: 500px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    /* background-color: violet; */
+}
+
+.form-group{
+    width: 80%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: auto;
+    margin: 5px 0;
+    /* background-color: yellow;   */
+}
+
+.form-control{
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid #eeeeee;
+    padding-left: 10px;
+    font-size: 1rem;
+}
+
+.form-control:focus{
+    font-size: 1rem;
+
+}
+
+.form-control::placeholder{
+    font-size: 1rem;
+}
+
+.invalid-feedback{
+    color: #c91432;
+    margin-top: 5px;
+    font-size: 0.8rem;
+    width: 100%;
+
+}
+
+.btn{
+    width: 82%;
+    height: 50px;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: none;
+    background-color: #000000;
+    color: white;
+    cursor: pointer;
+}
+
+.btn:hover{
+    transition: transform 0.3s ,background-color 0.3s ease;
+    transform: scale(1.01);
+}
+
+.or{
+    width: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    opacity: 0.5;
+
+}
+
+.btn-google{
+    background-color: rgb(241, 241, 241);
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.btn-google img{
+    width: 20px;
+    height: auto;
+
+}
+
+
+
+
