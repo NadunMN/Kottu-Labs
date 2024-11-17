@@ -30,18 +30,12 @@ class LoginForm extends Model
 
     public function login()
     {
-        $user = User::findOne(['email' => $this->email]);
+        $user = User::findOne(['email' => $this->email, 'mobile_number' => $this->mobile_number]);
         if (!$user) {
-            $this->addError('email', 'User does not exist with this email');
-            return false;
-        }
-
-        if (!$user) {
-            $this->addError('mobile_number', 'User does not exist with this Mobile Number');
+            $this->addError('email', 'Email and Mobile Number do not match or user does not exist');
             return false;
         }
 
         return Application::$app->login($user);
-
     }
 }
