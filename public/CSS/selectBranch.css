@@ -1,0 +1,98 @@
+/* General Reset */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.navbar .nav-links li {
+    display: inline;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.navbar .nav-links a:hover {
+    color: #f90;
+}
+
+/* Select Branch Header */
+.select-branch-header {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.select-branch-header h1 {
+    font-size: 28px;
+    color: #333;
+}
+
+/* Branch Selection Styles */
+.branch-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 20px auto;
+}
+
+.branch {
+    cursor: pointer;
+    text-align: center;
+}
+
+.branch-img {
+    width: 200px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+.branch-img:hover {
+    transform: scale(1.15); /* Slight zoom effect */
+    border-color: #f90;
+}
+
+.branch p {
+    margin: 10px 0 0;
+    font-size: 20px; /* Larger text */
+    font-weight: bold;
+    color: #333; /* Default black */
+    transition: color 0.3s ease; /* Smooth transition for hover */
+}
+
+.branch:hover p {
+    color: #000; /* Darker black */
+    font-size: 22px; /* Slightly larger on hover */
+}
+

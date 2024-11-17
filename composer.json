@@ -1,21 +1,19 @@
 {
 
-    "name": "user/php",
-    
-    "authors": [
-        {
-            "name": "Thirani Athukorala",
-            "email": "140165855+Thirani15@users.noreply.github.com"
-        }
-    ],
-
+    "name": "user/kottu-labs",
     "autoload": {
         "psr-4": {
-            "Lenovo\\KottuLabs\\": "src/",
+            "User\\KottuLabs\\": "src/",
             "app\\": "./"
         }
     },
-    
+    "authors": [
+        {
+            "name": "Ranuga Lecamwasam",
+            "email": "ranugalecamwasam2002@gmail.com"
+        }
+    ],
+
     "require": {
         "vlucas/phpdotenv": "^5.6"
     }

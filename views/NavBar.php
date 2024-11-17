@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NavBar</title>
-    <link rel="stylesheet" href="/CSS/NavBar.css">
+    <link rel="stylesheet" href="../public/CSS/NavBar.css">
 </head>
 <body>
     <div class="main-div">
@@ -16,7 +16,7 @@
         </div>
         <ul class="nav-links">
             <li><a href="/">HOME</a></li>
-            <li><a href="#">MENU</a></li>
+            <li><a href="/menu">MENU</a></li>
             <li><a href="/about">ABOUT</a></li>
             <li><a href="#">OUR STAFF</a></li>
             <li><a href="contact">CONTACT</a></li>
@@ -47,6 +47,6 @@
         <button class="menu-icon" onclick="toggleMenu()">&#9776;</button> <!-- Menu Icon -->
         </div>
     </div>
-    <script src="/JavaScript/NavBar.js"></script>
+    <script src="../public/JavaScript/NavBar.js"></script>
 </body>
 </html>

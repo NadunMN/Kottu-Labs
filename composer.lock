@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< Updated upstream
     "content-hash": "1dc93980c2944a1833684e7a32f7b14d",
+=======
+    "content-hash": "11006f15bffa248a036bb16969acf274",
+>>>>>>> Stashed changes
     "packages": [
         {
             "name": "graham-campbell/result-type",
