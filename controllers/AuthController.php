@@ -48,7 +48,7 @@ class AuthController extends Controller
             if ($user->validate() && $user->save()) {
                 if (Application::$app->login($user)) {
                    
-                    $response->redirect('/login');
+                    $response->redirect('/');
                     return;
                 } else {
                     // Debugging statement
