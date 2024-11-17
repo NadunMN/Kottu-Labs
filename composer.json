@@ -1,4 +1,5 @@
 {
+
     "name": "user/php",
     
     "authors": [
@@ -7,11 +8,14 @@
             "email": "140165855+Thirani15@users.noreply.github.com"
         }
     ],
+
     "autoload": {
         "psr-4": {
+            "Lenovo\\KottuLabs\\": "src/",
             "app\\": "./"
         }
     },
+    
     "require": {
         "vlucas/phpdotenv": "^5.6"
     }

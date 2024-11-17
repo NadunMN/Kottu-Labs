@@ -85,6 +85,12 @@ class SiteController extends Controller
         $this->setLayout('auth');
         return $this->render('dinein');
     }
+
+    public function payment(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('payments');
+    }
    
 }
 ?>
