@@ -54,10 +54,13 @@ if (Application::$app->user && Application::$app->user->position == 'admin') {
     $app->router->get('/profile', [$siteController, 'stewardDashboard']);
 }
 
-
+//thiranis route
 $app->router->get('/about',[$siteController, 'about']);
 $app->router->get('/cancelReserve',[$siteController, 'cancelReserve']);
 $app->router->get('/dinein',[$siteController, 'dinein']);
+
+//maheshs routes
+$app->router->get('/payment',[$siteController, 'payment']);
 
 // Define route for getting user data
 $app->router->get('/user/data', [$userController, 'getUserData']);
