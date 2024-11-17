@@ -16,6 +16,14 @@ class m0003_add_mutiplecolumns_users
             $db->pdo->exec($SQL);
         }
 
+        // Add location column
+        $checkColumnSQL = "SHOW COLUMNS FROM users LIKE 'location';";
+        $result = $db->pdo->query($checkColumnSQL)->fetch();
+        if (!$result) {
+            $SQL = "ALTER TABLE users ADD COLUMN location VARCHAR(20) NOT NULL;";
+            $db->pdo->exec($SQL);
+        }
+
         // Add date_of_birth column
         $checkColumnSQL = "SHOW COLUMNS FROM users LIKE 'date_of_birth';";
         $result = $db->pdo->query($checkColumnSQL)->fetch();
@@ -71,6 +79,10 @@ class m0003_add_mutiplecolumns_users
 
         // Drop mobile_number column
         $SQL = "ALTER TABLE users DROP COLUMN mobile_number;";
+        $db->pdo->exec($SQL);
+
+        // Drop location column
+        $SQL = "ALTER TABLE users DROP COLUMN location;";
         $db->pdo->exec($SQL);
 
     }

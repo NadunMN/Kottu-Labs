@@ -9,13 +9,14 @@ use app\models\User; // Import User class
 class LoginForm extends Model
 {
     public string $email = '';
-    public string $password = '';
+    public string $mobile_number = '';
 
     public function rules(): array
     {
         return [
             'email' => [self::RULE_REQUIRED, self::RULE_EMAIL],
-            'password' => [self::RULE_REQUIRED]
+            'mobile_number' => [self::RULE_REQUIRED, self::RULE_MOBILE],
+            
         ];
     }
 
@@ -23,7 +24,7 @@ class LoginForm extends Model
     {
         return [
             'email' => 'Your Email',
-            'password' => 'Password'
+            'mobile_number' => 'Mobile Number',
         ];
     }
 
@@ -35,8 +36,8 @@ class LoginForm extends Model
             return false;
         }
 
-        if (!password_verify($this->password, $user->password)) {
-            $this->addError('password', 'Password is incorrect');
+        if (!$user) {
+            $this->addError('mobile_number', 'User does not exist with this Mobile Number');
             return false;
         }
 

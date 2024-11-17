@@ -16,8 +16,6 @@ class User extends UserModel
     public string $lastname = '';
     public string $email = '';
     public int $status = self::STATUS_INACTIVE;
-    public string $password = '';
-    public string $confirmPassword = '';
     public string $position = 'customer'; // Default position
     public ?string $date_of_birth = '';
     public string $mobile_number = '';
@@ -25,6 +23,7 @@ class User extends UserModel
     public string $address = '';
     public string $nationality = '';
     public string $created_at = '';
+    public string $location = '';
 
     public static User $use;
     public static function tableName(): string
@@ -37,12 +36,12 @@ class User extends UserModel
         return 'id';
     }
 
-    public function save()
-    {
-        $this->status = self::STATUS_INACTIVE;
-        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
-        return parent::save();
-    }
+    // public function save()
+    // {
+    //     $this->status = self::STATUS_INACTIVE;
+    //     $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+    //     return parent::save();
+    // }
 
     public function rules(): array
     {
@@ -50,8 +49,8 @@ class User extends UserModel
             'firstname' => [self::RULE_REQUIRED],
             'lastname' => [self::RULE_REQUIRED],
             'email' => [self::RULE_REQUIRED, self::RULE_EMAIL, [self::RULE_UNIQUE, 'class' => self::class]],
-            'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 8], [self::RULE_MAX, 'max' => 16]],
-            'confirmPassword' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']],
+            // 'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 8], [self::RULE_MAX, 'max' => 16]],
+            // 'confirmPassword' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']],
             'mobile_number' => [self::RULE_MOBILE, [self::RULE_UNIQUE, 'class' => self::class]],
         ];
     }
@@ -68,7 +67,7 @@ class User extends UserModel
 
     public function attributes(): array
     {
-        return ['id','firstname', 'lastname', 'email', 'password', 'status', 'position',
+        return ['id','firstname', 'lastname', 'email', 'location', 'status', 'position',
          'mobile_number', 'gender', 'address', 'nationality',  'date_of_birth'];
     }
 
@@ -78,8 +77,6 @@ class User extends UserModel
             'firstname' => 'First Name',
             'lastname' => 'Last Name',
             'email' => 'Your Email',
-            'password' => 'Password',
-            'confirmPassword' => 'Confirm Password',
             'mobile_number' => 'Mobile Number',
             // 'gender' => 'Gender',
             // 'address' => 'Address',
@@ -107,7 +104,7 @@ class User extends UserModel
             'address' => $this->address,
             'nationality' => $this->nationality,
             'created_at' => $this->created_at,
-            'password' => $this->password,
+            'location' => $this->location,
         ];
     }
 
