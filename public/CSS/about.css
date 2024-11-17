@@ -39,7 +39,7 @@
   padding: 0 20px;
 }
 
-.container1 .title h2 {
+.container1 .title h1 {
   font-size: clamp(2rem, 5vw, 3.75rem);
   font-family: var(--font-primary);
   opacity: 0;
@@ -48,26 +48,42 @@
 
 /* Main Content Section */
 .container2 {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 60vh;
-  background-color: rgb(212, 217, 217);
-  color: var(--text-dark);
-  max-width: var(--max-width-container);
-  margin: 2rem auto;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: var(--shadow-regular);
+  background-color: #f8f8f8; /* Light background for a warm feel */
+  padding: 50px 20px; /* Padding around the section */
+  text-align: center; /* Center-align text */
+  border-radius: 10px; /* Smooth corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
 
+/* Styling for Heading */
 .container2 h2 {
-  margin-bottom: 1.5rem;
-  font-size: clamp(1.5rem, 3vw, 1.875rem);
-  line-height: 1.5;
-  font-family: var(--font-primary);
+  font-size: 2rem; /* Large font size */
+  font-weight: 700; /* Bold text */
+  color: #333; /* Dark grey for contrast */
+  margin-bottom: 10px; /* Space below heading */
 }
+
+/* Styling for Restaurant Name */
+.container2 .Name {
+  font-size: 2.5rem; /* Larger text for the name */
+  font-weight: 900; /* Extra bold */
+  color: #d2691e; /* Copper-like color for emphasis */
+  text-transform: uppercase; /* Capitalize name */
+  margin: 10px 0; /* Spacing around the name */
+  letter-spacing: 2px; /* Slight spacing for clarity */
+}
+
+/* Styling for Welcome Text */
+.container2 .welcome-text {
+  font-size: 1.2rem; /* Comfortable font size */
+  font-weight: 400; /* Normal weight */
+  color: #555; /* Medium grey for softer look */
+  line-height: 1.6; /* Improved readability */
+  max-width: 600px; /* Restrict width for better alignment */
+  margin: 0 auto; /* Center the text */
+  padding-top: 10px; /* Space above text */
+}
+
 
 /* Cards Section */
 .container3 {
@@ -75,9 +91,23 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   padding: 2rem;
-  background: var(--bg-light);
-  max-width: var(--max-width-container);
+  background: var(--bg-light, #f8f8f8);
+  max-width: var(--max-width-container, 1200px);
   margin: 0 auto;
+  text-align: center; /* Center-align text in the section */
+}
+
+/* Visible Heading Style */
+.container3 h2 {
+  font-size: 2.5rem;
+  text-align: center;
+  font-weight: bold;
+  color: var(--primary-color, #333); /* Use a prominent color */
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 1.5rem; /* Space below the heading */
+  animation: fadeIn 1s ease-in-out; /* Smooth fade-in animation */
+  display: block; /* Ensure visibility */
 }
 
 .container3 .card {
@@ -136,21 +166,21 @@
   opacity: 1;
 }
 
-/* Name Styling */
+/* Name Styling
 .Name {
   color: var(--primary-color);
   font-family: var(--font-secondary);
-  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-size: clamp(1.25rem, 2vw, 4rem);
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 2px;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  border-bottom: 3px solid var(--secondary-color);
+  border-bottom: 3px solid var(--secondary-color); 
   padding: 0.75rem 1rem;
-  background-color: var(--bg-light);
-  border-radius: 5px;
+  background-color: var(--bg-light); 
+   border-radius: 5px; 
   display: inline-block;
-}
+} */
 
 /* Animations */
 @keyframes fadeIn {
