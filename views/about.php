@@ -32,9 +32,8 @@
         </section>
 
         <!-- Branches Section -->
-        <section class="container3" aria-label="Our Branches">
-            <h2 class="visually-hidden">Our Locations</h2>
-            
+        <h2 class="topic">Our Locations</h2>
+        <section class="container3" >
             <!-- Wattala Branch Card -->
             <article class="card">
                 <img src="/Photo/Thirani_pics/Wattala.png" 
