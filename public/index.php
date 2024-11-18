@@ -4,6 +4,7 @@ use app\core\Application;
 use app\controllers\SiteController;
 use app\controllers\AuthController;
 use app\controllers\UserController;
+use app\controllers\sendOtp;
 use app\models\User;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -29,6 +30,7 @@ $siteController = new SiteController();
 $authController = new AuthController();
 $userController = new UserController();
 
+
 // Define routes
 $app->router->get('/', [$siteController, 'home']);
 $app->router->get('/contact', [$siteController, 'contact']);
@@ -53,6 +55,10 @@ if (Application::$app->user && Application::$app->user->position == 'admin') {
 }else if(Application::$app->user && Application::$app->user->position == 'steward') {
     $app->router->get('/profile', [$siteController, 'stewardDashboard']);
 }
+
+$app->router->get('/otp', [$siteController, 'otp']);
+
+
 
 //thiranis route
 $app->router->get('/about',[$siteController, 'about']);

@@ -91,6 +91,12 @@ class SiteController extends Controller
         $this->setLayout('auth');
         return $this->render('payments');
     }
+
+    public function otp(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('otp');
+    }
    
 }
 ?>

@@ -1,0 +1,146 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0px 6px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #2d3748;
+    font-size: 28px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    margin-top: 30px;
+}
+
+p {
+    color: #718096;
+    margin-bottom: 35px;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.otp-field {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 35px;
+}
+
+.otp-field input {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: #2d3748;
+    background: #f8fafc;
+    transition: all 0.3s ease;
+}
+
+.otp-field input:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+    background: white;
+}
+
+.otp-field input.error {
+    border-color: #e53e3e;
+}
+
+button {
+    background: linear-gradient(to right, #4299e1, #667eea);
+    color: white;
+    border: none;
+    padding: 16px 30px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(66, 153, 225, 0.12);
+    disabled: true;
+    opacity: 0.6;
+}
+
+button:enabled {
+    opacity: 1;
+}
+
+.resend {
+    margin-top: 24px;
+    color: #4299e1;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+.resend:hover {
+    text-decoration: underline;
+}
+
+.timer {
+    margin-top: 18px;
+    color: #718096;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* For Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* For Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 30px 20px;
+    }
+
+    .otp-field input {
+        width: 45px;
+        height: 45px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+}
