@@ -727,6 +727,11 @@ body{
         height: 150px;        
     }
 
+    .circle1 {
+        width: 170px;        
+        height: 170px;        
+    }
+
 
     .circle-name-wrapper{
         top: -40px;
