@@ -28,7 +28,7 @@ class SiteController extends Controller
             }
         }
 
-        $this->setLayout('auth');
+        // $this->setLayout('auth');
 
         return $this->render('contact', [
             'model' => $contact
@@ -37,6 +37,7 @@ class SiteController extends Controller
 
     public function userDashboard()
     {
+        
         
         $this->setLayout('profile');
         return $this->render('userdashboard');
@@ -90,6 +91,18 @@ class SiteController extends Controller
     {
         $this->setLayout('auth');
         return $this->render('payments');
+    }
+
+    public function otp(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('otp');
+    }
+
+    public function cart(Request $request,Response $response)
+    {
+        $this->setLayout('main');
+        return $this->render('cart');
     }
    
 }

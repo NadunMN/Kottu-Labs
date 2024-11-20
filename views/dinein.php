@@ -33,7 +33,7 @@
             </header>
 
             <!-- Reservation Section -->
-            <section class="reservation-section" aria-label="Reservation Form">
+            <section>
                 <div class="card-container">
                     
                     <!-- Reservation Form Card -->

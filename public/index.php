@@ -4,6 +4,7 @@ use app\core\Application;
 use app\controllers\SiteController;
 use app\controllers\AuthController;
 use app\controllers\UserController;
+use app\controllers\sendOtp;
 use app\models\User;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -28,6 +29,7 @@ $app = new Application(dirname(__DIR__), $config);
 $siteController = new SiteController();
 $authController = new AuthController();
 $userController = new UserController();
+
 
 // Define routes
 $app->router->get('/', [$siteController, 'home']);
@@ -54,6 +56,11 @@ if (Application::$app->user && Application::$app->user->position == 'admin') {
     $app->router->get('/profile', [$siteController, 'stewardDashboard']);
 }
 
+$app->router->get('/otp', [$siteController, 'otp']);
+$app->router->get('/cart', [$siteController, 'cart']);
+
+
+
 //thiranis route
 $app->router->get('/about',[$siteController, 'about']);
 $app->router->get('/cancelReserve',[$siteController, 'cancelReserve']);
@@ -61,6 +68,9 @@ $app->router->get('/dinein',[$siteController, 'dinein']);
 
 //maheshs routes
 $app->router->get('/payment',[$siteController, 'payment']);
+$app->router->get('/cash_confirmation',[$siteController, 'cash_confirmation']);
+$app->router->get('/card_payment',[$siteController, 'card_payment']);
+
 
 // Define route for getting user data
 $app->router->get('/user/data', [$userController, 'getUserData']);

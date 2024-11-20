@@ -52,6 +52,15 @@
                     </div>
                   </div>
 
+
+                  <div class="personal-information-name">
+                    <div>
+                      <label for="created_at">Account Creation</label>
+                      <input type="text" id="accountc" name="created_at" value="" disabled>
+                    </div>
+
+                  </div>
+
                   
 
 
@@ -97,13 +106,7 @@
                     </div>
                   </div>
 
-                  <div class="personal-information-name">
-                    <div>
-                      <label for="created_at">Account Creation</label>
-                      <input type="text" id="accountc" name="created_at" value="" disabled>
-                    </div>
-
-                  </div>
+                  
 
 
                 </div>
