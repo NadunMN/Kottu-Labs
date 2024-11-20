@@ -97,6 +97,12 @@ class SiteController extends Controller
         $this->setLayout('auth');
         return $this->render('otp');
     }
+
+    public function cart(Request $request,Response $response)
+    {
+        $this->setLayout('main');
+        return $this->render('cart');
+    }
    
 }
 ?>

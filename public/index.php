@@ -57,6 +57,7 @@ if (Application::$app->user && Application::$app->user->position == 'admin') {
 }
 
 $app->router->get('/otp', [$siteController, 'otp']);
+$app->router->get('/cart', [$siteController, 'cart']);
 
 
 
