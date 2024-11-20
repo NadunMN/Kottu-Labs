@@ -24,6 +24,7 @@ body{
     margin: 10px 0;
     margin-left: 10px;
     border-radius: 10px;
+    padding-bottom: 10px;
 }
 
 .right-side{
@@ -50,6 +51,7 @@ body{
     height:auto;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
+    padding-bottom: 10px;
 }
 
 .card-topic-container{
@@ -108,6 +110,16 @@ body{
     background-color: rgb(230, 147, 147);
     border-radius: 10px;
 }
+
+.cart-item-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
+
 
 .cart-item-details{
     display: flex;
@@ -281,3 +293,69 @@ body{
     transition: transform 0.3s ,background-color 0.3s ease;
     transform: scale(1.05);
 }
+
+.offer-wrapper-topic{
+    margin-bottom: 20px;
+}
+
+.offer-wrapper{
+    height: 100%;
+}
+
+.offer-wrapper-body{
+    border: none;
+    height: auto;
+    width: 95%;
+    border-bottom:1px solid rgb(216, 216, 216);
+}
+
+.offer-content-body-photo{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(230, 147, 147);
+    border-radius: 10px;
+}
+
+.offer-content-body-photo img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
+.offer-content-body-photo-details{
+    width: 85%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+
+.offer-content-body-photo-details div{
+    width: auto;
+    height: auto;
+}
+
+.offer-content-body-photo-details button{
+    width: auto;
+    height: 30px;
+    padding:0 20px;
+    font-size: 0.8rem;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.offer-content-body-photo-details button:hover{
+    background-color: #EE3E3F;
+    color: rgb(255, 255, 255);
+    transition: transform 0.3s ,background-color 0.3s ease;
+    transform: scale(1.05);
+}
+
+
