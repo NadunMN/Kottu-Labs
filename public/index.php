@@ -68,6 +68,9 @@ $app->router->get('/dinein',[$siteController, 'dinein']);
 
 //maheshs routes
 $app->router->get('/payment',[$siteController, 'payment']);
+$app->router->get('/cash_confirmation',[$siteController, 'cash_confirmation']);
+$app->router->get('/card_payment',[$siteController, 'card_payment']);
+
 
 // Define route for getting user data
 $app->router->get('/user/data', [$userController, 'getUserData']);

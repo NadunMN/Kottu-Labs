@@ -28,7 +28,7 @@ class SiteController extends Controller
             }
         }
 
-        $this->setLayout('auth');
+        // $this->setLayout('auth');
 
         return $this->render('contact', [
             'model' => $contact
@@ -37,6 +37,7 @@ class SiteController extends Controller
 
     public function userDashboard()
     {
+        
         
         $this->setLayout('profile');
         return $this->render('userdashboard');

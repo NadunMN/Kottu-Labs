@@ -105,15 +105,15 @@
 
 
                         <div class="add-review-body">
-                            <textarea id="review-content" placeholder="Write your review here..."></textarea>
+                            <textarea id="review-content" name='review' placeholder="Write your review here..."></textarea>
                         </div>
 
                     </div>
 
                     <div class="add-review-submit">
                         <div class="order-list-button add-review-cancel">
-                            <button id="submit">Cancel</button>
-                            <input type="submit" id="submit" value="Submit">
+                            <!-- <button id="submit">Cancel</button> -->
+                            <button type="submit" id="submit" name="submit"  value="Submit"> submit </button>
                         </div>
                     </div>
 
