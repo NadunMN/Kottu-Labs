@@ -84,6 +84,24 @@
   padding-top: 10px; /* Space above text */
 }
 
+.topic {
+  display: flex;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  justify-content: center;
+  font-size: 3rem; 
+  color: #110f0f; /* White text color */
+  text-transform: uppercase; /* Capitalize the title */
+  letter-spacing: 2px; /* Add spacing between letters */
+  text-align: center; /* Center the title */
+  margin: 20px auto; /* Space around the title */
+  padding: 10px 20px; /* Padding inside the title container */
+  width: fit-content; /* Shrinks or grows to fit the content */
+}
+
+.topic:hover {
+  transform: scale(1.05); /* Slight zoom effect */
+  transition: all 0.3s ease-in-out; /* Smooth transition */
+}
 
 /* Cards Section */
 .container3 {

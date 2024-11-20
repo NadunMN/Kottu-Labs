@@ -59,6 +59,7 @@ body {
   flex-wrap: wrap;
   gap: var(--spacing);
   justify-content: center;
+  
 }
 
 .card-img{
