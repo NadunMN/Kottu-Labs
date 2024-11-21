@@ -72,6 +72,11 @@ $app->router->get('/cash_confirmation',[$siteController, 'cash_confirmation']);
 $app->router->get('/card_payment',[$siteController, 'card_payment']);
 
 
+//ranuga's routes
+$app->router->get('/menu',[$siteController, 'menu']);
+$app->router->get('/selectBranch',[$siteController, 'selectBranch']);
+$app->router->get('/homeMenu',[$siteController, 'homeMenu']);
+
 // Define route for getting user data
 $app->router->get('/user/data', [$userController, 'getUserData']);
 $app->router->post('/user/delete', [$userController, 'deleteUser']);

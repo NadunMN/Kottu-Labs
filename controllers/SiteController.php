@@ -104,6 +104,18 @@ class SiteController extends Controller
         $this->setLayout('main');
         return $this->render('cart');
     }
+
+    public function menu(Request $request,Response $response)
+    {
+        $this->setLayout('main');
+        return $this->render('menu');
+    }
+
+    public function homeMenu(Request $request,Response $response)
+    {
+        $this->setLayout('main');
+        return $this->render('homeMenu');
+    }
    
 }
 ?>
