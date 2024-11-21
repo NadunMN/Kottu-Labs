@@ -91,6 +91,21 @@ class SiteController extends Controller
         $this->setLayout('auth');
         return $this->render('payments');
     }
+
+    public function menu(Request $request,Response $response)
+    {
+        return $this->render('menu');
+    }
+
+    public function homeMenu(Request $request,Response $response)
+    {
+        return $this->render('homeMenu');
+    }
+
+    public function selectBranch(Request $request,Response $response)
+    {
+        return $this->render('selectBranch');
+    }
    
 }
 ?>

@@ -62,6 +62,11 @@ $app->router->get('/dinein',[$siteController, 'dinein']);
 //maheshs routes
 $app->router->get('/payment',[$siteController, 'payment']);
 
+//ranuga's routes
+$app->router->get('/menu',[$siteController, 'menu']);
+$app->router->get('/selectBranch',[$siteController, 'selectBranch']);
+$app->router->get('/homeMenu',[$siteController, 'homeMenu']);
+
 // Define route for getting user data
 $app->router->get('/user/data', [$userController, 'getUserData']);
 $app->router->post('/user/delete', [$userController, 'deleteUser']);

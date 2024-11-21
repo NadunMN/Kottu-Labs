@@ -60,7 +60,7 @@
 
                 <div class="topic-head">
                     <!-- <button>LEARN MORE</button> -->
-                    <button >TAKE AWAY</button>
+                    <button onclick="window.location.href='/selectBranch'">TAKE AWAY</button>
                     <button onclick="window.location.href='/dinein'">DINE IN</button>
                 </div>
             </div>

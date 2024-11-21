@@ -1,0 +1,161 @@
+/* General Reset */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.navbar .nav-links li {
+    display: inline;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.navbar .nav-links a:hover {
+    color: #f90;
+}
+
+/* Select Branch Header */
+.select-branch-header {
+    margin: 20px 0;
+    text-align: center;
+    padding: 10px;
+}
+
+.select-branch-header h1 {
+    font-size: 28px;
+    color: #333;
+}
+
+/* Branch Selection Styles */
+.branch-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 20px auto;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    padding: 10px;
+}
+
+.branch {
+    cursor: pointer;
+    text-align: center;
+    flex: 1 1 calc(33.33% - 20px); /* Flexible layout for 3 items per row */
+    max-width: 300px; /* Prevent branches from growing too large */
+    margin: 10px;
+}
+
+.branch-img {
+    width: 100%; /* Responsive width */
+    max-width: 200px; /* Limit maximum size */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+.branch-img:hover {
+    transform: scale(1.15); /* Slight zoom effect */
+    border-color: #f90;
+}
+
+.branch p {
+    margin: 10px 0 0;
+    font-size: 20px; /* Larger text */
+    font-weight: bold;
+    color: #333; /* Default black */
+    transition: color 0.3s ease; /* Smooth transition for hover */
+}
+
+.branch:hover p {
+    color: #000; /* Darker black */
+    font-size: 22px; /* Slightly larger on hover */
+}
+
+/* Responsive Design with Media Queries */
+
+/* For screens smaller than 768px (tablet and below) */
+@media (max-width: 768px) {
+    .branch-container {
+        flex-direction: column; /* Stack branches vertically */
+        gap: 10px;
+    }
+
+    .branch {
+        flex: 1 1 100%; /* Take full width */
+    }
+
+    .branch-img {
+        max-width: 150px; /* Smaller images */
+    }
+
+    .branch p {
+        font-size: 18px; /* Adjust text size */
+    }
+
+    .select-branch-header h1 {
+        font-size: 24px; /* Smaller heading */
+    }
+}
+
+/* For screens smaller than 480px (mobile devices) */
+@media (max-width: 480px) {
+    .navbar {
+        flex-direction: column; /* Stack navbar items */
+        align-items: flex-start;
+    }
+
+    .navbar .logo {
+        font-size: 20px; /* Smaller logo */
+    }
+
+    .navbar .nav-links {
+        flex-direction: column; /* Stack links vertically */
+        gap: 10px;
+    }
+
+    .branch-img {
+        max-width: 120px; /* Even smaller images */
+    }
+
+    .branch p {
+        font-size: 16px; /* Smaller text */
+    }
+
+    .select-branch-header h1 {
+        font-size: 20px; /* Smaller heading */
+    }
+}
+
+
