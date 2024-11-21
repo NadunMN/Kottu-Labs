@@ -18,6 +18,17 @@ class m0001_initial
         ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);
 
+        $SQL = "CREATE TABLE IF NOT EXISTS reviews (
+            review_id INT AUTO_INCREMENT PRIMARY KEY,
+            user_id INT NOT NULL,
+            rating INT NOT NULL,
+            review VARCHAR(255) NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        ) ENGINE=INNODB;";
+                $db->pdo->exec($SQL);
+
+
        
     }
 
@@ -25,6 +36,9 @@ class m0001_initial
     {
         $db = Application::$app->db;
         $SQL = "DROP TABLE IF EXISTS users;";
+        $db->pdo->exec($SQL);
+
+        $SQL = "DROP TABLE IF EXISTS reviews;";
         $db->pdo->exec($SQL);
 
        

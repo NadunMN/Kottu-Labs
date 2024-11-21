@@ -14,10 +14,7 @@
             <!-- order list -->
             <div class="order-list-container">
                 <h2>Order History</h2>
-                <!-- <div class="order-list-button">
-                    <button>View More</button>
-                    <button>Add Reservation</button>
-                </div> -->
+                
             </div>
 
 
@@ -89,11 +86,11 @@
 
                                 <div class="review-rate add">
                                     <div class="starts s">
-                                        <div></div>
-                                        <div></div>
-                                        <div></div>
-                                        <div></div>
-                                        <div></div>
+                                        <div class="box"></div>
+                                        <div class="box"></div>
+                                        <div class="box"></div>
+                                        <div class="box"></div>
+                                        <div class="box"></div>
                                     </div>
                                 </div>
 
@@ -290,6 +287,23 @@
         </div>
     </div>
     </div>
+
+    <script>
+        const boxes = document.querySelectorAll(".add .s div");
+
+boxes.forEach((box, index) => {
+  box.addEventListener("mouseover", () => {
+    for (let i = 0; i <= index; i++) {
+      boxes[i].classList.add("hover");
+    }
+  });
+
+  box.addEventListener("mouseout", () => {
+    boxes.forEach((b) => b.classList.remove("hover"));
+  });
+});
+
+    </script>
 
 </body>
 
