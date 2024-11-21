@@ -9,17 +9,17 @@
     <meta name="author" content="Kottu Labs">
     
     <!-- Page Title -->
-    <title>Dine-In Reservation - Kottu Labs</title>
+    <title>Dine in</title>
     
     <!-- Styles -->
     <link rel="stylesheet" href="/CSS/dinein.css">
     
     <!-- Resource Preloading -->
-    <link rel="preload" href="/Photo/Thirani_pics/dinein_pic.jpg" as="image">
-    <link rel="preload" href="/CSS/dinein.css" as="style">
+    <!-- <link rel="preload" href="/Photo/Thirani_pics/dinein_pic.jpg" as="image"> -->
+    <!-- <link rel="preload" href="/CSS/dinein.css" as="style"> -->
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <!-- <link rel="icon" type="image/x-icon" href="/favicon.ico"> -->
 </head>
 
 <body>
@@ -33,10 +33,14 @@
             </header>
 
             <!-- Reservation Section -->
-            <section class="reservation-section" aria-label="Reservation Form">
+            <section>
                 <div class="card-container">
-                    <!-- Restaurant Image -->
-                    <div class="card-img">
+                    
+                    <!-- Reservation Form Card -->
+                    <div class="card-content">
+                        <h2 class="form-title">Make a Reservation</h2>
+
+                        <div class="card-img">
                         <img 
                             src="/Photo/Thirani_pics/dinein_pic.jpg" 
                             alt="Kottu Labs dining area interior"
@@ -47,10 +51,6 @@
                         >
                     </div>
 
-                    <!-- Reservation Form Card -->
-                    <div class="card-content">
-                        <h2 class="form-title">Make a Reservation</h2>
-                        
                         <form id="reservationForm" action="/submit-reservation" method="POST" class="reservation-form">
                             <!-- Personal Information Section -->
                             <div class="form-section personal-info">
@@ -168,7 +168,7 @@
         </main>
     </div>
 
-    <!-- Scripts -->
+    <!-- Scripts
     <script>
         // Initialize form validation and date restrictions
         document.addEventListener('DOMContentLoaded', function() {
@@ -184,7 +184,7 @@
                 console.log('Form submitted');
             });
         });
-    </script>
+    </script> -->
     <script src="/JavaScript/dinein.js" defer></script>
 </body>
 </html>

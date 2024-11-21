@@ -28,7 +28,7 @@ class SiteController extends Controller
             }
         }
 
-        $this->setLayout('auth');
+        // $this->setLayout('auth');
 
         return $this->render('contact', [
             'model' => $contact
@@ -37,6 +37,7 @@ class SiteController extends Controller
 
     public function userDashboard()
     {
+        
         
         $this->setLayout('profile');
         return $this->render('userdashboard');
@@ -92,19 +93,28 @@ class SiteController extends Controller
         return $this->render('payments');
     }
 
+    public function otp(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('otp');
+    }
+
+    public function cart(Request $request,Response $response)
+    {
+        $this->setLayout('main');
+        return $this->render('cart');
+    }
+
     public function menu(Request $request,Response $response)
     {
+        $this->setLayout('main');
         return $this->render('menu');
     }
 
     public function homeMenu(Request $request,Response $response)
     {
+        $this->setLayout('main');
         return $this->render('homeMenu');
-    }
-
-    public function selectBranch(Request $request,Response $response)
-    {
-        return $this->render('selectBranch');
     }
    
 }

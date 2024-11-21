@@ -1,22 +1,20 @@
 {
-
-    "name": "user/php",
-    
+    "name": "user/kottu-labs",
+    "autoload": {
+        "psr-4": {
+            "User\\KottuLabs\\": "src/",
+            "app\\":"./"
+        }
+    },
     "authors": [
         {
             "name": "Thirani Athukorala",
             "email": "140165855+Thirani15@users.noreply.github.com"
         }
     ],
-
-    "autoload": {
-        "psr-4": {
-            "Lenovo\\KottuLabs\\": "src/",
-            "app\\": "./"
-        }
-    },
-    
     "require": {
-        "vlucas/phpdotenv": "^5.6"
+        "vlucas/phpdotenv": "^5.6",
+        "twilio/sdk": "^8.3",
+        "infobip/infobip-api-php-client": "^5.1"
     }
 }
