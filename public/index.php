@@ -84,5 +84,11 @@ $app->router->get('/user/data', [$userController, 'getUserData']);
 $app->router->post('/user/delete', [$userController, 'deleteUser']);
 $app->router->post('/user/update', [$userController, 'updateUser']);
 
+//define route for review and rating
+$app->router->post('/review/add', [$userController, 'addReview']);
+$app->router->get('/review/data', [$userController, 'getReviewData']);
+
+
+
 // Run the application
 $app->run();

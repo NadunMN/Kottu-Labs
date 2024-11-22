@@ -534,7 +534,7 @@ body{
     /* background-color:#333; */
 }
 
-.review-rate .starts div{
+.review-rate-start{
     width: 15px;
     height: 15px;
     /* background-color: #8f5c5c; */
@@ -560,19 +560,25 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color:#333; */
 }
 
 
-.add .s div{
+.box{
     width: 35px;
     height: 35px;
-    /* background-color: #8f5c5c; */
     background-image: url(/Photo/icon/star.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     opacity: 0.8;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.box.hover {
+    background-image: url(/Photo/icon/star_gold.png);
+    
+    
 }
 
 .review-body{
@@ -580,9 +586,9 @@ body{
     height: auto;
     /* background-color: #4b3a3a; */
     display: flex;
-    justify-content: center;
     align-items: center;
     margin-top: 10px;
+
     /* margin-left: 10px; */
     padding-bottom: 15px;
     /* border-bottom: 1px solid #d0d0d0; */
