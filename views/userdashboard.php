@@ -14,10 +14,7 @@
             <!-- order list -->
             <div class="order-list-container">
                 <h2>Order History</h2>
-                <!-- <div class="order-list-button">
-                    <button>View More</button>
-                    <button>Add Reservation</button>
-                </div> -->
+                
             </div>
 
 
@@ -81,7 +78,7 @@
                     <div class="review-list-button">
                     </div>
                 </div>
-                <form class="form" action="" method="POST">
+                <form class="form" id="add-form" action="" method="POST">
                     <div class="add-reviews-body-container">
 
                         <div class="add-review-header">
@@ -89,11 +86,11 @@
 
                                 <div class="review-rate add">
                                     <div class="starts s">
-                                        <div></div>
-                                        <div></div>
-                                        <div></div>
-                                        <div></div>
-                                        <div></div>
+                                        <div class="box"></div>
+                                        <div class="box"></div>
+                                        <div class="box"></div>
+                                        <div class="box"></div>
+                                        <div class="box"></div>
                                     </div>
                                 </div>
 
@@ -113,7 +110,7 @@
                     <div class="add-review-submit">
                         <div class="order-list-button add-review-cancel">
                             <!-- <button id="submit">Cancel</button> -->
-                            <button type="submit" id="submit" name="submit"  value="Submit"> submit </button>
+                            <button type="submit" id="add-review" name="submit"  value="Submit"> submit </button>
                         </div>
                     </div>
 
@@ -237,11 +234,11 @@
                             <div class="review-rate">
                                 <h5>4.5</h5>
                                 <div class="starts">
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
+                                    <div class='review-rate-start'></div>
+                                    <div class='review-rate-start'></div>
+                                    <div class='review-rate-start'></div>
+                                    <div class='review-rate-start'></div>
+                                    <div class='review-rate-start'></div>
                                 </div>
                             </div>
                         </div>
@@ -290,6 +287,9 @@
         </div>
     </div>
     </div>
+
+    <script src="/JavaScript/addReview.js"></script>
+
 
 </body>
 
