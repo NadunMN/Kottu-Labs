@@ -26,7 +26,7 @@
             } else {
                 // Store user ID
                 userId = data.id;
-                console.log('User:', data);
+                // console.log('User:', data);
                 // Display user data in the frontend
                 document.getElementById('fname').value = data.firstname;
                 document.getElementById('lname').value = data.lastname;
@@ -42,7 +42,7 @@
 document.getElementById('delete').addEventListener('click', function() {
     if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
         const requestBody = JSON.stringify({ id: userId });
-        console.log('Request Body:', requestBody); // Log the request body
+        // console.log('Request Body:', requestBody)
 
         fetch('/user/delete', {
             method: 'POST',

@@ -78,7 +78,7 @@
                     <div class="review-list-button">
                     </div>
                 </div>
-                <form class="form" action="" method="POST">
+                <form class="form" id="add-form" action="" method="POST">
                     <div class="add-reviews-body-container">
 
                         <div class="add-review-header">
@@ -110,7 +110,7 @@
                     <div class="add-review-submit">
                         <div class="order-list-button add-review-cancel">
                             <!-- <button id="submit">Cancel</button> -->
-                            <button type="submit" id="submit" name="submit"  value="Submit"> submit </button>
+                            <button type="submit" id="add-review" name="submit"  value="Submit"> submit </button>
                         </div>
                     </div>
 
@@ -234,11 +234,11 @@
                             <div class="review-rate">
                                 <h5>4.5</h5>
                                 <div class="starts">
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
+                                    <div class='review-rate-start'></div>
+                                    <div class='review-rate-start'></div>
+                                    <div class='review-rate-start'></div>
+                                    <div class='review-rate-start'></div>
+                                    <div class='review-rate-start'></div>
                                 </div>
                             </div>
                         </div>
@@ -288,22 +288,8 @@
     </div>
     </div>
 
-    <script>
-        const boxes = document.querySelectorAll(".add .s div");
+    <script src="/JavaScript/addReview.js"></script>
 
-boxes.forEach((box, index) => {
-  box.addEventListener("mouseover", () => {
-    for (let i = 0; i <= index; i++) {
-      boxes[i].classList.add("hover");
-    }
-  });
-
-  box.addEventListener("mouseout", () => {
-    boxes.forEach((b) => b.classList.remove("hover"));
-  });
-});
-
-    </script>
 
 </body>
 

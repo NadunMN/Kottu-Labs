@@ -534,7 +534,7 @@ body{
     /* background-color:#333; */
 }
 
-.review-rate .starts div{
+.review-rate-start{
     width: 15px;
     height: 15px;
     /* background-color: #8f5c5c; */
@@ -563,7 +563,7 @@ body{
 }
 
 
-.add .s div{
+.box{
     width: 35px;
     height: 35px;
     background-image: url(/Photo/icon/star.png);
@@ -572,30 +572,14 @@ body{
     background-repeat: no-repeat;
     opacity: 0.8;
     transition: background-color 0.3s ease;
+    cursor: pointer;
 }
 
-/* .add .s div:hover,
-.add .s div:hover ~ div{
+.box.hover {
     background-image: url(/Photo/icon/star_gold.png);
+    
+    
 }
-
-*/
-
-/* .box {
-    width: 35px;
-    height: 35px;
-    background-image: url(/Photo/icon/star.png);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.8;
-    transition: background-color 0.3s ease;
-  } */
-  
-
-  .add .s div:hover {
-    background-image: url(/Photo/icon/star_gold.png);
-  } 
 
 .review-body{
     width: 90%;

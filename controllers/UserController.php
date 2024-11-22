@@ -8,6 +8,7 @@ use app\core\Request;
 use app\core\Response;
 use app\models\User;
 use app\core\Model;
+use app\models\Review;
 
 class UserController extends Controller
 {
@@ -62,8 +63,6 @@ class UserController extends Controller
                 throw new \Exception('No user is logged in');
             }
 
-            
-
             $userData = $request->getBody();
             $user->loadData($userData);
 
@@ -82,5 +81,19 @@ class UserController extends Controller
             echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
     }
+
+
+public function addReview()
+{
+    $review = new Review();
+    $review->loadData(Application::$app->request->getBody());
+
+    if ($review->validate() && $review->save()) {
+        echo json_encode(['success' => true]);
+    } else {
+        error_log('Review validation or save failed: ' . json_encode($review->errors));
+        echo json_encode(['success' => false, 'errors' => $review->errors]);
+    }
+}
 
 }
