@@ -24,15 +24,15 @@ class Review extends DbModel
         return 'review_id';
     }
 
-    // public function load($data)
-    // {
-    //     // Load the data only if the keys exist
-    //     foreach ($data as $key => $value) {
-    //         if (property_exists($this, $key)) {
-    //             $this->{$key} = $value;
-    //         }
-    //     }
-    // }
+    public function load($data)
+    {
+        // Load the data only if the keys exist
+        foreach ($data as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->{$key} = $value;
+            }
+        }
+    }
 
     public function attributes(): array
     {
