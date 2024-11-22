@@ -47,13 +47,15 @@ $app->router->get('/logout', [$authController, 'logout']);
 
 if (Application::$app->user && Application::$app->user->position == 'admin') {
     $app->router->get('/profile', [$siteController, 'adminDashboard']);
-} else if(Application::$app->user && Application::$app->user->position == 'customer') {
+}else if(Application::$app->user && Application::$app->user->position == 'customer') {
     $app->router->get('/profile', [$siteController, 'userDashboard']);
     $app->router->get('/myaccount', [$siteController, 'userProfile']);
 }else if(Application::$app->user && Application::$app->user->position == 'chef') {
     $app->router->get('/profile', [$siteController, 'chefDashboard']);
 }else if(Application::$app->user && Application::$app->user->position == 'steward') {
     $app->router->get('/profile', [$siteController, 'stewardDashboard']);
+}else if(Application::$app->user && Application::$app->user->position == 'manager') {
+    $app->router->get('/profile', [$siteController, 'managerDashboard']);
 }
 
 $app->router->get('/otp', [$siteController, 'otp']);
