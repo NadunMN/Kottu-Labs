@@ -221,14 +221,18 @@
 
                 </div>
 
-                <div class="reviews-content">
 
-                    <div class="review">
+
+
+
+                <div class="reviews-content" id="reviewsContent">
+
+                    <!-- <div class="review">
                         <div class="review-header">
                             <div class="review-name">
                                 <div></div>
-                                <h4>Nadun Madusankan</h4>
-                                <h6>4 months ago</h6>
+                                <h4 id="name">Nadun Madusankan</h4>
+                                <h6 id="date">4 months ago</h6>
                             </div>
 
                             <div class="review-rate">
@@ -250,36 +254,14 @@
                                 I highly recommend this place for anyone looking for a memorable dining experience. Can't wait to come back!</p>
                         </div>
 
-                    </div>
+                    </div> -->
 
-                    <div class="review">
-                        <div class="review-header">
-                            <div class="review-name">
-                                <div></div>
-                                <h4>Ranuga Lekawasam</h4>
-                                <h6>4 months ago</h6>
-                            </div>
-
-                            <div class="review-rate">
-                                <h5>3.8</h5>
-                                <div class="starts">
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="review-body">
-                            <p>"The food here is fantastic! Every dish is fresh, full of flavor, and presented with care. The menu has something for everyone,
-                                from classic favorites to unique options that surprise and delight. Perfect for anyone who loves a great meal!"</p>
-                        </div>
-
-                    </div>
-
+                
                 </div>
+
+
+
+
             </div>
 
 

@@ -47,9 +47,29 @@ class Review extends DbModel
         ];
     }
 
+    public static function findAll($where)
+{
+    $tableName = static::tableName();
+    $attributes = array_keys($where);
+
+    $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+    $statement = self::prepare("
+        SELECT reviews.*, CONCAT(users.firstname, ' ', users.lastname) as userName 
+        FROM $tableName 
+        JOIN users ON reviews.user_id = users.id 
+        WHERE $sql
+    ");
+    foreach ($where as $key => $value) {
+        $statement->bindValue(":$key", $value);
+    }
+    $statement->execute();
+    return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
+}
 
 
-    public function toArray(): array
+
+
+    public function toArrayReview(): array
     {
         return [
             'review_id' => $this->review_id,

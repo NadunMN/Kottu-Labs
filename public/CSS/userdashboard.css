@@ -586,9 +586,9 @@ body{
     height: auto;
     /* background-color: #4b3a3a; */
     display: flex;
-    justify-content: center;
     align-items: center;
     margin-top: 10px;
+
     /* margin-left: 10px; */
     padding-bottom: 15px;
     /* border-bottom: 1px solid #d0d0d0; */

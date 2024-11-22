@@ -1,3 +1,116 @@
+
+let userId;
+
+// Fetch user data from the backend
+// Fetch reviews from the server
+fetch('/review/data')
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            console.error('Error:', data.error);
+        } else {
+            // Assume user ID from the first review
+            const userId = data[0]?.user_id || 'Unknown User';
+            console.log('User:', userId);
+            console.log('Reviews:', data);
+
+            // Get the reviews content container
+            const reviewsContent = document.getElementById('reviewsContent');
+
+            if (data == null || data.length === 0) {
+                reviewsContent.innerHTML = 'No reviews available'; // Show a message if there are no reviews
+            } else {
+                reviewsContent.innerHTML = ''; // Clear previous content if data is available
+            }
+            
+
+            // Dynamically generate review elements
+            data.forEach(review => {
+                // Create review container
+                const reviewDiv = document.createElement('div');
+                reviewDiv.className = 'review';
+
+                // Populate review HTML
+                reviewDiv.innerHTML = `
+                    <div class="review-header">
+                        <div class="review-name">
+                            <div></div>
+                            <h4 id="name">${review.userName || 'Anonymous'}</h4>
+                            <h6 id="date">${review.created_at.substring(0,10) || 'Date not available'}</h6>
+                        </div>
+                        <div class="review-rate">
+                            <h5>${review.rating || '0.0'}.0</h5>
+                            <div class="starts">
+                                ${renderStars(review.rating || 0)}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-body">
+                        <p>${review.review || 'No review content available.'}</p>
+                    </div>
+                `;
+
+                // Append review to the container
+                reviewsContent.appendChild(reviewDiv);
+            });
+        }
+    })
+    .catch(error => console.error('Error fetching reviews:', error));
+
+// Function to render stars based on rating
+function renderStars(rating) {
+    const maxStars = 5;
+    let starsHTML = '';
+
+    for (let i = 0; i < maxStars; i++) {
+        if (i < Math.floor(rating)) {
+            starsHTML += "<div class='review-rate-start style='background-image: url(/Photo/icon/star_gold.png);'></div>";
+        } else {
+            starsHTML += "<div class='review-rate-start style='background-image: url(/Photo/icon/star_gold.png);'></div>";
+        }
+    }
+
+    return starsHTML;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
 document.addEventListener('DOMContentLoaded', (event) => {
   const boxes = document.querySelectorAll(".box");
   let selectedIndex = -1;
