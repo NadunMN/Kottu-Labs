@@ -14,6 +14,7 @@ class UserController extends Controller
 {
 
     public Model $model;
+    public Review $reviewuser;
 
     public function getUserData()
     {
@@ -83,17 +84,35 @@ class UserController extends Controller
     }
 
 
-public function addReview()
-{
-    $review = new Review();
-    $review->loadData(Application::$app->request->getBody());
+    public function addReview()
+    {
+        $review = new Review();
+        $review->loadData(Application::$app->request->getBody());
 
-    if ($review->validate() && $review->save()) {
-        echo json_encode(['success' => true]);
-    } else {
-        error_log('Review validation or save failed: ' . json_encode($review->errors));
-        echo json_encode(['success' => false, 'errors' => $review->errors]);
+        if ($review->validate() && $review->save()) {
+            echo json_encode(['success' => true]);
+        } else {
+            error_log('Review validation or save failed: ' . json_encode($review->errors));
+            echo json_encode(['success' => false, 'errors' => $review->errors]);
+        }
     }
-}
 
+    public function getReviewData()
+    {
+        if (Application::$app->user) {
+
+            $userId = Application::$app->user->id;
+            $reviews = Review::findAll(['user_id' => $userId]);
+
+            $reviewData = [];
+
+            foreach ($reviews as $review) {
+                $reviewData[] = $review;
+            }
+
+            echo json_encode($reviewData);
+        } else {
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
 }

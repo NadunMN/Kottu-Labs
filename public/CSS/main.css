@@ -82,7 +82,7 @@ main {
 .first-background-overlay .Header-text {
     background-color: transparent;
     color: white;
-    font-family: 'Times New Roman', Times, serif;
+    font-family:'Times New Roman', Times, serif;
     font-size: 100px;
     text-align: center;
     margin-top: -50px;
