@@ -125,9 +125,7 @@
 
                 <div class="review-list-topic">
                     <h2>My Reviews</h2>
-                    <!-- <div class="review-list-button">
-            <button>Add Review</button>
-        </div> -->
+                    
                 </div>
 
 
@@ -222,45 +220,7 @@
                 </div>
 
 
-
-
-
-                <div class="reviews-content" id="reviewsContent">
-
-                    <!-- <div class="review">
-                        <div class="review-header">
-                            <div class="review-name">
-                                <div></div>
-                                <h4 id="name">Nadun Madusankan</h4>
-                                <h6 id="date">4 months ago</h6>
-                            </div>
-
-                            <div class="review-rate">
-                                <h5>4.5</h5>
-                                <div class="starts">
-                                    <div class='review-rate-start'></div>
-                                    <div class='review-rate-start'></div>
-                                    <div class='review-rate-start'></div>
-                                    <div class='review-rate-start'></div>
-                                    <div class='review-rate-start'></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="review-body">
-                            <p>I had an amazing experience at this restaurant! The ambiance was warm and inviting,
-                                and the staff was incredibly attentive and friendly. Each dish was beautifully presented and bursting with flavor
-                                you can tell they use fresh, quality ingredients. From appetizers to dessert, everything was perfect.
-                                I highly recommend this place for anyone looking for a memorable dining experience. Can't wait to come back!</p>
-                        </div>
-
-                    </div> -->
-
-                
-                </div>
-
-
-
+                <div class="reviews-content" id="reviewsContent"></div>
 
             </div>
 
