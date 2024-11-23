@@ -64,12 +64,19 @@ class SiteController extends Controller
 
     public function stewardDashboard(Request $request,Response $response)
     {
-        $this->setLayout('auth');
+        $this->setLayout('main');
         return $this->render('stewarddashboard');
+    }
+
+    public function managerDashboard(Request $request,Response $response)
+    {
+        $this->setLayout('dashboard');
+        return $this->render('managerDashboard');
     }
 
 
     public function about(Request $request,Response $response)
+
     {
         // $this->setLayout('auth');
         return $this->render('about');
