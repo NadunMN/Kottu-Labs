@@ -1,87 +1,32 @@
-/* General Reset */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
-}
-
-/* Navbar Styles */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.navbar .logo {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.navbar .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-}
-
-.navbar .nav-links li {
-    display: inline;
-}
-
-.navbar .nav-links a {
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-    transition: color 0.3s;
-}
-
-.navbar .nav-links a:hover {
-    color: #f90;
-}
-
-/* Select Branch Header */
-.select-branch-header {
-    margin: 20px 0;
-    text-align: center;
-    padding: 10px;
-}
-
-.select-branch-header h1 {
-    font-size: 28px;
-    color: #333;
-}
-
 /* Branch Selection Styles */
 .branch-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+    flex-direction: column; /* Stack branches vertically */
+    align-items: center; /* Center items horizontally */
+    gap: 20px; /* Add spacing between branches */
     margin: 20px auto;
-    flex-wrap: wrap; /* Allow wrapping for smaller screens */
     padding: 10px;
+}
+
+.select-branch-header{
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
 }
 
 .branch {
     cursor: pointer;
     text-align: center;
-    flex: 1 1 calc(33.33% - 20px); /* Flexible layout for 3 items per row */
-    max-width: 300px; /* Prevent branches from growing too large */
+    width: 100%; /* Take full width */
+    max-width: 300px; /* Limit maximum size */
     margin: 10px;
 }
 
 .branch-img {
-    width: 100%; /* Responsive width */
-    max-width: 200px; /* Limit maximum size */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 50%;
+    width: 150px; /* Set a fixed width */
+    height: 150px; /* Set a fixed height */
+    border-radius: 50%; /* Maintain the circular shape */
     border: 2px solid #ccc;
+    object-fit: cover; /* Crop the image to fill the container */
     transition: transform 0.4s ease, border-color 0.4s ease;
 }
 
@@ -103,59 +48,16 @@ body {
     font-size: 22px; /* Slightly larger on hover */
 }
 
-/* Responsive Design with Media Queries */
-
-/* For screens smaller than 768px (tablet and below) */
-@media (max-width: 768px) {
-    .branch-container {
-        flex-direction: column; /* Stack branches vertically */
-        gap: 10px;
-    }
-
-    .branch {
-        flex: 1 1 100%; /* Take full width */
-    }
-
+/* Responsive Design */
+@media (max-width: 480px) {
     .branch-img {
-        max-width: 150px; /* Smaller images */
+        max-width: 150px; /* Adjust size for smaller screens */
     }
 
     .branch p {
         font-size: 18px; /* Adjust text size */
     }
-
-    .select-branch-header h1 {
-        font-size: 24px; /* Smaller heading */
-    }
 }
 
-/* For screens smaller than 480px (mobile devices) */
-@media (max-width: 480px) {
-    .navbar {
-        flex-direction: column; /* Stack navbar items */
-        align-items: flex-start;
-    }
-
-    .navbar .logo {
-        font-size: 20px; /* Smaller logo */
-    }
-
-    .navbar .nav-links {
-        flex-direction: column; /* Stack links vertically */
-        gap: 10px;
-    }
-
-    .branch-img {
-        max-width: 120px; /* Even smaller images */
-    }
-
-    .branch p {
-        font-size: 16px; /* Smaller text */
-    }
-
-    .select-branch-header h1 {
-        font-size: 20px; /* Smaller heading */
-    }
-}
 
 
