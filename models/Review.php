@@ -97,6 +97,17 @@ class Review extends DbModel
 
         return $statement->execute();
     }
+    
+
+    public function delete()
+    {
+        $tableName = static::tableName();
+        $primaryKey = static::primaryKey();
+        $sql = "DELETE FROM $tableName WHERE $primaryKey = :$primaryKey";
+        $statement = self::prepare($sql);
+        $statement->bindValue(":$primaryKey", $this->{$primaryKey});
+        return $statement->execute();
+    }
 
     
     

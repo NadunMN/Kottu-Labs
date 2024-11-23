@@ -84,6 +84,7 @@ class UserController extends Controller
     }
 
 
+    //add review
     public function addReview()
     {
         $review = new Review();
@@ -97,6 +98,7 @@ class UserController extends Controller
         }
     }
 
+    //get review data
     public function getReviewData()
     {
         if (Application::$app->user) {
@@ -113,6 +115,37 @@ class UserController extends Controller
             echo json_encode($reviewData);
         } else {
             echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+
+
+    //review deletion
+    public function deleteReviewData(){
+        try {
+            $reviewId = Application::$app->request->getBody()['review_id'] ?? null;
+            
+
+            if (!$reviewId) {
+                throw new \Exception('Review ID not provided');
+            }
+
+            // Debugging statement
+            error_log("Review ID received: " . $reviewId);
+
+            $review = Review::findOne(['review_id' => $reviewId]);
+            if (!$review) {
+                throw new \Exception('Review not found');
+            }
+
+            if (!$review->delete()) {
+                throw new \Exception('Failed to delete review');
+            }
+
+            echo json_encode(['success' => true]);
+        } catch (\Exception $e) {
+            // Log the exception or handle it as needed
+            error_log($e->getMessage());
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
     }
 }
