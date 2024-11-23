@@ -43,9 +43,9 @@ fetch('/review/data')
                             <h6 id="date">${review.created_at.substring(0,10) || 'Date not available'}</h6>
                         </div>
                         <div class="review-rate">
-                            <button class="edit-icon"></button>
-                            <button class="delete-icon" ></button>
-                            ${reviewId= review.review_id}
+                            <button class="edit-icon" review-id ='${review.review_id}'></button>
+                            <button class="delete-icon" review-id ='${review.review_id}' ></button>
+                            
                             <h5>${review.rating || '0.0'}.0</h5>
                             <div class="starts">
                                 ${renderStars(review.rating || 0)}
@@ -62,7 +62,113 @@ fetch('/review/data')
                 // Append review to the container
                 reviewsContent.appendChild(reviewDiv);
             });
+
+            // Add event listeners for delete buttons after reviews are generated
+            document.querySelectorAll('.delete-icon').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (confirm('Are you sure you want to delete this review? This action cannot be undone.')) {
+                        const reviewId = button.getAttribute('review-id');
+                        const requestBody = JSON.stringify({ review_id: reviewId });
+                        console.log('Request Body:', requestBody);
+
+                        fetch('/review/delete', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: requestBody
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('The review has been deleted.');
+                                fetchReviews(); // Refresh the reviews
+                            } else {
+                                alert('There was an error deleting the review: ' + data.message);
+                                console.error('Error:', data.message);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                    }
+                });
+            });
+
+
+
+
+            // Add event listeners for edit buttons after reviews are generated
+            document.querySelectorAll('.edit-icon').forEach(button => {
+                button.addEventListener('click', function() {
+                    const reviewElement = button.closest('.review-header').nextElementSibling; // Get the corresponding review-body
+                    const reviewTextElement = reviewElement.querySelector('p'); // Select the paragraph element with the review text
+                    const oldText = reviewTextElement.innerText; // Get the current review text
+            
+                    // Prevent multiple text areas
+                    if (reviewElement.querySelector('textarea')) return;
+            
+                    // Create a textarea and pre-fill it with the old text
+                    const textArea = document.createElement('textarea');
+                    textArea.value = oldText;
+                    textArea.classList.add('edit-textarea');
+            
+                    // Create Save and Cancel buttons
+                    const saveButton = document.createElement('button');
+                    saveButton.innerText = 'Save';
+                    saveButton.classList.add('save-button');
+            
+                    const cancelButton = document.createElement('button');
+                    cancelButton.innerText = 'Cancel';
+                    cancelButton.classList.add('cancel-button');
+            
+                    // Hide the original text and add the textarea and buttons
+                    reviewTextElement.style.display = 'none';
+                    reviewElement.appendChild(textArea);
+                    reviewElement.appendChild(saveButton);
+                    reviewElement.appendChild(cancelButton);
+            
+                    // Save button functionality
+                    saveButton.addEventListener('click', () => {
+                        const newText = textArea.value;
+                        const reviewId = button.getAttribute('review-id'); // Retrieve review ID
+                        console.log('Review ID:', reviewId);
+            
+                        fetch('/review/update', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ review_id: reviewId, review: newText })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('The review has been updated.');
+                                reviewTextElement.innerText = newText; // Update the review text
+                                cleanUp(); // Remove textarea and buttons
+                            } else {
+                                alert('Error updating the review: ' + data.message);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                    });
+            
+                    // Cancel button functionality
+                    cancelButton.addEventListener('click', cleanUp);
+            
+                    // Cleanup function to restore original view
+                    function cleanUp() {
+                        textArea.remove();
+                        saveButton.remove();
+                        cancelButton.remove();
+                        reviewTextElement.style.display = ''; // Show original text
+                    }
+                });
+            });
+            
+            
         }
+
+        
     })
     .catch(error => console.error('Error fetching reviews:', error));
 
@@ -82,34 +188,6 @@ function renderStars(rating) {
     return starsHTML;
 }
 
-// Delete button event listener
-document.querySelectorAll('.reviews-content').forEach(button => {
-    button.addEventListener('click', function() {
-        if (confirm('Are you sure you want to delete this review? This action cannot be undone.')) {
-            const requestBody = JSON.stringify({ review_id: reviewId });
-            console.log('Request Body:', requestBody);
-
-            fetch('/review/delete', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: requestBody
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('The review has been deleted.');
-                    fetchReviews(); // Refresh the reviews
-                } else {
-                    alert('There was an error deleting the review: ' + data.message);
-                    console.error('Error:', data.message);
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        }
-    });
-});
 
 document.addEventListener('DOMContentLoaded', (event) => {
   const boxes = document.querySelectorAll(".box");
