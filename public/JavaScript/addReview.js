@@ -1,5 +1,5 @@
-
 let userId;
+let reviewId;
 
 // Fetch user data from the backend
 // Fetch reviews from the server
@@ -13,6 +13,10 @@ fetch('/review/data')
             const userId = data[0]?.user_id || 'Unknown User';
             console.log('User:', userId);
             console.log('Reviews:', data);
+           
+            reviewId = data[0]?.review_id;
+            
+
 
             // Get the reviews content container
             const reviewsContent = document.getElementById('reviewsContent');
@@ -39,6 +43,9 @@ fetch('/review/data')
                             <h6 id="date">${review.created_at.substring(0,10) || 'Date not available'}</h6>
                         </div>
                         <div class="review-rate">
+                            <button class="edit-icon"></button>
+                            <button class="delete-icon" ></button>
+                            ${reviewId= review.review_id}
                             <h5>${review.rating || '0.0'}.0</h5>
                             <div class="starts">
                                 ${renderStars(review.rating || 0)}
@@ -49,6 +56,8 @@ fetch('/review/data')
                         <p>${review.review || 'No review content available.'}</p>
                     </div>
                 `;
+
+                reviewId= review.review_id;
 
                 // Append review to the container
                 reviewsContent.appendChild(reviewDiv);
@@ -64,52 +73,43 @@ function renderStars(rating) {
 
     for (let i = 0; i < maxStars; i++) {
         if (i < Math.floor(rating)) {
-            starsHTML += "<div class='review-rate-start style='background-image: url(/Photo/icon/star_gold.png);'></div>";
+            starsHTML += "<div class='review-rate-start' style='background-image: url(/Photo/icon/star_gold.png);'></div>";
         } else {
-            starsHTML += "<div class='review-rate-start style='background-image: url(/Photo/icon/star_gold.png);'></div>";
+            starsHTML += "<div class='review-rate-start' style='background-image: url(/Photo/icon/star.png);'></div>";
         }
     }
 
     return starsHTML;
 }
 
+// Delete button event listener
+document.querySelectorAll('.reviews-content').forEach(button => {
+    button.addEventListener('click', function() {
+        if (confirm('Are you sure you want to delete this review? This action cannot be undone.')) {
+            const requestBody = JSON.stringify({ review_id: reviewId });
+            console.log('Request Body:', requestBody);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
+            fetch('/review/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: requestBody
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('The review has been deleted.');
+                    fetchReviews(); // Refresh the reviews
+                } else {
+                    alert('There was an error deleting the review: ' + data.message);
+                    console.error('Error:', data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    });
+});
 
 document.addEventListener('DOMContentLoaded', (event) => {
   const boxes = document.querySelectorAll(".box");
@@ -213,5 +213,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   
 });
+
+
+
 
 

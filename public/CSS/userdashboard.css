@@ -719,10 +719,41 @@ body{
     border: 1px solid #b8b8b8;
 }
 
+.edit-icon{
+    width: 20px;
+    height: 20px;
+    background-image: url(/Photo/icon/edit.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+}
+
+.delete-icon{
+    width: 20px;
+    height: 20px;
+    background-image: url(/Photo/icon/delete.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+
+    border:none;
+    cursor: pointer;
+}
+
 
 /* responsive design */
 
 @media (max-width: 990px) {
+
+    .delete-icon,.edit-icon{
+        width: 15px;
+        height: 15px;
+    }
 
     .userprofile-backcover{
         height: 120px;  
