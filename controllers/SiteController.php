@@ -123,6 +123,18 @@ class SiteController extends Controller
         $this->setLayout('main');
         return $this->render('homeMenu');
     }
+
+    public function selectBranch(Request $request,Response $response)
+    {
+        $this->setLayout('main');
+        return $this->render('selectBranch');
+    }
+
+    public function viewUsers(Request $request,Response $response)
+    {
+        $this->setLayout('main');
+        return $this->render('viewUsers');
+    }
    
 }
 ?>
