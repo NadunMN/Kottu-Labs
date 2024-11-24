@@ -40,16 +40,12 @@
                     <div class="card-content">
                         <h2 class="form-title">Make a Reservation</h2>
 
-                        <div class="card-img">
+                        <!-- <div class="card-img">
                         <img 
                             src="/Photo/Thirani_pics/dinein_pic.jpg" 
                             alt="Kottu Labs dining area interior"
-                            width="600"
-                            height="400"
-                            loading="eager"
-                            class="restaurant-image"
                         >
-                    </div>
+                    </div> -->
 
                         <form id="reservationForm" action="/submit-reservation" method="POST" class="reservation-form">
                             <!-- Personal Information Section -->
