@@ -1,68 +1,147 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Get all list items in the sidebar
-    const menuItems = document.querySelectorAll(".sidebar ul li");
+    // Select all sidebar list items
+    const sidebarOptions = document.querySelectorAll(".sidebar ul li");
+    const mainContent = document.getElementById("main-content");
 
-    // Get the current URL fragment or default to #viewUsers
-    let currentPage = window.location.hash || "#viewUsers";
+    // Default selection to "view-users"
+    document.getElementById("view-users").classList.add("selected");
+    
+    // Event listener for each sidebar option
+    sidebarOptions.forEach(option => {
+        option.addEventListener("click", () => {
+            // Remove 'selected' class from all options
+            sidebarOptions.forEach(opt => opt.classList.remove("selected"));
+            // Add 'selected' class to the clicked option
+            option.classList.add("selected");
 
-    // Set the initial active menu item
-    setActiveMenuItem(currentPage);
+            // Render appropriate content
+            const optionId = option.id;
 
-    // Load the content for the default page on load
-    loadContent(currentPage.substring(1)); // Remove '#' to get the page name
+            switch (optionId) {
+                case "view-users":
+                    mainContent.innerHTML = `
+                        <div class="view-users-section">
+                            <h2>View Users</h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Contact No.</th>
+                                        <th> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>John Doe</td>
+                                        <td>johndoe@example.com</td>
+                                        <td>Admin</td>
+                                        <td>027282</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button>Edit</button>
+                                                <button>Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jane Smith</td>
+                                        <td>janesmith@example.com</td>
+                                        <td>User</td>
+                                        <td>023456</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button>Edit</button>
+                                                <button>Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Michael Brown</td>
+                                        <td>michaelb@example.com</td>
+                                        <td>Manager</td>
+                                        <td>078945</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button>Edit</button>
+                                                <button>Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Linda Lee</td>
+                                        <td>lindalee@example.com</td>
+                                        <td>Admin</td>
+                                        <td>031298</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button>Edit</button>
+                                                <button>Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>`;
+                    break;
 
-    // Add event listener for hash changes
-    window.addEventListener("hashchange", () => {
-        currentPage = window.location.hash; // Update the current page based on hash
-        setActiveMenuItem(currentPage); // Highlight the corresponding menu item
-        loadContent(currentPage.substring(1)); // Load the corresponding content
-    });
+                case "update-menu":
+                    mainContent.innerHTML = `
+                        <div class="update-menu-section">
+                            <h2>Update Menu</h2>
+                            <p>Update the restaurant menu here.</p>
+                        </div>`;
+                    break;
 
-    /**
-     * Highlights the active menu item based on the current page
-     * @param {string} currentPage - The current URL hash
-     */
-    function setActiveMenuItem(currentPage) {
-        menuItems.forEach((item) => {
-            // Remove the active class from all menu items
-            item.classList.remove("active");
+                case "view-reservations":
+                    mainContent.innerHTML = `
+                        <div class="view-reservations-section">
+                            <h2>View Reservations</h2>
+                            <p>List of reservations will appear here.</p>
+                        </div>`;
+                    break;
 
-            // Check if the item's link matches the current URL fragment
-            const link = item.querySelector("a").getAttribute("href");
-            if (link === currentPage) {
-                item.classList.add("active"); // Add the active class to the matching item
+                case "update-offers":
+                    mainContent.innerHTML = `
+                        <div class="update-offers-section">
+                            <h2>Update Offers</h2>
+                            <p>Modify active offers here.</p>
+                        </div>`;
+                    break;
+
+                case "staff":
+                    mainContent.innerHTML = `
+                        <div class="staff-section">
+                            <h2>Staff</h2>
+                            <p>Manage staff details and roles here.</p>
+                        </div>`;
+                    break;
+
+                case "feedbacks":
+                    mainContent.innerHTML = `
+                        <div class="feedbacks-section">
+                            <h2>Feedbacks</h2>
+                            <p>View customer feedback here.</p>
+                        </div>`;
+                    break;
+
+                case "order-history":
+                    mainContent.innerHTML = `
+                        <div class="order-history-section">
+                            <h2>Order History</h2>
+                            <p>List of past orders will appear here.</p>
+                        </div>`;
+                    break;
+
+                default:
+                    mainContent.innerHTML = `<h2>${optionId.replace("-", " ")}</h2><p>Content for this section will go here.</p>`;
+                    break;
             }
         });
-    }
-
-    /**
-     * Dynamically loads content into the main content area
-     * @param {string} page - The name of the page to load (e.g., 'viewUsers')
-     */
-    function loadContent(page) {
-        const contentArea = document.getElementById("main-content");
-
-        // Use fetch to load the PHP file in the same folder as managerDashboard.php
-        fetch(`${page}.php`) // Directly fetch the PHP file in the current directory
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`Failed to load page: ${page}`);
-                }
-                return response.text(); // Get the HTML content as text
-            })
-            .then((data) => {
-                contentArea.innerHTML = data; // Set the fetched content in the main area
-            })
-            .catch((error) => {
-                // Display an error message if the fetch fails
-                contentArea.innerHTML = `
-                    <p>Error loading content. Please try again.</p>
-                    <p>${error.message}</p>
-                `;
-                console.error("Error:", error);
-            });
-    }
+    });
 });
+
 
 
 

@@ -12,46 +12,37 @@
         <div class="sidebar">
             <h2>Dashboard</h2>
             <ul>
-                <li id="view-users">
-                    <img src="/Photo/icon/users.png" alt="View Users">
-                    <a href="#viewUsers">View Users</a>
-                </li>
-                <li id="update-menu">
-                    <img src="/Photo/icon/menu.png" alt="Update Menu">
-                    <a href="#updateMenu">Update Menu</a>
-                </li>
-                <li id="view-reservations">
-                    <img src="/Photo/icon/reservations.png" alt="View Reservations">
-                    <a href="#viewReservations">View Reservations</a>
-                </li>
-                <li id="update-offers">
-                    <img src="/Photo/icon/offers.png" alt="Update Offers">
-                    <a href="#updateOffers">Update Offers</a>
-                </li>
-                <li id="staff">
-                    <img src="/Photo/icon/staff.png" alt="Staff">
-                    <a href="#staff">Staff</a>
-                </li>
-                <li id="feedbacks">
-                    <img src="/Photo/icon/feedback.png" alt="Feedbacks">
-                    <a href="#feedbacks">Feedbacks</a>
-                </li>
-                <li id="order-history">
-                    <img src="/Photo/icon/orderhistory.png" alt="Order History">
-                    <a href="#orderHistory">Order History</a>
-                </li>
+                <?php
+                $menuItems = [
+                    ['id' => 'view-users', 'icon' => '/Photo/icon/users.png', 'text' => 'View Users'],
+                    ['id' => 'update-menu', 'icon' => '/Photo/icon/menu.png', 'text' => 'Update Menu'],
+                    ['id' => 'view-reservations', 'icon' => '/Photo/icon/reservations.png', 'text' => 'View Reservations'],
+                    ['id' => 'update-offers', 'icon' => '/Photo/icon/offers.png', 'text' => 'Update Offers'],
+                    ['id' => 'staff', 'icon' => '/Photo/icon/staff.png', 'text' => 'Staff'],
+                    ['id' => 'feedbacks', 'icon' => '/Photo/icon/feedback.png', 'text' => 'Feedbacks'],
+                    ['id' => 'order-history', 'icon' => '/Photo/icon/orderhistory.png', 'text' => 'Order History']
+                ];
+                foreach ($menuItems as $item) {
+                    echo "<li id='{$item['id']}'>
+                            <img src='{$item['icon']}' alt='{$item['text']}'>
+                            <a href='#'>{$item['text']}</a>
+                        </li>";
+                }
+                ?>
             </ul>
         </div>
 
         <!-- Main Content -->
         <div class="main-content" id="main-content">
-            <!-- Content will be loaded here via AJAX -->
+            <h2>Select an option from the sidebar</h2>
         </div>
     </div>
 
     <script src="/JavaScript/managerDashboard.js"></script>
 </body>
 </html>
+
+
 
 
 
