@@ -275,6 +275,57 @@ body {
     }
 }
 
+/* Order History Section */
+.order-history-section {
+    font-size: 16px;
+}
+
+.order-history-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.order-history-section table th,
+.order-history-section table td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-history-section table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.order-history-section table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.order-history-section table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Action Button - View */
+.order-history-section table td .action-buttons {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.order-history-section table td .action-buttons button {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+}
+
+.order-history-section table td .action-buttons button:hover {
+    background-color: #0056b3;
+}
 
 
 
