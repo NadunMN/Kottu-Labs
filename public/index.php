@@ -67,6 +67,8 @@ $app->router->get('/cart', [$siteController, 'cart']);
 $app->router->get('/about',[$siteController, 'about']);
 $app->router->get('/cancelReserve',[$siteController, 'cancelReserve']);
 $app->router->get('/dinein',[$siteController, 'dinein']);
+$app->router->get('/staff',[$siteController, 'staff']);
+
 
 //maheshs routes
 $app->router->get('/payment',[$siteController, 'payment']);

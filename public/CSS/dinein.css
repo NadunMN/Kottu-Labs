@@ -1,9 +1,9 @@
 /* Root Variables */
 :root {
-  --primary-color: #3e497a;
-  --secondary-color: #f37c7c;
+  --primary-color: #040817;
+  --secondary-color: #eb0909;
   --accent-color: #ffc107;
-  --background-color: #f9f9f9;
+  --background-color: #f6f5ed;
   --text-color: #2c2c2c;
   --input-bg-color: #ffffff;
   --border-color: #ddd;
@@ -34,23 +34,26 @@ body {
 }
 
 /* Container */
-.page-wrapper {
+/* .page-wrapper {
   width: 100%;
   max-width: 1200px;
   padding: var(--spacing);
-}
+} */
 
 /* Header Styles */
-.page-header {
+/* .page-header {
   text-align: center;
   margin-bottom: var(--spacing);
-}
+} */
 
 .headline {
-  font-size: 2.5rem;
-  font-weight: 600;
+  font-size: 3rem;
+  font-weight: 700;
   color: var(--primary-color);
   text-shadow: 1px 1px var(--shadow-color);
+  font-family: cursive;
+  text-align: center;
+  margin-bottom: var(--spacing);
 }
 
 /* Card Styles */
@@ -59,26 +62,6 @@ body {
   flex-wrap: wrap;
   gap: var(--spacing);
   justify-content: center;
-  
-}
-
-.card-img{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px 0;
-}
-
-.card-img img {
-  width: 100%;
-  max-width: 500px;
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 10px var(--shadow-color);
-  transition: transform var(--transition-speed);
-}
-
-.card-img img:hover {
-  transform: scale(1.05);
 }
 
 .card-content {
@@ -86,29 +69,40 @@ body {
   border-radius: var(--border-radius);
   padding: var(--spacing);
   box-shadow: 0 8px 20px var(--shadow-color);
-  flex: 1 1 500px;
-  max-width: 600px;
+  flex: 1 1 800px; /* Wider form */
+  max-width: 1000px;
   display: flex;
-  justify-items: center;
   flex-direction: column;
 }
 
-
 .card-content .form-title {
-
-  text-align: center;
-  
+  font-size: 2rem; /* Increase the font size */
+  font-weight: 700; /* Bold font */
+  color: var(--primary-color); /* Use the primary color */
+  text-align: center; /* Center align the text */
+  text-transform: uppercase; /* Convert text to uppercase */
+  letter-spacing: 2px; /* Add spacing between letters */
+  margin-bottom: var(--spacing); /* Add space below the title */
+  text-shadow: 1px 1px 3px var(--shadow-color); /* Subtle text shadow for depth */
+  position: relative; 
+  font-family: 'Times New Roman', Times, serif;
 }
 
 /* Form Styles */
 .reservation-form {
+  display: grid; /* Use grid layout for two columns */
+  grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+  gap: var(--spacing); /* Space between rows and columns */
+  width: 100%;
+}
+
+.form-group {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing);
 }
 
 .form-label {
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 0.5rem;
   color: var(--text-color);
 }
@@ -137,6 +131,7 @@ body {
 }
 
 button {
+  grid-column: span 2; /* Button spans both columns */
   padding: 0.75rem 1.5rem;
   background: var(--primary-color);
   color: #fff;
@@ -164,16 +159,15 @@ button:focus-visible {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .card-container {
-      flex-direction: column;
-      align-items: center;
-  }
-
   .card-content {
-      max-width: 100%;
+    max-width: 100%;
   }
 
-  .card-img img {
-      max-width: 100%;
+  .reservation-form {
+    grid-template-columns: 1fr; /* Single column for smaller screens */
+  }
+
+  button {
+    grid-column: span 1; /* Button spans single column on mobile */
   }
 }

@@ -23,7 +23,7 @@
 
 /* Hero Section */
 .container1 {
-  height: 450px;
+  height: 390px;
   width: 100%;
   position: relative;
   background: var(--primary-color);
@@ -67,16 +67,18 @@
 .container2 .Name {
   font-size: 2.5rem; /* Larger text for the name */
   font-weight: 900; /* Extra bold */
-  color: #d2691e; /* Copper-like color for emphasis */
+  color: #050505; /* Copper-like color for emphasis */
   text-transform: uppercase; /* Capitalize name */
   margin: 10px 0; /* Spacing around the name */
   letter-spacing: 2px; /* Slight spacing for clarity */
+  background: #080808;
 }
+
 
 /* Styling for Welcome Text */
 .container2 .welcome-text {
   font-size: 1.2rem; /* Comfortable font size */
-  font-weight: 400; /* Normal weight */
+  font-weight: bold; /* Normal weight */
   color: #555; /* Medium grey for softer look */
   line-height: 1.6; /* Improved readability */
   max-width: 600px; /* Restrict width for better alignment */
