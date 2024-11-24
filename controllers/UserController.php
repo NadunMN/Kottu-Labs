@@ -121,6 +121,7 @@ class UserController extends Controller
 
     //review deletion
     public function deleteReviewData(){
+        
         try {
             $reviewId = Application::$app->request->getBody()['review_id'] ?? null;
             
@@ -138,7 +139,7 @@ class UserController extends Controller
                 throw new \Exception('Review not found');
             }
 
-            if (!$review->upda()) {
+            if (!$review->delete()) {
                 throw new \Exception('Failed to delete review');
             }
 
