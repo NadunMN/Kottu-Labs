@@ -56,6 +56,7 @@ if (Application::$app->user && Application::$app->user->position == 'admin') {
     $app->router->get('/profile', [$siteController, 'stewardDashboard']);
 }else if(Application::$app->user && Application::$app->user->position == 'manager') {
     $app->router->get('/profile', [$siteController, 'managerDashboard']);
+    $app->router->get('/myaccount', [$siteController, 'userProfile']);
 }
 
 $app->router->get('/otp', [$siteController, 'otp']);
