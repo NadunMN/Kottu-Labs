@@ -12,6 +12,7 @@ body {
     height: 100vh;
     padding: 20px; /* Adds space around the dashboard */
     box-sizing: border-box;
+    flex-direction: row;
 }
 
 .sidebar {
@@ -49,15 +50,16 @@ body {
     background-color: rgba(255, 255, 255, 0.1); /* Subtle highlight on hover */
 }
 
-.sidebar ul li.active a {
+.sidebar ul li.selected {
+    background-color: rgba(255, 255, 255, 0.2);
     color: #f44336; /* Red text for the selected item */
-    font-weight: bold; /* Optional: Makes it more noticeable */
+    font-weight: bold; /* Makes it more noticeable */
 }
 
 .sidebar ul li a {
     text-decoration: none;
     color: white;
-    font-size: 20px;
+    font-size: 18px;
     padding-left: 10px;
     transition: color 0.3s;
 }
@@ -68,6 +70,11 @@ body {
     margin-right: 10px; /* Space between icon and text */
 }
 
+/* Highlight only the text of the selected item in red */
+.sidebar ul li.selected a {
+    color: #f44336;
+}
+
 .main-content {
     flex: 1;
     background-color: white;
@@ -75,6 +82,75 @@ body {
     padding: 20px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
+
+/* View Users Table */
+.view-users-section {
+    font-size: 16px;
+}
+
+.view-users-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.view-users-section table th,
+.view-users-section table td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.view-users-section table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.view-users-section table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.view-users-section table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Edit and Delete Buttons */
+.view-users-section table td .action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.view-users-section table td .action-buttons button {
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.view-users-section table td .action-buttons button:hover {
+    background-color: #e53935;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
+
+
+
+
+
 
 
 
