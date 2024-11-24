@@ -136,5 +136,10 @@ class SiteController extends Controller
         return $this->render('viewUsers');
     }
    
+    public function staff(Request $request,Response $response)
+    {
+        // $this->setLayout('auth');
+        return $this->render('staff');
+    }
 }
 ?>

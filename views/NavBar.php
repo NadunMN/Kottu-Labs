@@ -18,7 +18,7 @@
             <li><a href="/">HOME</a></li>
             <li><a href="/homeMenu">MENU</a></li>
             <li><a href="/about">ABOUT</a></li>
-            <li><a href="#">OUR STAFF</a></li>
+            <li><a href="/staff">OUR STAFF</a></li>
             <li><a href="/contact">CONTACT</a></li>
         </ul>
         <div class="menu-iconbox">

@@ -24,17 +24,17 @@
 
 <body>
     <!-- Page Wrapper -->
-    <div class="page-wrapper">
+    <!-- <div class="page-wrapper"> -->
         <!-- Main Content -->
-        <main class="main-content">
+        <!-- <main class="main-content"> -->
             <!-- Header Section -->
-            <header class="page-header">
+            <header>
                 <h1 class="headline">Reserve your Spot & Enjoy!</h1>
             </header>
 
             <!-- Reservation Section -->
             <section>
-                <div class="card-container">
+                <!-- <div class="card-container"> -->
                     
                     <!-- Reservation Form Card -->
                     <div class="card-content">
@@ -54,6 +54,7 @@
                         <form id="reservationForm" action="/submit-reservation" method="POST" class="reservation-form">
                             <!-- Personal Information Section -->
                             <div class="form-section personal-info">
+
                                 <!-- Full Name Field -->
                                 <div class="form-group">
                                     <label for="fullName" class="form-label">Full Name</label>
@@ -69,7 +70,7 @@
                                         placeholder="Enter your full name"
                                     >
                                 </div>
-
+                                <br>
                                 <!-- Phone Number Field -->
                                 <div class="form-group">
                                     <label for="phone" class="form-label">Phone Number</label>
@@ -104,7 +105,7 @@
                                             min=""
                                         >
                                     </div>
-
+                                    <br>
                                     <!-- Time Field -->
                                     <div class="form-group">
                                         <label for="reservation-time" class="form-label">Reservation Time</label>
@@ -132,7 +133,7 @@
                                         <small id="timeHelp" class="helper-text">Please select your preferred dining time</small>
                                     </div>
                                 </div>
-
+                                <br>
                                 <!-- Number of Guests Field -->
                                 <div class="form-group">
                                     <label for="guests" class="form-label">Number of Guests</label>
@@ -152,7 +153,7 @@
                             </div>
 
                             <!-- Form Controls -->
-                            <div class="form-controls">
+                            
                                 <button 
                                     type="submit" 
                                     class="submit-button"
@@ -160,13 +161,13 @@
                                 >
                                     Confirm Reservation
                                 </button>
-                            </div>
+                            
                         </form>
                     </div>
-                </div>
+                <!-- </div> -->
             </section>
-        </main>
-    </div>
+        <!-- </main> -->
+    <!-- </div> -->
 
     <!-- Scripts
     <script>
