@@ -109,6 +109,37 @@ class Review extends DbModel
         return $statement->execute();
     }
 
+    public function update()
+    {
+
+        $tableName = static::tableName();
+        $attributes = $this->attributes();
+        $params = array_map(fn($attr) => "$attr = :$attr", $attributes);
+        
+        // Assuming primaryKey() returns a string key name
+        $primaryKey = static::primaryKey();
+        $sql = "UPDATE $tableName SET " . implode(', ', $params) . " WHERE $primaryKey = :$primaryKey";
+        
+        // Ensure prepare method is available and connects to PDO
+        $statement = self::prepare($sql);  // Ensure `prepare` is implemented correctly
+        
+        // Bind attribute values
+        foreach ($attributes as $attribute) {
+            $statement->bindValue(":$attribute", $this->{$attribute});
+        }
+        $statement->bindValue(":$primaryKey", $this->{$primaryKey});
+    
+        // Execute statement and return result
+        try {
+            return $statement->execute();
+        } catch (\Exception $e) {
+            // Error handling here
+            echo "Update failed: " . $e->getMessage();
+            return false;
+        }
+    }
+    
+
     
     
 

@@ -3,10 +3,12 @@
 namespace app\core;
 
 use app\core\db\Database;
+use app\core\Model\ReviewModel;
 use app\core\Response;
 use app\core\Session;
 use app\core\Router;
 use app\core\View;
+use app\core\Model\UserModel;
 
 class Application
 {
@@ -20,6 +22,7 @@ class Application
     public Session $session;
     public Database $db;
     public ?UserModel $user;
+    public ReviewModel $review;
     public View $view;
 
     public static Application $app;
