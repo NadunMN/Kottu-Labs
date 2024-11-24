@@ -99,18 +99,27 @@ fetch('/review/data')
             // Add event listeners for edit buttons after reviews are generated
             document.querySelectorAll('.edit-icon').forEach(button => {
                 button.addEventListener('click', function() {
+
+                    const newdiv = document.querySelector('.review-body');
+                    newdiv.classList.add('.review-body-new');
+
                     const reviewElement = button.closest('.review-header').nextElementSibling; // Get the corresponding review-body
                     const reviewTextElement = reviewElement.querySelector('p'); // Select the paragraph element with the review text
                     const oldText = reviewTextElement.innerText; // Get the current review text
             
                     // Prevent multiple text areas
                     if (reviewElement.querySelector('textarea')) return;
-            
+
+                    
                     // Create a textarea and pre-fill it with the old text
                     const textArea = document.createElement('textarea');
                     textArea.value = oldText;
                     textArea.classList.add('edit-textarea');
-            
+
+                    // Create a div to hold the buttons
+                    const buttonContainer = document.createElement('div');
+                    buttonContainer.classList.add('button-container');
+
                     // Create Save and Cancel buttons
                     const saveButton = document.createElement('button');
                     saveButton.innerText = 'Save';
@@ -119,18 +128,22 @@ fetch('/review/data')
                     const cancelButton = document.createElement('button');
                     cancelButton.innerText = 'Cancel';
                     cancelButton.classList.add('cancel-button');
+
+                    // Append the buttons to the div
+                    buttonContainer.appendChild(saveButton);
+                    buttonContainer.appendChild(cancelButton);
             
                     // Hide the original text and add the textarea and buttons
                     reviewTextElement.style.display = 'none';
                     reviewElement.appendChild(textArea);
-                    reviewElement.appendChild(saveButton);
-                    reviewElement.appendChild(cancelButton);
+                    reviewElement.appendChild(buttonContainer);
             
                     // Save button functionality
                     saveButton.addEventListener('click', () => {
                         const newText = textArea.value;
                         const reviewId = button.getAttribute('review-id'); // Retrieve review ID
                         console.log('Review ID:', reviewId);
+                        console.log('New Text:', newText);
             
                         fetch('/review/update', {
                             method: 'POST',
@@ -161,6 +174,7 @@ fetch('/review/data')
                         saveButton.remove();
                         cancelButton.remove();
                         reviewTextElement.style.display = ''; // Show original text
+                        newdiv.classList.remove('.review-body-new');
                     }
                 });
             });

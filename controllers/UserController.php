@@ -133,12 +133,44 @@ class UserController extends Controller
             error_log("Review ID received: " . $reviewId);
 
             $review = Review::findOne(['review_id' => $reviewId]);
+
             if (!$review) {
                 throw new \Exception('Review not found');
             }
 
-            if (!$review->delete()) {
+            if (!$review->upda()) {
                 throw new \Exception('Failed to delete review');
+            }
+
+            echo json_encode(['success' => true]);
+        } catch (\Exception $e) {
+            // Log the exception or handle it as needed
+            error_log($e->getMessage());
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function updateReviewData()
+    {
+
+        $review = new Review();
+        try {
+            $reviewId = Application::$app->request->getBody()['review_id'] ?? null;
+            if (!$reviewId) {
+                throw new \Exception('Review ID not provided');
+            }
+
+            $review = Review::findOne(['review_id' => $reviewId]);
+            if (!$review) {
+                throw new \Exception('Review not found');
+            }
+
+            $reviewData = Application::$app->request->getBody();
+            $review->loadData($reviewData);
+
+            if (!$review->update()) {
+                throw new \Exception('Failed to update review');
             }
 
             echo json_encode(['success' => true]);
