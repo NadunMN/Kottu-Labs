@@ -172,30 +172,56 @@ document.addEventListener("DOMContentLoaded", () => {
                             </div>`;
                         break;
 
-                    case "update-offers":
-                        mainContent.innerHTML = `
-                            <div class="update-offers-section">
-                                <h2>Update Offers</h2>
-                                <p>Modify active offers here.</p>
-                                    
-                                <form class="update-offer-form">
-                                    <div class="form-group">
-                                        <label for="offer-image">Upload Offer Image</label>
-                                        <input type="file" id="offer-image" name="offer-image" accept="image/*" />
-                                    </div>
+                        case "update-offers":
+                            mainContent.innerHTML = `
+                                <div class="update-offers-section">
+                                    <h2>Update Offers</h2>
+                                    <p>Modify active offers here.</p>
                                         
-                                    <div class="form-group">
-                                        <label for="offer-description">Offer Description</label>
-                                        <textarea id="offer-description" name="offer-description" rows="5" placeholder="Describe the offer..."></textarea>
+                                    <!-- Update Offer Form -->
+                                    <form class="update-offer-form">
+                                        <div class="form-group">
+                                            <label for="offer-image">Upload Offer Image</label>
+                                            <input type="file" id="offer-image" name="offer-image" accept="image/*" />
+                                        </div>
+                                            
+                                        <div class="form-group">
+                                            <label for="offer-description">Offer Description</label>
+                                            <textarea id="offer-description" name="offer-description" rows="5" placeholder="Describe the offer..."></textarea>
+                                        </div>
+                                            
+                                        <div class="form-group">
+                                            <button type="submit" class="update-offer-btn">Update Offer</button>
+                                        </div>
+                                    </form>
+                        
+                                    <!-- Posted Offers Section -->
+                                    <div class="posted-offers">
+                                        <h3>Posted Offers</h3>
+                                        <div class="offers-container">
+                                            <!-- Example Offer Cards -->
+                                            <div class="offer-card">
+                                                <img src="path/to/image1.jpg" alt="Offer Image 1" class="offer-image" />
+                                                <div class="offer-content">
+                                                    <h4>50% Off on All Kottu</h4>
+                                                    <p>Enjoy half-price Kottu this weekend!</p>
+                                                    <button class="delete-btn">Delete</button>
+                                                </div>
+                                            </div>
+                                            <div class="offer-card">
+                                                <img src="path/to/image2.jpg" alt="Offer Image 2" class="offer-image" />
+                                                <div class="offer-content">
+                                                    <h4>Free Drink with Any Meal</h4>
+                                                    <p>Get a free drink with every meal purchase over $10.</p>
+                                                    <button class="delete-btn">Delete</button>
+                                                </div>
+                                            </div>
+                                            <!-- Add more offer cards dynamically as needed -->
+                                        </div>
                                     </div>
-                                        
-                                <div class="form-group">
-                                    <button type="submit" class="update-offer-btn">Update Offer</button>
-                                </div>
-                            </form>
-                        </div>`;
-                        break;
-
+                                </div>`;
+                            break;
+                        
                 case "staff":
                     mainContent.innerHTML = `
                         <div class="staff-section">
@@ -204,13 +230,70 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>`;
                     break;
 
-                case "feedbacks":
-                    mainContent.innerHTML = `
-                        <div class="feedbacks-section">
-                            <h2>Feedbacks</h2>
-                            <p>View customer feedback here.</p>
-                        </div>`;
-                    break;
+                    case "feedbacks":
+                        mainContent.innerHTML = `
+                            <div class="feedbacks-section">
+                                <h2>Customer Feedbacks</h2>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Rating</th>
+                                            <th>Review</th>
+                                            <th>Customer Name</th>
+                                            <th>Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>5/5</td>
+                                            <td>Excellent service and amazing food!</td>
+                                            <td>John Doe</td>
+                                            <td>2024-11-20</td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button>Delete</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>4/5</td>
+                                            <td>Great experience, but waiting time was long.</td>
+                                            <td>Jane Smith</td>
+                                            <td>2024-11-21</td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button>Delete</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>5/5</td>
+                                            <td>The kottu was out of this world!</td>
+                                            <td>Michael Brown</td>
+                                            <td>2024-11-22</td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button>Delete</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3/5</td>
+                                            <td>Food was good, but the drinks could be better.</td>
+                                            <td>Linda Lee</td>
+                                            <td>2024-11-23</td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button>Delete</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>`;
+                        break;
+                    
 
                 case "order-history":
                     mainContent.innerHTML = `
