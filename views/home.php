@@ -14,7 +14,7 @@
     <div class="home-top-main">
         <div class="first-background-img">
             <div class="first-background-overlay">
-                <p class="Header-text">Enjoy our,<br/> Delicious Meal Kottu</p>
+                <p class="Header-text">Enjoy your,<br/> SL Comfort Food Kottu</p>
                 <p class="Sub-text">
                 Experience the authentic taste of Sri Lanka with our signature Kottu dishes!</br>
                 we’re ready to serve you with freshly made Kottu that's packed with flavor.
