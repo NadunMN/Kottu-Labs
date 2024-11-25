@@ -21,7 +21,8 @@
                     ['id' => 'staff', 'icon' => '/Photo/icon/staff.png', 'text' => 'Staff'],
                     ['id' => 'feedbacks', 'icon' => '/Photo/icon/feedback.png', 'text' => 'Feedbacks'],
                     ['id' => 'order-history', 'icon' => '/Photo/icon/orderhistory.png', 'text' => 'Order History'],
-                    ['id' => 'reports', 'icon' => '/Photo/icon/reports.png', 'text' => 'Reports']
+                    ['id' => 'reports', 'icon' => '/Photo/icon/reports.png', 'text' => 'Reports'],
+                    ['id' => 'new-item', 'icon' => '/Photo/icon/newitem.png', 'text' => 'New Item']
                 ];
                 foreach ($menuItems as $item) {
                     echo "<li id='{$item['id']}'>
@@ -36,10 +37,7 @@
 
         
         <!-- Main Content -->
-        <div class="main-content" id="main-content">
-            <h2>Select an option from the sidebar</h2>
-        </div>
-    </div>
+        <div class="main-content" id="main-content"></div>
 
     <script src="/JavaScript/managerDashboard.js"></script>
 </body>

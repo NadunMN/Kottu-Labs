@@ -5,15 +5,19 @@ namespace app\models;
 use app\core\db\DbModel;
 use app\core\Model\MealModel;
 
-class Meal extends MealModel
+class Meal extends DbModel
 {
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 2;
 
     public string $meal_id = '';
     public string $meal_name = '';
     public string $meal_price = '';
     public string $meal_description = '';
     public string $meal_photo = '';
-    public int $meal_stauts = 1;
+    public int $meal_status = self::STATUS_INACTIVE;
+
     
     
 
@@ -39,7 +43,7 @@ class Meal extends MealModel
 
     public function attributes(): array
     {
-        return ['meal_id','meal_name', 'meal_price', 'meal_description', 'meal_photo', 'meal_stauts'];
+        return ['meal_name', 'meal_price', 'meal_photo', 'meal_description'];
     }
 
     public function rules(): array
@@ -47,7 +51,6 @@ class Meal extends MealModel
         return [
             'meal_name' => [self::RULE_REQUIRED],
             'meal_price' => [self::RULE_REQUIRED],
-            'meal_photo' => [self::RULE_REQUIRED],
         ];
     }
 
@@ -81,7 +84,7 @@ class Meal extends MealModel
                 'meal_price' => $this->meal_price,
                 'meal_description' => $this->meal_description,
                 'meal_photo' => $this->meal_photo,
-                'meal_stauts' => $this->meal_stauts,     
+                'meal_status' => $this->meal_status,     
         ];
     }
 

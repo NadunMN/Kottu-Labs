@@ -5,7 +5,7 @@ namespace app\models;
 use app\core\db\DbModel;
 use app\core\Model\ReviewModel;
 
-class Review extends ReviewModel
+class Review extends DbModel
 {
 
     public string $review_id = '';
