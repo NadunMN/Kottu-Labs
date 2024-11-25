@@ -39,7 +39,7 @@
 
     <div class="offers-section">
         <div class="topic-head">
-            <p class="card-head-topic">Most Popular Deal</p>
+            <p class="card-head-topic">Special Offers</p>
             <button>View all</button>
         </div>
         <hr class="styled-hr">
@@ -81,14 +81,7 @@
 
     
 
-    <div class="offers-section">
-        <div class="topic-head">
-            <p class="card-head-topic">Monthly offers</p>
-            <button>View all</button>
-        </div>
-        <hr class="styled-hr">
-        <?php include __DIR__ . '/./carousel.php'; ?>
-    </div>
+    
 
 
     <div class="description-section">
