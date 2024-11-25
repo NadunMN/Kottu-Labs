@@ -9,6 +9,7 @@ use app\core\Session;
 use app\core\Router;
 use app\core\View;
 use app\core\Model\UserModel;
+use app\core\Model\MealModel;
 
 class Application
 {
@@ -23,6 +24,7 @@ class Application
     public Database $db;
     public ?UserModel $user;
     public ReviewModel $review;
+    public MealModel $meal;
     public View $view;
 
     public static Application $app;

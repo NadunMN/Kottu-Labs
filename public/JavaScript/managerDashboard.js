@@ -169,41 +169,24 @@ document.addEventListener("DOMContentLoaded", () => {
                             <button class="add-item-btn">Add New Item</button>
 
                             <!-- Add New Item Form -->
-                            <div class="add-item-form hidden">
+                            <div id="add-item-form" class="add-item-form hidden">
                                 <h3>Add New Menu Item</h3>
-                                <form>
+                                <form id="add-form" action="">
                                     <div class="form-group">
                                         <label for="item-image">Upload Image</label>
-                                        <input type="file" id="item-image" name="item-image" accept="image/*">
+                                        <input type="file" id="item-image" name="meal_photo" accept="image/*">
                                     </div>
                                     <div class="form-group">
                                         <label for="item-name">Name</label>
-                                        <input type="text" id="item-name" name="item-name" placeholder="Enter item name">
+                                        <input type="text" id="item-name" name="meal_name" placeholder="Enter item name">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="item-type">Type</label>
-                                        <select id="item-type" name="item-type">
-                                            <option value="Appetizers">Appetizers</option>
-                                            <option value="Pasta">Pasta</option>
-                                            <option value="Dolphin.Kottu">Dolphin.Kottu</option>
-                                            <option value="KL Inventions">KL Inventions</option>
-                                            <option value="Wraps & Rotti Sandwiches">Wraps & Rotti Sandwiches</option>
-                                            <option value="Parata">Parata</option>
-                                            <option value="Devilled Portions">Devilled Portions</option>
-                                            <option value="KL Special Fried Rice">KL Special Fried Rice</option>
-                                            <option value="Classic Kottu">Classic Kottu</option>
-                                            <option value="Cheese Kottu">Cheese Kottu</option>
-                                            <option value="String Hopper Kottu">String Hopper Kottu</option>
-                                            <option value="Mocktails">Mocktails</option>
-                                            <option value="Beverages">Beverages</option>
-                                        </select>
-                                    </div>
+                                    
                                     <div class="form-group">
                                         <label for="item-price">Price</label>
-                                        <input type="number" id="item-price" name="item-price" placeholder="Enter price" min="0" step="0.01">
+                                        <input type="number" id="item-price" name="meal_price" placeholder="Enter price" min="0" step="0.01">
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="save-item-btn">Save Item</button>
+                                        <input type="submit" name="submit" class="save-item-btn" placeholder="Submit">
                                     </div>
                                 </form>
                             </div>
@@ -239,6 +222,98 @@ document.addEventListener("DOMContentLoaded", () => {
                             row.remove();
                         });
                     });
+
+
+                    const addForm = document.getElementById('add-form');
+
+                    if (addForm) {
+                        addForm.addEventListener("submit", function (event) {
+                            event.preventDefault(); // Prevent default form submission
+                    
+                            const formData = new FormData(this);
+                            const data = {};
+                    
+                            // Convert FormData to a plain object
+                            for (const [key, value] of formData.entries()) {
+                                if (key === "meal_photo" && value instanceof File) {
+                                    // Save only the file name
+                                    data[key] = value.name;
+                                } else {
+                                    data[key] = value;
+                                }
+                            }
+                    
+                            // Validate required fields
+                            if (!data.meal_name || !data.meal_price || !data.meal_photo) {
+                                alert("Please fill out all required fields (Name, Price, and Photo).");
+                                return;
+                            }
+                    
+                            // Convert the object to JSON
+                            const requestBody = JSON.stringify(data);
+                            console.log('Request Body:', requestBody);
+                    
+                            // Send the JSON data via fetch
+                            fetch("/menuitem/add", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: requestBody,
+                            })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error(`HTTP error! status: ${response.status}`);
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    console.log("Success:", data);
+                                    alert("Menu item added successfully!");
+                                })
+                                .catch(error => {
+                                    console.error("Error:", error);
+                                    alert("An error occurred while adding the menu item.");
+                                });
+                        });
+                    } else {
+                        console.error("Element with id 'add-form' not found.");
+                    }
+                    
+ 
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     break;
 

@@ -4,6 +4,7 @@ use app\core\Application;
 use app\controllers\SiteController;
 use app\controllers\AuthController;
 use app\controllers\UserController;
+use app\controllers\ManagerController;
 use app\controllers\sendOtp;
 use app\models\User;
 
@@ -29,6 +30,7 @@ $app = new Application(dirname(__DIR__), $config);
 $siteController = new SiteController();
 $authController = new AuthController();
 $userController = new UserController();
+$managerController = new ManagerController();
 
 
 // Define routes
@@ -94,6 +96,9 @@ $app->router->post('/review/add', [$userController, 'addReview']);
 $app->router->get('/review/data', [$userController, 'getReviewData']);
 $app->router->post('/review/delete', [$userController, 'deleteReviewData']);
 $app->router->post('/review/update', [$userController, 'updateReviewData']);
+
+//define route for menuItems
+$app->router->post('/menuitem/add', [$managerController, 'addmenuItems']);
 
 
 
