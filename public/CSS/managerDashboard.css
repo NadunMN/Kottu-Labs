@@ -220,7 +220,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
-    justify-content: center;
+    justify-content: left;
 }
 
 .offer-card {
@@ -453,6 +453,113 @@ body {
         font-size: 14px;
     }
 }
+
+.reservation-section {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.reservation-section h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.reservation-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.reservation-table th, .reservation-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.reservation-table th {
+    background-color: #f3f3f3;
+    font-weight: bold;
+}
+
+.reservation-table td {
+    background-color: #fff;
+}
+
+/* Table styles */
+.menu-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.menu-table th, .menu-table td {
+    padding: 10px 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.menu-table th {
+    background-color: #f3f3f3;
+    font-weight: bold;
+}
+
+.action-buttons button {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.edit-btn {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.status-btn {
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.status-btn.available {
+    background-color: #2ecc71;
+}
+
+.status-btn.unavailable {
+    background-color: #e74c3c;
+}
+
+.edit-btn:hover {
+    background-color: #2980b9;
+}
+
+.status-btn.available:hover {
+    background-color: #27ae60;
+}
+
+.status-btn.unavailable:hover {
+    background-color: #c0392b;
+}
+
+
+
+
 
 
 

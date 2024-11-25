@@ -86,13 +86,103 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>`;
                     break;
 
-                case "update-menu":
+                    case "update-menu": 
                     mainContent.innerHTML = `
-                        <div class="update-menu-section">
-                            <h2>Update Menu</h2>
-                            <p>Update the restaurant menu here.</p>
+                        <div class="view-branch-menu-section">
+                            <h2>Branch: Nawala</h2> <!-- You can dynamically replace 'Nawala' based on the selected branch -->
+                            <table class="menu-table">
+                                <thead>
+                                    <tr>
+                                        <th>Meal ID</th>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Price</th>
+                                        <th>Actions</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>001</td>
+                                        <td>Kottu</td>
+                                        <td>Main</td>
+                                        <td>$10</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="edit-btn">Edit</button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="status-btn available">Available</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>002</td>
+                                        <td>Rice</td>
+                                        <td>Main</td>
+                                        <td>$8</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="edit-btn">Edit</button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="status-btn unavailable">Unavailable</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>003</td>
+                                        <td>Roti</td>
+                                        <td>Side</td>
+                                        <td>$5</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="edit-btn">Edit</button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="status-btn available">Available</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>004</td>
+                                        <td>Beverage</td>
+                                        <td>Drink</td>
+                                        <td>$3</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="edit-btn">Edit</button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="status-btn unavailable">Unavailable</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>`;
+
+                    // Add event listeners to the status buttons to toggle availability
+                    const statusButtons = document.querySelectorAll('.status-btn');
+
+                    statusButtons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            // Toggle status class and text between Available/Unavailable
+                            if (button.classList.contains('available')) {
+                                button.classList.remove('available');
+                                button.classList.add('unavailable');
+                                button.textContent = 'Unavailable';
+                            } else {
+                                button.classList.remove('unavailable');
+                                button.classList.add('available');
+                                button.textContent = 'Available';
+                            }
+                        });
+                    });
+
                     break;
+
+
 
                     case "view-reservations":
                         mainContent.innerHTML = `
