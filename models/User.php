@@ -11,6 +11,7 @@ class User extends UserModel
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 2;
+
     public string $id = '';
     public string $firstname = '';
     public string $lastname = '';
@@ -23,7 +24,7 @@ class User extends UserModel
     public string $address = '';
     public string $nationality = '';
     public string $created_at = '';
-    public string $location = '';
+    public int $branch_id = 1;
 
     public static User $use;
     public static function tableName(): string
@@ -67,7 +68,7 @@ class User extends UserModel
 
     public function attributes(): array
     {
-        return ['id','firstname', 'lastname', 'email', 'location', 'status', 'position',
+        return ['id','firstname', 'lastname', 'email', 'branch_id', 'status', 'position',
          'mobile_number', 'gender', 'address', 'nationality',  'date_of_birth'];
     }
 
@@ -104,7 +105,7 @@ class User extends UserModel
             'address' => $this->address,
             'nationality' => $this->nationality,
             'created_at' => $this->created_at,
-            'location' => $this->location,
+            'branch_id' => $this->branch_id,
         ];
     }
 
