@@ -110,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                         <td>
                                             <div class="action-buttons">
                                                 <button class="edit-btn">Edit</button>
+                                                <button class="delete-btn">Delete</button>
                                             </div>
                                         </td>
                                         <td>
@@ -124,6 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                         <td>
                                             <div class="action-buttons">
                                                 <button class="edit-btn">Edit</button>
+                                                <button class="delete-btn">Delete</button>
                                             </div>
                                         </td>
                                         <td>
@@ -138,6 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                         <td>
                                             <div class="action-buttons">
                                                 <button class="edit-btn">Edit</button>
+                                                <button class="delete-btn">Delete</button>
                                             </div>
                                         </td>
                                         <td>
@@ -152,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                         <td>
                                             <div class="action-buttons">
                                                 <button class="edit-btn">Edit</button>
+                                                <button class="delete-btn">Delete</button>
                                             </div>
                                         </td>
                                         <td>
@@ -160,14 +164,61 @@ document.addEventListener("DOMContentLoaded", () => {
                                     </tr>
                                 </tbody>
                             </table>
+
+                            <!-- Add New Item Button -->
+                            <button class="add-item-btn">Add New Item</button>
+
+                            <!-- Add New Item Form -->
+                            <div class="add-item-form hidden">
+                                <h3>Add New Menu Item</h3>
+                                <form>
+                                    <div class="form-group">
+                                        <label for="item-image">Upload Image</label>
+                                        <input type="file" id="item-image" name="item-image" accept="image/*">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="item-name">Name</label>
+                                        <input type="text" id="item-name" name="item-name" placeholder="Enter item name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="item-type">Type</label>
+                                        <select id="item-type" name="item-type">
+                                            <option value="Appetizers">Appetizers</option>
+                                            <option value="Pasta">Pasta</option>
+                                            <option value="Dolphin.Kottu">Dolphin.Kottu</option>
+                                            <option value="KL Inventions">KL Inventions</option>
+                                            <option value="Wraps & Rotti Sandwiches">Wraps & Rotti Sandwiches</option>
+                                            <option value="Parata">Parata</option>
+                                            <option value="Devilled Portions">Devilled Portions</option>
+                                            <option value="KL Special Fried Rice">KL Special Fried Rice</option>
+                                            <option value="Classic Kottu">Classic Kottu</option>
+                                            <option value="Cheese Kottu">Cheese Kottu</option>
+                                            <option value="String Hopper Kottu">String Hopper Kottu</option>
+                                            <option value="Mocktails">Mocktails</option>
+                                            <option value="Beverages">Beverages</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="item-price">Price</label>
+                                        <input type="number" id="item-price" name="item-price" placeholder="Enter price" min="0" step="0.01">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="save-item-btn">Save Item</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>`;
+
+                    // Toggle the Add New Item Form visibility
+                    document.querySelector('.add-item-btn').addEventListener('click', () => {
+                        const form = document.querySelector('.add-item-form');
+                        form.classList.toggle('hidden');
+                    });
 
                     // Add event listeners to the status buttons to toggle availability
                     const statusButtons = document.querySelectorAll('.status-btn');
-
                     statusButtons.forEach(button => {
                         button.addEventListener('click', () => {
-                            // Toggle status class and text between Available/Unavailable
                             if (button.classList.contains('available')) {
                                 button.classList.remove('available');
                                 button.classList.add('unavailable');
@@ -180,7 +231,17 @@ document.addEventListener("DOMContentLoaded", () => {
                         });
                     });
 
+                    // Add event listeners to delete buttons
+                    const deleteButtons = document.querySelectorAll('.delete-btn');
+                    deleteButtons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            const row = button.closest('tr');
+                            row.remove();
+                        });
+                    });
+
                     break;
+
 
 
 
@@ -263,54 +324,98 @@ document.addEventListener("DOMContentLoaded", () => {
                         break;
 
                         case "update-offers":
-                            mainContent.innerHTML = `
-                                <div class="update-offers-section">
-                                    <h2>Update Offers</h2>
-                                    <p>Modify active offers here.</p>
-                                        
-                                    <!-- Update Offer Form -->
-                                    <form class="update-offer-form">
-                                        <div class="form-group">
-                                            <label for="offer-image">Upload Offer Image</label>
-                                            <input type="file" id="offer-image" name="offer-image" accept="image/*" />
-                                        </div>
-                                            
-                                        <div class="form-group">
-                                            <label for="offer-description">Offer Description</label>
-                                            <textarea id="offer-description" name="offer-description" rows="5" placeholder="Describe the offer..."></textarea>
-                                        </div>
-                                            
-                                        <div class="form-group">
-                                            <button type="submit" class="update-offer-btn">Update Offer</button>
-                                        </div>
-                                    </form>
-                        
-                                    <!-- Posted Offers Section -->
-                                    <div class="posted-offers">
-                                        <h3>Posted Offers</h3>
-                                        <div class="offers-container">
-                                            <!-- Example Offer Cards -->
-                                            <div class="offer-card">
-                                                <img src="path/to/image1.jpg" alt="Offer Image 1" class="offer-image" />
-                                                <div class="offer-content">
-                                                    <h4>50% Off on All Kottu</h4>
-                                                    <p>Enjoy half-price Kottu this weekend!</p>
-                                                    <button class="delete-btn">Delete</button>
-                                                </div>
-                                            </div>
-                                            <div class="offer-card">
-                                                <img src="path/to/image2.jpg" alt="Offer Image 2" class="offer-image" />
-                                                <div class="offer-content">
-                                                    <h4>Free Drink with Any Meal</h4>
-                                                    <p>Get a free drink with every meal purchase over $10.</p>
-                                                    <button class="delete-btn">Delete</button>
-                                                </div>
-                                            </div>
-                                            <!-- Add more offer cards dynamically as needed -->
+                    mainContent.innerHTML = `
+                        <div class="update-offers-section">
+                            <h2>Update Offers</h2>
+
+                            <!-- Add New Offer -->
+                            <div class="add-new-offer">
+                                <h3>Add New Offer</h3>
+                                <form class="update-offer-form">
+                                    <div class="form-group">
+                                        <label for="offer-image">Upload Offer Image</label>
+                                        <input type="file" id="offer-image" name="offer-image" accept="image/*" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="offer-description">Offer Description</label>
+                                        <textarea id="offer-description" name="offer-description" rows="5" placeholder="Describe the offer..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn submit-offer-btn">Add Offer</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Existing Offers -->
+                            <div class="existing-offers">
+                                <h3>Existing Offers</h3>
+                                <div class="offers-container">
+                                    <!-- Example Offer Cards -->
+                                    <div class="offer-card">
+                                        <img src="path/to/image1.jpg" alt="Offer Image 1" class="offer-image" />
+                                        <div class="offer-content">
+                                            <h4>50% Off on All Kottu</h4>
+                                            <p>Enjoy half-price Kottu this weekend!</p>
+                                            <button class="btn delete-btn">Delete</button>
                                         </div>
                                     </div>
-                                </div>`;
-                            break;
+                                    <div class="offer-card">
+                                        <img src="path/to/image2.jpg" alt="Offer Image 2" class="offer-image" />
+                                        <div class="offer-content">
+                                            <h4>Free Drink with Any Meal</h4>
+                                            <p>Get a free drink with every meal purchase over $10.</p>
+                                            <button class="btn delete-btn">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <!-- Add New Special Notice -->
+                            <div class="add-new-special-notice">
+                                <h3>Add New Special Notice</h3>
+                                <form class="special-notice-form">
+                                    <div class="form-group">
+                                        <label for="special-notice-image">Upload Notice Image</label>
+                                        <input type="file" id="special-notice-image" name="special-notice-image" accept="image/*" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="special-notice-description">Notice Description</label>
+                                        <textarea id="special-notice-description" name="special-notice-description" rows="5" placeholder="Add a description for the notice..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn submit-notice-btn">Add Special Notice</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Existing Special Notices -->
+                            <div class="existing-special-notices">
+                                <h3>Existing Special Notices</h3>
+                                <div class="notices-container">
+                                    <!-- Example Notice Cards -->
+                                    <div class="notice-card">
+                                        <img src="path/to/special-image1.jpg" alt="Special Notice 1" class="notice-image" />
+                                        <div class="notice-content">
+                                            <h4>Maintenance Notice</h4>
+                                            <p>The Nawala branch will be closed for maintenance on Dec 5th.</p>
+                                            <button class="btn delete-btn">Delete</button>
+                                        </div>
+                                    </div>
+                                    <div class="notice-card">
+                                        <img src="path/to/special-image2.jpg" alt="Special Notice 2" class="notice-image" />
+                                        <div class="notice-content">
+                                            <h4>Special Event</h4>
+                                            <p>Join us for a live music night on Nov 30th at Wattala!</p>
+                                            <button class="btn delete-btn">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    break;
+
                         
                 case "staff":
                     mainContent.innerHTML = `
