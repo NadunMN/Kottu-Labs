@@ -141,5 +141,11 @@ class SiteController extends Controller
         // $this->setLayout('auth');
         return $this->render('staff');
     }
+
+    public function offer(Request $request,Response $response)
+    {
+        // $this->setLayout('auth');
+        return $this->render('offer');
+    }
 }
 ?>
