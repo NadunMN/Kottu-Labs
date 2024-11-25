@@ -1,33 +1,138 @@
-body{
-    /* margin: 0; */
-    /* padding: 0; */
-    /* font-family: Arial, Helvetica, sans-serif; */
-    /* background-image: url('/Photo/kottu_bg.jpeg'); */
-    /* background-size: cover; */
-    /* background-position: center; */
-    /* background-repeat: no-repeat; */
-    /* height: 100vh; */
-    /* color: #fff; */
+/* Global variables for consistent theming */
+:root {
+    --primary-color: #000000;
+    --secondary-color: #e0bd91;
+    --text-light: #ffffff;
+    --text-dark: #000000;
+    --bg-light: #f8f8f8;
+    --bg-dark: rgba(27, 27, 27, 0.7);
+    --shadow-regular: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    --shadow-strong: 5px 5px 20px rgba(0, 0, 0, 0.3);
+    --transition-speed: 0.3s;
+    --max-width-container: 1480px;
+    --font-primary: 'Times New Roman', Times, serif;
+    --font-secondary: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif; /* Or your preferred font */
+}
+
+.container1 {
+  height: 450px;
+  width: 100%;
+  position: relative;
+  background: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.container1 .title {
+    text-align: center;
+    color: var(--text-light);
+    padding: 0 20px;
+}
+
+.container1 .title h1 {
+    font-size: clamp(2rem, 5vw, 3.75rem);
+    font-family: var(--font-primary);
+    opacity: 0;
+    animation: fadeIn 1s ease-in forwards;
+  }
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+.container2 {
+   display: flex;
+   justify-content: space-evenly;
+   background-color: #f8f8f8; 
+   padding: 50px 20px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: center;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    align-items: self-start;
+    width: 25%;
+    transition: all 0.3s ease-in-out;
+}
+
+.info-item:hover{
+    transform: scale(1.05); 
+    /* transition: all 0.3s ease-in-out;  */
+}
+
+.icon {
+    width: 30px; 
+    height: 30px;
+    margin-right: 20px;
+}
+
+.address-container, .phone-container{
+  display: flex;
+  align-items: baseline;
+  gap: 5px; /* Adjust the gap between the icon and text */
+  margin-bottom: 0;
+}
+
+.address-container .iconL, .phone-container .iconP {
+  /* margin: 0; Remove the default margin */
+  width: 12px; /* Adjust the size if needed */
+  height: 12px;
+}
+
+.address-container p {
+  /* margin: 0; Remove extra spacing */
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.phone-container p {
+  margin: 0; 
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+  /* margin-top: 0; */
+}
+
+.text-container h3 {
+  margin-bottom: 10px;
 }
 
 .form-login{
-    /* width:100%;/ */
-    /* height: 100vh; */
-    /* display: flex; */
-    /* background-image: url('/Photo/kottu_bg.jpeg'); */
-    /* justify-content: right; */
-    /* padding-right: 100px; */
-    /* background-repeat: no-repeat; */
-    /* background-size: cover; */
-    /* align-items: center; */
-    /* background-color: rgb(255, 255, 255); */
+    display: flex;
+    background-image: url('/Photo/kottu_bg.jpeg');
+    justify-content: center;
+    background-repeat: repeat-x;
+    background-size: 50vw 100%;
+    background-position: center;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 }  
-
-.form-login h1{
-    /* color: #ffffff; */
-}
  
-/* .form-login .second-part{
+.form-login .second-part{
     padding: 50px 0;
     width: 500px;
     display: flex;
@@ -36,29 +141,30 @@ body{
     align-items: center;
     border-radius: 20px;
     background-color: rgb(255, 255, 255);
-    
+    margin: 30px;
     box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.1);
-} */
+}
 
-/* .form-login .second-part h1{
+.form-login .second-part h1{
     font-size: 1.8rem;
     font-weight: 600;
     margin-bottom: 10px;
-    text-align: left;
+    text-align: center;
     width: 80%;
     color: #000000;
-} */
+    
+}
 
-/* .form-login .second-part h3{
+.form-login .second-part h3{
     font-size: 0.9rem;
     font-weight: 600;
     margin-bottom: 10px;
     text-align: left;
     width: 80%;
     opacity: 0.5;
-} */
+}
 
-/* form{
+form{
     width: 500px;
     height: auto;
     display: flex;
@@ -66,9 +172,9 @@ body{
     justify-content: center;
     align-items: center;
     margin: 10px 0;
-} */
+}
 
-/* .form-group{
+.form-group{
     width: 80%;
     height: auto;
     display: flex;
@@ -77,9 +183,9 @@ body{
     flex-direction: column;
     height: auto;
     margin: 5px 0;
-} */
+}
 
-/* .form-control{
+.form-control{
     width: 100%;
     height: 50px;
     padding: 10px 20px;
@@ -87,9 +193,9 @@ body{
     border: 1px solid #a2a2a2;
     padding-left: 10px;
     font-size: 1rem;
-} */
+}
 
-/* textarea.form-control{
+textarea.form-control{
     height: auto;
     max-height: 200px;
     resize: vertical;
@@ -103,9 +209,9 @@ body{
 .form-control:hover{
     transition: transform 0.3s ,background-color 0.3s ease;
     transform: scale(1.01);
-} */
+}
 
-/* .form-control::placeholder{
+.form-control::placeholder{
     font-size: 1rem;
 }
 
@@ -114,8 +220,8 @@ body{
     margin-top: 5px;
     font-size: 0.8rem;
     width: 100%;
-} */
-/* 
+}
+
 .btn{
     width: 82%;
     height: 50px;
@@ -132,71 +238,49 @@ body{
     transform: scale(1.01);
 }
 
-.or{
-    width: 75%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+/* Adjust styles for smaller screens */
+@media (max-width: 768px) {
+    /* Container1 adjustments */
+    .container1 {
+      height: 300px; /* Reduce height */
+    }
+    .container1 .title h1 {
+      font-size: clamp(1.5rem, 4vw, 2.5rem); /* Reduce font size */
+    }
+  
+    /* Container2 and Info-items adjustments */
+    .container2 {
+      flex-direction: column; /* Stack items vertically */
+      gap: 20px; /* Add spacing between items */
+    }
+    .info-item {
+      width: 70%; /* Take full width of the container */
+      margin: 10px auto; /* Center items and add spacing */
+    }
+    .form-login{
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
 
-    opacity: 0.5;
+    form {
+      width: 100%;
+    }  }
+  
+  /* For very small screens like phones */
+  @media (max-width: 480px) {
+    .container1 {
+      height: 250px;
+    }
+    .container1 .title h1 {
+      font-size: clamp(1rem, 3vw, 2rem);
+    }
+  
+    .info-item {
+      width: 100%; /* Full width */
+    }
 
-} */
-
-/* .btn-google{
-    background-color: rgb(241, 241, 241);
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-}
-
-.btn-google img{
-    width: 20px;
-    height: auto;
-
-} */
-
-
-
-
-
-
-
-.contact-container {
-    /* display: flex; */
-    /* justify-content: space-around; */
-    /* align-items: center; */
-    /* padding: 50px; */
-    /* gap: 30px; */
-    /* background: rgba(0, 0, 0, 0.7); Transparent overlay */
-}
-
-/* .contact-info {
-    max-width: 40%;
-}
-
-.contact-info h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-}
-
-.contact-info p {
-    margin-bottom: 20px;
-    line-height: 1.6;
-}
-
-.info-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.info-item .icon {
-    font-size: 1.5rem;
-    margin-right: 10px;
-    color: #00bcd4;
-}
- */
+    form {
+      width: 100%;
+    }
+  }
+  

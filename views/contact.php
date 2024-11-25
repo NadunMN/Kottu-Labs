@@ -16,39 +16,67 @@ $this->title = 'Contact';
     <title>Document</title>
     <link rel="stylesheet" href="/CSS/contact.css">
 </head>
-<body>
 
+<body>
 <div class="contact-container">
-    <div class="contact-info">
-        <h1>Contact Us</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-        <div class="info-item">
-            <i class="icon">&#x1F4CD;</i> <!-- Location Icon -->
-            <span>
-                <strong>Address:</strong><br>
-                4671 Sugar Camp Road, Owatonna, Minnesota, 55060
-            </span>
+    <!-- Hero Section -->
+    <section class="container1" aria-label="Page Header">
+        <div class="title">
+            <h1>Contact Us</h1>
         </div>
+    </section>
+
+    <section class="container2">
         <div class="info-item">
-            <i class="icon">&#x260E;</i> <!-- Phone Icon -->
-            <span>
-                <strong>Phone:</strong><br>
-                507-475-60945-6094
-            </span>
+            <img src="/Photo/icon/restaurant1.png" alt="restaurant icon" class="icon" />
+            <div class="text-container">
+                <h3>Waattala Branch</h3>
+                <div class="address-container">
+                    <img src="/Photo/icon/location.png" alt="restaurant icon" class="iconL" />
+                    <p>190, 3 Negombo Rd,<br>Wattala.</p>
+                </div>
+                <div class="phone-container">
+                    <img src="/Photo/icon/phone.png" alt="restaurant icon" class="iconP" />
+                    <p>076 130 1478</p>
+                </div>
+            </div>
         </div>
+
         <div class="info-item">
-            <i class="icon">&#x1F4E7;</i> <!-- Email Icon -->
-            <span>
-                <strong>Email:</strong><br>
-                wrub7d7810e@temporary-mail.net
-            </span>
+            <img src="/Photo/icon/restaurant1.png" alt="restaurant icon" class="icon" />
+            <div class="text-container">
+                <h3>Kelaniya Branch</h3>
+                <div class="address-container">
+                    <img src="/Photo/icon/location.png" alt="restaurant icon" class="iconL" />
+                    <p>540, Kandy Rd, <br>Kelaniya.</p>
+                </div>
+                <div class="phone-container">
+                    <img src="/Photo/icon/phone.png" alt="restaurant icon" class="iconP" />
+                    <p>077 712 0815</p>
+                </div>
+            </div>
         </div>
-    </div>
+
+        <div class="info-item"><img src="/Photo/icon/restaurant1.png" alt="restaurant icon" class="icon" />
+            <div class="text-container">
+                <h3>Kotahena Branch</h3>
+                <div class="address-container">
+                    <img src="/Photo/icon/location.png" alt="restaurant icon" class="iconL" />
+                    <p>51C, Green Ln, <br>Colombo 13.</p>
+                </div>
+                <div class="phone-container">
+                    <img src="/Photo/icon/phone.png" alt="restaurant icon" class="iconP" />
+                    <p>077 123 4567</p>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
   
     <div class="form-login">
         
         <div class="second-part">
-            <h1>Contact</h1>
+            <h1>Send Message</h1>
 
             <?php $form = Form::begin('', 'post') ?>
             <?php echo $form->field($model, 'subject') ?>
