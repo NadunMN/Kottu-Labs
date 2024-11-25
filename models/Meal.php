@@ -3,26 +3,32 @@
 namespace app\models;
 
 use app\core\db\DbModel;
-use app\core\Model\ReviewModel;
+use app\core\Model\MealModel;
 
-class Review extends DbModel
+class Meal extends DbModel
 {
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 2;
 
-    public string $review_id = '';
-    public string $user_id = '';
-    public string $rating = '';
-    public string $review = '';
-    public string $created_at = '';
+    public string $meal_id = '';
+    public string $meal_name = '';
+    public string $meal_price = '';
+    public string $meal_description = '';
+    public string $meal_photo = '';
+    public int $meal_status = self::STATUS_INACTIVE;
+
+    
     
 
     public static function tableName(): string
     {
-        return 'reviews';
+        return 'meals';
     }
 
     public static function primaryKey(): string
     {
-        return 'review_id';
+        return 'meal_id';
     }
 
     public function load($data)
@@ -37,51 +43,52 @@ class Review extends DbModel
 
     public function attributes(): array
     {
-        return ['review_id','user_id', 'rating', 'review'];
+        return ['meal_name', 'meal_price', 'meal_photo', 'meal_description'];
     }
 
     public function rules(): array
     {
         return [
-            'rating' => [self::RULE_REQUIRED],
-            'review' => [self::RULE_REQUIRED],
+            'meal_name' => [self::RULE_REQUIRED],
+            'meal_price' => [self::RULE_REQUIRED],
         ];
     }
 
-    public static function findAll($where)
-{
-    $tableName = static::tableName();
-    $attributes = array_keys($where);
+//     public static function findAll($where)
+// {
+//     $tableName = static::tableName();
+//     $attributes = array_keys($where);
 
-    $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
-    $statement = self::prepare("
-        SELECT reviews.*, CONCAT(users.firstname, ' ', users.lastname) as userName 
-        FROM $tableName 
-        JOIN users ON reviews.user_id = users.id 
-        WHERE $sql
-    ");
-    foreach ($where as $key => $value) {
-        $statement->bindValue(":$key", $value);
-    }
-    $statement->execute();
-    return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
-}
-
-
+//     $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+//     $statement = self::prepare("
+//         SELECT reviews.*, CONCAT(users.firstname, ' ', users.lastname) as userName 
+//         FROM $tableName 
+//         JOIN users ON reviews.user_id = users.id 
+//         WHERE $sql
+//     ");
+//     foreach ($where as $key => $value) {
+//         $statement->bindValue(":$key", $value);
+//     }
+//     $statement->execute();
+//     return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
+// }
 
 
-    public function toArrayReview(): array
+
+
+    public function toArray(): array
     {
         return [
-            'review_id' => $this->review_id,
-            'user_id' => $this->user_id,
-            'rating' => $this->rating,
-            'review' => $this->review,
-            'created_at' => $this->created_at,     
+               'meal_id' => $this->meal_id,
+                'meal_name' => $this->meal_name,
+                'meal_price' => $this->meal_price,
+                'meal_description' => $this->meal_description,
+                'meal_photo' => $this->meal_photo,
+                'meal_status' => $this->meal_status,     
         ];
     }
 
-    public function save()
+    public function add()
     {
         $tableName = static::tableName();
         $attributes = $this->attributes();

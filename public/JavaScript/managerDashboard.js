@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>`;
                     break;
 
-                    case "update-menu": 
+                case "update-menu": 
                     mainContent.innerHTML = `
                         <div class="view-branch-menu-section">
                             <h2>Branch: Nawala</h2> <!-- You can dynamically replace 'Nawala' based on the selected branch -->
@@ -169,41 +169,20 @@ document.addEventListener("DOMContentLoaded", () => {
                             <button class="add-item-btn">Add New Item</button>
 
                             <!-- Add New Item Form -->
-                            <div class="add-item-form hidden">
+                            <div id="add-item-form" class="add-item-form hidden">
                                 <h3>Add New Menu Item</h3>
-                                <form>
-                                    <div class="form-group">
-                                        <label for="item-image">Upload Image</label>
-                                        <input type="file" id="item-image" name="item-image" accept="image/*">
-                                    </div>
+                                <form id="add-form" action="">
+                                    
                                     <div class="form-group">
                                         <label for="item-name">Name</label>
-                                        <input type="text" id="item-name" name="item-name" placeholder="Enter item name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="item-type">Type</label>
-                                        <select id="item-type" name="item-type">
-                                            <option value="Appetizers">Appetizers</option>
-                                            <option value="Pasta">Pasta</option>
-                                            <option value="Dolphin.Kottu">Dolphin.Kottu</option>
-                                            <option value="KL Inventions">KL Inventions</option>
-                                            <option value="Wraps & Rotti Sandwiches">Wraps & Rotti Sandwiches</option>
-                                            <option value="Parata">Parata</option>
-                                            <option value="Devilled Portions">Devilled Portions</option>
-                                            <option value="KL Special Fried Rice">KL Special Fried Rice</option>
-                                            <option value="Classic Kottu">Classic Kottu</option>
-                                            <option value="Cheese Kottu">Cheese Kottu</option>
-                                            <option value="String Hopper Kottu">String Hopper Kottu</option>
-                                            <option value="Mocktails">Mocktails</option>
-                                            <option value="Beverages">Beverages</option>
-                                        </select>
+                                        <input type="text" id="item-name" name="meal_name" placeholder="Enter item name">
                                     </div>
                                     <div class="form-group">
                                         <label for="item-price">Price</label>
-                                        <input type="number" id="item-price" name="item-price" placeholder="Enter price" min="0" step="0.01">
+                                        <input type="number" id="item-price" name="meal_price" placeholder="Enter price" min="0" step="0.01">
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="save-item-btn">Save Item</button>
+                                        <input type="submit" name="submit" class="save-item-btn" placeholder="Submit">
                                     </div>
                                 </form>
                             </div>
@@ -240,54 +219,93 @@ document.addEventListener("DOMContentLoaded", () => {
                         });
                     });
 
+                    document.getElementById('add-form').addEventListener("submit", function(event) {
+                        event.preventDefault();
+                        const formData = new FormData(this);
+                        const data = Object.fromEntries(formData.entries());
+                        const requestBody = JSON.stringify(data);
+                        console.log('Request Body:', requestBody); 
+                        fetch("menuitem/add", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: requestBody,
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log("Success:", data);
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                        });
+                    });
+
+
                     break;
 
 
 
 
-                    case "view-reservations":
-                        mainContent.innerHTML = `
-                            <div class="view-reservations-section">
-                                <h2>View Reservations</h2>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Reservation No.</th>
-                                            <th>Date</th>
-                                            <th>Time</th>
-                                            <th>No. of Heads</th>
-                                            <th>Booked By</th>
-                                            <th>Table Number</th>
-                                            <th> </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>R001</td>
-                                            <td>2024-11-25</td>
-                                            <td>19:00</td>
-                                            <td>4</td>
-                                            <td>John Doe</td>
-                                            <td>12</td>
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <button>Edit</button>
-                                                    <button>Delete</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>R002</td>
-                                            <td>2024-11-26</td>
-                                            <td>20:30</td>
-                                            <td>2</td>
-                                            <td>Jane Smith</td>
-                                            <td>5</td>
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <button>Edit</button>
-                                                    <button>Delete</button>
-                                                </div>
+
+
+
+
+
+
+
+
+
+
+                    
+
+                case "view-reservations":
+                    mainContent.innerHTML = `
+                        <div class="view-reservations-section">
+                            <h2>View Reservations</h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Reservation No.</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>No. of Heads</th>
+                                        <th>Booked By</th>
+                                        <th>Table Number</th>
+                                        <th> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>R001</td>
+                                        <td>2024-11-25</td>
+                                        <td>19:00</td>
+                                        <td>4</td>
+                                        <td>John Doe</td>
+                                        <td>12</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button>Edit</button>
+                                                <button>Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>R002</td>
+                                        <td>2024-11-26</td>
+                                        <td>20:30</td>
+                                        <td>2</td>
+                                        <td>Jane Smith</td>
+                                        <td>5</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button>Edit</button>
+                                                <button>Delete</button>
                                             </td>
                                         </tr>
                                         <tr>
@@ -323,7 +341,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             </div>`;
                         break;
 
-                        case "update-offers":
+                case "update-offers":
                     mainContent.innerHTML = `
                         <div class="update-offers-section">
                             <h2>Update Offers</h2>
@@ -416,7 +434,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>`;
                     break;
 
-                        
                 case "staff":
                     mainContent.innerHTML = `
                         <div class="staff-section">
@@ -425,70 +442,69 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>`;
                     break;
 
-                    case "feedbacks":
-                        mainContent.innerHTML = `
-                            <div class="feedbacks-section">
-                                <h2>Customer Feedbacks</h2>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Rating</th>
-                                            <th>Review</th>
-                                            <th>Customer Name</th>
-                                            <th>Date</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>5/5</td>
-                                            <td>Excellent service and amazing food!</td>
-                                            <td>John Doe</td>
-                                            <td>2024-11-20</td>
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <button>Delete</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>4/5</td>
-                                            <td>Great experience, but waiting time was long.</td>
-                                            <td>Jane Smith</td>
-                                            <td>2024-11-21</td>
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <button>Delete</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>5/5</td>
-                                            <td>The kottu was out of this world!</td>
-                                            <td>Michael Brown</td>
-                                            <td>2024-11-22</td>
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <button>Delete</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3/5</td>
-                                            <td>Food was good, but the drinks could be better.</td>
-                                            <td>Linda Lee</td>
-                                            <td>2024-11-23</td>
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <button>Delete</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>`;
-                        break;
-                    
+                case "feedbacks":
+                    mainContent.innerHTML = `
+                        <div class="feedbacks-section">
+                            <h2>Customer Feedbacks</h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Rating</th>
+                                        <th>Review</th>
+                                        <th>Customer Name</th>
+                                        <th>Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>5/5</td>
+                                        <td>Excellent service and amazing food!</td>
+                                        <td>John Doe</td>
+                                        <td>2024-11-20</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button>Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4/5</td>
+                                        <td>Great experience, but waiting time was long.</td>
+                                        <td>Jane Smith</td>
+                                        <td>2024-11-21</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button>Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>5/5</td>
+                                        <td>The kottu was out of this world!</td>
+                                        <td>Michael Brown</td>
+                                        <td>2024-11-22</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button>Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3/5</td>
+                                        <td>Food was good, but the drinks could be better.</td>
+                                        <td>Linda Lee</td>
+                                        <td>2024-11-23</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button>Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>`;
+                    break;
 
                 case "order-history":
                     mainContent.innerHTML = `
@@ -563,8 +579,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             </table>
                         </div>`;
                     break;
-                    
-                    
 
                 default:
                     mainContent.innerHTML = `<h2>${optionId.replace("-", " ")}</h2><p>Content for this section will go here.</p>`;

@@ -35,7 +35,7 @@ class Request
     }
 
 
-    public function     getBody()
+    public function getBody()
     {
         $body = [];
 

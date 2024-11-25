@@ -10,26 +10,25 @@ body {
 .dashboard-container {
     display: flex;
     height: 100vh;
-    padding: 20px; /* Adds space around the dashboard */
+    padding: 10px; /* Adds space around the dashboard */
     box-sizing: border-box;
     flex-direction: row;
 }
 
 .sidebar {
-    width: 250px;
-    background-color: #000; /* Black background */
-    color: #fff; /* White text */
+    width: 20%;
+    background-color: #000000; /* Black background */
+    color: #ffffff; /* White text */
     padding: 20px;
     border-radius: 10px; /* Smooth corners */
-    margin-right: 20px; /* Gap between sidebar and main content */
+    margin-right: 10px; /* Gap between sidebar and main content */
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
 }
 
 .sidebar h2 {
-    margin: 0 0 20px;
-    font-size: 28px;
-    border-bottom: 1px solid #fff;
+    font-size: 2rem;
     padding-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .sidebar ul {
@@ -38,11 +37,12 @@ body {
 }
 
 .sidebar ul li {
-    margin-bottom: 25px; /* Increased gap between lines */
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
-    padding: 10px; /* Add padding for easier highlight */
-    border-radius: 5px; /* Smooth corners */
+    padding: 10px; 
+    border-radius: 5px;
+    font-weight: 400;
     transition: color 0.3s, background-color 0.3s;
 }
 
@@ -59,7 +59,7 @@ body {
 .sidebar ul li a {
     text-decoration: none;
     color: white;
-    font-size: 18px;
+    font-size: 1rem;
     padding-left: 10px;
     transition: color 0.3s;
 }
@@ -76,8 +76,11 @@ body {
 }
 
 .main-content {
+    width: 100%;
+    min-height: 100%;
+    height: fit-content;
     flex: 1;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     border-radius: 10px;
     padding: 20px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
@@ -135,12 +138,10 @@ body {
 }
 
 .view-branch-menu-section {
-    max-width: 1200px;
-    margin: 20px auto;
+    width: 100%;
+    height: auto;
     padding: 20px;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 
 .menu-table {
@@ -199,24 +200,146 @@ body {
 .add-item-btn {
     background-color: #2ecc71;
     color: white;
+    margin-top: 10px;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 1rem;
 }
+
+
+
 
 .add-item-form.hidden {
     display: none;
 }
 
+/* Form Container Styles */
 .add-item-form {
-    margin-top: 20px;
-    padding: 20px;
-    background: #f9f9f9;
+    width: 100%;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
 }
+
+.add-item-form h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* Form Group Styles */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+/* Input Field Styles */
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
+}
+
+/* File Input Styles */
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 2px dashed #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.form-group input[type="file"]:hover {
+    border-color: #4a90e2;
+}
+
+/* Select Dropdown Styles */
+.form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23555' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-color: white;
+    cursor: pointer;
+}
+
+/* Submit Button Styles */
+.save-item-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.save-item-btn:hover {
+    background-color: #357abd;
+}
+
+.save-item-btn:active {
+    transform: translateY(1px);
+}
+
+/* Placeholder Styles */
+::placeholder {
+    color: #999;
+}
+
+/* Hidden Class */
+.hidden {
+    display: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .add-item-form {
+        margin: 10px;
+        padding: 20px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group select,
+    .save-item-btn {
+        padding: 10px;
+    }
+}
+
+
+
+
 
 
 /* Update Offers Section */
@@ -239,33 +362,7 @@ body {
     text-transform: uppercase;
 }
 
-/* Form Styling */
-.form-group {
-    margin-bottom: 20px;
-}
 
-.form-group label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    background-color: #f9f9f9;
-    transition: border-color 0.3s;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    border-color: #3498db;
-    outline: none;
-}
 
 .btn {
     background-color: #3498db;
