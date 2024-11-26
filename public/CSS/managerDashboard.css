@@ -153,7 +153,7 @@ body {
 .menu-table th, .menu-table td {
     padding: 12px;
     text-align: left;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
 }
 
 .menu-table th {
@@ -206,6 +206,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
+    
 }
 
 
@@ -221,29 +222,38 @@ body {
     margin: 20px auto;
     padding: 30px;
     background-color: #ffffff;
-    border-radius: 8px;
-    border: 1px solid #ddd;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.add-item-form:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 .add-item-form h3 {
     text-align: center;
-    color: #333;
-    margin-bottom: 25px;
-    font-size: 24px;
-    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
 /* Form Group Styles */
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    position: relative;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
-    color: #555;
-    font-weight: 500;
-    font-size: 14px;
+    margin-bottom: 10px;
+    color: #34495e;
+    font-weight: 600;
+    font-size: 15px;
+    transition: color 0.3s ease;
 }
 
 /* Input Field Styles */
@@ -251,78 +261,77 @@ body {
 .form-group input[type="number"],
 .form-group select {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 14px;
-    transition: border-color 0.3s ease;
+    padding: 14px;
+    border: 2px solid #e6e6e6;
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
 }
 
 .form-group input[type="text"]:focus,
 .form-group input[type="number"]:focus,
 .form-group select:focus {
     outline: none;
-    border-color: #4a90e2;
-    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
+    border-color: #3498db;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
 /* File Input Styles */
 .form-group input[type="file"] {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     background-color: #f8f9fa;
-    border: 2px dashed #ddd;
-    border-radius: 6px;
+    border: 2px dashed #bdc3c7;
+    border-radius: 8px;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .form-group input[type="file"]:hover {
-    border-color: #4a90e2;
+    border-color: #3498db;
+    background-color: #f0f0f0;
 }
 
 /* Select Dropdown Styles */
 .form-group select {
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23555' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23718096' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 12px center;
-    background-color: white;
+    background-position: right 15px center;
     cursor: pointer;
 }
 
 /* Submit Button Styles */
 .save-item-btn {
     width: 100%;
-    padding: 14px;
-    background-color: #4a90e2;
+    padding: 16px;
+    background-color: #3498db;
     color: white;
     border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 500;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .save-item-btn:hover {
-    background-color: #357abd;
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .save-item-btn:active {
     transform: translateY(1px);
+    box-shadow: none;
 }
 
-/* Placeholder Styles */
-::placeholder {
-    color: #999;
-}
-
-/* Hidden Class */
-.hidden {
-    display: none;
-}
-
-/* Responsive Styles */
+/* Responsive Adjustments */
 @media (max-width: 768px) {
     .add-item-form {
         margin: 10px;
@@ -333,9 +342,22 @@ body {
     .form-group input[type="number"],
     .form-group select,
     .save-item-btn {
-        padding: 10px;
+        padding: 12px;
+        font-size: 14px;
     }
 }
+
+/* Additional Enhancements */
+* {
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+::placeholder {
+    color: #a0aec0;
+    opacity: 0.7;
+}
+
 
 
 
@@ -701,10 +723,16 @@ hr {
 }
 
 .menu-table th, .menu-table td {
-    padding: 10px 15px;
+    padding: 15px 10px;
     text-align: center;
-    border: 1px solid #ddd;
-    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+    font-size: 1rem;
+    /* padding: 15px 0; */
+}
+
+#table-content tr:hover{
+    background-color: #f3f3f3;
+
 }
 
 .menu-table th {
@@ -714,11 +742,11 @@ hr {
 
 .action-buttons button {
     padding: 5px 10px;
-    font-size: 14px;
+    font-size: 1rem;
     border: none;
     border-radius: 3px;
     cursor: pointer;
-    margin: 0 5px;
+    /* margin: 0 5px; */
 }
 
 .edit-btn {
@@ -728,9 +756,12 @@ hr {
 
 .status-btn {
     padding: 5px 10px;
-    font-size: 12px;
-    font-weight: bold;
-    color: #fff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: 300;
+    /* margin: 0 5px; */
 }
 
 .status-btn.available {
@@ -752,22 +783,4 @@ hr {
 .status-btn.unavailable:hover {
     background-color: #c0392b;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
