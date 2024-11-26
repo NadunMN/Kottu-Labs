@@ -24,12 +24,12 @@
         <!-- Welcome Section -->
         <section class="container2" aria-label="Welcome Message">
             <h2>Welcome to</h2>
-            <div class="Name"><span style="color: white;">KOTTU</span><span style="color: red;">LABS</span></div>
+            <div class="Name"><span style="color: white;">KOTTU</span><span style="color: #EE3E3F;">LABS</span></div>
 
             <p class="welcome-text">
                 A cozy restaurant offering a large variety of Kottu dishes, 
                 served in an inviting atmosphere with attentive service.
-            </p>
+            </p>    
         </section>
 
         <section class="container3" aria-label="Our Story">
