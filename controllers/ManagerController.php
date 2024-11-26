@@ -75,5 +75,35 @@ class ManagerController extends Controller
         }
     }
 
+    public function updatemenuItems()
+    {
+
+        $review = new Meal();
+        try {
+            $mealId = Application::$app->request->getBody()['meal_olderid'] ?? null;
+            if (!$mealId) {
+                throw new \Exception('Meal ID not provided');
+            }
+
+            $meal = Meal::findOne(['meal_id' => $mealId]);
+            if (!$meal) {
+                throw new \Exception('Review not found');
+            }
+
+            $mealData = Application::$app->request->getBody();
+            $review->loadData($mealData);
+
+            if (!$review->update()) {
+                throw new \Exception('Failed to update review');
+            }
+
+            echo json_encode(['success' => true]);
+        } catch (\Exception $e) {
+            // Log the exception or handle it as needed
+            error_log($e->getMessage());
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
 
 }

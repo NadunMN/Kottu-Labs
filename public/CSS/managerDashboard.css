@@ -19,7 +19,7 @@ body {
     width: 20%;
     background-color: #000000; /* Black background */
     color: #ffffff; /* White text */
-    padding: 20px;
+    padding : 20px;
     border-radius: 10px; /* Smooth corners */
     margin-right: 10px; /* Gap between sidebar and main content */
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
@@ -140,8 +140,23 @@ body {
 .view-branch-menu-section {
     width: 100%;
     height: auto;
-    padding: 20px;
     border-radius: 10px;
+}
+
+.topic-bar{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.view-branch-menu-section h2{
+    font-weight: 600;
+}
+.view-branch-menu-section h5{
+    font-weight: 300;
+    opacity: 0.8;
 }
 
 .menu-table {
@@ -217,146 +232,128 @@ body {
 }
 
 /* Form Container Styles */
+/* Popup Form */
 .add-item-form {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    margin: 20px auto;
-    padding: 30px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1000;
 }
 
-.add-item-form:hover {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+#add-form{
+    width: 90%;
+
+    max-width: 500px;
+    background-color: white;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 10px;
+    margin: 20px;
 }
 
-.add-item-form h3 {
+#add-form h3{
+    font-size: 1.2rem;
+    width: 100%;
     text-align: center;
-    color: #2c3e50;
-    margin-bottom: 30px;
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
+    border-radius: 10px;
+    
 }
 
-/* Form Group Styles */
-.form-group {
-    margin-bottom: 25px;
+.add-item-form .hidden{
+    display: none;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     position: relative;
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 18px;
+    cursor: pointer;
+    color: #555;
+}
+
+.close-btn:hover {
+    color: black;
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 15px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 10px;
-    color: #34495e;
-    font-weight: 600;
-    font-size: 15px;
-    transition: color 0.3s ease;
+    font-weight: 400;
+    font-size: 1rem;
+    margin-bottom: 5px;
 }
 
-/* Input Field Styles */
-.form-group input[type="text"],
-.form-group input[type="number"],
+.form-group input,
 .form-group select {
     width: 100%;
-    padding: 14px;
-    border: 2px solid #e6e6e6;
-    border-radius: 8px;
-    font-size: 15px;
-    background-color: #f9f9f9;
-    transition: all 0.3s ease;
+    height: auto;
+    font-size: 1rem;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-.form-group input[type="text"]:focus,
-.form-group input[type="number"]:focus,
-.form-group select:focus {
-    outline: none;
-    border-color: #3498db;
-    background-color: white;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-}
-
-/* File Input Styles */
-.form-group input[type="file"] {
+.cancel-item-btn{
     width: 100%;
-    padding: 12px;
-    background-color: #f8f9fa;
-    border: 2px dashed #bdc3c7;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    height: auto;
+    font-size: 1rem;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-.form-group input[type="file"]:hover {
-    border-color: #3498db;
-    background-color: #f0f0f0;
-}
-
-/* Select Dropdown Styles */
-.form-group select {
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23718096' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    cursor: pointer;
-}
-
-/* Submit Button Styles */
 .save-item-btn {
-    width: 100%;
-    padding: 16px;
-    background-color: #3498db;
+    background-color: #28a745;
     color: white;
+    padding: 10px 15px;
     border: none;
-    border-radius: 8px;
-    font-size: 17px;
-    font-weight: 600;
+    border-radius: 5px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
 .save-item-btn:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #218838;
 }
 
-.save-item-btn:active {
-    transform: translateY(1px);
-    box-shadow: none;
+.cancel-item-btn:hover {
+    background-color: #882121;
+    color: white;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .add-item-form {
-        margin: 10px;
-        padding: 20px;
-    }
 
-    .form-group input[type="text"],
-    .form-group input[type="number"],
-    .form-group select,
-    .save-item-btn {
-        padding: 12px;
-        font-size: 14px;
-    }
-}
 
-/* Additional Enhancements */
-* {
-    box-sizing: border-box;
-    transition: all 0.3s ease;
-}
 
-::placeholder {
-    color: #a0aec0;
-    opacity: 0.7;
-}
+
+
+
+
+
+
 
 
 
