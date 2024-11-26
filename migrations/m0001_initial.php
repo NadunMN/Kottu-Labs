@@ -101,6 +101,16 @@ class m0001_initial
         ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);
 
+
+        // menu table
+        $SQL = "CREATE TABLE IF NOT EXISTS menus (
+            menu_id INT AUTO_INCREMENT PRIMARY KEY,
+            branch_id INT NOT NULL,
+            FOREIGN KEY (branch_id) REFERENCES branches(branch_id) ON DELETE CASCADE,
+            INDEX (branch_id)
+        ) ENGINE=INNODB;";
+        $db->pdo->exec($SQL);
+
         // meals table
         $SQL = "CREATE TABLE IF NOT EXISTS meals (
             meal_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -122,6 +132,17 @@ class m0001_initial
         ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);
 
+
+        // menu_meal table
+        $SQL = "CREATE TABLE menu_meals (
+            meal_id INT NOT NULL,
+            menu_id INT NOT NULL,
+            PRIMARY KEY (meal_id, menu_id),
+            FOREIGN KEY (meal_id) REFERENCES meals(meal_id) ON DELETE CASCADE,
+            FOREIGN KEY (menu_id) REFERENCES menus(menu_id) ON DELETE CASCADE
+        ) ENGINE=INNODB;";
+        $db->pdo->exec($SQL);
+
         // order_items table
         $SQL = "CREATE TABLE order_items (
             order_id INT NOT NULL,
@@ -137,7 +158,7 @@ class m0001_initial
         $db = Application::$app->db;
         $tables = [
             'order_items', 'meal_offers', 'offers', 'meals', 'orders', 'payments', 
-            'reservations', 'reviews', 'users', 'branches'
+            'reservations', 'reviews', 'users', 'branches', 'menus', 'menu_meals' 
         ];
         foreach ($tables as $table) {
             $SQL = "DROP TABLE IF EXISTS $table;";
