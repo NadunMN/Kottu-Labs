@@ -86,6 +86,44 @@
   padding-top: 10px; /* Space above text */
 }
 
+.container3 {
+  background-color: #f8f8f8; /* Adjust the background color as needed */
+  padding: 20px; /* Adjust the padding as needed */
+  border-radius: 10px; /* Adjust the border radius as needed */
+  box-shadow: 0 4px 8px rgba(159, 19, 19, 0.1); /* Adjust the box shadow as needed */
+  margin: 20px auto; /* Center the section and add margin */
+  max-width: 1400px; /* Adjust the max-width as needed */
+  text-align: center;
+}
+
+.container3 h2 {
+  color: #333; /* Adjust the text color as needed */
+  font-size: 30px; /* Adjust the font size as needed */
+  font-weight: bold;
+  margin-bottom: 10px; /* Adjust the margin as needed */
+}
+
+.container3 p {
+  color: #403f3f; /* Adjust the text color as needed */
+  font-size: 16px; /* Adjust the font size as needed */
+  line-height: 1.5;
+  margin-bottom: 20px; /* Adjust the margin as needed */
+}
+
+.container3 ul {
+  display: inline-block; /* Center the list */
+  text-align: left; /* Align the list items to the left */
+  padding: 0;
+  margin: 0;
+  list-style-type: none; /* Remove default list styling */
+}
+
+.container3 ul li {
+  margin-bottom: 10px; /* Add space between list items */
+  list-style-type: square;
+  font-size: 21px;
+}
+
 .topic {
   display: flex;
   font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -106,7 +144,7 @@
 }
 
 /* Cards Section */
-.container3 {
+.container4 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
@@ -118,7 +156,7 @@
 }
 
 /* Visible Heading Style */
-.container3 h2 {
+.container4 h2 {
   font-size: 2.5rem;
   text-align: center;
   font-weight: bold;
@@ -130,7 +168,7 @@
   display: block; /* Ensure visibility */
 }
 
-.container3 .card {
+.container4 .card {
   height: 500px;
   background: var(--text-light);
   border-radius: 8px;
@@ -140,19 +178,19 @@
   transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
 }
 
-.container3 .card:hover {
+.container4 .card:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-strong);
 }
 
-.container3 .card img {
+.container4 .card img {
   height: 100%;
   width: 100%;
   object-fit: cover;
   transition: transform var(--transition-speed) ease;
 }
 
-.container3 .intro {
+.container4 .intro {
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -163,26 +201,26 @@
   transition: transform var(--transition-speed) ease;
 }
 
-.container3 .card:hover .intro {
+.container4 .card:hover .intro {
   transform: translateY(0);
 }
 
-.container3 .card:hover img {
+.container4 .card:hover img {
   transform: scale(1.05);
 }
 
-.container3 .card h1 {
+.container4 .card h1 {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
-.container3 .card p {
+.container4 .card p {
   line-height: 1.6;
   opacity: 0;
   transition: opacity var(--transition-speed) ease;
 }
 
-.container3 .card:hover p {
+.container4 .card:hover p {
   opacity: 1;
 }
 
@@ -225,11 +263,11 @@
     margin: 1rem;
   }
 
-  .container3 {
+  .container4 {
     padding: 1rem;
   }
 
-  .container3 .card {
+  .container4 .card {
     height: 400px;
   }
 }
