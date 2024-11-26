@@ -8,9 +8,13 @@
 </head>
 
 <body>
+    <div class="container1">
+        <!-- <div class="title"> -->
+            <h1>Our Staff</h1>
+        <!-- </div> -->
+    </div>
+
     <div class="container">
-    <h1>Meet the dedicated team behind <br> KOTTULABS</h1>
-    
     <!-- Branch 1 -->
     <div class="wrapper">
         <h2>Team Wattala</h2>
