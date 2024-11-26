@@ -99,6 +99,8 @@ $app->router->post('/review/update', [$userController, 'updateReviewData']);
 
 //define route for menuItems
 $app->router->post('/menuitem/add', [$managerController, 'addmenuItems']);
+$app->router->get('/menuitem/data', [$managerController, 'getmenuItems']);
+$app->router->post('/mealitem/delete', [$managerController, 'deletemenuItems']);
 
 
 

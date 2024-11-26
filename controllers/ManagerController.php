@@ -19,4 +19,61 @@ class ManagerController extends Controller
             echo json_encode(['success' => false, 'errors' => $meal->errors]);
         }
     }
+
+    
+
+    //get menu data
+    public function getmenuItems()
+    {
+        if (Application::$app->user) {
+
+            
+            $userId = Application::$app->user->id;
+            $meals = Meal::findAll([]);
+
+            $mealData = [];
+
+            foreach ($meals as $meal) {
+                $mealData[] = $meal;
+            }
+
+            echo json_encode($mealData);
+        } else {
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+
+    //review deletion
+    public function deletemenuItems(){
+        
+        try {
+            $menuId = Application::$app->request->getBody()['meal_id'] ?? null;
+            
+
+            if (!$menuId) {
+                throw new \Exception('Meal ID not provided');
+            }
+
+            // Debugging statement
+            error_log("Meal ID received: " . $menuId);
+
+            $meal = Meal::findOne(['meal_id' => $menuId]);
+
+            if (!$meal) {
+                throw new \Exception('meal not found');
+            }
+
+            if (!$meal->delete()) {
+                throw new \Exception('Failed to delete review');
+            }
+
+            echo json_encode(['success' => true]);
+        } catch (\Exception $e) {
+            // Log the exception or handle it as needed
+            error_log($e->getMessage());
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
 }
