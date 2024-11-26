@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                                     </div>
                                                 </form>
                                             </div>
-    
+                                               
                                             <table class="menu-table" id="menu-table">
                                                 <thead>
                                                     <tr>
@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                                 `;
 
-
+                                let mealId;
                                 // Dynamically generate meal elements
                                 data.forEach(meal => {
                                     // Create a new table row
@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 
                                     // Populate row HTML
                                     row.innerHTML = `
-                                        <td class="meal-id">${meal.meal_id}</td>
+                                        <td class="meal-id" >${meal.meal_id}</td>
                                         <td>${meal.meal_name}</td>
                                         <td>${meal.meal_description}</td>
                                         <td>Rs.${meal.meal_price}</td>
@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                             
 
                                             <div class="action-buttons">
-                                                <button class="edit-btn">Edit</button>
+                                                <button class="edit-btn" meal-id='${meal.meal_id}'>Edit</button>
                                                 <button class="delete-btn" meal-id ='${meal.meal_id}'>Delete</button>
                                             </div>
                                         </td>
@@ -216,35 +216,31 @@ document.addEventListener("DOMContentLoaded", () => {
                                 });
 
                                  // Get Elements
-                                 const openFormBtn = document.querySelector('.add-item-btn');
-                                 const closeFormBtn = document.querySelector('.cancel-item-btn');
-                                 // Select the add-item-form element
-                                 const addItemForm = document.getElementById('add-item-form');
+                                const openFormBtn = document.querySelector('.add-item-btn');
+                                const closeFormBtn = document.querySelector('.cancel-item-btn');
+                                const addItemForm = document.getElementById('add-item-form');
+                                const addForm = document.getElementById('add-form');
  
                                  // Open the Popup
-                                 openFormBtn.addEventListener('click', () => {
-                                     addItemForm.classList.remove('hidden');
-                                 });
+                                openFormBtn.addEventListener('click', () => {
+                                    addItemForm.classList.remove('hidden');
+                                    resetForm();
+                                    addForm.removeEventListener('submit', updateItem);
+                                    addForm.addEventListener('submit', addNewItem);
+                                });
 
                              
- 
+
                                  // Close the Popup
-                                 closeFormBtn.addEventListener('click', (event) => {
-                                    event.preventDefault();
+                                closeFormBtn.addEventListener('click', (event) => {
                                     addItemForm.classList.add('hidden');
+                                    event.preventDefault();
+                                    resetForm();
                                 });
  
                             
  
-                                 // Close Popup on Click Outside
-                                 window.addEventListener('click', (event) => {
-                                     if (event.target === addItemForm) {
-                                         addItemForm.classList.add('hidden');
-                                     }
-                                 });
-
-                                 
-                               
+                                
 
                                 
 
@@ -265,58 +261,99 @@ document.addEventListener("DOMContentLoaded", () => {
                                 });
 
 
-                    document.querySelectorAll('.edit-btn').forEach(button => {
-                        button.addEventListener('click', function() {
-                            const mealId = button.getAttribute('meal-id');
-                            const row = button.closest('tr');
-                            const mealName = row.querySelector('td:nth-child(2)').innerText;
-                            const mealDescription = row.querySelector('td:nth-child(3)').innerText;
-                            const mealPrice = row.querySelector('td:nth-child(4)').innerText.replace('Rs.', '');
-                    
-                            // Open the form and fill it with the existing data
-                            const addItemForm = document.getElementById('add-item-form');
-                            addItemForm.classList.remove('hidden');
-                            document.getElementById('item-id').value = mealId;
-                            document.getElementById('item-name').value = mealName;
-                            document.getElementById('item-price').value = mealPrice;
-                            document.getElementById('meal_description').value = mealDescription;
-                    
-                            // Change form action to update
-                            const form = document.getElementById('update-form');
-                            form.addEventListener('submit', updateItem);
-                    
-                            function updateItem(event) {
-                                event.preventDefault();
-                                const formData = new FormData(form);
-                                const data = Object.fromEntries(formData.entries());
-                                const requestBody = JSON.stringify(data);
-                                console.log('Request Body:', requestBody);
-                                fetch("menuitem/update", {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                    },
-                                    body: requestBody,
-                                })
-                                .then(response => {
-                                    if (!response.ok) {
-                                        throw new Error(`HTTP error! status: ${response.status}`);
-                                    }
-                                    return response.json();
-                                })
-                                .then(data => {
-                                    console.log("Success:", data);
-                                    addItemForm.classList.add('hidden');
-                                    form.removeEventListener('submit', updateItem);
-                                    form.addEventListener('submit', addNewItem);
-                                })
-                                .catch(error => {
-                                    console.error("Error:", error);
-                                });
-                                
-                            }
-                        });
+                                // Edit Button Event Listener
+                document.querySelectorAll('.edit-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        mealId = button.getAttribute('meal-id');;
+                        console.log(mealId);
+                        const row = button.closest('tr');
+                        const mealName = row.querySelector('td:nth-child(2)').innerText;
+                        const mealDescription = row.querySelector('td:nth-child(3)').innerText;
+                        const mealPrice = row.querySelector('td:nth-child(4)').innerText.replace('Rs.', '');
+
+                        // Open the form and fill it with the existing data
+                        addItemForm.classList.remove('hidden');
+                        document.getElementById('item-id').value = mealId;
+                        document.getElementById('item-name').value = mealName;
+                        document.getElementById('item-price').value = mealPrice;
+                        document.getElementById('meal_description').value = mealDescription;
+
+                        // Change form action to update
+                        addForm.removeEventListener('submit', addNewItem);
+                        addForm.addEventListener('submit', updateItem);
                     });
+                });
+
+                function addNewItem(event) {
+                    event.preventDefault();
+                    const formData = new FormData(addForm);
+                    const data = Object.fromEntries(formData.entries());
+                    
+                    const requestBody = JSON.stringify(data);
+                    console.log('Request Body:', requestBody);
+                    fetch("/menuitem/add", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: requestBody,
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log("Success:", data);
+                        addItemForm.classList.add('hidden');
+                        resetForm();
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                    });
+                }
+
+
+                // Function to update an existing item
+                function updateItem(event) {
+                    event.preventDefault();
+                    const formData = new FormData(addForm);
+                    let data = Object.fromEntries(formData.entries());
+                    data.older_id = mealId;
+                    const requestBody = JSON.stringify(data);
+                    console.log('Request Body:', requestBody);
+                    fetch("/menuitem/update", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: requestBody,
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log("Success:", data);
+                        addItemForm.classList.add('hidden');
+                        resetForm();
+                        addForm.removeEventListener('submit', updateItem);
+                        addForm.addEventListener('submit', addNewItem);
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                    });
+                }
+
+                // Function to reset the form
+                function resetForm() {
+                    addForm.reset();
+                    document.getElementById('item-id').value = '';
+                }
+                                
 
 
 
@@ -344,10 +381,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                 .then(response => response.json())
                                 .then(data => {
                                     if (data.success) {
-                                        alert('The review has been deleted.');
+                                        alert('The meal has been deleted.');
                                         fetchReviews(); // Refresh the reviews
                                     } else {
-                                        alert('There was an error deleting the review: ' + data.message);
+                                        alert('There was an error deleting the meal: ' + data.message);
                                         console.error('Error:', data.message);
                                     }
                                 })
@@ -358,32 +395,32 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
 
                     
-                    document.getElementById('add-form').addEventListener("submit", function(event) {
-                        event.preventDefault();
-                        const formData = new FormData(this);
-                        const data = Object.fromEntries(formData.entries());
-                        const requestBody = JSON.stringify(data);
-                        console.log('Request Body:', requestBody);
-                        fetch("menuitem/add", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: requestBody,
-                        })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error(`HTTP error! status: ${response.status}`);
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            console.log("Success:", data);
-                        })
-                        .catch(error => {
-                            console.error("Error:", error);
-                        });
-                    });
+                    // document.getElementById('add-form').addEventListener("submit", function(event) {
+                    //     event.preventDefault();
+                    //     const formData = new FormData(this);
+                    //     const data = Object.fromEntries(formData.entries());
+                    //     const requestBody = JSON.stringify(data);
+                    //     console.log('Request Body:', requestBody);
+                    //     fetch("menuitem/add", {
+                    //         method: "POST",
+                    //         headers: {
+                    //             "Content-Type": "application/json",
+                    //         },
+                    //         body: requestBody,
+                    //     })
+                    //     .then(response => {
+                    //         if (!response.ok) {
+                    //             throw new Error(`HTTP error! status: ${response.status}`);
+                    //         }
+                    //         return response.json();
+                    //     })
+                    //     .then(data => {
+                    //         console.log("Success:", data);
+                    //     })
+                    //     .catch(error => {
+                    //         console.error("Error:", error);
+                    //     });
+                    // });
 
                     
 

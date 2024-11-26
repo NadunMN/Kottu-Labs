@@ -78,9 +78,9 @@ class ManagerController extends Controller
     public function updatemenuItems()
     {
 
-        $review = new Meal();
+        $meal = new Meal();
         try {
-            $mealId = Application::$app->request->getBody()['meal_olderid'] ?? null;
+            $mealId = Application::$app->request->getBody()['older_id'] ?? null;
             if (!$mealId) {
                 throw new \Exception('Meal ID not provided');
             }
@@ -91,9 +91,9 @@ class ManagerController extends Controller
             }
 
             $mealData = Application::$app->request->getBody();
-            $review->loadData($mealData);
+            $meal->loadData($mealData);
 
-            if (!$review->update()) {
+            if (!$meal->update()) {
                 throw new \Exception('Failed to update review');
             }
 

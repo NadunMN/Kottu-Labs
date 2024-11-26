@@ -227,7 +227,7 @@ body {
 
 
 
-.add-item-form.hidden {
+.add-item-form.hidden, .update-item-form.hidden {
     display: none;
 }
 
