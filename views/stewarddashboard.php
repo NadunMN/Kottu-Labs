@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="/CSS/managerDashboard.css">
+    <link rel="stylesheet" href="/CSS/stewardDashboard.css">
 </head>
 <body>
     <div class="dashboard-container">
@@ -16,13 +16,9 @@
             <ul>
                 <?php
                 $menuItems = [
-                    ['id' => 'view-users', 'icon' => '/Photo/icon/users.png', 'text' => 'View Order Status'],
-                    ['id' => 'update-menu', 'icon' => '/Photo/icon/menu.png', 'text' => 'Update Menu'],
-                    ['id' => 'view-reservations', 'icon' => '/Photo/icon/reservations.png', 'text' => 'Customer Arrives'],
-                    ['id' => 'update-offers', 'icon' => '/Photo/icon/offers.png', 'text' => 'Update Offers'],
-                    ['id' => 'staff', 'icon' => '/Photo/icon/staff.png', 'text' => 'Staff'],
-                    ['id' => 'feedbacks', 'icon' => '/Photo/icon/feedback.png', 'text' => 'Feedbacks'],
-                    ['id' => 'order-history', 'icon' => '/Photo/icon/orderhistory.png', 'text' => 'Customer Payments']
+                    ['id' => 'view-order-status', 'icon' => '/Photo/icon/orderstatus.png', 'text' => 'View Order Status'],
+                    ['id' => 'customer-arrivals', 'icon' => '/Photo/icon/customerarrival.png', 'text' => 'Customer Arrivals'],
+                    ['id' => 'customer-payments', 'icon' => '/Photo/icon/payment.png', 'text' => 'Customer Payments']
                 ];
                 foreach ($menuItems as $item) {
                     echo "<li id='{$item['id']}'>

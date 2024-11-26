@@ -1,11 +1,82 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Sample data arrays
+    const orderStatusData = [
+        { orderId: "097", name: "John Doe", order: "Prawns Dolphin Kottu", tableNo: "04", status: "Ready" },
+        { orderId: "101", name: "Michael Brown", order: "Sea Food Kottu", tableNo: "02", status: "Ready" },
+        { orderId: "097", name: "Jane Smith", order: "Chicken Cheese Kottu", tableNo: "04", status: "Processing" },
+        { orderId: "102", name: "Linda Lee", order: "Mutton String Hopper Kottu", tableNo: "03", status: "Processing" },
+        { orderId: "102", name: "Linda Lee", order: "2L Coca Cola Bottle", tableNo: "03", status: "Processing" }
+    ];
+
+    const arrivalsData = [
+        { reservationNo: "R001", time: "19:00", heads: "4", bookedBy: "John Doe", tableNumber: "12", arrived: "YES" },
+        { reservationNo: "R002", time: "20:30", heads: "2", bookedBy: "Jane Smith", tableNumber: "5", arrived: "YES"  },
+        { reservationNo: "R003", time: "18:45", heads: "6", bookedBy: "Michael Brown", tableNumber: "8", arrived: "NO"  },
+        { reservationNo: "R004", time: "21:00", heads: "3", bookedBy: "Linda Lee", tableNumber: "3", arrived: "NO"  }
+    ];
+
+    const paymentsData = [
+        { orderId: "#1001", time: "18:30", customerName: "John Doe", totalAmount: "$45.00", paymentMethod: "Cash", tableNo: "02", status: "Pending", isReadyToPay: true },
+        { orderId: "#1002", time: "21:20", customerName: "Tom Starc", totalAmount: "$60.00", paymentMethod: "Cash", tableNo: "04", status: "Pending", isReadyToPay: true },
+        { orderId: "#1003", time: "19:00", customerName: "Jane Smith", totalAmount: "$25.00", paymentMethod: "-", tableNo: "01", status: "Pending", isReadyToPay: false },
+        { orderId: "#1004", time: "20:15", customerName: "Michael Brown", totalAmount: "$60.00", paymentMethod: "Cash", tableNo: "02", status: "Completed", isReadyToPay: true },
+        { orderId: "#1005", time: "17:45", customerName: "Linda Lee", totalAmount: "$30.00", paymentMethod: "Card", tableNo: "03", status: "Completed", isReadyToPay: true }
+    ];
+
+    //select table for cusstomer arrivals
+    const availableTables = Array.from({length: 8}, (_, i) => (i + 1).toString().padStart(2, '0')); 
+    
     // Select all sidebar list items
     const sidebarOptions = document.querySelectorAll(".sidebar ul li");
     const mainContent = document.getElementById("main-content");
 
-    // Default selection to "view-users"
-    document.getElementById("view-users").classList.add("selected");
+    // Default selection to "view-order-status"
+    const defaultOption = document.getElementById("view-order-status");
+    defaultOption.classList.add("selected");
     
+    // Render default content for "view-order-status"
+    mainContent.innerHTML = `
+        <div class="view-users-section">
+            <h2>Order Status</h2>
+            <div class="filter-section">
+                <input type="text" id="tableFilter" placeholder="Filter by Table No...">
+                <button onclick="filterOrders()">Filter</button>
+                <button onclick="resetFilter()">Reset</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Name</th>
+                        <th>Order</th>
+                        <th>Table No.</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="order-status-body">
+                </tbody>
+            </table>
+        </div>`;
+
+    // Populate default content
+    const defaultTableBody = document.getElementById("order-status-body");
+    orderStatusData.forEach(order => {
+        const row = document.createElement("tr");
+        const statusColor = order.status === "Ready" ? "green" : "red";
+        row.innerHTML = `
+            <td>${order.orderId}</td>
+            <td>${order.name}</td>
+            <td>${order.order}</td>
+            <td>${order.tableNo}</td>
+            <td style="color: ${statusColor};">${order.status}</td>
+            <td>
+                ${order.status === "Ready" ? '<button class="done-btn">Done</button>' : ''}
+            </td>
+        `;
+        defaultTableBody.appendChild(row);
+    });
+
     // Event listener for each sidebar option
     sidebarOptions.forEach(option => {
         option.addEventListener("click", () => {
@@ -18,275 +89,149 @@ document.addEventListener("DOMContentLoaded", () => {
             const optionId = option.id;
 
             switch (optionId) {
-                case "view-users":
+                case "view-order-status":
                     mainContent.innerHTML = `
                         <div class="view-users-section">
                             <h2>Order Status</h2>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
-                                        <th>Contact No.</th>
-                                        <th> </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>John Doe</td>
-                                        <td>johndoe@example.com</td>
-                                        <td>Admin</td>
-                                        <td>027282</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button>Edit</button>
-                                                <button>Delete</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jane Smith</td>
-                                        <td>janesmith@example.com</td>
-                                        <td>User</td>
-                                        <td>023456</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button>Edit</button>
-                                                <button>Delete</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Michael Brown</td>
-                                        <td>michaelb@example.com</td>
-                                        <td>Manager</td>
-                                        <td>078945</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button>Edit</button>
-                                                <button>Delete</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Linda Lee</td>
-                                        <td>lindalee@example.com</td>
-                                        <td>Admin</td>
-                                        <td>031298</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button>Edit</button>
-                                                <button>Delete</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>`;
-                    break;
-
-                case "update-menu":
-                    mainContent.innerHTML = `
-                        <div class="update-menu-section">
-                            <h2>Update Menu</h2>
-                            <p>Update the restaurant menu here.</p>
-                        </div>`;
-                    break;
-
-                    case "view-reservations":
-                        mainContent.innerHTML = `
-                            <div class="view-reservations-section">
-                                <h2>View Reservations</h2>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Reservation No.</th>
-                                            <th>Date</th>
-                                            <th>Time</th>
-                                            <th>No. of Heads</th>
-                                            <th>Booked By</th>
-                                            <th>Table Number</th>
-                                            <th> </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>R001</td>
-                                            <td>2024-11-25</td>
-                                            <td>19:00</td>
-                                            <td>4</td>
-                                            <td>John Doe</td>
-                                            <td>12</td>
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <button>Edit</button>
-                                                    <button>Delete</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>R002</td>
-                                            <td>2024-11-26</td>
-                                            <td>20:30</td>
-                                            <td>2</td>
-                                            <td>Jane Smith</td>
-                                            <td>5</td>
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <button>Edit</button>
-                                                    <button>Delete</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>R003</td>
-                                            <td>2024-11-27</td>
-                                            <td>18:45</td>
-                                            <td>6</td>
-                                            <td>Michael Brown</td>
-                                            <td>8</td>
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <button>Edit</button>
-                                                    <button>Delete</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>R004</td>
-                                            <td>2024-11-28</td>
-                                            <td>21:00</td>
-                                            <td>3</td>
-                                            <td>Linda Lee</td>
-                                            <td>3</td>
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <button>Edit</button>
-                                                    <button>Delete</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>`;
-                        break;
-
-                    case "update-offers":
-                        mainContent.innerHTML = `
-                            <div class="update-offers-section">
-                                <h2>Update Offers</h2>
-                                <p>Modify active offers here.</p>
-                                    
-                                <form class="update-offer-form">
-                                    <div class="form-group">
-                                        <label for="offer-image">Upload Offer Image</label>
-                                        <input type="file" id="offer-image" name="offer-image" accept="image/*" />
-                                    </div>
-                                        
-                                    <div class="form-group">
-                                        <label for="offer-description">Offer Description</label>
-                                        <textarea id="offer-description" name="offer-description" rows="5" placeholder="Describe the offer..."></textarea>
-                                    </div>
-                                        
-                                <div class="form-group">
-                                    <button type="submit" class="update-offer-btn">Update Offer</button>
-                                </div>
-                            </form>
-                        </div>`;
-                        break;
-
-                case "staff":
-                    mainContent.innerHTML = `
-                        <div class="staff-section">
-                            <h2>Staff</h2>
-                            <p>Manage staff details and roles here.</p>
-                        </div>`;
-                    break;
-
-                case "feedbacks":
-                    mainContent.innerHTML = `
-                        <div class="feedbacks-section">
-                            <h2>Feedbacks</h2>
-                            <p>View customer feedback here.</p>
-                        </div>`;
-                    break;
-
-                case "order-history":
-                    mainContent.innerHTML = `
-                        <div class="order-history-section">
-                            <h2>Order History</h2>
+                            <div class="filter-section">
+                                <input type="text" id="tableFilter" placeholder="Filter by Table No...">
+                                <button onclick="filterOrders()">Filter</button>
+                                <button onclick="resetFilter()">Reset</button>
+                            </div>
                             <table>
                                 <thead>
                                     <tr>
                                         <th>Order ID</th>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Customer Name</th>
-                                        <th>Total Amount</th>
+                                        <th>Name</th>
+                                        <th>Order</th>
+                                        <th>Table No.</th>
                                         <th>Status</th>
-                                        <th>Actions</th>
+                                        <th> </th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>#1001</td>
-                                        <td>2024-11-20</td>
-                                        <td>18:30</td>
-                                        <td>John Doe</td>
-                                        <td>$45.00</td>
-                                        <td>Completed</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button>View</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#1002</td>
-                                        <td>2024-11-21</td>
-                                        <td>19:00</td>
-                                        <td>Jane Smith</td>
-                                        <td>$25.00</td>
-                                        <td>Pending</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button>View</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#1003</td>
-                                        <td>2024-11-22</td>
-                                        <td>20:15</td>
-                                        <td>Michael Brown</td>
-                                        <td>$60.00</td>
-                                        <td>Completed</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button>View</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#1004</td>
-                                        <td>2024-11-23</td>
-                                        <td>17:45</td>
-                                        <td>Linda Lee</td>
-                                        <td>$30.00</td>
-                                        <td>Cancelled</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button>View</button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                <tbody id="order-status-body">
                                 </tbody>
                             </table>
                         </div>`;
+
+                    const orderStatusBody = document.getElementById("order-status-body");
+                    orderStatusData.forEach(order => {
+                        const row = document.createElement("tr");
+                        const statusColor = order.status === "Ready" ? "green" : "red";
+                        row.innerHTML = `
+                            <td>${order.orderId}</td>
+                            <td>${order.name}</td>
+                            <td>${order.order}</td>
+                            <td>${order.tableNo}</td>
+                            <td style="color: ${statusColor};">${order.status}</td>
+                            <td>
+                                ${order.status === "Ready" ? '<button class="done-btn">Done</button>' : ''}
+                            </td>
+                        `;
+                        orderStatusBody.appendChild(row);
+                    });
                     break;
-                    
-                    
+
+                case "customer-arrivals":
+                    mainContent.innerHTML = `
+                        <div class="customer-arrivals-section">
+                            <h2>Customer Arrivals</h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Reservation No.</th>
+                                        <th>Time</th>
+                                        <th>No. of Heads</th>
+                                        <th>Booked By</th>
+                                        <th>Table Number</th>
+                                        <th>Arrived</th>
+                                        <th> </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="arrivals-body">
+                                </tbody>
+                            </table>
+                        </div>`;
+
+                    const arrivalsBody = document.getElementById("arrivals-body");
+                    arrivalsData.forEach(arrival => {
+                        const row = document.createElement("tr");
+                        const arrivalColor = arrival.arrived === "YES" ? "green" : "red";
+                        row.innerHTML = `
+                            <td>${arrival.reservationNo}</td>
+                            <td>${arrival.time}</td>
+                            <td>${arrival.heads}</td>
+                            <td>${arrival.bookedBy}</td>
+                            <td>
+                                <select class="table-select" data-reservation="${arrival.reservationNo}">
+                                    <option value="">Select Table</option>
+                                    ${availableTables.map(table => 
+                                        `<option value="${table}" ${arrival.tableNumber === table ? 'selected' : ''}>
+                                            ${table}
+                                        </option>`
+                                    ).join('')}
+                                </select>
+                            </td>
+                            <td style="color: ${arrivalColor};">${arrival.arrived}</td>
+                            <td>
+                                ${arrival.arrived === "YES" ? 
+                                    '<button class="confirm-btn">Confirm</button>' : 
+                                    '<button class="delete-btn">Delete</button>'}
+                            </td>
+                        `;
+                        arrivalsBody.appendChild(row);
+                    });
+                    break;
+
+                case "customer-payments":
+                    const currentDate = new Date().toISOString().slice(0, 10);
+                    mainContent.innerHTML = `
+                        <div class="customer-payment-section">
+                            <div>
+                                <h2>Customer Payments</h2>
+                                <span>${currentDate}</span>
+                            </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Time</th>
+                                        <th>Customer Name</th>
+                                        <th>Total Amount</th>
+                                        <th>Payment Method</th>
+                                        <th>Table No.</th>
+                                        <th>Status</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="payment-table-body">
+                                </tbody>
+                            </table>
+                        </div>`;
+                
+                    const tableBody = document.getElementById("payment-table-body");
+                    paymentsData.forEach(payment => {
+                        const row = document.createElement("tr");
+                        const statusColor = payment.status === "Completed" ? "green" : "red";
+                        row.innerHTML = `
+                            <td>${payment.orderId}</td>
+                            <td>${payment.time}</td>
+                            <td>${payment.customerName}</td>
+                            <td>${payment.totalAmount}</td>
+                            <td>${payment.paymentMethod}</td>
+                            <td>${payment.tableNo}</td>
+                            <td style="color: ${statusColor};">${payment.status}</td>
+                            <td>
+                                ${
+                                    payment.status === "Pending" && payment.isReadyToPay
+                                        ? `<button class="confirm-btn">Confirm</button>`
+                                        : ""
+                                }
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                    break;
 
                 default:
                     mainContent.innerHTML = `<h2>${optionId.replace("-", " ")}</h2><p>Content for this section will go here.</p>`;
@@ -295,8 +240,3 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
-
-
-
-
-
