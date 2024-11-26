@@ -1,0 +1,376 @@
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    margin: 0;
+    background-color: #f4f4f4; /* Light gray background */
+}
+
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+    padding: 10px; 
+    box-sizing: border-box;
+    flex-direction: row;
+}
+
+.sidebar {
+    width: 20%;
+    background-color: #000000; 
+    color: #ffffff; 
+    padding: 20px;
+    border-radius: 10px; 
+    margin-right: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); 
+}
+
+.sidebar h2 {
+    font-size: 2rem;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px; 
+    display: flex;
+    align-items: center;
+    padding: 10px; 
+    border-radius: 5px;
+    font-weight: 400;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.sidebar ul li:hover {
+    background-color: rgba(255, 255, 255, 0.1); 
+}
+
+.sidebar ul li.selected {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #f44336; 
+    font-weight: bold;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+    padding-left: 10px;
+    transition: color 0.3s;
+}
+
+.sidebar ul li img {
+    width: 24px; 
+    height: 24px; 
+    margin-right: 10px;
+}
+
+.sidebar ul li.selected a {
+    color: #f44336;
+}
+
+.main-content {
+    width: 100%;
+    min-height: 100%;
+    height: fit-content;
+    flex: 1;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* View Users Table */
+.view-users-section {
+    font-size: 16px;
+}
+
+.view-users-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.view-users-section table th,
+.view-users-section table td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.view-users-section table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.view-users-section table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.view-users-section table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.filter-section {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+}
+
+.filter-section input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.filter-section button {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.filter-section button:last-child {
+    background-color: #666;
+}
+
+.filter-section button:hover {
+    opacity: 0.9;
+}
+
+.view-users-section .done-btn {
+    background-color: #007bff; 
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.view-users-section .done-btn:hover {
+    background-color: #0056b3;
+}
+
+/* View Customer Arrivals Table */
+.customer-arrivalss-section {
+    font-size: 16px;
+}
+
+.customer-arrivals-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.customer-arrivals-section table th,
+.customer-arrivals-section table td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.customer-arrivals-section table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.customer-arrivals-section table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.customer-arrivals-section table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.customer-arrivals-section table th:last-child {
+    width: 100px; /* Adjust width as needed */
+}
+
+.customer-arrivals-section table td:last-child {
+    text-align: center;
+}
+
+.customer-arrivals-section .confirm-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.customer-arrivals-section .confirm-btn:hover {
+    background-color: #0056b3;
+}
+
+.customer-arrivals-section .delete-btn {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.customer-arrivals-section .delete-btn:hover {
+    background-color: #cc0000;
+}
+
+/* Customer Payment Section */
+.customer-payment-section {
+    font-size: 16px;
+}
+
+.customer-payment-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.customer-payment-section table th,
+.customer-payment-section table td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.customer-payment-section table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.customer-payment-section table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.customer-payment-section table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.customer-payment-section table th:last-child {
+    width: 100px; /* Adjust width as needed */
+}
+
+.customer-payment-section table td:last-child {
+    text-align: center;
+}
+
+.customer-payment-section .confirm-btn {
+    background-color: #007bff; /* Orange */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.customer-payment-section .confirm-btn:hover {
+    background-color: #0056b3;
+}
+
+/* ... existing code ... */
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+
+    .sidebar {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .main-content {
+        width: 100%;
+        padding: 15px;
+    }
+
+    /* Table responsiveness */
+    .view-users-section table,
+    .customer-arrivals-section table,
+    .customer-payment-section table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    /* Filter section responsiveness */
+    .filter-section {
+        flex-direction: column;
+    }
+
+    .filter-section input,
+    .filter-section button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    /* Button sizing */
+    .confirm-btn,
+    .delete-btn,
+    .done-btn {
+        width: 100%;
+        margin: 5px 0;
+        padding: 10px;
+    }
+
+    /* Font size adjustments */
+    .sidebar h2 {
+        font-size: 24px;
+    }
+
+    .sidebar ul li a {
+        font-size: 16px;
+    }
+
+    table th,
+    table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+}
+
+/* Additional breakpoint for very small devices */
+@media (max-width: 480px) {
+    .dashboard-container {
+        padding: 5px;
+    }
+
+    .sidebar,
+    .main-content {
+        padding: 10px;
+    }
+
+    table th,
+    table td {
+        padding: 6px;
+        font-size: 12px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
