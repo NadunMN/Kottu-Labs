@@ -82,8 +82,25 @@
                                         aria-describedby="phoneFormat"
                                     >
                                     <small id="phoneFormat" class="helper-text">Please enter a 10-digit phone number</small>
+                                    <br>
+
+                                    <!-- Select branch -->
+                                    <label for="select branch" class="form-label">Select Branch</label>
+                                    <select 
+                                            id="select-branch" 
+                                            name="select branch"
+                                            class="form-select"
+                                            required
+                                            aria-describedby="timeHelp"
+                                        >
+                                                <option value="Branch1">Wattala</option>
+                                                <option value="Branch2">Kotahena</option>
+                                                <option value="Branch3">Kelaniya</option>
+                                    </select>
+                                    <small id="branchselect" class="helper-text">Please select the restaurant</small>    
                                 </div>
                             </div>
+                         
 
                             <!-- Reservation Details Section -->
                             <div class="form-section reservation-details">
