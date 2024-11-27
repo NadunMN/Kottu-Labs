@@ -9,7 +9,7 @@
 <body>
     <div class="form-login">
         <div class="second-part">
-            <h1>Welcome Back!</h1>
+            <h1>Welcome Back!👋</h1>
             <h3>Your gateway to the ultimate flavor experience.</h3>
 
             <?php $form = \app\core\form\Form::begin('', 'post')?>

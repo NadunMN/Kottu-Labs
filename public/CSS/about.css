@@ -87,41 +87,51 @@
 }
 
 .container3 {
-  background-color: #f8f8f8; /* Adjust the background color as needed */
-  padding: 20px; /* Adjust the padding as needed */
-  border-radius: 10px; /* Adjust the border radius as needed */
-  box-shadow: 0 4px 8px rgba(159, 19, 19, 0.1); /* Adjust the box shadow as needed */
-  margin: 20px auto; /* Center the section and add margin */
-  max-width: 1400px; /* Adjust the max-width as needed */
-  text-align: center;
+ 
+  width: 100%;
+  margin: 20px auto;
+  padding: 2rem;
+  background-color: #ffffff;
 }
 
 .container3 h2 {
-  color: #333; /* Adjust the text color as needed */
-  font-size: 30px; /* Adjust the font size as needed */
-  font-weight: bold;
-  margin-bottom: 10px; /* Adjust the margin as needed */
+  color: #000000;
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  padding-bottom: 0.5rem;
 }
 
 .container3 p {
-  color: #403f3f; /* Adjust the text color as needed */
-  font-size: 16px; /* Adjust the font size as needed */
-  line-height: 1.5;
-  margin-bottom: 20px; /* Adjust the margin as needed */
+  color: #000000;
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
 .container3 ul {
-  display: inline-block; /* Center the list */
-  text-align: left; /* Align the list items to the left */
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
   padding: 0;
-  margin: 0;
-  list-style-type: none; /* Remove default list styling */
 }
 
 .container3 ul li {
-  margin-bottom: 10px; /* Add space between list items */
-  list-style-type: square;
-  font-size: 21px;
+  background-color: #e74c3c;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: transform 0.3s ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+.container3 ul li:hover {
+  transform: scale(1.05);
+  background-color: #c0392b;
 }
 
 .topic {
@@ -224,21 +234,7 @@
   opacity: 1;
 }
 
-/* Name Styling
-.Name {
-  color: var(--primary-color);
-  font-family: var(--font-secondary);
-  font-size: clamp(1.25rem, 2vw, 4rem);
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  border-bottom: 3px solid var(--secondary-color); 
-  padding: 0.75rem 1rem;
-  background-color: var(--bg-light); 
-   border-radius: 5px; 
-  display: inline-block;
-} */
+
 
 /* Animations */
 @keyframes fadeIn {
