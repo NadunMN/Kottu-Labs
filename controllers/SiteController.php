@@ -36,9 +36,7 @@ class SiteController extends Controller
     }
 
     public function userDashboard()
-    {
-        
-        
+    { 
         $this->setLayout('profile');
         return $this->render('userdashboard');
     }
@@ -56,12 +54,6 @@ class SiteController extends Controller
         return $this->render('admindashboard');
     }
 
-    public function chefDashboard(Request $request,Response $response)
-    {
-        $this->setLayout('auth');
-        return $this->render('chefdashboard');
-    }
-
     public function stewardDashboard(Request $request,Response $response)
     {
         $this->setLayout('main');
@@ -74,6 +66,11 @@ class SiteController extends Controller
         return $this->render('managerDashboard');
     }
 
+    public function chefdashboard(Request $request,Response $response)
+    {
+        $this->setLayout('dashboard');
+        return $this->render('chefdashboard');
+    }
 
     public function about(Request $request,Response $response)
 
@@ -147,5 +144,6 @@ class SiteController extends Controller
         // $this->setLayout('auth');
         return $this->render('offer');
     }
+
 }
 ?>

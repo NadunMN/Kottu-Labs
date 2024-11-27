@@ -72,6 +72,7 @@ $app->router->get('/about',[$siteController, 'about']);
 $app->router->get('/cancelReserve',[$siteController, 'cancelReserve']);
 $app->router->get('/dinein',[$siteController, 'dinein']);
 $app->router->get('/staff',[$siteController, 'staff']);
+$app->router->get('/chefdashboard',[$siteController, 'chefdashboard']);
 
 
 //maheshs routes
