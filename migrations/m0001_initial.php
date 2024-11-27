@@ -29,7 +29,7 @@ class m0001_initial
             INDEX (branch_id)
         ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);
-
+                                                            
         // reviews table
         $SQL = "CREATE TABLE IF NOT EXISTS reviews (
             review_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -45,13 +45,16 @@ class m0001_initial
         // reservations table
         $SQL = "CREATE TABLE IF NOT EXISTS reservations (
             reservation_no INT AUTO_INCREMENT PRIMARY KEY,
-            reservation_date DATE NOT NULL,
-            reservation_time TIME NOT NULL,
+            reservation_date VARCHAR(255) NOT NULL,
+            reservation_time VARCHAR(255) NOT NULL,
             number_of_guests INT NOT NULL,
             confirmation_status TINYINT NOT NULL DEFAULT 0,
             branch_id INT NOT NULL,
+            user_id INT NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
             FOREIGN KEY (branch_id) REFERENCES branches(branch_id) ON DELETE CASCADE,
-            INDEX (branch_id)
+            INDEX (branch_id),
+            INDEX (user_id)
         ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);
 

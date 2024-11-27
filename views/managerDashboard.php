@@ -21,8 +21,7 @@
                     ['id' => 'staff', 'icon' => '/Photo/icon/staff.png', 'text' => 'Staff'],
                     ['id' => 'feedbacks', 'icon' => '/Photo/icon/feedback.png', 'text' => 'Feedbacks'],
                     ['id' => 'order-history', 'icon' => '/Photo/icon/orderhistory.png', 'text' => 'Order History'],
-                    ['id' => 'reports', 'icon' => '/Photo/icon/reports.png', 'text' => 'Reports'],
-                    ['id' => 'new-item', 'icon' => '/Photo/icon/newitem.png', 'text' => 'New Item']
+                    
                 ];
                 foreach ($menuItems as $item) {
                     echo "<li id='{$item['id']}'>
