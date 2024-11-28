@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function() {
       
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
-        data.branch_id = '1';
         data.user_id = userId;
         const requestBody = JSON.stringify(data);
         console.log('Request Body:', requestBody); 
