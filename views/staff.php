@@ -14,7 +14,7 @@
         <!-- </div> -->
     </div>
 
-    <div class="container">
+    <div class="container-of-wrapper">
     <!-- Branch 1 -->
     <div class="wrapper">
         <h2>Team Wattala</h2>
@@ -22,116 +22,129 @@
         <div class="members">
             
             <div class="team-mem">
+                <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
+                </div>
                 <h4>Mrs.Emma</h4>
                 <p>Graphic Designer</p>
             </div>
 
             <div class="team-mem">
+                <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
+                </div>
                 <h4>Mrs.Emma</h4>
                 <p>Graphic Designer</p>
             </div>
 
             <div class="team-mem">
+                <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
+                </div>
                 <h4>Mrs.Emma</h4>
                 <p>Graphic Designer</p>
             </div>
 
             <div class="team-mem">
+                <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
+                </div>
                 <h4>Mrs.Emma</h4>
                 <p>Graphic Designer</p>
             </div>
 
-            <div class="team-mem">
-                <img src="/Photo/Thirani_pics/Manager.jpg">
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
-            </div>
+            
 
         </div>
     </div>
 
     <!-- Branch 2 -->
     <div class="wrapper">
-        <h2>Team Kotahena</h2>
+        <h2>Team Kelaniya</h2>
         <hr>
         <div class="members">
             
             <div class="team-mem">
-
+                <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
+                </div>
                 <h4>Mrs.Emma</h4>
                 <p>Graphic Designer</p>
             </div>
 
             <div class="team-mem">
+                <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
+                </div>
                 <h4>Mrs.Emma</h4>
                 <p>Graphic Designer</p>
             </div>
 
             <div class="team-mem">
+                <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
+                </div>
+                <h4>Mrs.Emma</h4>
+                <p>Graphic Designer</p>
+            </div>
+            
+            <div class="team-mem">
+                <div class="image">
+                <img src="/Photo/Thirani_pics/Manager.jpg">
+                </div>
                 <h4>Mrs.Emma</h4>
                 <p>Graphic Designer</p>
             </div>
 
-            <div class="team-mem">
-                <img src="/Photo/Thirani_pics/Manager.jpg">
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
-            </div>
-
-            <div class="team-mem">
-                <img src="/Photo/Thirani_pics/Manager.jpg">
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
-            </div>
+            
 
         </div>
     </div>
 
     <!-- Branch 3 -->
     <div class="wrapper">
-        <h2>Team Kelaniya</h2>
+        <h2>Team Kotahena</h2>
         <hr>
         <div class="members">
             
             <div class="team-mem">
+                <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
+                </div>
                 <h4>Mrs.Emma</h4>
                 <p>Graphic Designer</p>
             </div>
 
             <div class="team-mem">
+                <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
-            </div>
-        
-            <div class="team-mem">
-                <img src="/Photo/Thirani_pics/Manager.jpg">
+                </div>
                 <h4>Mrs.Emma</h4>
                 <p>Graphic Designer</p>
             </div>
 
             <div class="team-mem">
+                <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
+                </div>
+                <h4>Mrs.Emma</h4>
+                <p>Graphic Designer</p>
+            </div>
+            
+            <div class="team-mem">
+                <div class="image">
+                <img src="/Photo/Thirani_pics/Manager.jpg">
+                </div>
                 <h4>Mrs.Emma</h4>
                 <p>Graphic Designer</p>
             </div>
 
-            <div class="team-mem">
-                <img src="/Photo/Thirani_pics/Manager.jpg">
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
-            </div>
+            
 
         </div>
     </div>
+
+
     </div>
 
 </body>

@@ -31,7 +31,6 @@ class ManagerController extends Controller
         if (Application::$app->user) {
 
             
-            $userId = Application::$app->user->id;
             $meals = Meal::findAll([]);
 
             $mealData = [];
@@ -39,6 +38,10 @@ class ManagerController extends Controller
             foreach ($meals as $meal) {
                 $mealData[] = $meal;
             }
+
+            // var_dump($mealData);
+            // exit;
+
 
             echo json_encode($mealData);
         } else {
