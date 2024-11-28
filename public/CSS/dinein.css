@@ -47,14 +47,27 @@ body {
 } */
 
 .headline {
-  font-size: 3rem;
+  font-size: 4rem; /* Increased font size for prominence */
   font-weight: 700;
-  color: var(--primary-color);
-  text-shadow: 1px 1px var(--shadow-color);
-  font-family: cursive;
+  color: var(--primary-color); /* Retains the primary brand color */
+  text-shadow: 2px 2px 5px var(--shadow-color), 0px 0px 8px rgba(0, 0, 0, 0.2); /* Adds depth with a soft glow */
+  font-family: "Playfair Display", serif; /* A modern, elegant font */
   text-align: center;
-  margin-bottom: var(--spacing);
+  margin-bottom: 30px;
+  margin-top: 30px;
+  letter-spacing: 1px; /* Slightly spaced letters for readability */
+  line-height: 1.2; /* Ensures compact but readable spacing */
+  background: linear-gradient(90deg, var(--highlight-color), var(--primary-color));
+  /* -webkit-background-clip: text; */
+  /* -webkit-text-fill-color: transparent; Gradient text effect */
+  transition: transform 0.3s ease, color 0.3s ease; /* Smooth animations */
 }
+
+.headline:hover {
+  transform: scale(1.05); /* Slight zoom-in effect on hover */
+  color: var(--secondary-color); /* Change to a secondary brand color on hover */
+}
+
 
 /* Card Styles */
 .card-container {
@@ -94,7 +107,7 @@ body {
   margin-bottom: var(--spacing); /* Add space below the title */
   text-shadow: 1px 1px 3px var(--shadow-color); /* Subtle text shadow for depth */
   position: relative; 
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 
 /* Form Styles */
