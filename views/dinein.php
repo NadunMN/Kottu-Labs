@@ -26,21 +26,7 @@
         <div class="card-content">
             <h2 class="form-title">Make a Reservation</h2>
             <form id="reservationForm" action="" class="reservation-form">
-                <!-- Personal Information Section -->
-               
-
-
-                        <!-- <div class="card-img">
-                        <img 
-                            src="/Photo/Thirani_pics/dinein_pic.jpg" 
-                            alt="Kottu Labs dining area interior"
-                        >
-                    </div> -->
-
-                    
-                <!-- Reservation Details Section -->
-                <div class="form-section reservation-details">
-                    <div class="form-row date-time">
+    
                         <!-- Date Field -->
                         <div class="form-group">
                             <label for="reservation-date" class="form-label">Reservation Date</label>
@@ -52,7 +38,7 @@
                                 required
                             >
                         </div>
-                        <br>
+                        
                         <!-- Time Field -->
                         <div class="form-group">
                             <label for="reservation-time" class="form-label">Reservation Time</label>
@@ -77,8 +63,7 @@
                                 </optgroup>
                             </select>
                         </div>
-
-
+                   
                         <div class="form-group">
                             <label for="reservation-branch" class="form-label">Reservation Time</label>
                             <select 
@@ -95,8 +80,8 @@
                                 
                             </select>
                         </div>
-                    </div>
-                    <br>
+                    
+                    
                     <!-- Number of Guests Field -->
                     <div class="form-group">
                         <label for="guests" class="form-label">Number of Guests</label>
@@ -112,7 +97,7 @@
                         >
                         <small id="guestHelp" class="helper-text">Maximum 20 guests per reservation</small>
                     </div>
-                </div>
+                
 
                 <!-- Form Controls -->
                 <button 
