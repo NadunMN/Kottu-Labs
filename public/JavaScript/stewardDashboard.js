@@ -1,26 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
     // Sample data arrays
     const orderStatusData = [
-        { orderId: "097", name: "John Doe", order: "Prawns Dolphin Kottu", tableNo: "04", status: "Ready" },
-        { orderId: "101", name: "Michael Brown", order: "Sea Food Kottu", tableNo: "02", status: "Ready" },
-        { orderId: "097", name: "Jane Smith", order: "Chicken Cheese Kottu", tableNo: "04", status: "Processing" },
-        { orderId: "102", name: "Linda Lee", order: "Mutton String Hopper Kottu", tableNo: "03", status: "Processing" },
-        { orderId: "102", name: "Linda Lee", order: "2L Coca Cola Bottle", tableNo: "03", status: "Processing" }
+        { orderId: "097", name: "Thirani Imanya", order: "Prawns Dolphin Kottu", tableNo: "04", status: "Ready" },
+        { orderId: "101", name: "Nadun Madushabka", order: "Sea Food Kottu", tableNo: "02", status: "Ready" },
+        { orderId: "097", name: "Amal Perera", order: "Chicken Cheese Kottu", tableNo: "04", status: "Processing" },
+        { orderId: "102", name: "Abdul Raheem", order: "Mutton String Hopper Kottu", tableNo: "03", status: "Processing" },
+        { orderId: "102", name: "Kevin Silva", order: "Redbull", tableNo: "03", status: "Processing" }
     ];
 
     const arrivalsData = [
-        { reservationNo: "R001", time: "19:00", heads: "4", bookedBy: "John Doe", tableNumber: "12", arrived: "YES" },
-        { reservationNo: "R002", time: "20:30", heads: "2", bookedBy: "Jane Smith", tableNumber: "5", arrived: "YES"  },
-        { reservationNo: "R003", time: "18:45", heads: "6", bookedBy: "Michael Brown", tableNumber: "8", arrived: "NO"  },
-        { reservationNo: "R004", time: "21:00", heads: "3", bookedBy: "Linda Lee", tableNumber: "3", arrived: "NO"  }
+        { reservationNo: "R001", time: "19:00", heads: "4", bookedBy: "Thirani Imanya", tableNumber: "12", arrived: "YES" },
+        { reservationNo: "R002", time: "20:30", heads: "2", bookedBy: "Nadun Madushanka", tableNumber: "5", arrived: "YES"  },
+        { reservationNo: "R003", time: "18:45", heads: "6", bookedBy: "Imeth Methnuka", tableNumber: "8", arrived: "NO"  },
+        { reservationNo: "R004", time: "21:00", heads: "3", bookedBy: "Praneesh Surendran", tableNumber: "3", arrived: "NO"  }
     ];
 
     const paymentsData = [
-        { orderId: "#1001", time: "18:30", customerName: "John Doe", totalAmount: "$45.00", paymentMethod: "Cash", tableNo: "02", status: "Pending", isReadyToPay: true },
-        { orderId: "#1002", time: "21:20", customerName: "Tom Starc", totalAmount: "$60.00", paymentMethod: "Cash", tableNo: "04", status: "Pending", isReadyToPay: true },
-        { orderId: "#1003", time: "19:00", customerName: "Jane Smith", totalAmount: "$25.00", paymentMethod: "-", tableNo: "01", status: "Pending", isReadyToPay: false },
-        { orderId: "#1004", time: "20:15", customerName: "Michael Brown", totalAmount: "$60.00", paymentMethod: "Cash", tableNo: "02", status: "Completed", isReadyToPay: true },
-        { orderId: "#1005", time: "17:45", customerName: "Linda Lee", totalAmount: "$30.00", paymentMethod: "Card", tableNo: "03", status: "Completed", isReadyToPay: true }
+        { orderId: "#1001", time: "18:30", customerName: "Thirani Imanya", totalAmount: "$45.00", paymentMethod: "Cash", tableNo: "02", status: "Pending", isReadyToPay: true },
+        { orderId: "#1002", time: "21:20", customerName: "Abdul Raheem", totalAmount: "$60.00", paymentMethod: "Cash", tableNo: "04", status: "Pending", isReadyToPay: true },
+        { orderId: "#1003", time: "19:00", customerName: "Gihan Perera", totalAmount: "$25.00", paymentMethod: "-", tableNo: "01", status: "Pending", isReadyToPay: false },
+        { orderId: "#1004", time: "20:15", customerName: "Kevin Silva", totalAmount: "$60.00", paymentMethod: "Cash", tableNo: "02", status: "Completed", isReadyToPay: true },
+        { orderId: "#1005", time: "17:45", customerName: "Jehan Fonseka", totalAmount: "$30.00", paymentMethod: "Card", tableNo: "03", status: "Completed", isReadyToPay: true }
     ];
 
     //select table for cusstomer arrivals

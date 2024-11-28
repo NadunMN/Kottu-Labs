@@ -34,10 +34,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>John Doe</td>
-                                        <td>johndoe@example.com</td>
-                                        <td>Admin</td>
-                                        <td>027282</td>
+                                        <td>Nadun Madushanka</td>
+                                        <td>nadun@gmail.com</td>
+                                        <td>Customer</td>
+                                        <td>+94728472932</td>
                                         <td>
                                             <div class="action-buttons">
                                                 <button>Edit</button>
@@ -46,10 +46,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Jane Smith</td>
-                                        <td>janesmith@example.com</td>
-                                        <td>User</td>
-                                        <td>023456</td>
+                                        <td>Thirani Imanya</td>
+                                        <td>thirani@gmail.com</td>
+                                        <td>Customer</td>
+                                        <td>+94776283966</td>
                                         <td>
                                             <div class="action-buttons">
                                                 <button>Edit</button>
@@ -58,10 +58,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Michael Brown</td>
-                                        <td>michaelb@example.com</td>
+                                        <td>Ranuga Geenal</td>
+                                        <td>ranuga@gmail.com</td>
                                         <td>Manager</td>
-                                        <td>078945</td>
+                                        <td>+94777721655</td>
                                         <td>
                                             <div class="action-buttons">
                                                 <button>Edit</button>
@@ -70,10 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Linda Lee</td>
-                                        <td>lindalee@example.com</td>
-                                        <td>Admin</td>
-                                        <td>031298</td>
+                                        <td>Mahesh Lanka</td>
+                                        <td>lanka@gmail.com</td>
+                                        <td>Chef</td>
+                                        <td>+94762937632</td>
                                         <td>
                                             <div class="action-buttons">
                                                 <button>Edit</button>
@@ -675,7 +675,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     <tr>
                                         <td>5/5</td>
                                         <td>Excellent service and amazing food!</td>
-                                        <td>John Doe</td>
+                                        <td>Thirani Imanya</td>
                                         <td>2024-11-20</td>
                                         <td>
                                             <div class="action-buttons">
@@ -686,7 +686,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     <tr>
                                         <td>4/5</td>
                                         <td>Great experience, but waiting time was long.</td>
-                                        <td>Jane Smith</td>
+                                        <td>Nadun Madushanka</td>
                                         <td>2024-11-21</td>
                                         <td>
                                             <div class="action-buttons">
@@ -697,7 +697,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     <tr>
                                         <td>5/5</td>
                                         <td>The kottu was out of this world!</td>
-                                        <td>Michael Brown</td>
+                                        <td>Imeth Methnuka</td>
                                         <td>2024-11-22</td>
                                         <td>
                                             <div class="action-buttons">
@@ -708,7 +708,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     <tr>
                                         <td>3/5</td>
                                         <td>Food was good, but the drinks could be better.</td>
-                                        <td>Linda Lee</td>
+                                        <td>Abdul Raheem</td>
                                         <td>2024-11-23</td>
                                         <td>
                                             <div class="action-buttons">

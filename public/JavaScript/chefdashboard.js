@@ -245,8 +245,8 @@ document.addEventListener("DOMContentLoaded", () => {
                                         <td>#1001</td>
                                         <td>2024-11-20</td>
                                         <td>18:30</td>
-                                        <td>John Doe</td>
-                                        <td>Pasta</td>
+                                        <td>Thirani Imanya</td>
+                                        <td>Chicken Kottu</td>
                                         <td>Completed</td>
                                         
                                     </tr>
@@ -254,8 +254,8 @@ document.addEventListener("DOMContentLoaded", () => {
                                         <td>#1002</td>
                                         <td>2024-11-21</td>
                                         <td>19:00</td>
-                                        <td>Jane Smith</td>
-                                        <td>Chicken Kottu, Chocolate Milkshake</td>
+                                        <td>Abdul Raheem</td>
+                                        <td>Redbull</td>
                                         <td>Pending</td>
                                         <td>
                                             <div class="action-buttons">
@@ -268,8 +268,8 @@ document.addEventListener("DOMContentLoaded", () => {
                                         <td>#1003</td>
                                         <td>2024-11-22</td>
                                         <td>20:15</td>
-                                        <td>Michael Brown</td>
-                                        <td>Baby corn fries, Red bull</td>
+                                        <td>Imeth Methnuka</td>
+                                        <td>Chicken Fried Rice</td>
                                         <td>Under Preparation</td>
                                         <td>
                                             <div class="action-buttons">
@@ -281,8 +281,8 @@ document.addEventListener("DOMContentLoaded", () => {
                                         <td>#1004</td>
                                         <td>2024-11-23</td>
                                         <td>17:45</td>
-                                        <td>Linda Lee</td>
-                                        <td>Dolphin Kottu</td>
+                                        <td>Nadun Madushanka</td>
+                                        <td>Seafood Kottu</td>
                                         <td>Under Preparation</td>
                                         <td>
                                             <div class="action-buttons">

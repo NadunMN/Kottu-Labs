@@ -24,7 +24,7 @@
     <img src="/Photo/offers/AZEEZ RESTAURANT.jpg" alt="Product Image" class="card-image">
     <div class="card-content">
       <h2 class="card-title">Product Name</h2>
-      <div class="card-price">$99.99</div>
+      <div class="card-price">Rs. 1000/=</div>
       <p class="card-description">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
       </p>
@@ -36,20 +36,7 @@
     <img src="/Photo/offers/AZEEZ RESTAURANT.jpg" alt="Product Image" class="card-image">
     <div class="card-content">
       <h2 class="card-title">Product Name</h2>
-      <div class="card-price">$99.99</div>
-      <p class="card-description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
-      </p>
-      <button class="view-button">View Details</button>
-    </div>
-  </div>
-
-
-  <div class="card">
-    <img src="/Photo/offers/AZEEZ RESTAURANT.jpg" alt="Product Image" class="card-image">
-    <div class="card-content">
-      <h2 class="card-title">Product Name</h2>
-      <div class="card-price">$99.99</div>
+      <div class="card-price">Rs. 2500/=</div>
       <p class="card-description">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
       </p>
@@ -62,7 +49,20 @@
     <img src="/Photo/offers/AZEEZ RESTAURANT.jpg" alt="Product Image" class="card-image">
     <div class="card-content">
       <h2 class="card-title">Product Name</h2>
-      <div class="card-price">$99.99</div>
+      <div class="card-price">Rs. 760/=</div>
+      <p class="card-description">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+      </p>
+      <button class="view-button">View Details</button>
+    </div>
+  </div>
+
+
+  <div class="card">
+    <img src="/Photo/offers/AZEEZ RESTAURANT.jpg" alt="Product Image" class="card-image">
+    <div class="card-content">
+      <h2 class="card-title">Product Name</h2>
+      <div class="card-price">Rs. 1500/=</div>
       <p class="card-description">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
       </p>
@@ -74,7 +74,7 @@
     <img src="/Photo/offers/AZEEZ RESTAURANT.jpg" alt="Product Image" class="card-image">
     <div class="card-content">
       <h2 class="card-title">Product Name</h2>
-      <div class="card-price">$99.99</div>
+      <div class="card-price">Rs. 500/=</div>
       <p class="card-description">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
       </p>
@@ -87,7 +87,7 @@
     <img src="/Photo/offers/AZEEZ RESTAURANT.jpg" alt="Product Image" class="card-image">
     <div class="card-content">
       <h2 class="card-title">Product Name</h2>
-      <div class="card-price">$99.99</div>
+      <div class="card-price">Rs. 1999/=</div>
       <p class="card-description">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
       </p>
@@ -119,7 +119,7 @@
         <div class="offer-content-body-photo-details">
             <div>
                 <h4>Special Cheese kottu</h4>
-                <h5>Rs.850.00</h5>
+                <h5>Rs.850/=</h5>
             </div>
 
             <button>View</button>
@@ -136,7 +136,7 @@
         <div class="offer-content-body-photo-details">
             <div>
                 <h4>Special Cheese kottu</h4>
-                <h5>Rs.850.00</h5>
+                <h5>Rs.850/=</h5>
             </div>
 
             <button>View</button>
@@ -153,7 +153,7 @@
         <div class="offer-content-body-photo-details">
             <div>
                 <h4>Special Cheese kottu</h4>
-                <h5>Rs.850.00</h5>
+                <h5>Rs. 5500/=</h5>
             </div>
 
             <button>View</button>
