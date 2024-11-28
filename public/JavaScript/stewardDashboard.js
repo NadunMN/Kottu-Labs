@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     // Sample data arrays
     const orderStatusData = [
+<<<<<<< Updated upstream
         { orderId: "097", name: "Thirani Imanya", order: "Prawns Dolphin Kottu", tableNo: "04", status: "Ready" },
         { orderId: "101", name: "Nadun Madushabka", order: "Sea Food Kottu", tableNo: "02", status: "Ready" },
         { orderId: "097", name: "Amal Perera", order: "Chicken Cheese Kottu", tableNo: "04", status: "Processing" },
@@ -21,6 +22,28 @@ document.addEventListener("DOMContentLoaded", () => {
         { orderId: "#1003", time: "19:00", customerName: "Gihan Perera", totalAmount: "$25.00", paymentMethod: "-", tableNo: "01", status: "Pending", isReadyToPay: false },
         { orderId: "#1004", time: "20:15", customerName: "Kevin Silva", totalAmount: "$60.00", paymentMethod: "Cash", tableNo: "02", status: "Completed", isReadyToPay: true },
         { orderId: "#1005", time: "17:45", customerName: "Jehan Fonseka", totalAmount: "$30.00", paymentMethod: "Card", tableNo: "03", status: "Completed", isReadyToPay: true }
+=======
+        { orderId: "1003", name: "Kasun Senanayaka", order: "Prawns Dolphin Kottu", tableNo: "04", status: "Ready" },
+        { orderId: "1010", name: "Nipuni Wathsala", order: "Sea Food Kottu", tableNo: "02", status: "Ready" },
+        { orderId: "1003", name: "Kasun Senanayaka", order: "Chicken Cheese Kottu", tableNo: "04", status: "Processing" },
+        { orderId: "1005", name: "Deshan Herath", order: "Mutton String Hopper Kottu", tableNo: "03", status: "Processing" },
+        { orderId: "1005", name: "Deshan Herath", order: "2L Coca Cola Bottle", tableNo: "03", status: "Processing" }
+    ];
+
+    const arrivalsData = [
+        { reservationNo: "R001", time: "19:00", heads: "4", bookedBy: "Kasun Senanayaka", tableNumber: "2", arrived: "YES" },
+        { reservationNo: "R002", time: "19:30", heads: "2", bookedBy: "Nimal Perera", tableNumber: "5", arrived: "YES"  },
+        { reservationNo: "R003", time: "18:45", heads: "6", bookedBy: "Nipuni Wathsala", tableNumber: "8", arrived: "NO"  },
+        { reservationNo: "R004", time: "21:00", heads: "3", bookedBy: "Deshan Herath", tableNumber: "3", arrived: "NO"  }
+    ];
+
+    const paymentsData = [
+        { orderId: "1003", time: "20:30", customerName: "Kasun Senanayaka", totalAmount: "4500.00", paymentMethod: "Cash", tableNo: "02", status: "Pending", isReadyToPay: true },
+        { orderId: "1002", time: "19:20", customerName: "Nimal Perera", totalAmount: "1200.00", paymentMethod: "Cash", tableNo: "04", status: "Pending", isReadyToPay: true },
+        { orderId: "1010", time: "19:00", customerName: "Ahmad Hafis", totalAmount: "2500.00", paymentMethod: "-", tableNo: "01", status: "Pending", isReadyToPay: false },
+        { orderId: "1006", time: "18:15", customerName: "Nipuni Wathsala", totalAmount: "600.00", paymentMethod: "Cash", tableNo: "02", status: "Completed", isReadyToPay: true },
+        { orderId: "1005", time: "17:45", customerName: "Deshan Herath", totalAmount: "300.00", paymentMethod: "Card", tableNo: "03", status: "Completed", isReadyToPay: true }
+>>>>>>> Stashed changes
     ];
 
     //select table for cusstomer arrivals
