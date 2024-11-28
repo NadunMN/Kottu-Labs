@@ -40,7 +40,7 @@
     <div class="offers-section">
         <div class="topic-head">
             <p class="card-head-topic">Special Offers</p>
-            <button>View all</button>
+            <button onclick="window.location.href='/offer'">View All</button>
         </div>
         <hr class="styled-hr">
         <?php include __DIR__ . '../carousel.php'; ?>
@@ -103,9 +103,7 @@
                     Whether dining in, ordering takeaway, 
                     or catering an event, our goal is to provide you with delicious food and a memorable experience.</p>
                 </div>
-                <div class="topic-head">
-                    <button>LEARN MORE</button>
-                </div>
+                
             </div>
             
         </div>
