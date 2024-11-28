@@ -393,7 +393,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         .then((data) => {
                           if (data.success) {
                             alert("The meal has been deleted.");
-                            fetchReviews(); // Refresh the reviews
+                            button.closest("tr").remove();
+
                           } else {
                             alert(
                               "There was an error deleting the meal: " +
