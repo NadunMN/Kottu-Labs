@@ -13,33 +13,23 @@
     
     <!-- Styles -->
     <link rel="stylesheet" href="/CSS/dinein.css">
-    
-    <!-- Resource Preloading -->
-    <!-- <link rel="preload" href="/Photo/Thirani_pics/dinein_pic.jpg" as="image"> -->
-    <!-- <link rel="preload" href="/CSS/dinein.css" as="style"> -->
-    
-    <!-- Favicon -->
-    <!-- <link rel="icon" type="image/x-icon" href="/favicon.ico"> -->
 </head>
 
 <body>
-    <!-- Page Wrapper -->
-    <!-- <div class="page-wrapper"> -->
-        <!-- Main Content -->
-        <!-- <main class="main-content"> -->
-            <!-- Header Section -->
-            <header>
-                <h1 class="headline">Reserve your Spot & Enjoy!</h1>
-            </header>
+    <!-- Header Section -->
+    <header>
+        <h1 class="headline">Reserve Your Spot & Enjoy!</h1>
+    </header>
 
-            <!-- Reservation Section -->
-            <section>
-                <!-- <div class="card-container"> -->
-                    
-                    <!-- Reservation Form Card -->
-                    <div class="card-content">
-                        <h2 class="form-title">Make a Reservation</h2>
+    <!-- Reservation Section -->
+    <section>
+        <div class="card-content">
+            <h2 class="form-title">Make a Reservation</h2>
+            <form id="reservationForm" action="" class="reservation-form">
+                <!-- Personal Information Section -->
+               
 
+<<<<<<< HEAD
                         <!-- <div class="card-img">
                         <img 
                             src="/Photo/Thirani_pics/dinein_pic.jpg" 
@@ -176,29 +166,77 @@
                                 </button>
                             
                         </form>
+=======
+                <!-- Reservation Details Section -->
+                <div class="form-section reservation-details">
+                    <div class="form-row date-time">
+                        <!-- Date Field -->
+                        <div class="form-group">
+                            <label for="reservation-date" class="form-label">Reservation Date</label>
+                            <input 
+                                type="date" 
+                                id="reservation-date" 
+                                name="reservation_date"
+                                class="form-input"
+                                required
+                            >
+                        </div>
+                        <br>
+                        <!-- Time Field -->
+                        <div class="form-group">
+                            <label for="reservation-time" class="form-label">Reservation Time</label>
+                            <select 
+                                id="reservation-time" 
+                                name="reservation_time"
+                                class="form-select"
+                                required
+                            >
+                                <option value="">Select a time slot</option>
+                                <optgroup label="Afternoon">
+                                    <option value="15:00">3:00 PM - 4:00 PM</option>
+                                    <option value="16:00">4:00 PM - 5:00 PM</option>
+                                    <option value="17:00">5:00 PM - 6:00 PM</option>
+                                </optgroup>
+                                <optgroup label="Evening">
+                                    <option value="18:00">6:00 PM - 7:00 PM</option>
+                                    <option value="19:00">7:00 PM - 8:00 PM</option>
+                                    <option value="20:00">8:00 PM - 9:00 PM</option>
+                                    <option value="21:00">9:00 PM - 10:00 PM</option>
+                                    <option value="22:00">10:00 PM - 11:00 PM</option>
+                                </optgroup>
+                            </select>
+                        </div>
+>>>>>>> d9d9898a680a267e8f74f2928a15a6ed3a899170
                     </div>
-                <!-- </div> -->
-            </section>
-        <!-- </main> -->
-    <!-- </div> -->
+                    <br>
+                    <!-- Number of Guests Field -->
+                    <div class="form-group">
+                        <label for="guests" class="form-label">Number of Guests</label>
+                        <input 
+                            type="number" 
+                            id="guests" 
+                            name="number_of_guests"
+                            class="form-input"
+                            required
+                            min="1"
+                            max="20"
+                            placeholder="Enter number of guests"
+                        >
+                        <small id="guestHelp" class="helper-text">Maximum 20 guests per reservation</small>
+                    </div>
+                </div>
 
-    <!-- Scripts
-    <script>
-        // Initialize form validation and date restrictions
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set minimum date to today
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('reservation-date').min = today;
+                <!-- Form Controls -->
+                <button 
+                    type="submit" 
+                    class="submit-button"
+                >
+                    Confirm Reservation
+                </button>
+            </form>
+        </div>
+    </section>
 
-            // Form validation
-            const form = document.getElementById('reservationForm');
-            form.addEventListener('submit', function(event) {
-                event.preventDefault();
-                // Add your form submission logic here
-                console.log('Form submitted');
-            });
-        });
-    </script> -->
-    <script src="/JavaScript/dinein.js" defer></script>
+    <script src="/JavaScript/dinein.js"></script>
 </body>
 </html>

@@ -1,25 +1,25 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Select all sidebar list items
-    const sidebarOptions = document.querySelectorAll(".sidebar ul li");
-    const mainContent = document.getElementById("main-content");
+  // Select all sidebar list items
+  const sidebarOptions = document.querySelectorAll(".sidebar ul li");
+  const mainContent = document.getElementById("main-content");
 
-    // Default selection to "view-users"
-    document.getElementById("view-users").classList.add("selected");
-    
-    // Event listener for each sidebar option
-    sidebarOptions.forEach(option => {
-        option.addEventListener("click", () => {
-            // Remove 'selected' class from all options
-            sidebarOptions.forEach(opt => opt.classList.remove("selected"));
-            // Add 'selected' class to the clicked option
-            option.classList.add("selected");
+  // Default selection to "view-users"
+  document.getElementById("view-users").classList.add("selected");
 
-            // Render appropriate content
-            const optionId = option.id;
+  // Event listener for each sidebar option
+  sidebarOptions.forEach((option) => {
+    option.addEventListener("click", () => {
+      // Remove 'selected' class from all options
+      sidebarOptions.forEach((opt) => opt.classList.remove("selected"));
+      // Add 'selected' class to the clicked option
+      option.classList.add("selected");
 
-            switch (optionId) {
-                case "view-users":
-                    mainContent.innerHTML = `
+      // Render appropriate content
+      const optionId = option.id;
+
+      switch (optionId) {
+        case "view-users":
+          mainContent.innerHTML = `
                         <div class="view-users-section">
                             <h2>View Users</h2>
                             <table>
@@ -84,27 +84,26 @@ document.addEventListener("DOMContentLoaded", () => {
                                 </tbody>
                             </table>
                         </div>`;
-                    break;
+          break;
 
-                case "update-menu":
+        case "update-menu":
+          fetch("/menuitem/data")
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.error) {
+                console.error("Error:", data.error);
+              } else {
+                // Get the meal content container
+                const mealContent = document.getElementById("main-content");
+                console.log(data);
 
-                    fetch('/menuitem/data')
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.error) {
-                                console.error('Error:', data.error);
-                            } else {
-                                // Get the meal content container
-                                const mealContent = document.getElementById('main-content');
-                                console.log(data)
+                if (data == null || data.length === 0) {
+                  mealContent.innerHTML = "No meals available"; // Show a message if there are no meals
+                } else {
+                  mealContent.innerHTML = ""; // Clear previous content if data is available
+                }
 
-                                if (data == null || data.length === 0) {
-                                    mealContent.innerHTML = 'No meals available'; // Show a message if there are no meals
-                                } else {
-                                    mealContent.innerHTML = ''; // Clear previous content if data is available
-                                }
-
-                                mealContent.innerHTML =`
+                mealContent.innerHTML = `
 
                                     <div class="view-branch-menu-section">
                                             <div class="topic-bar">
@@ -180,22 +179,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
                                 `;
 
-                                let mealId;
-                                // Dynamically generate meal elements
-                                data.forEach(meal => {
-                                    // Create a new table row
-                                    const row = document.createElement('tr');
-                                
-                                    // Populate row HTML
-                                    row.innerHTML = `
-                                        <td class="meal-id" >${meal.meal_id}</td>
+                let mealId;
+                // Dynamically generate meal elements
+                data.forEach((meal) => {
+                  // Create a new table row
+                  const row = document.createElement("tr");
+
+                  // Populate row HTML
+                  row.innerHTML = `
+                                        <td class="meal-id" >${
+                                          meal.meal_id
+                                        }</td>
                                         <td>${meal.meal_name}</td>
                                         <td>${meal.meal_description}</td>
                                         <td>Rs.${meal.meal_price}</td>
                                         <td>
 
-                                        <button class="status-btn ${meal.available ? 'available' : 'unavailable'}">
-                                                ${meal.available ? 'Available' : 'Unavailable'}
+                                        <button class="status-btn ${
+                                          meal.available
+                                            ? "available"
+                                            : "unavailable"
+                                        }">
+                                                ${
+                                                  meal.available
+                                                    ? "Available"
+                                                    : "Unavailable"
+                                                }
                                             </button>
                                             
                                         </td>
@@ -203,312 +212,351 @@ document.addEventListener("DOMContentLoaded", () => {
                                             
 
                                             <div class="action-buttons">
-                                                <button class="edit-btn" meal-id='${meal.meal_id}'>Edit</button>
-                                                <button class="delete-btn" meal-id ='${meal.meal_id}'>Delete</button>
+                                                <button class="edit-btn" meal-id='${
+                                                  meal.meal_id
+                                                }'>Edit</button>
+                                                <button class="delete-btn" meal-id ='${
+                                                  meal.meal_id
+                                                }'>Delete</button>
                                             </div>
                                         </td>
                                     `;
-                                
-                                    // Append the row directly to the table body
-                                    document.getElementById('table-content').appendChild(row);
 
-                                    
-                                });
+                  // Append the row directly to the table body
+                  document.getElementById("table-content").appendChild(row);
+                });
 
-                                 // Get Elements
-                                const openFormBtn = document.querySelector('.add-item-btn');
-                                const closeFormBtn = document.querySelector('.cancel-item-btn');
-                                const addItemForm = document.getElementById('add-item-form');
-                                const addForm = document.getElementById('add-form');
- 
-                                 // Open the Popup
-                                openFormBtn.addEventListener('click', () => {
-                                    addItemForm.classList.remove('hidden');
-                                    resetForm();
-                                    addForm.removeEventListener('submit', updateItem);
-                                    addForm.addEventListener('submit', addNewItem);
-                                });
+                // Get Elements
+                const openFormBtn = document.querySelector(".add-item-btn");
+                const closeFormBtn = document.querySelector(".cancel-item-btn");
+                const addItemForm = document.getElementById("add-item-form");
+                const addForm = document.getElementById("add-form");
 
-                             
+                // Open the Popup
+                openFormBtn.addEventListener("click", () => {
+                  addItemForm.classList.remove("hidden");
+                  resetForm();
+                  addForm.removeEventListener("submit", updateItem);
+                  addForm.addEventListener("submit", addNewItem);
+                });
 
-                                 // Close the Popup
-                                closeFormBtn.addEventListener('click', (event) => {
-                                    addItemForm.classList.add('hidden');
-                                    event.preventDefault();
-                                    resetForm();
-                                });
- 
-                            
- 
-                                
+                // Close the Popup
+                closeFormBtn.addEventListener("click", (event) => {
+                  addItemForm.classList.add("hidden");
+                  event.preventDefault();
+                  resetForm();
+                });
 
-                                
+                // Add event listeners to the status buttons to toggle availability
+                const statusButtons = document.querySelectorAll(".status-btn");
+                statusButtons.forEach((button) => {
+                  button.addEventListener("click", () => {
+                    if (button.classList.contains("available")) {
+                      button.classList.remove("available");
+                      button.classList.add("unavailable");
+                      button.textContent = "Unavailable";
+                    } else {
+                      button.classList.remove("unavailable");
+                      button.classList.add("available");
+                      button.textContent = "Available";
+                    }
+                  });
+                });
 
-                                // Add event listeners to the status buttons to toggle availability
-                                const statusButtons = document.querySelectorAll('.status-btn');
-                                statusButtons.forEach(button => {
-                                    button.addEventListener('click', () => {
-                                        if (button.classList.contains('available')) {
-                                            button.classList.remove('available');
-                                            button.classList.add('unavailable');
-                                            button.textContent = 'Unavailable';
-                                        } else {
-                                            button.classList.remove('unavailable');
-                                            button.classList.add('available');
-                                            button.textContent = 'Available';
-                                        }
-                                    });
-                                });
+                // Edit Button Event Listener
+                document.querySelectorAll(".edit-btn").forEach((button) => {
+                  button.addEventListener("click", function () {
+                    mealId = button.getAttribute("meal-id");
+                    console.log(mealId);
+                    const row = button.closest("tr");
+                    const mealName =
+                      row.querySelector("td:nth-child(2)").innerText;
+                    const mealDescription =
+                      row.querySelector("td:nth-child(3)").innerText;
+                    const mealPrice = row
+                      .querySelector("td:nth-child(4)")
+                      .innerText.replace("Rs.", "");
 
+                    // Open the form and fill it with the existing data
+                    addItemForm.classList.remove("hidden");
+                    document.getElementById("item-id").value = mealId;
+                    document.getElementById("item-name").value = mealName;
+                    document.getElementById("item-price").value = mealPrice;
+                    document.getElementById("meal_description").value =
+                      mealDescription;
 
-                                // Edit Button Event Listener
-                document.querySelectorAll('.edit-btn').forEach(button => {
-                    button.addEventListener('click', function() {
-                        mealId = button.getAttribute('meal-id');;
-                        console.log(mealId);
-                        const row = button.closest('tr');
-                        const mealName = row.querySelector('td:nth-child(2)').innerText;
-                        const mealDescription = row.querySelector('td:nth-child(3)').innerText;
-                        const mealPrice = row.querySelector('td:nth-child(4)').innerText.replace('Rs.', '');
-
-                        // Open the form and fill it with the existing data
-                        addItemForm.classList.remove('hidden');
-                        document.getElementById('item-id').value = mealId;
-                        document.getElementById('item-name').value = mealName;
-                        document.getElementById('item-price').value = mealPrice;
-                        document.getElementById('meal_description').value = mealDescription;
-
-                        // Change form action to update
-                        addForm.removeEventListener('submit', addNewItem);
-                        addForm.addEventListener('submit', updateItem);
-                    });
+                    // Change form action to update
+                    addForm.removeEventListener("submit", addNewItem);
+                    addForm.addEventListener("submit", updateItem);
+                  });
                 });
 
                 function addNewItem(event) {
-                    event.preventDefault();
-                    const formData = new FormData(addForm);
-                    const data = Object.fromEntries(formData.entries());
-                    
-                    const requestBody = JSON.stringify(data);
-                    console.log('Request Body:', requestBody);
-                    fetch("/menuitem/add", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: requestBody,
+                  event.preventDefault();
+                  const formData = new FormData(addForm);
+                  const data = Object.fromEntries(formData.entries());
+
+                  const requestBody = JSON.stringify(data);
+                  console.log("Request Body:", requestBody);
+                  fetch("/menuitem/add", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: requestBody,
+                  })
+                    .then((response) => {
+                      if (!response.ok) {
+                        throw new Error(
+                          `HTTP error! status: ${response.status}`
+                        );
+                      }
+                      return response.json();
                     })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        return response.json();
+                    .then((data) => {
+                      console.log("Success:", data);
+                      addItemForm.classList.add("hidden");
+                      resetForm();
                     })
-                    .then(data => {
-                        console.log("Success:", data);
-                        addItemForm.classList.add('hidden');
-                        resetForm();
-                    })
-                    .catch(error => {
-                        console.error("Error:", error);
+                    .catch((error) => {
+                      console.error("Error:", error);
                     });
                 }
 
-
                 // Function to update an existing item
                 function updateItem(event) {
-                    event.preventDefault();
-                    const formData = new FormData(addForm);
-                    let data = Object.fromEntries(formData.entries());
-                    data.older_id = mealId;
-                    const requestBody = JSON.stringify(data);
-                    console.log('Request Body:', requestBody);
-                    fetch("/menuitem/update", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: requestBody,
+                  event.preventDefault();
+                  const formData = new FormData(addForm);
+                  let data = Object.fromEntries(formData.entries());
+                  data.older_id = mealId;
+                  const requestBody = JSON.stringify(data);
+                  console.log("Request Body:", requestBody);
+                  fetch("/menuitem/update", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: requestBody,
+                  })
+                    .then((response) => {
+                      if (!response.ok) {
+                        throw new Error(
+                          `HTTP error! status: ${response.status}`
+                        );
+                      }
+                      return response.json();
                     })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        return response.json();
+                    .then((data) => {
+                      console.log("Success:", data);
+                      addItemForm.classList.add("hidden");
+                      resetForm();
+                      addForm.removeEventListener("submit", updateItem);
+                      addForm.addEventListener("submit", addNewItem);
                     })
-                    .then(data => {
-                        console.log("Success:", data);
-                        addItemForm.classList.add('hidden');
-                        resetForm();
-                        addForm.removeEventListener('submit', updateItem);
-                        addForm.addEventListener('submit', addNewItem);
-                    })
-                    .catch(error => {
-                        console.error("Error:", error);
+                    .catch((error) => {
+                      console.error("Error:", error);
                     });
                 }
 
                 // Function to reset the form
                 function resetForm() {
-                    addForm.reset();
-                    document.getElementById('item-id').value = '';
+                  addForm.reset();
+                  document.getElementById("item-id").value = "";
                 }
-                                
 
+                // Add event listeners to delete buttons
+                const deleteButtons = document.querySelectorAll(".delete-btn");
+                deleteButtons.forEach((button) => {
+                  button.addEventListener("click", () => {
+                    // const row = button.closest('tr');
+                    // row.remove();
 
+                    if (
+                      confirm(
+                        "Are you sure you want to delete this meal? This action cannot be undone."
+                      )
+                    ) {
+                      const mealId = button.getAttribute("meal-id");
+                      console.log(mealId);
 
-                    // Add event listeners to delete buttons
-                    const deleteButtons = document.querySelectorAll('.delete-btn');
-                    deleteButtons.forEach(button => {
-                        button.addEventListener('click', () => {
-                            // const row = button.closest('tr');
-                            // row.remove();
+                      const requestBody = JSON.stringify({ meal_id: mealId });
+                      console.log("Request Body:", requestBody);
 
-                            if (confirm('Are you sure you want to delete this meal? This action cannot be undone.')) {
-                                const mealId = button.getAttribute('meal-id');
-                                console.log(mealId);
-
-                                const requestBody = JSON.stringify({ meal_id: mealId });
-                                console.log('Request Body:', requestBody);
-        
-                                fetch('/mealitem/delete', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: requestBody
-                                })
-                                .then(response => response.json())
-                                .then(data => {
-                                    if (data.success) {
-                                        alert('The meal has been deleted.');
-                                        fetchReviews(); // Refresh the reviews
-                                    } else {
-                                        alert('There was an error deleting the meal: ' + data.message);
-                                        console.error('Error:', data.message);
-                                    }
-                                })
-                                .catch(error => console.error('Error:', error));
-                            }
-
-                        });
-                    });
-
-                    
-                    // document.getElementById('add-form').addEventListener("submit", function(event) {
-                    //     event.preventDefault();
-                    //     const formData = new FormData(this);
-                    //     const data = Object.fromEntries(formData.entries());
-                    //     const requestBody = JSON.stringify(data);
-                    //     console.log('Request Body:', requestBody);
-                    //     fetch("menuitem/add", {
-                    //         method: "POST",
-                    //         headers: {
-                    //             "Content-Type": "application/json",
-                    //         },
-                    //         body: requestBody,
-                    //     })
-                    //     .then(response => {
-                    //         if (!response.ok) {
-                    //             throw new Error(`HTTP error! status: ${response.status}`);
-                    //         }
-                    //         return response.json();
-                    //     })
-                    //     .then(data => {
-                    //         console.log("Success:", data);
-                    //     })
-                    //     .catch(error => {
-                    //         console.error("Error:", error);
-                    //     });
-                    // });
-
-                    
-
-                 }
+                      fetch("/mealitem/delete", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: requestBody,
+                      })
+                        .then((response) => response.json())
+                        .then((data) => {
+                          if (data.success) {
+                            alert("The meal has been deleted.");
+                            fetchReviews(); // Refresh the reviews
+                          } else {
+                            alert(
+                              "There was an error deleting the meal: " +
+                                data.message
+                            );
+                            console.error("Error:", data.message);
+                          }
+                        })
+                        .catch((error) => console.error("Error:", error));
+                    }
+                  });
                 });
+              }
+            });
 
-        
-                    break;
+          break;
 
-                case "view-reservations":
-                    mainContent.innerHTML = `
-                        <div class="view-reservations-section">
-                            <h2>View Reservations</h2>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Reservation No.</th>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>No. of Heads</th>
-                                        <th>Booked By</th>
-                                        <th>Table Number</th>
-                                        <th> </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>R001</td>
-                                        <td>2024-11-25</td>
-                                        <td>19:00</td>
-                                        <td>4</td>
-                                        <td>John Doe</td>
-                                        <td>12</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button>Edit</button>
-                                                <button>Delete</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>R002</td>
-                                        <td>2024-11-26</td>
-                                        <td>20:30</td>
-                                        <td>2</td>
-                                        <td>Jane Smith</td>
-                                        <td>5</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button>Edit</button>
-                                                <button>Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>R003</td>
-                                            <td>2024-11-27</td>
-                                            <td>18:45</td>
-                                            <td>6</td>
-                                            <td>Michael Brown</td>
-                                            <td>8</td>
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <button>Edit</button>
-                                                    <button>Delete</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>R004</td>
-                                            <td>2024-11-28</td>
-                                            <td>21:00</td>
-                                            <td>3</td>
-                                            <td>Linda Lee</td>
-                                            <td>3</td>
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <button>Edit</button>
-                                                    <button>Delete</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>`;
-                        break;
+        case "view-reservations":
+            fetch("/reservation/data")
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              if (!Array.isArray(data)) {
+                console.error("Data is not an array");
+                document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
+                return;
+              }
+          
+              const reservationContent = document.getElementById("main-content");
+          
+              if (!data || data.length === 0) {
+                reservationContent.innerHTML = "<p>No reservations available</p>";
+                return;
+              }
+          
+              // Clear the content and build the table structure
+              reservationContent.innerHTML = `
+                <div class="view-branch-menu-section">
+                  <div class="topic-bar">
+                    <div>
+                      <h2>Nawala</h2>
+                      <h5>${data.length} reservations available</h5>
+                    </div>
+                  </div>
+                  <table class="menu-table" id="menu-table">
+                    <thead>
+                      <tr>
+                        <th>Reservation No</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>No. Guests</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="table-content"></tbody>
+                  </table>
+                </div>
+              `;
+          
+              const tableContent = document.getElementById("table-content");
+          
+              if (!tableContent) {
+                console.error("Table content element not found.");
+                return;
+              }
+          
+              // Populate the table with reservation data
+              data.forEach((reservation) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                  <td class="reservation-id">${reservation.reservation_no}</td>
+                  <td>${reservation.reservation_date}</td>
+                  <td>${reservation.reservation_time}</td>
+                  <td>${reservation.number_of_guests}</td>
+                  <td>
+                    <button class="status-btn ${reservation.confirmation_status ? "available" : "unavailable"}">
+                      ${reservation.confirmation_status ? "Confirmed" : "Pending"}
+                    </button>
+                  </td>
+                  <td>
+                    <div class="action-buttons">
+                      <button class="delete-btn" reservation-no='${reservation.reservation_no}'>Delete</button>
+                    </div>
+                  </td>
+                `;
+                tableContent.appendChild(row);
+              });
+          
+              // Handle status button toggle
+              const statusButtons = document.querySelectorAll(".status-btn");
+              statusButtons.forEach((button) => {
+                button.addEventListener("click", () => {
+                  const isAvailable = button.classList.contains("available");
+                  button.classList.toggle("available", !isAvailable);
+                  button.classList.toggle("unavailable", isAvailable);
+                  button.textContent = isAvailable ? "Pending" : "Confirmed";
+                  fetch('/reservation/update', {
+                    method: 'POST',
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      'confirmation_status': isAvailable ? 0 : 1,
+                      'reservation_no': button.closest("tr").querySelector(".reservation-id").textContent
+                    })
+                  });
+                });
+              });
+          
+            
+              // Handle delete button click
+              document.querySelectorAll(".delete-btn").forEach((button) => {
+                button.addEventListener("click", () => {
+                  if (confirm("Are you sure you want to delete this reservation? This action cannot be undone.")) {
+                    const reservationNo = button.getAttribute("reservation-no");
+          
+                    const requestBody = JSON.stringify({ reservation_no: reservationNo });
+                    console.log("Request Body:", requestBody);
+          
+                    fetch("/reservation/delete", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: requestBody,
+                    })
+                      .then((response) => {
+                        if (!response.ok) {
+                          throw new Error("Network response was not ok");
+                        }
+                        return response.json();
+                      })
+                      .then((data) => {
+                        if (data.success) {
+                          alert("The reservation has been deleted.");
+                          button.closest("tr").remove();
+                        } else {
+                          alert("There was an error deleting the reservation: " + data.message);
+                          console.error("Error:", data.message);
+                        }
+                      })
+                      .catch((error) => {
+                        console.error("Error:", error);
+                        alert("Failed to delete the reservation.");
+                      });
+                  }
+                });
+              });
+            })
+            .catch((error) => {
+              console.error("Fetch error:", error);
+              document.getElementById("main-content").innerHTML = "<p>Error loading reservations.</p>";
+            });
+          
+         break;
 
-                case "update-offers":
-                    mainContent.innerHTML = `
+        case "update-offers":
+          mainContent.innerHTML = `
                         <div class="update-offers-section">
                             <h2>Update Offers</h2>
 
@@ -598,18 +646,18 @@ document.addEventListener("DOMContentLoaded", () => {
                                 </div>
                             </div>
                         </div>`;
-                    break;
+          break;
 
-                case "staff":
-                    mainContent.innerHTML = `
+        case "staff":
+          mainContent.innerHTML = `
                         <div class="staff-section">
                             <h2>Staff</h2>
                             <p>Manage staff details and roles here.</p>
                         </div>`;
-                    break;
+          break;
 
-                case "feedbacks":
-                    mainContent.innerHTML = `
+        case "feedbacks":
+          mainContent.innerHTML = `
                         <div class="feedbacks-section">
                             <h2>Customer Feedbacks</h2>
                             <table>
@@ -670,10 +718,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                 </tbody>
                             </table>
                         </div>`;
-                    break;
+          break;
 
-                case "order-history":
-                    mainContent.innerHTML = `
+        case "order-history":
+          mainContent.innerHTML = `
                         <div class="order-history-section">
                             <h2>Order History</h2>
                             <table>
@@ -744,15 +792,15 @@ document.addEventListener("DOMContentLoaded", () => {
                                 </tbody>
                             </table>
                         </div>`;
-                    break;
+          break;
 
-                default:
-                    mainContent.innerHTML = `<h2>${optionId.replace("-", " ")}</h2><p>Content for this section will go here.</p>`;
-                    break;
-            }
-        });
+        default:
+          mainContent.innerHTML = `<h2>${optionId.replace(
+            "-",
+            " "
+          )}</h2><p>Content for this section will go here.</p>`;
+          break;
+      }
     });
+  });
 });
-
-
-

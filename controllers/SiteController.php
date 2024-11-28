@@ -105,7 +105,7 @@ class SiteController extends Controller
 
     public function cart(Request $request,Response $response)
     {
-        $this->setLayout('main');
+        $this->setLayout('dashboard');
         return $this->render('cart');
     }
 
@@ -141,7 +141,7 @@ class SiteController extends Controller
 
     public function offer(Request $request,Response $response)
     {
-        // $this->setLayout('auth');
+        $this->setLayout('dashboard');
         return $this->render('offer');
     }
 

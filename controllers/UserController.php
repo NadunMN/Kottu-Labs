@@ -7,15 +7,13 @@ use app\core\Application;
 use app\core\Request;
 use app\core\Response;
 use app\models\User;
-use app\core\Model;
 use app\models\Review;
+use app\models\Reservation;
 
 class UserController extends Controller
 {
 
-    public Model $model;
-    public Review $reviewuser;
-
+    
     public function getUserData()
     {
         if (Application::$app->user) {
@@ -181,4 +179,21 @@ class UserController extends Controller
             echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
     }
+
+
+   public function addReservation(){
+        $reservation = new Reservation();
+        $reservation->loadData(Application::$app->request->getBody());
+
+        if ($reservation->save()) {
+            echo json_encode(['success' => true]);
+        } else {
+            error_log('Reservation validation or save failed: ' . json_encode($reservation->errors));
+            echo json_encode(['success' => false, 'errors' => $reservation->errors]);
+        }
+   }
+
+
+
+  
 }

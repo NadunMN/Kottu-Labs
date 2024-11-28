@@ -13,7 +13,7 @@
 
         <div class="second-part">
 
-<h1>Join Kottu Labs!</h1>
+<h1>Get Stared!👏</h1>
 <h3>Sign up for exclusive perks and experiences.</h3>
 
 <?php $form = \app\core\form\Form::begin('', 'post')?>
@@ -25,6 +25,7 @@
 
 
 <button type="submit" class="btn btn-primary">Submit</button>
+<p style="margin-top: 10px;">Have an account?<a href="/login">Sign In</a></p>
 
 
 <?php echo \app\core\form\Form::end()?>

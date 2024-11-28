@@ -104,6 +104,12 @@ $app->router->get('/menuitem/data', [$managerController, 'getmenuItems']);
 $app->router->post('/mealitem/delete', [$managerController, 'deletemenuItems']);
 $app->router->post('/menuitem/update', [$managerController, 'updatemenuItems']);
 
+//define route for reservations
+$app->router->post('/reservation/add', [$userController, 'addReservation']);
+$app->router->get('/reservation/data', [$managerController, 'getReservation']);
+$app->router->post('/reservation/delete', [$managerController, 'deleteReservation']);
+$app->router->post('/reservation/update', [$managerController, 'updateReservation']);
+
 
 
 // Run the application

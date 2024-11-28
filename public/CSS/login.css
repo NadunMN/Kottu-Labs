@@ -9,7 +9,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: tomato; */
+    background-image: url('/Photo/13682.jpg');
+    background-size:cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }  
  
 
@@ -22,6 +25,11 @@
     justify-content: center;
     align-items: center;
     border-radius: 20px;
+    background-color: white;
+    /* background-image: url('/Photo/13682.jpg');
+    background-size:cover;
+    background-position: center;
+    background-repeat: no-repeat; */
     
     box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.1);
 }
@@ -29,15 +37,14 @@
 .form-login .second-part h1{
     font-size: 1.8rem;
     font-weight: 600;
-    margin-bottom: 10px;
     text-align: left;
     width: 80%;
 }
 
 .form-login .second-part h3{
     font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 10px;
+    font-weight: 300;
+    margin-bottom: 20px;
     text-align: left;
     width: 80%;
     opacity: 0.5;
@@ -71,7 +78,7 @@ form{
     width: 100%;
     height: 50px;
     border-radius: 10px;
-    border: 1px solid #eeeeee;
+    border: 1px solid #cbcbcb;
     padding-left: 10px;
     font-size: 1rem;
 }
@@ -102,11 +109,14 @@ form{
     background-color: #000000;
     color: white;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 .btn:hover{
     transition: transform 0.3s ,background-color 0.3s ease;
     transform: scale(1.01);
+    background-color:#EE3E3F;
+
 }
 
 .or{

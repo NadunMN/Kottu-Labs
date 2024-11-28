@@ -34,7 +34,7 @@
 
         <section class="container3" aria-label="Our Story">
             
-            <h2>Why Create an Account?</h2>
+            <h2>Why Create an Account?</h2> 
             <p>
             Creating a Kottu Labs account comes with several benefits tailored to enhance your experience with the restaurant.With a Kottu Labs account, you'll unlock a premium experience that matches the high-quality service and ambiance we’re known for. Join now and elevate your dining journey! Here’s why it’s worth signing up:
             <br><br>

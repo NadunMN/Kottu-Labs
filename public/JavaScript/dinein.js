@@ -1,5 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() 
-{
+document.addEventListener("DOMContentLoaded", function() {
     const dateInput = document.getElementById('reservation-date');
     const today = new Date();
     const oneMonthLater = new Date();
@@ -14,19 +13,56 @@ document.addEventListener("DOMContentLoaded", function()
 
     dateInput.setAttribute('min', formatDate(today));
     dateInput.setAttribute('max', formatDate(oneMonthLater));
-});
 
-/*document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("reservationForm").addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent the default form submission
+    let userId; // Declare userId in a scope accessible to both fetch and submit event listener
 
-        // Generate a random reservation number
-        const reservationNumber = Math.floor(Math.random() * 1000000) + 1;
+    // Fetch user data from the backend
+    fetch('/user/data')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.error) {
+            console.error(data.error);
+        } else {
+            // Store user ID
+            userId = data.id;
+            console.log('User:', userId);
+        }
+    })
+    .catch(error => console.error('Error fetching user data:', error));
 
-        // Display the reservation number in a popup message
-        alert(`Your reservation number is: ${reservationNumber}`);
-
-        // Display the success message after the first popup is closed
-        alert('Reservation successfully completed. Enjoy dining');
+    document.getElementById('reservationForm').addEventListener("submit", function(event) {
+        event.preventDefault();
+      
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+        data.branch_id = '1';
+        data.user_id = userId;
+        const requestBody = JSON.stringify(data);
+        console.log('Request Body:', requestBody); 
+      
+        fetch("/reservation/add", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: requestBody,
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json(); 
+        })
+        .then(data => {
+            console.log("Success:", data);
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
     });
-});*/
+});

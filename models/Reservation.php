@@ -3,26 +3,29 @@
 namespace app\models;
 
 use app\core\db\DbModel;
-use app\core\Model\ReviewModel;
+use app\core\Model\ReservationModel;
 
-class Review extends DbModel
+class Reservation extends ReservationModel
 {
 
-    public string $review_id = '';
+    public string $reservation_no = '';
+    public string $reservation_date = '';
+    public string $reservation_time = '';
+    public string $number_of_guests = '';
+    public int $confirmation_status = 0;
+    public string $branch_id = '';
     public string $user_id = '';
-    public string $rating = '';
-    public string $review = '';
-    public string $created_at = '';
+    
     
 
     public static function tableName(): string
     {
-        return 'reviews';
+        return 'reservations';
     }
 
     public static function primaryKey(): string
     {
-        return 'review_id';
+        return 'reservation_no';
     }
 
     public function load($data)
@@ -37,48 +40,70 @@ class Review extends DbModel
 
     public function attributes(): array
     {
-        return ['review_id','user_id', 'rating', 'review'];
+        return ['reservation_no','reservation_date', 'reservation_time', 'number_of_guests', 
+        'confirmation_status', 'branch_id', 'user_id'];
     }
 
     public function rules(): array
     {
         return [
-            'rating' => [self::RULE_REQUIRED],
-            'review' => [self::RULE_REQUIRED],
+            'reservation_no' => [self::RULE_REQUIRED],
+            'reservation_date' => [self::RULE_REQUIRED],
+            'reservation_time' => [self::RULE_REQUIRED],
+            'number_of_guests' => [self::RULE_REQUIRED],
+            'confirmation_status' => [self::RULE_REQUIRED],
+            'branch_id' => [self::RULE_REQUIRED],
+            'user_id' => [self::RULE_REQUIRED],
+            
         ];
     }
 
     public static function findAll($where)
-{
-    $tableName = static::tableName();
-    $attributes = array_keys($where);
-
-    $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
-    $statement = self::prepare("
-        SELECT reservations.*, CONCAT(users.firstname, ' ', users.lastname) as userName, branches.branch_name as branchName
-        FROM $tableName 
-        JOIN users ON reviews.user_id = users.id
-        JOIN branches ON users.branch_id = branches.branch_id
-        WHERE $sql
-    ");
-    foreach ($where as $key => $value) {
-        $statement->bindValue(":$key", $value);
+    {
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+    
+        // Generate the WHERE clause dynamically
+        $sql = implode(" AND ", array_map(fn($attr) => "`$attr` = :$attr", $attributes));
+    
+        $statement = self::prepare("
+            SELECT 
+                $tableName.*, 
+                CONCAT(users.firstname, ' ', users.lastname) AS userName, 
+                branches.branch_name AS branchName
+            FROM `$tableName`
+            JOIN users ON $tableName.user_id = users.id
+            JOIN branches ON $tableName.branch_id = branches.branch_id
+            
+        ");
+    
+        foreach ($where as $key => $value) {
+            $statement->bindValue(":$key", $value);
+        }
+    
+        // Error handling for the SQL execution
+        try {
+            $statement->execute();
+            return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
+        } catch (\PDOException $e) {
+            // Log or handle the error appropriately
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
     }
-    $statement->execute();
-    return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
-}
+    
 
-
-
-
-    public function toArrayReview(): array
+    public function toArray(): array
     {
         return [
-            'review_id' => $this->review_id,
-            'user_id' => $this->user_id,
-            'rating' => $this->rating,
-            'review' => $this->review,
-            'created_at' => $this->created_at,     
+            'reservation_no' => $this->reservation_no,
+            'reservation_date' => $this->reservation_date,
+            'reservation_time' => $this->reservation_time,
+            'number_of_guests' => $this->number_of_guests,
+            'confirmation_status' => $this->confirmation_status,
+            'branch_id' => $this->branch_id,
+            'user_id' => $this->user_id     
+            
         ];
     }
 
