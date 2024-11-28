@@ -91,6 +91,10 @@
   margin: 20px auto;
   padding: 2rem;
   background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .container3 h2 {
@@ -103,11 +107,13 @@
 }
 
 .container3 p {
-  color: #000000;
+  color: #000000aa;
   line-height: 1.6;
   text-align: center;
+  font-weight: 600;
   margin-bottom: 1.5rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  width: 90%;
 }
 
 .container3 ul {
