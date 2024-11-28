@@ -55,7 +55,7 @@ class Review extends DbModel
 
     $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
     $statement = self::prepare("
-        SELECT reservations.*, CONCAT(users.firstname, ' ', users.lastname) as userName, branches.branch_name as branchName
+        SELECT reviews.*, CONCAT(users.firstname, ' ', users.lastname) as userName, branches.branch_name as branchName
         FROM $tableName 
         JOIN users ON reviews.user_id = users.id
         JOIN branches ON users.branch_id = branches.branch_id

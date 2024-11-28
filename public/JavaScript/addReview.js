@@ -3,30 +3,26 @@ let reviewId;
 
 // Fetch user data from the backend
 // Fetch reviews from the server
+function fetchReviews() {
 fetch('/review/data')
     .then(response => response.json())
     .then(data => {
         if (data.error) {
             console.error('Error:', data.error);
         } else {
-            // Assume user ID from the first review
-            const userId = data[0]?.user_id || 'Unknown User';
-            console.log('User:', userId);
-            console.log('Reviews:', data);
-           
-            reviewId = data[0]?.review_id;
-            
-
-
             // Get the reviews content container
             const reviewsContent = document.getElementById('reviewsContent');
 
             if (data == null || data.length === 0) {
-                reviewsContent.innerHTML = 'No reviews available'; // Show a message if there are no reviews
+                reviewsContent.innerHTML = 'No reviews available'; 
             } else {
                 reviewsContent.innerHTML = ''; // Clear previous content if data is available
             }
-            
+
+            // Sort the reviews by date (newest first)
+            data.sort((a, b) => {
+                return new Date(b.created_at) - new Date(a.created_at);
+            });
 
             // Dynamically generate review elements
             data.forEach(review => {
@@ -103,6 +99,7 @@ fetch('/review/data')
                     const newdiv = document.querySelector('.review-body');
                     newdiv.classList.add('.review-body-new');
 
+                    const reviewDiv = button.closest('.review');
                     const reviewElement = button.closest('.review-header').nextElementSibling; // Get the corresponding review-body
                     const reviewTextElement = reviewElement.querySelector('p'); // Select the paragraph element with the review text
                     const oldText = reviewTextElement.innerText; // Get the current review text
@@ -110,6 +107,14 @@ fetch('/review/data')
                     // Prevent multiple text areas
                     if (reviewElement.querySelector('textarea')) return;
 
+                    // Create message div
+                    const messageDiv = document.createElement('div');
+                    messageDiv.style.color = 'green';
+                    messageDiv.style.marginTop = '10px';
+                    messageDiv.style.display = 'none';
+
+                    // Add message div before the review element
+                    reviewElement.insertBefore(messageDiv, reviewElement.firstChild);
                     
                     // Create a textarea and pre-fill it with the old text
                     const textArea = document.createElement('textarea');
@@ -137,6 +142,7 @@ fetch('/review/data')
                     reviewTextElement.style.display = 'none';
                     reviewElement.appendChild(textArea);
                     reviewElement.appendChild(buttonContainer);
+                    reviewElement.appendChild(messageDiv);
             
                     // Save button functionality
                     saveButton.addEventListener('click', () => {
@@ -155,11 +161,25 @@ fetch('/review/data')
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                alert('The review has been updated.');
-                                reviewTextElement.innerText = newText; // Update the review text
-                                cleanUp(); // Remove textarea and buttons
+                                reviewTextElement.innerText = newText;
+                                messageDiv.textContent = 'Saved!';
+                                messageDiv.style.display = 'block';
+
+                                // Hide buttons immediately
+                                textArea.remove();
+                                buttonContainer.remove();
+                                reviewTextElement.style.display = '';
+                                
+                                // Hide message after 1.5 seconds and clean up
+                                setTimeout(() => {
+                                    messageDiv.style.display = 'none';
+                                    messageDiv.remove();
+                                    newdiv.classList.remove('.review-body-new');
+                                }, 3000);
                             } else {
-                                alert('Error updating the review: ' + data.message);
+                                messageDiv.style.color = 'red';
+                                messageDiv.textContent = 'Error updating the review: ' + data.message;
+                                messageDiv.style.display = 'block';
                             }
                         })
                         .catch(error => console.error('Error:', error));
@@ -185,7 +205,7 @@ fetch('/review/data')
         
     })
     .catch(error => console.error('Error fetching reviews:', error));
-
+}
 // Function to render stars based on rating
 function renderStars(rating) {
     const maxStars = 5;
@@ -204,6 +224,10 @@ function renderStars(rating) {
 
 
 document.addEventListener('DOMContentLoaded', (event) => {
+
+    // Call fetchReviews when page loads
+    fetchReviews();
+
   const boxes = document.querySelectorAll(".box");
   let selectedIndex = -1;
   let rating =0;
@@ -264,15 +288,37 @@ document.addEventListener('DOMContentLoaded', (event) => {
   document.getElementById('add-form').addEventListener("submit", function(event) {
     event.preventDefault();
   
+    let errorDiv = document.getElementById('rating-error');
+    if (!errorDiv) {
+        errorDiv = document.createElement('div');
+        errorDiv.id = 'rating-error';
+        errorDiv.style.color = 'red';
+        errorDiv.style.marginBottom = '10px';
+        // Insert error div before the form
+        this.insertBefore(errorDiv, this.firstChild);
+    }
+    const reviewText = this.querySelector('textarea[name="review"]').value.trim();
+
+
     if (userId === undefined) {
-      console.error('User ID is not set.');
-      return;
+        console.error('User ID is not set.');
+        errorDiv.textContent = 'Please log in to submit a review.';
+        return;
     }
 
     if (rating === 0) {
-      console.error('Rating is not selected.');
-      return;
+        console.error('Rating is not selected.');
+        errorDiv.textContent = 'Please select a rating before submitting.';
+        return;
     }
+    if (!reviewText) {
+        console.error('Review text is empty.');
+        errorDiv.textContent = 'Please write a review before submitting.';
+        return;
+    }
+
+    // Clear error message if validation passes
+    errorDiv.textContent = '';
 
     const formData = new FormData(this);
     const data = Object.fromEntries(formData.entries());
@@ -296,9 +342,25 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
         .then(data => {
             console.log("Success:", data);
+            errorDiv.style.color = 'green';
+            errorDiv.textContent = 'Review submitted successfully!';
+
+            this.querySelector('textarea[name="review"]').value = '';
+
+            selectedIndex = -1;
+            rating = 0;
+            boxes.forEach(b => b.classList.remove("hover"));
+
+            fetchReviews();
+
+            setTimeout(() => {
+                errorDiv.textContent = '';
+            }, 1500);
         })
         .catch(error => {
             console.error("Error:", error);
+            errorDiv.style.color = 'red';
+            errorDiv.textContent = 'Error submitting review. Please try again.';
         });
     
   });
