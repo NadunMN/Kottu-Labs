@@ -135,7 +135,7 @@ class SiteController extends Controller
    
     public function staff(Request $request,Response $response)
     {
-        // $this->setLayout('auth');
+        $this->setLayout('main');
         return $this->render('staff');
     }
 

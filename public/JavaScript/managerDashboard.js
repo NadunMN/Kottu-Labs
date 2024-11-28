@@ -95,7 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
               } else {
                 // Get the meal content container
                 const mealContent = document.getElementById("main-content");
-                console.log(data);
 
                 if (data == null || data.length === 0) {
                   mealContent.innerHTML = "No meals available"; // Show a message if there are no meals
@@ -297,7 +296,6 @@ document.addEventListener("DOMContentLoaded", () => {
                   const data = Object.fromEntries(formData.entries());
 
                   const requestBody = JSON.stringify(data);
-                  console.log("Request Body:", requestBody);
                   fetch("/menuitem/add", {
                     method: "POST",
                     headers: {
@@ -377,7 +375,6 @@ document.addEventListener("DOMContentLoaded", () => {
                       )
                     ) {
                       const mealId = button.getAttribute("meal-id");
-                      console.log(mealId);
 
                       const requestBody = JSON.stringify({ meal_id: mealId });
                       console.log("Request Body:", requestBody);
