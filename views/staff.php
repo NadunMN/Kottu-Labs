@@ -25,32 +25,32 @@
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Mr.Ranuga</h4>
+                <p>Manager</p>
             </div>
 
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Mrs.Thirani</h4>
+                <p>Chef</p>
             </div>
 
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Mr.Mahesh</h4>
+                <p>Admin</p>
             </div>
 
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Mr.Nadun</h4>
+                <p>Steward</p>
             </div>
 
             
@@ -60,7 +60,7 @@
 
     <!-- Branch 2 -->
     <div class="wrapper">
-        <h2>Team Kelaniya</h2>
+        <h2>Team Wattala</h2>
         <hr>
         <div class="members">
             
@@ -68,32 +68,32 @@
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Mr.Ranuga</h4>
+                <p>Manager</p>
             </div>
 
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Mrs.Thirani</h4>
+                <p>Chef</p>
             </div>
 
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Mr.Mahesh</h4>
+                <p>Admin</p>
             </div>
-            
+
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Mr.Nadun</h4>
+                <p>Steward</p>
             </div>
 
             
@@ -103,7 +103,7 @@
 
     <!-- Branch 3 -->
     <div class="wrapper">
-        <h2>Team Kotahena</h2>
+        <h2>Team Wattala</h2>
         <hr>
         <div class="members">
             
@@ -111,39 +111,39 @@
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Mr.Ranuga</h4>
+                <p>Manager</p>
             </div>
 
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Mrs.Thirani</h4>
+                <p>Chef</p>
             </div>
 
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Mr.Mahesh</h4>
+                <p>Admin</p>
             </div>
-            
+
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Mr.Nadun</h4>
+                <p>Steward</p>
             </div>
 
             
 
         </div>
     </div>
-
+   
 
     </div>
 
