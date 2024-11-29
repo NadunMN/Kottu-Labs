@@ -60,7 +60,7 @@
 
     <!-- Branch 2 -->
     <div class="wrapper">
-        <h2>Team Kelaniya</h2>
+        <h2>Team Wattala</h2>
         <hr>
         <div class="members">
             
@@ -87,7 +87,7 @@
                 <h4>Kalindu</h4>
                 <p>Steward</p>
             </div>
-            
+
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
@@ -103,7 +103,7 @@
 
     <!-- Branch 3 -->
     <div class="wrapper">
-        <h2>Team Kotahena</h2>
+        <h2>Team Wattala</h2>
         <hr>
         <div class="members">
             
@@ -130,7 +130,7 @@
                 <h4>Hashen Silva</h4>
                 <p>Steward</p>
             </div>
-            
+
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
@@ -143,7 +143,7 @@
 
         </div>
     </div>
-
+   
 
     </div>
 

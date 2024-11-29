@@ -27,10 +27,9 @@ body {
 
 /* Menu icon in the search container */
 .menu-icon {
-    position: absolute;
-    right: 50px;
-    display: flex;
-    align-items: center;
+    
+    display: none;
+    
 }
 
 .search-container img {

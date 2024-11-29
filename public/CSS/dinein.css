@@ -114,8 +114,9 @@ body {
 .reservation-form {
   display: grid; /* Use grid layout for two columns */
   grid-template-columns: repeat(2, 1fr); /* Two equal columns */
-  gap: var(--spacing); /* Space between rows and columns */
+  gap: 2rem; /* Space between rows and columns */
   width: 100%;
+  align-items: center;
 }
 
 .form-group {
@@ -163,6 +164,7 @@ button {
   cursor: pointer;
   text-transform: uppercase;
   transition: background-color var(--transition-speed), transform var(--transition-speed);
+
 }
 
 button:hover {
