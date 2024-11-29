@@ -13,7 +13,7 @@
         <input type="text" id="search" placeholder="Search menu items...">
         <div class="menu-icon">
             <a href="#" id="menu-icon">
-                <img src="/Photo/icon/menu.png" alt="Menu">
+                <img src="/Photo/icon/sidebar.png" alt="Menu">
             </a>
             <span>0</span>
         </div>
@@ -22,7 +22,7 @@
     <div class="sidebar" id="sidebar">
         <div class="sidebar-close">
             <a href="#" id="close-icon">
-                <img src="/Photo/icon/close-icon.png" alt="close">
+                <img src="/Photo/icon/close.png" alt="close">
             </a>
         </div>
         <div class="cart-menu">
