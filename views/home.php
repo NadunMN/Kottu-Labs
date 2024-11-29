@@ -50,7 +50,7 @@
         <div class="description-section-part description-section-part-second">
         <div class="description-text-section description-text-section-second">
                 <div class="description-head-topic description-head-topic-second">
-                    <p>Lock in your <br/><span>dining spot NOW!</span></p>
+                    <p>Lock in your <br/><span>dining spot Now!</span></p>
                 </div>
                 <div class="description-content description-content-second">
                     <p>Discover a dining experience that blends tradition and innovation. Our dishes are crafted with passion, 
