@@ -23,7 +23,6 @@
         </ul>
         <div class="menu-iconbox">
         <div class="icon-box">
-            <a href="#"><img src="/Photo/icon/search.png" alt="Search"></a>
             <a href="/cart"><img src="/Photo/icon/shopping-cart.png" alt="Cart"></a>
 
             <div class="drop-down">

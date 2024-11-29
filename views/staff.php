@@ -25,32 +25,32 @@
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Abdul Raheem</h4>
+                <p>Head Chef</p>
             </div>
 
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Hansaja Kithmal</h4>
+                <p>Steward</p>
             </div>
 
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Naveen Harindra</h4>
+                <p>Steward</p>
             </div>
 
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Chamikara Malinda</h4>
+                <p>Steward</p>
             </div>
 
             
@@ -68,32 +68,32 @@
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Lisitha Dissanayae</h4>
+                <p>Head Chef</p>
             </div>
 
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>John Perera</h4>
+                <p>Steward</p>
             </div>
 
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Kalindu</h4>
+                <p>Steward</p>
             </div>
             
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Heshan</h4>
+                <p>Steward</p>
             </div>
 
             
@@ -111,32 +111,32 @@
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Dinesh Fernando</h4>
+                <p>Head Chef</p>
             </div>
 
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Wilson</h4>
+                <p>Steward</p>
             </div>
 
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Hashen Silva</h4>
+                <p>Steward</p>
             </div>
             
             <div class="team-mem">
                 <div class="image">
                 <img src="/Photo/Thirani_pics/Manager.jpg">
                 </div>
-                <h4>Mrs.Emma</h4>
-                <p>Graphic Designer</p>
+                <h4>Yunal</h4>
+                <p>Steward</p>
             </div>
 
             
