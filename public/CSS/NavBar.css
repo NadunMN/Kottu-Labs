@@ -22,6 +22,12 @@ body {
     z-index: 1000;
 }
 
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
 .logo-img {
     width: 150px;
     height: 50px;
@@ -42,7 +48,7 @@ body {
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 30px;
+    gap: 20px;
     transition: max-height 0.3s ease;
 }
 
@@ -53,6 +59,10 @@ body {
     transition: background-color 0.3s ease;
 }
 
+.horizonal-line{
+    display: none;
+}
+
 .nav-links li:hover {
     /* background-color: #61dafb; */
     box-shadow: (0 0 5px #EE3E3F);
@@ -61,10 +71,18 @@ body {
 .nav-links a {
     text-decoration: none;
     color: #ffffff;
-    font-size: 1rem;;
+    font-size: 0.9rem;;
     font-weight: 500;
     transition: color 0.3s ease;
 }
+
+.nav-links a img {
+    display: none;
+    width: 20px;
+    height: 20px;
+}
+
+
 
 .nav-links a:hover {
     color: #EE3E3F;
@@ -111,12 +129,11 @@ body {
     position: absolute;
     top: 65px;
     right: 0;
-    font-size: 1rem;
+    font-size: 0.9rem;
     background: black; /* Semi-transparent background */
-    /* backdrop-filter: blur(10px);       */
-    /* -webkit-backdrop-filter: blur(10px); */
-    width: 100%;
-    /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); Blur effect on box borders */
+    
+    width: 280px;
+    box-shadow: 0 4px 15px rgba(73, 73, 73, 0.1);
     border: none;
     z-index: 10000;
     overflow: hidden;
@@ -124,20 +141,23 @@ body {
     opacity: 0;
     transform: translateY(-10px);
     transition: max-height 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .dropdown-content a {
     color: rgb(255, 255, 255);
     text-decoration: none;
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-start;
     cursor: pointer;
-    padding-right: 20px;
+    padding-left: 20px;
     margin: 10px 0px;
     width: 100%;
     border-radius: 0;
-    text-align: right;
+    text-align: left;
     font-weight: 500;
   }
 
@@ -222,6 +242,10 @@ body {
         /* padding-bottom: 10px; */
         
     }
+
+    .horizonal-line{
+        display: block;
+    }
     .menu-iconbox{
         display: flex;
         justify-content: flex-end;
@@ -251,8 +275,19 @@ body {
 
     .nav-links a {
         font-size: 14px;
-        display: block; /* Full clickable area */
+        display: flex; /* Full clickable area */
+        align-items: center;
+        justify-content: flex-start;
+        padding-left: 20px;
+        gap: 10px;
     }
+
+    .nav-links a img {
+        display: block; /* Show icons */
+        width: 15px;
+        height: 15px;
+    }
+    
 
     .menu-icon {
         display: block; /* Show menu icon */
