@@ -15,7 +15,7 @@
             <a href="#" id="menu-icon">
                 <img src="/Photo/icon/sidebar.png" alt="Menu">
             </a>
-            <span>0</span>
+            
         </div>
     </div>
 

@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="/CSS/login.css">
 </head>
 <body>
+    <!-- <div class="upper-part">
+    <div class="logo-img"></div>
+               
+
+    </div> -->
     <div class="form-login">
         <div class="second-part">
             <h1>Welcome Back!👋</h1>

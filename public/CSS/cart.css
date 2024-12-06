@@ -8,7 +8,7 @@ body{
     align-items: flex-start;
     justify-content: center;
     width: 100%;
-    height:auto;
+    height:100vh;
     gap: 15px;
     /* background-color: royalblue; */
 }
@@ -18,8 +18,9 @@ body{
     justify-content: flex-start;
     flex-direction: column;
     width: 100%;
-    min-height: 100vh;
-    height: auto;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
     background-color: rgb(255, 255, 255);
     margin: 10px 0;
     margin-left: 10px;
