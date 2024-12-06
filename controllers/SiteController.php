@@ -50,13 +50,13 @@ class SiteController extends Controller
 
     public function adminDashboard(Request $request,Response $response)
     {
-        $this->setLayout('auth');
+        $this->setLayout('dashboard');
         return $this->render('admindashboard');
     }
 
     public function stewardDashboard(Request $request,Response $response)
     {
-        $this->setLayout('main');
+        $this->setLayout('dashboard');
         return $this->render('stewarddashboard');
     }
 
@@ -143,6 +143,49 @@ class SiteController extends Controller
     {
         $this->setLayout('dashboard');
         return $this->render('offer');
+    }
+
+    //admin
+    public function dashboardAdmin(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('/admin/dashboard');
+    }
+
+    public function staffAdmin(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('/admin/staff');
+    }
+
+    public function updatemenuAdmin(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('/admin/update-menu');
+    }
+
+    public function reservationAdmin(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('/admin/view-reservations');
+    }
+
+    public function updateoffersAdmin(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('/admin/update-offers');
+    }
+
+    public function feedbacksAdmin(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('/admin/feedbacks');
+    }
+
+    public function orderhistoryAdmin(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('/admin/order-history');
     }
 
 }

@@ -28,7 +28,7 @@ body {
 /* Menu icon in the search container */
 .menu-icon {
     
-    display: none;
+    display: block;
     
 }
 

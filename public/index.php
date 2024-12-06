@@ -110,6 +110,14 @@ $app->router->get('/reservation/data', [$managerController, 'getReservation']);
 $app->router->post('/reservation/delete', [$managerController, 'deleteReservation']);
 $app->router->post('/reservation/update', [$managerController, 'updateReservation']);
 
+//admin
+$app->router->get('/profile/dashboard', [$siteController, 'dashboardAdmin']);
+$app->router->get('/profile/staff', [$siteController, 'staffAdmin']);
+$app->router->get('/profile/update-menu', [$siteController, 'updatemenuAdmin']);
+$app->router->get('/profile/view-reservations', [$siteController, 'reservationAdmin']);
+$app->router->get('/profile/update-offers', [$siteController, 'updateoffersAdmin']);
+$app->router->get('/profile/feedbacks', [$siteController, 'feedbacksAdmin']);
+$app->router->get('/profile/order-history', [$siteController, 'orderhistoryAdmin']);
 
 
 // Run the application
