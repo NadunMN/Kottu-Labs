@@ -12,15 +12,23 @@
             <div class="logo-img">
                 
             </div>
+
+            <ul class="nav-links">
+            <li><a href="/"> <img src="/Photo/icon/home.png" alt="">HOME</a></li>
+            <hr class="horizonal-line" style="width: 100%; height: 1px;  margin: auto; opacity:0.1;">
+
+            <li><a href="/homeMenu"><img src="/Photo/icon/burger-bar.png" alt="">MENU</a></li>
+
+            <li><a href="/about"><img src="/Photo/icon/info.png" alt="">ABOUT</a></li>
+
+            <li><a href="/staff"><img src="/Photo/icon/receptionist.png" alt="">OUR STAFF</a></li>
+            <hr class="horizonal-line" style="width: 100%; height: 1px;  margin: auto; opacity:0.1;">
+
+            <li><a href="/contact"><img src="/Photo/icon/phone-call.png" alt="">CONTACT</a></li>
+        </ul>
            
         </div>
-        <ul class="nav-links">
-            <li><a href="/">HOME</a></li>
-            <li><a href="/homeMenu">MENU</a></li>
-            <li><a href="/about">ABOUT</a></li>
-            <li><a href="/staff">OUR STAFF</a></li>
-            <li><a href="/contact">CONTACT</a></li>
-        </ul>
+        
         <div class="menu-iconbox">
         <div class="icon-box">
             <a href="/cart"><img src="/Photo/icon/shopping-cart.png" alt="Cart"></a>
@@ -28,15 +36,17 @@
             <div class="drop-down">
                 <a href="#" onclick="toggleMenuprofile()"><img src="/Photo/icon/user.png" alt="Profile"></a>
                 <div class="dropdown-content">
-                    <a href="/profile">DASHBOARD</a>
-                    <a href="/myaccount">MY ACCOUNT</a>
-                    <a href="/offer">SPECIAL OFFERS</a>
-                    <a href="#">WHY CREATE AN ACCOUNT?</a>
+                    <a href="/profile"> <img src="/Photo/icon/dashboard.png" alt=""> DASHBOARD </a>
+                    <hr style="width: 100%; height: 1px;  margin: auto; opacity:0.1;">
+                    <a href="/offer"> <img src="/Photo/icon/shopping-basket.png" alt=""> SPECIAL OFFERS</a>
                     <?php if (\app\core\Application::$app->user ==null): ?>
-                        <a href="/login">LOG IN</a>
+                        <a href="/login"> <img src="/Photo/icon/enter.png" alt=""> LOG IN</a>
                         <?php else: ?>
-                            <a href="/logout">LOG OUT</a>
+                            <a href="/logout"> <img src="/Photo/icon/logout.png" alt=""> LOG OUT</a>
                     <?php endif; ?>
+                    <hr style="width: 100%; height: 1px;  margin: auto;opacity:0.1; ">
+                    <a href="#"> WHY CREATE AN ACCOUNT?</a>
+
                 </div>
             </div>
 
