@@ -1,0 +1,128 @@
+.upper-content{
+    height: auto;
+    width: 100%;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button-wrapper-stat{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid rgb(206, 206, 206);
+    border-radius: 10px;
+    gap:0;
+}
+
+.button-wrapper-stat button{
+    background-color: white;
+    color: rgb(206, 206, 206);
+   border: none;
+   font-size: 1rem;
+   padding: 10px 20px;
+   cursor: pointer;
+   border-right: 1px solid rgb(206, 206, 206);
+}
+
+.button-wrapper-stat button:hover{
+  color: black;
+  background-color: rgba(211, 26, 26, 0.195);
+}
+
+.button-wrapper-stat button:first-child{
+   border-bottom-left-radius:10px;
+    border-top-left-radius:10px;
+}
+
+.button-wrapper-stat button:last-child{
+   border-bottom-right-radius:10px;
+    border-top-right-radius:10px;
+    border-right: none;
+}
+
+.branch-selection-wrapper{
+    width: auto;
+    height:auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 1rem;
+    gap: 10px;
+}
+
+#branch{
+    width: 200px;
+    height: 40px;
+    border: 1px solid rgb(206, 206, 206);
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 1rem;
+}
+
+/* card */
+
+.details-card-wrapper{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.card {
+    width: 300px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-header {
+    background-color: #f2f2f2;
+    padding: 12px;
+    font-weight: bold;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .card-body {
+    padding: 16px;
+  }
+  
+  .card-title {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .card-text {
+    font-size: 14px;
+    color: #4CAF50;
+  }
+
+
+
+  /* graph*/
+
+  .graph-container-wrapper{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: bisque;
+    padding: 20px 0;
+  }
+
+  .graph-container {
+    width: 800px;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .graph {
+    height: 400px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
