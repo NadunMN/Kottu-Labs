@@ -1,41 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
     const menuItems = document.querySelectorAll('.menu-item');
-    const mainContent = document.getElementById('main-content');
+    const iframe = document.getElementById('dynamicIframe');
+
+    // Define mapping between menu items and iframe sources
+    const iframeSources = {
+        dashboard: '/profile/dashboard',
+        staff: '/profile/staff', // Corrected typo here
+        'update-menu': '/path/to/update-menu.php',
+        'view-reservations': '/path/to/view-reservations.php',
+        'update-offers': '/path/to/update-offers.php',
+        feedbacks: '/path/to/feedbacks.php',
+        'order-history': '/path/to/order-history.php'
+    };
 
     menuItems.forEach(item => {
         item.addEventListener('click', () => {
-            const contentId = item.id;
-            const phpFile = `/profile/${contentId}`;
-
-            // Display loading indicator
-            mainContent.innerHTML = '<p>Loading content...</p>';
-
-            fetch(phpFile)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Failed to load content from ${phpFile}`);
-                    }
-                    return response.text();
-                })
-                .then(data => {
-
-                    // Execute embedded scripts
-                    const scripts = mainContent.querySelectorAll('script');
-                    scripts.forEach(script => {
-                        if (script.textContent.trim()) {
-                            const newScript = document.createElement('script');
-                            newScript.textContent = script.textContent;
-                            document.body.appendChild(newScript).parentNode.removeChild(newScript);
-                        }
-                    });
-
-                    mainContent.innerHTML = data;
-
-                })
-                .catch(error => {
-                    console.error(`Error loading content from ${phpFile}:`, error);
-                    mainContent.innerHTML = '<p>Error loading content. Please try again later.</p>';
-                });
+            const itemId = item.id; // Get ID of the clicked menu item
+            if (iframeSources[itemId]) {
+                iframe.src = iframeSources[itemId]; // Update iframe src
+            } else {
+                iframe.src = ''; // Clear iframe src if no source is defined
+            }
         });
     });
 });
