@@ -64,13 +64,13 @@
 
 
     <!-- Charts Section -->
-    <div id="columnchart_material" style="width: 800px; height: 500px; background-color:black"></div>
+    <div id="columnchart_material" style="width: 100%; height: 400px; background-color:black"></div>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', () => {
         google.charts.load('current', {'packages':['bar']});
-        google.charts.setOnLoadCallback(drawChart);
+        google.charts.setOnLoadCallback(drawChart).getContext('2d');
 
         function drawChart() {
             var data = google.visualization.arrayToDataTable([
