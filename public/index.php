@@ -48,7 +48,7 @@ $app->router->get('/logout', [$authController, 'logout']);
 // $app->router->get('/profile', [$siteController, 'userProfile']);
 
 if (Application::$app->user && Application::$app->user->position == 'admin') {
-    $app->router->get('/profile', [$siteController, 'adminDashboard']);
+    $app->router->get('/profile', [$siteController, 'adminDashboard']);  
 }else if(Application::$app->user && Application::$app->user->position == 'customer') {
     $app->router->get('/profile', [$siteController, 'userDashboard']);
     $app->router->get('/myaccount', [$siteController, 'userProfile']);
