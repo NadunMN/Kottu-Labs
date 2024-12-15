@@ -1,3 +1,7 @@
+*{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .upper-content{
     height: auto;
     width: 100%;
@@ -66,59 +70,66 @@
 
 .details-card-wrapper{
     display: flex;
+    flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     gap: 20px;
     padding: 20px 0;
+    margin: 20px 0;
+}
+
+.card-container{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    height: auto;
 }
 
 .card {
     width: 300px;
-    border: none;
+    border: 1px solid rgb(228, 228, 228);
     border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .card-header {
-    background-color: #f2f2f2;
-    padding: 12px;
-    font-weight: bold;
-    border-radius: 10px 10px 0 0;
   }
   
   .card-body {
-    padding: 16px;
+    padding: 20px;
+  }
+  .card-body img{
+    width: 30px;
+    height: 30px;
   }
   
   .card-title {
-    font-size: 36px;
+    font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 8px;
-  }
-  
-  .card-text {
-    font-size: 14px;
-    color: #4CAF50;
+    margin: 0;
   }
 
+  .card-text{
+    font-size: 1rem;
+    font-weight: normal;
+  }
 
 
   /* graph*/
 
+.chart-container-wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  gap: 20px;
+  margin: 20px 0;
 
+
+}
 .chart-container {
     width: 100%;
-    height: 400px;
+    height: 320px;
     background-color: #ffffff;
     border-radius: 10px;
-    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
 }
 
-
-
-#myChart{
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-}
