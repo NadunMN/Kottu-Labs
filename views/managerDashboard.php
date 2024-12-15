@@ -38,7 +38,9 @@
 
         
         <!-- Main Content -->
-        <div class="main-content" id="main-content"></div>
+        <div class="main-content" id="main-content">
+            
+        </div>
 
     <script src="/JavaScript/managerDashboard.js"></script>
 </body>
