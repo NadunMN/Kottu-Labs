@@ -31,11 +31,11 @@
                     $menuItems = [
                         ['id' => 'dashboard', 'icon' => '/Photo/icon/dashboard.png', 'text' => 'DashBoard'],
                         ['id' => 'staff', 'icon' => '/Photo/icon/receptionist.png', 'text' => 'Update Staff'],
-                        ['id' => 'update-menu', 'icon' => '/Photo/icon/menu.png', 'text' => 'Update Menu'],
-                        ['id' => 'view-reservations', 'icon' => '/Photo/icon/booking (1).png', 'text' => 'View Reservations'],
-                        ['id' => 'update-offers', 'icon' => '/Photo/icon/shopping-basket.png', 'text' => 'Update Offers'],
+                        ['id' => 'updatemenu', 'icon' => '/Photo/icon/menu.png', 'text' => 'Update Menu'],
+                        ['id' => 'viewreservations', 'icon' => '/Photo/icon/booking (1).png', 'text' => 'View Reservations'],
+                        ['id' => 'updateoffers', 'icon' => '/Photo/icon/shopping-basket.png', 'text' => 'Update Offers'],
                         ['id' => 'feedbacks', 'icon' => '/Photo/icon/review.png', 'text' => 'Feedbacks'],
-                        ['id' => 'order-history', 'icon' => '/Photo/icon/shopping-bag.png', 'text' => 'Order History'],
+                        ['id' => 'orderhistory', 'icon' => '/Photo/icon/shopping-bag.png', 'text' => 'Order History'],
                     ];
                     foreach ($menuItems as $item) {
                         echo "<li id='{$item['id']}' class='menu-item'>

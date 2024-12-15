@@ -5,12 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Define mapping between menu items and iframe sources
     const iframeSources = {
         dashboard: '/profile/dashboard',
-        staff: '/profile/staff', // Corrected typo here
-        'update-menu': '/path/to/update-menu.php',
-        'view-reservations': '/path/to/view-reservations.php',
-        'update-offers': '/path/to/update-offers.php',
-        feedbacks: '/path/to/feedbacks.php',
-        'order-history': '/path/to/order-history.php'
+        staff: '/profile/staff',
+        updatemenu: '/profile/update-menu',
+        viewreservations: '/profile/view-reservations',
+        updateoffers: '/profile/update-offers',
+        feedbacks: '/profile/feedbacks',
+        orderhistory: '/profile/order-history'
     };
 
     menuItems.forEach(item => {
