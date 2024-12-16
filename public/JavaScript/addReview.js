@@ -14,11 +14,15 @@ function fetchRatings() {
         ratingArr = data.map(rating => parseFloat(rating.rating));
         sumrating = ratingArr.reduce((a, b) => a + b, 0);
         sumrating = sumrating / ratingArr.length;
-        
+
         console.log("Rating Array:", sumrating);
+        
 
         
         const avgRating = document.getElementById("Main-rating-value");
+        if (isNaN(sumrating)) {
+          sumrating = 0;
+        }
         avgRating.textContent = sumrating.toFixed(1);
 
         
@@ -43,6 +47,9 @@ function fetchRatings() {
         const subject1 = document.getElementById("revire-subject-1");
 
         let cleanliness = (sumrating+0.2);
+        if (cleanliness===0.2) {
+          cleanliness = 0;
+        }
         if (cleanliness > 5) {
           cleanliness = 5;
         }
@@ -61,6 +68,7 @@ function fetchRatings() {
         const subject2 = document.getElementById("revire-subject-2");
 
         let safety = (sumrating-0.5);
+        
         if (safety > 5) {
             safety = 5;
           }
@@ -78,6 +86,13 @@ function fetchRatings() {
         const subject3 = document.getElementById("revire-subject-3");
 
         let staff = (sumrating+0.5);
+
+        if (staff===0.5) {
+          staff = 0;
+        }
+
+        console.log(staff);
+
         if (staff > 5) {
             staff = 5;
           }
@@ -95,6 +110,7 @@ function fetchRatings() {
         const subject4 = document.getElementById("revire-subject-4");
 
         let amenties = (sumrating-0.2);
+        
         if (amenties > 5) {
             amenties = 5;
           }
@@ -112,6 +128,9 @@ function fetchRatings() {
         const subject5 = document.getElementById("revire-subject-5");
 
         let location = (sumrating);
+
+  
+
         if (location > 5) {
             location = 5;
           }

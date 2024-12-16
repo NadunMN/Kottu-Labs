@@ -192,27 +192,27 @@
 
                     <div>
                         <h5 id="revire-subject-1">0.0</h5>
-                        <h5>cleanliness</h5>
+                        <h5>Cleanliness</h5>
                     </div>
 
                     <div>
                         <h5 id="revire-subject-2">0.0</h5>
-                        <h5>safety & security</h5>
+                        <h5>Safety & Security</h5>
                     </div>
 
                     <div>
                         <h5 id="revire-subject-3">0.0</h5>
-                        <h5>staff</h5>
+                        <h5>Staff</h5>
                     </div>
 
                     <div>
                         <h5 id="revire-subject-4">0.0</h5>
-                        <h5>amenties</h5>
+                        <h5>Amenties</h5>
                     </div>
 
                     <div>
                         <h5 id="revire-subject-5">0.0</h5>
-                        <h5>location</h5>
+                        <h5>Location</h5>
                     </div>
 
                 </div>

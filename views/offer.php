@@ -33,7 +33,7 @@
   </div>
 
   <div class="card">
-    <img src="/Photo/offers/AZEEZ RESTAURANT.jpg" alt="Product Image" class="card-image">
+    <img src="/Photo/offers/_Start your forever with a delightful symphony of flavors at our wedding breakfast!.jpg" alt="Product Image" class="card-image">
     <div class="card-content">
       <h2 class="card-title">Product Name</h2>
       <div class="card-price">Rs. 2500/=</div>
@@ -46,7 +46,7 @@
 
 
   <div class="card">
-    <img src="/Photo/offers/AZEEZ RESTAURANT.jpg" alt="Product Image" class="card-image">
+    <img src="/Photo/offers/Premium PSD _ Social media food promotion post and instagram or facebook post banner flyer design template.jpg" alt="Product Image" class="card-image">
     <div class="card-content">
       <h2 class="card-title">Product Name</h2>
       <div class="card-price">Rs. 760/=</div>
@@ -100,71 +100,6 @@
 
    
     
-</div>
-
-<div class="right-side">
-
-
-<div class="payment-wrapper offer-wrapper">
-
-<div class="payment-wrapper-topic offer-wrapper-topic">
-    <h2>Special Notice</h2>
-    </div>
-
-    <div class="payment-wrapper-topic payment-wrapper-body offer-wrapper-body ">
-
-        <div class="offer-content-body-photo">
-            <img src="/Photo/offers/_Start your forever with a delightful symphony of flavors at our wedding breakfast!.jpg" alt="">
-        </div>
-        <div class="offer-content-body-photo-details">
-            <div>
-                <h4>Special Cheese kottu</h4>
-                <h5>Rs.850/=</h5>
-            </div>
-
-            <button>View</button>
-        </div>
-
-    </div>
-
-    <div class="payment-wrapper-topic payment-wrapper-body offer-wrapper-body ">
-
-        <div class="offer-content-body-photo">
-        <img src="/Photo/offers/AZEEZ RESTAURANT.jpg" alt="">
-
-        </div>
-        <div class="offer-content-body-photo-details">
-            <div>
-                <h4>Special Cheese kottu</h4>
-                <h5>Rs.850/=</h5>
-            </div>
-
-            <button>View</button>
-        </div>
-
-    </div>
-
-    <div class="payment-wrapper-topic payment-wrapper-body offer-wrapper-body ">
-
-        <div class="offer-content-body-photo">
-        <img src="/Photo/offers/Premium PSD _ Social media food promotion post and instagram or facebook post banner flyer design template.jpg" alt="">
-
-        </div>
-        <div class="offer-content-body-photo-details">
-            <div>
-                <h4>Special Cheese kottu</h4>
-                <h5>Rs. 5500/=</h5>
-            </div>
-
-            <button>View</button>
-        </div>
-
-    </div>
-
-   
-    
-</div>
-
 </div>
 
 </div>

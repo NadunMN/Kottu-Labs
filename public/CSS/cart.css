@@ -106,8 +106,8 @@ body{
 }
 
 .cart-item-img{
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     background-color: rgb(230, 147, 147);
     border-radius: 10px;
 }
