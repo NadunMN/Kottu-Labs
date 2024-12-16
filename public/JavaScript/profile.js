@@ -1,5 +1,5 @@
-    // Get the current path
-    const currentPath = window.location.pathname;
+    let currentPath = window.location.pathname;
+    console.log('Current Path:', currentPath);
     
     // Select the button element
     const button = document.getElementById("view-profile");

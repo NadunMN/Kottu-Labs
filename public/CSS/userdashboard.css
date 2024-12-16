@@ -394,8 +394,14 @@ body{
     width: 65%;
     height: 10px;
     border-radius: 50px;
-    background-color: rgb(255, 255, 255);
+    background-color: white;
 }
+
+/* .second-part .part div .line{
+    width: 100%;
+    height: 100%;
+    background-color: #ff2c2c;
+} */
 
 .first-part .starts{
     width: 100%;
