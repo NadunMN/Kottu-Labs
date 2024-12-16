@@ -81,7 +81,7 @@ $currentPath = $_SERVER['REQUEST_URI'];
             </div>
 
         </div>
-    </div>
+    </div> 
 
    {{content}}
    <?php include __DIR__ . '/../footer.php'; ?>

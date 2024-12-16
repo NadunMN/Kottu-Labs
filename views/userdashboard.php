@@ -13,7 +13,7 @@
         <div class="order-history">
             <!-- order list -->
             <div class="order-list-container">
-                <h2>Order History</h2>
+                <h2>Reservation History</h2>
                 
             </div>
 
@@ -132,59 +132,57 @@
                 <div class="review-list-number">
                     <!-- first part -->
                     <div class="first-part">
-                        <h1>4.5</h1>
-                        <div class="starts">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                        <h4>35K reviews</h4>
+                        <h1 id="Main-rating-value">0</h1>
+                        <div class="starts" id="Main-rating-stars"></div>
+                        <h4 id="rating-quantity">35K Reviews</h4>
 
                     </div>
                     <!-- second part -->
                     <div class="second-part">
                         <div class="part">
-                            <div></div>
-                            <h4>4.0</h4>
-                            <h5>35K reviews</h5>
+                            <div>
+                                <div id="line-1" class="line" style="height:100%; background-color:#EE3E3F"></div>
+                            </div>
+                            <h4 id="rating-line-1">0</h4>
+                            <h5 id="rating-quantity-line" class="rating-quantity-line">0 reviews</h5>
                         </div>
 
 
                         <div class="part">
-                            <div></div>
-                            <h4>4.0</h4>
-                            <h5>35K reviews</h5>
+                        <div>
+                                <div id="line-2" class="line" style="height:100%; background-color:#EE3E3F"></div>
+                        </div>
+                            <h4 id="rating-line-2">0</h4>
+                            <h5 class="rating-quantity-line">0 reviews</h5>
                         </div>
 
 
                         <div class="part">
-                            <div></div>
-                            <h4>4.0</h4>
-                            <h5>35K reviews</h5>
+                            <div>
+                                <div id="line-3" class="line" style="height:100%; background-color:#EE3E3F"></div>
+                            </div>
+                            <h4 id="rating-line-3">0</h4>
+                            <h5  class="rating-quantity-line">0 reviews</h5>
                         </div>
 
 
                         <div class="part">
-                            <div></div>
-                            <h4>4.0</h4>
-                            <h5>35K reviews</h5>
+                            <div>
+                                <div id="line-4" class="line" style="height:100%; background-color:#EE3E3F"></div>
+                            </div>
+                            <h4 id="rating-line-4">0</h4>
+                            <h5  class="rating-quantity-line">0 reviews</h5>
                         </div>
 
 
                         <div class="part">
-                            <div></div>
-                            <h4>4.0</h4>
-                            <h5>35K reviews</h5>
+                            <div>
+                                <div id="line-5" class="line" style="height:100%; background-color:#EE3E3F"></div>
+                            </div>
+                            <h4 id="rating-line-5">0</h4>
+                            <h5  class="rating-quantity-line">0 reviews</h5>
                         </div>
 
-
-                        <div class="part">
-                            <div></div>
-                            <h4>4.0</h4>
-                            <h5>35K reviews</h5>
-                        </div>
 
 
                     </div>
@@ -193,27 +191,27 @@
                 <div class="review-subject">
 
                     <div>
-                        <h5>4.0</h5>
+                        <h5 id="revire-subject-1">0.0</h5>
                         <h5>cleanliness</h5>
                     </div>
 
                     <div>
-                        <h5>4.0</h5>
+                        <h5 id="revire-subject-2">0.0</h5>
                         <h5>safety & security</h5>
                     </div>
 
                     <div>
-                        <h5>4.0</h5>
+                        <h5 id="revire-subject-3">0.0</h5>
                         <h5>staff</h5>
                     </div>
 
                     <div>
-                        <h5>4.0</h5>
+                        <h5 id="revire-subject-4">0.0</h5>
                         <h5>amenties</h5>
                     </div>
 
                     <div>
-                        <h5>4.0</h5>
+                        <h5 id="revire-subject-5">0.0</h5>
                         <h5>location</h5>
                     </div>
 
