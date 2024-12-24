@@ -144,17 +144,6 @@ function fetchRatings() {
         const line5 = document.getElementById("line-5");
         line5.style.width = location * 20 + "%";
 
-        
-
-
-
-
-
-
-
-
-
-
       }
     })
     .catch((error) => console.error("Error fetching ratings:", error));
