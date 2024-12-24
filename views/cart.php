@@ -196,7 +196,7 @@
 <div class="payment-wrapper offer-wrapper">
 
 <div class="payment-wrapper-topic offer-wrapper-topic">
-    <h2>Special Offers</h2>
+    <h2>Booked Items</h2>
     </div>
 
     <div class="payment-wrapper-topic payment-wrapper-body offer-wrapper-body ">

@@ -1,3 +1,8 @@
+html {
+    scroll-behavior: smooth;
+}
+
+
 body{
     margin: 0;
     padding: 0;
@@ -27,6 +32,18 @@ body{
     border-radius: 10px;
     padding-bottom: 10px;
 }
+
+/* Combined solution for all browsers */
+.cart-wrapper {
+    overflow: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.cart-wrapper::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Opera */
+}
+
 
 .right-side{
     display: flex;

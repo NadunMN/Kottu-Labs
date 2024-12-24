@@ -18,8 +18,8 @@ fetch("/menuitem/data")
                                     <div class="view-branch-menu-section">
                                             <div class="topic-bar">
                                                 <div>
-                                                    <h2>Nawala</h2>
-                                                    <h5>36 meals available</h5>
+                                                    <h2 style="margin:0;">Nawala</h2>
+                                                    <h5 style="margin:0;">36 meals available</h5>
                                                 </div>
 
                                                 <div>

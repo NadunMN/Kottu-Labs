@@ -227,7 +227,7 @@ body{
 }
 
 .order-list-button button:hover{
-    background-color: #EE3E3F;
+    background-color: rgb(238, 62, 63);
     color: white;
     transition: transform 0.3s ,background-color 0.3s ease;
     transform: scale(1.05);
