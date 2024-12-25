@@ -1,25 +1,25 @@
 fetch("/menuitem/data")
-            .then((response) => response.json())
-            .then((data) => {
-              if (data.error) {
-                console.error("Error:", data.error);
-              } else {
-                // Get the meal content container
-                const mealContent = document.getElementById("main-content");
+  .then((response) => response.json())
+  .then((data) => {
+    if (data.error) {
+      console.error("Error:", data.error);
+    } else {
+      // Get the meal content container
+      const mealContent = document.getElementById("main-content");
 
-                if (data == null || data.length === 0) {
-                  mealContent.innerHTML = "No meals available"; // Show a message if there are no meals
-                } else {
-                  mealContent.innerHTML = ""; // Clear previous content if data is available
-                }
+      if (data == null || data.length === 0) {
+        mealContent.innerHTML = "No meals available"; // Show a message if there are no meals
+      } else {
+        mealContent.innerHTML = ""; // Clear previous content if data is available
+      }
 
-                mealContent.innerHTML = `
+      mealContent.innerHTML = `
 
                                     <div class="view-branch-menu-section">
                                             <div class="topic-bar">
                                                 <div>
-                                                    <h2 style="margin:0;">Nawala</h2>
-                                                    <h5 style="margin:0;">36 meals available</h5>
+                                                    <h2 style="margin:0;">Meals</h2>
+                                                    <h5 style="margin:0;">${data.length} meals available</h5>
                                                 </div>
 
                                                 <div>
@@ -109,41 +109,40 @@ fetch("/menuitem/data")
 
                                 `;
 
-                
-                                const imageInput = document.getElementById('meal_photo');
-                                const imagePreview = document.getElementById('imagePreview');
-                                const previewImage = document.getElementById('preview-image');
-                                const newPlaceHolder = document.querySelectorAll('.upload-placeholder');
+      const imageInput = document.getElementById("meal_photo");
+      const imagePreview = document.getElementById("imagePreview");
+      const previewImage = document.getElementById("preview-image");
+      const newPlaceHolder = document.querySelectorAll(".upload-placeholder");
 
-                                imageInput.addEventListener('change', function (event) {
-                                    const file = event.target.files[0]; // Get the selected file
-                                    if (file) {
-                                        newPlaceHolder.forEach(placeholder => placeholder.classList.add('hidden-img')); // Hide the placeholder
-                                        const reader = new FileReader(); // Create a FileReader to read the file
+      imageInput.addEventListener("change", function (event) {
+        const file = event.target.files[0]; // Get the selected file
+        if (file) {
+          newPlaceHolder.forEach((placeholder) =>
+            placeholder.classList.add("hidden-img")
+          ); // Hide the placeholder
+          const reader = new FileReader(); // Create a FileReader to read the file
 
-                                        reader.onload = function (e) {
-                                            let imageURL = e.target.result;
-                                            previewImage.src = imageURL; // Set the src of the img to the file content
-                                            imagePreview.classList.add('has-image'); // Add a class to indicate the image is loaded
+          reader.onload = function (e) {
+            let imageURL = e.target.result;
+            previewImage.src = imageURL; // Set the src of the img to the file content
+            imagePreview.classList.add("has-image"); // Add a class to indicate the image is loaded
 
-                                            // window.uploadedImage = imageURL;
-                                        };
+            // window.uploadedImage = imageURL;
+          };
 
-                                        reader.readAsDataURL(file); // Read the file as a data URL
-                                    }
-                                });
+          reader.readAsDataURL(file); // Read the file as a data URL
+        }
+      });
 
-                let mealId;
-                // Dynamically generate meal elements
-                data.forEach((meal) => {
-                  // Create a new table row
-                  const row = document.createElement("tr");
+      let mealId;
+      // Dynamically generate meal elements
+      data.forEach((meal) => {
+        // Create a new table row
+        const row = document.createElement("tr");
 
-                  // Populate row HTML
-                  row.innerHTML = `
-                                        <td class="meal-id" >${
-                                          meal.meal_id
-                                        }</td>
+        // Populate row HTML
+        row.innerHTML = `
+                                        <td class="meal-id" >${meal.meal_id}</td>
                                         <td>${meal.meal_name}</td>
                                         <td>${meal.meal_description}</td>
                                         <td>Rs.${meal.meal_price}</td>
@@ -152,209 +151,206 @@ fetch("/menuitem/data")
                                             
 
                                             <div class="action-buttons">
-                                                <button class="edit-btn" meal-id='${
-                                                  meal.meal_id
-                                                }'>Edit</button>
-                                                <button class="delete-btn" meal-id ='${
-                                                  meal.meal_id
-                                                }'>Delete</button>
+                                                <button class="edit-btn" meal-id='${meal.meal_id}'>Edit</button>
+                                                <button class="delete-btn" meal-id ='${meal.meal_id}'>Delete</button>
                                             </div>
                                         </td>
                                     `;
 
-                  // Append the row directly to the table body
-                  document.getElementById("table-content").appendChild(row);
-                });
+        // Append the row directly to the table body
+        document.getElementById("table-content").appendChild(row);
+      });
 
-                // Get Elements
-                const openFormBtn = document.querySelector(".add-item-btn");
-                const closeFormBtn = document.querySelector(".cancel-item-btn");
-                const addItemForm = document.getElementById("add-item-form");
-                const addForm = document.getElementById("add-form");
+      // Get Elements
+      const openFormBtn = document.querySelector(".add-item-btn");
+      const closeFormBtn = document.querySelector(".cancel-item-btn");
+      const addItemForm = document.getElementById("add-item-form");
+      const addForm = document.getElementById("add-form");
 
-                // Open the Popup
-                openFormBtn.addEventListener("click", () => {
-                  addItemForm.classList.remove("hidden");
-                  resetForm();
-                  addForm.removeEventListener("submit", updateItem);
-                  addForm.addEventListener("submit", addNewItem);
-                });
+      // Open the Popup
+      openFormBtn.addEventListener("click", () => {
+        addItemForm.classList.remove("hidden");
+        resetForm();
+        addForm.removeEventListener("submit", updateItem);
+        addForm.addEventListener("submit", addNewItem);
+      });
 
-                // Close the Popup
-                closeFormBtn.addEventListener("click", (event) => {
-                  addItemForm.classList.add("hidden");
-                  event.preventDefault();
-                  resetForm();
-                });
+      // Close the Popup
+      closeFormBtn.addEventListener("click", (event) => {
+        addItemForm.classList.add("hidden");
+        event.preventDefault();
+        resetForm();
+      });
 
-                // Add event listeners to the status buttons to toggle availability
-                const statusButtons = document.querySelectorAll(".status-btn");
-                statusButtons.forEach((button) => {
-                  button.addEventListener("click", () => {
-                    if (button.classList.contains("available")) {
-                      button.classList.remove("available");
-                      button.classList.add("unavailable");
-                      button.textContent = "Unavailable";
-                    } else {
-                      button.classList.remove("unavailable");
-                      button.classList.add("available");
-                      button.textContent = "Available";
-                    }
-                  });
-                });
+      // Add event listeners to the status buttons to toggle availability
+      const statusButtons = document.querySelectorAll(".status-btn");
+      statusButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          if (button.classList.contains("available")) {
+            button.classList.remove("available");
+            button.classList.add("unavailable");
+            button.textContent = "Unavailable";
+          } else {
+            button.classList.remove("unavailable");
+            button.classList.add("available");
+            button.textContent = "Available";
+          }
+        });
+      });
 
-                // Edit Button Event Listener
-                document.querySelectorAll(".edit-btn").forEach((button) => {
-                  button.addEventListener("click", function () {
-                    mealId = button.getAttribute("meal-id");
-                    console.log(mealId);
-                    const row = button.closest("tr");
-                    const mealName = row.querySelector("td:nth-child(2)").innerText;
-                    const mealDescription = row.querySelector("td:nth-child(3)").innerText;
-                    const mealPrice = row.querySelector("td:nth-child(4)").innerText.replace("Rs.", "");
+      // Edit Button Event Listener
+      document.querySelectorAll(".edit-btn").forEach((button) => {
+        button.addEventListener("click", function () {
+          mealId = button.getAttribute("meal-id");
+          console.log(mealId);
+          const row = button.closest("tr");
+          const mealName = row.querySelector("td:nth-child(2)").innerText;
+          const mealDescription =
+            row.querySelector("td:nth-child(3)").innerText;
+          const mealPrice = row
+            .querySelector("td:nth-child(4)")
+            .innerText.replace("Rs.", "");
 
-                    // Open the form and fill it with the existing data
-                    addItemForm.classList.remove("hidden");
-                    document.getElementById("item-id").value = mealId;
-                    document.getElementById("item-name").value = mealName;
-                    document.getElementById("item-price").value = mealPrice;
-                    document.getElementById("meal_description").value =
-                      mealDescription;
+          // Open the form and fill it with the existing data
+          addItemForm.classList.remove("hidden");
+          document.getElementById("item-id").value = mealId;
+          document.getElementById("item-name").value = mealName;
+          document.getElementById("item-price").value = mealPrice;
+          document.getElementById("meal_description").value = mealDescription;
 
-                    // Change form action to update
-                    addForm.removeEventListener("submit", addNewItem);
-                    addForm.addEventListener("submit", updateItem);
-                  });
-                });
+          // Change form action to update
+          addForm.removeEventListener("submit", addNewItem);
+          addForm.addEventListener("submit", updateItem);
+        });
+      });
 
-                function addNewItem(event) {
+      function addNewItem(event) {
+        event.preventDefault();
 
-                  event.preventDefault();
+        const fileInput = document.getElementById("meal_photo");
+        const formData = new FormData(addForm);
 
-                  const fileInput = document.getElementById('meal_photo');
-                  const formData = new FormData(addForm);
+        if (fileInput.files[0]) {
+          formData.append(
+            "meal_photo",
+            "/Photo/Menu/" + fileInput.files[0].name
+          );
+        }
 
-                  if (fileInput.files[0]) {
-                    formData.append('meal_photo', '/Photo/Menu/' + fileInput.files[0].name);
+        const data = Object.fromEntries(formData.entries());
+
+        const requestBody = JSON.stringify(data);
+        console.log("Request Body:", requestBody);
+        fetch("/menuitem/add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: requestBody,
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Success:", data);
+            addItemForm.classList.add("hidden");
+            resetForm();
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+
+      // Function to update an existing item
+      function updateItem(event) {
+        event.preventDefault();
+        const formData = new FormData(addForm);
+        const fileInput = document.getElementById("meal_photo");
+
+        if (fileInput.files[0]) {
+          formData.append(
+            "meal_photo",
+            "/Photo/Menu/" + fileInput.files[0].name
+          );
+        }
+
+        let data = Object.fromEntries(formData.entries());
+        data.older_id = mealId;
+        const requestBody = JSON.stringify(data);
+        console.log("Request Body:", requestBody);
+        fetch("/menuitem/update", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: requestBody,
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Success:", data);
+            addItemForm.classList.add("hidden");
+            resetForm();
+            addForm.removeEventListener("submit", updateItem);
+            addForm.addEventListener("submit", addNewItem);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+
+      // Function to reset the form
+      function resetForm() {
+        addForm.reset();
+        document.getElementById("item-id").value = "";
+      }
+
+      // Add event listeners to delete buttons
+      const deleteButtons = document.querySelectorAll(".delete-btn");
+      deleteButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          // const row = button.closest('tr');
+          // row.remove();
+
+          if (
+            confirm(
+              "Are you sure you want to delete this meal? This action cannot be undone."
+            )
+          ) {
+            const mealId = button.getAttribute("meal-id");
+
+            const requestBody = JSON.stringify({ meal_id: mealId });
+            console.log("Request Body:", requestBody);
+
+            fetch("/mealitem/delete", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: requestBody,
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success) {
+                  alert("The meal has been deleted.");
+                  button.closest("tr").remove();
+                } else {
+                  alert(
+                    "There was an error deleting the meal: " + data.message
+                  );
+                  console.error("Error:", data.message);
                 }
-                  
-                  const data = Object.fromEntries(formData.entries());
-
-                const requestBody = JSON.stringify(data);
-                  console.log("Request Body:", requestBody);
-                  fetch("/menuitem/add", {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: requestBody,
-                  })
-                    .then((response) => {
-                      if (!response.ok) {
-                        throw new Error(
-                          `HTTP error! status: ${response.status}`
-                        );
-                      }
-                      return response.json();
-                    })
-                    .then((data) => {
-                      console.log("Success:", data);
-                      addItemForm.classList.add("hidden");
-                      resetForm();
-                    })
-                    .catch((error) => {
-                      console.error("Error:", error);
-                    });
-                }
-
-                // Function to update an existing item
-                function updateItem(event) {
-                  event.preventDefault();
-                  const formData = new FormData(addForm);
-                  const fileInput = document.getElementById('meal_photo');
-
-                  if (fileInput.files[0]) {
-                    formData.append('meal_photo', '/Photo/Menu/' + fileInput.files[0].name);
-                  }
-                  
-                  let data = Object.fromEntries(formData.entries());
-                  data.older_id = mealId;
-                  const requestBody = JSON.stringify(data);
-                  console.log("Request Body:", requestBody);
-                  fetch("/menuitem/update", {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: requestBody,
-                  })
-                    .then((response) => {
-                      if (!response.ok) {
-                        throw new Error(
-                          `HTTP error! status: ${response.status}`
-                        );
-                      }
-                      return response.json();
-                    })
-                    .then((data) => {
-                      console.log("Success:", data);
-                      addItemForm.classList.add("hidden");
-                      resetForm();
-                      addForm.removeEventListener("submit", updateItem);
-                      addForm.addEventListener("submit", addNewItem);
-                    })
-                    .catch((error) => {
-                      console.error("Error:", error);
-                    });
-                }
-
-                // Function to reset the form
-                function resetForm() {
-                  addForm.reset();
-                  document.getElementById("item-id").value = "";
-                }
-
-                // Add event listeners to delete buttons
-                const deleteButtons = document.querySelectorAll(".delete-btn");
-                deleteButtons.forEach((button) => {
-                  button.addEventListener("click", () => {
-                    // const row = button.closest('tr');
-                    // row.remove();
-
-                    if (
-                      confirm(
-                        "Are you sure you want to delete this meal? This action cannot be undone."
-                      )
-                    ) {
-                      const mealId = button.getAttribute("meal-id");
-
-                      const requestBody = JSON.stringify({ meal_id: mealId });
-                      console.log("Request Body:", requestBody);
-
-                      fetch("/mealitem/delete", {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                        body: requestBody,
-                      })
-                        .then((response) => response.json())
-                        .then((data) => {
-                          if (data.success) {
-                            alert("The meal has been deleted.");
-                            button.closest("tr").remove();
-
-                          } else {
-                            alert(
-                              "There was an error deleting the meal: " +
-                                data.message
-                            );
-                            console.error("Error:", data.message);
-                          }
-                        })
-                        .catch((error) => console.error("Error:", error));
-                    }
-                  });
-                });
-              }
-            });
+              })
+              .catch((error) => console.error("Error:", error));
+          }
+        });
+      });
+    }
+  });
