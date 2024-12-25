@@ -31,10 +31,7 @@ fetch("/menuitem/data")
                                             <div id="add-item-form" class="add-item-form hidden">
                                             <form id="add-form" action="">
                                             <h3>Add New Menu Item</h3>
-                                                    <div class="form-group">
-                                                        <label for="item-id">Meal Id</label>
-                                                        <input type="text" id="item-id" name="meal_id" placeholder="Enter Meal id">
-                                                    </div>
+                                                   
                                                     <div class="form-group">
                                                         <label for="item-name">Meal Name</label>
                                                         <input type="text" id="item-name" name="meal_name" placeholder="Enter item name">

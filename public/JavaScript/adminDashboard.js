@@ -1,26 +1,44 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const menuItems = document.querySelectorAll('.menu-item');
-    const iframe = document.getElementById('dynamicIframe');
 
-    // Define mapping between menu items and iframe sources
-    const iframeSources = {
-        dashboard: '/profile/dashboard',
-        staff: '/profile/staff',
-        updatemenu: '/profile/update-menu',
-        viewreservations: '/profile/view-reservations',
-        updateoffers: '/profile/update-offers',
-        feedbacks: '/profile/feedbacks',
-        orderhistory: '/profile/order-history'
-    };
+  const sidebarOptions = document.querySelectorAll(".sidebar ul li");
 
-    menuItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const itemId = item.id; // Get ID of the clicked menu item
-            if (iframeSources[itemId]) {
-                iframe.src = iframeSources[itemId]; // Update iframe src
-            } else {
-                iframe.src = ''; // Clear iframe src if no source is defined
-            }
-        });
+  const defaultOption = document.getElementById("dashboard");
+  defaultOption.classList.add("selected");
+
+ 
+  sidebarOptions.forEach((option) => {
+    option.addEventListener("click", () => {
+      
+      sidebarOptions.forEach((opt) => opt.classList.remove("selected"));
+      
+      option.classList.add("selected");
     });
+  });
+
+  const menuItems = document.querySelectorAll('.menu-item');
+  const iframe = document.getElementById('dynamicIframe');
+  // Set default iframe source to dashboard
+  iframe.src = '/profile/dashboard';
+
+  
+  const iframeSources = {
+    dashboard: '/profile/dashboard',
+    staff: '/profile/staff',
+    updatemenu: '/profile/update-menu',
+    viewreservations: '/profile/view-reservations',
+    updateoffers: '/profile/update-offers',
+    feedbacks: '/profile/feedbacks',
+    orderhistory: '/profile/order-history'
+  };
+
+  menuItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const itemId = item.id; 
+      if (iframeSources[itemId]) {
+        iframe.src = iframeSources[itemId]; 
+      } else {
+        iframe.src = '';
+      }
+    });
+  });
 });
