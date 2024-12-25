@@ -79,7 +79,6 @@ fetch("/menuitem/data")
                                                         <th>Name</th>
                                                         <th>Type</th>
                                                         <th>Price</th>
-                                                        <th>Actions</th>
                                                         <th>Status</th>
                                                     </tr>
                                                 </thead>
@@ -103,21 +102,7 @@ fetch("/menuitem/data")
                                         <td>${meal.meal_name}</td>
                                         <td>${meal.meal_description}</td>
                                         <td>Rs.${meal.meal_price}</td>
-                                        <td>
-
-                                        <button class="status-btn ${
-                                          meal.available
-                                            ? "available"
-                                            : "unavailable"
-                                        }">
-                                                ${
-                                                  meal.available
-                                                    ? "Available"
-                                                    : "Unavailable"
-                                                }
-                                            </button>
-                                            
-                                        </td>
+                                        
                                         <td>
                                             
 
