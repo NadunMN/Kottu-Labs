@@ -29,45 +29,69 @@ fetch("/menuitem/data")
                                             </div>
 
                                             <div id="add-item-form" class="add-item-form hidden">
-                                            <form id="add-form" action="">
-                                            <h3>Add New Menu Item</h3>
-                                                   
-                                                    <div class="form-group">
-                                                        <label for="item-name">Meal Name</label>
-                                                        <input type="text" id="item-name" name="meal_name" placeholder="Enter item name">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="item-price">Meal Price</label>
-                                                        <input type="number" id="item-price" name="meal_price" placeholder="Enter price" min="0" step="0.01">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="meal_description">Description</label>
-                                                        <select id="meal_description" name="meal_description" required>
-                                                            <option value="Appetizers">Appetizers</option>
-                                                            <option value="Pasta">Pasta</option>
-                                                            <option value="Dolphin Kottu">Dolphin Kottu</option>
-                                                            <option value="KL Inventions">KL Inventions</option>
-                                                            <option value="Wraps & Rotti Sandwiches">Wraps & Rotti Sandwiches</option>
-                                                            <option value="Parata">Parata</option>
-                                                            <option value="Devilled Portions">Devilled Portions</option>
-                                                            <option value="KL Special Fried Rice">KL Special Fried Rice</option>
-                                                            <option value="Classic Kottu">Classic Kottu</option>
-                                                            <option value="Cheese Kottu">Cheese Kottu</option>
-                                                            <option value="String Hopper Kottu">String Hopper Kottu</option>
-                                                            <option value="Mocktails">Mocktails</option>
-                                                            <option value="Beverages">Beverages</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <input type="submit" name="submit" class="save-item-btn" placeholder="Submit">
+    <form id="add-form" action="">
+        <input type="hidden" id="item-id" name="meal_id">
+        <h3>Add New Menu Item</h3>
+        <div class="form-group-main">
+        
+        <div>
+        <div class="form-group">
+            <label for="item-name">Meal Name</label>
+            <input type="text" id="item-name" name="meal_name" placeholder="Enter item name">
+        </div>
 
-                                                    </div>
+        <div class="form-group">
+            <label for="item-price">Meal Price</label>
+            <input type="number" id="item-price" name="meal_price" placeholder="Enter price" min="0" step="0.01">
+        </div>
 
-                                                    <div class="form-group">
-                                                        <button class="cancel-item-btn">Cancel</button>
-                                                    </div>
-                                                </form>
-                                            </div>
+        <div class="form-group">
+            <label for="meal_description">Description</label>
+            <select id="meal_description" name="meal_description" required>
+                <option value="Appetizers">Appetizers</option>
+                <option value="Pasta">Pasta</option>
+                <!-- ... other options ... -->
+            </select>
+        </div>
+
+        </div>
+
+
+        <!-- Image Upload Section -->
+        <div class="form-group">
+            <label for="meal_photo">Item Image</label>
+            <div class="image-upload-container">
+                <div class="image-preview" id="imagePreview">
+                    <img src="placeholder.jpg" alt="Preview" id="preview-image">
+                    <div class="upload-placeholder">
+                        <i class="upload-icon">📸</i>
+                        <span>Click or drag image here</span>
+                    </div>
+                </div>
+                <input type="file" 
+                       id="meal_photo" 
+                       name="item_photo" 
+                       accept="image/*"
+                       class="image-input">
+            </div>
+            <span class="image-help-text">Recommended: 500x500px, Max size: 2MB</span>
+        </div>
+
+        </div>
+
+        <div class="button-group">
+
+          <div class="form-group">
+              <button class="cancel-item-btn">Cancel</button>
+          </div>
+
+          <div class="form-group">
+              <input type="submit" name="submit" class="save-item-btn" placeholder="Submit">
+          </div>
+
+        </div>
+    </form>
+</div>
                                                
                                             <table class="menu-table" id="menu-table">
                                                 <thead>
@@ -84,6 +108,30 @@ fetch("/menuitem/data")
                                         </div>
 
                                 `;
+
+                
+                                const imageInput = document.getElementById('meal_photo');
+                                const imagePreview = document.getElementById('imagePreview');
+                                const previewImage = document.getElementById('preview-image');
+                                const newPlaceHolder = document.querySelectorAll('.upload-placeholder');
+
+                                imageInput.addEventListener('change', function (event) {
+                                    const file = event.target.files[0]; // Get the selected file
+                                    if (file) {
+                                        newPlaceHolder.forEach(placeholder => placeholder.classList.add('hidden-img')); // Hide the placeholder
+                                        const reader = new FileReader(); // Create a FileReader to read the file
+
+                                        reader.onload = function (e) {
+                                            let imageURL = e.target.result;
+                                            previewImage.src = imageURL; // Set the src of the img to the file content
+                                            imagePreview.classList.add('has-image'); // Add a class to indicate the image is loaded
+
+                                            // window.uploadedImage = imageURL;
+                                        };
+
+                                        reader.readAsDataURL(file); // Read the file as a data URL
+                                    }
+                                });
 
                 let mealId;
                 // Dynamically generate meal elements
@@ -161,13 +209,9 @@ fetch("/menuitem/data")
                     mealId = button.getAttribute("meal-id");
                     console.log(mealId);
                     const row = button.closest("tr");
-                    const mealName =
-                      row.querySelector("td:nth-child(2)").innerText;
-                    const mealDescription =
-                      row.querySelector("td:nth-child(3)").innerText;
-                    const mealPrice = row
-                      .querySelector("td:nth-child(4)")
-                      .innerText.replace("Rs.", "");
+                    const mealName = row.querySelector("td:nth-child(2)").innerText;
+                    const mealDescription = row.querySelector("td:nth-child(3)").innerText;
+                    const mealPrice = row.querySelector("td:nth-child(4)").innerText.replace("Rs.", "");
 
                     // Open the form and fill it with the existing data
                     addItemForm.classList.remove("hidden");
@@ -184,11 +228,20 @@ fetch("/menuitem/data")
                 });
 
                 function addNewItem(event) {
+
                   event.preventDefault();
+
+                  const fileInput = document.getElementById('meal_photo');
                   const formData = new FormData(addForm);
+
+                  if (fileInput.files[0]) {
+                    formData.append('meal_photo', '/Photo/Menu/' + fileInput.files[0].name);
+                }
+                  
                   const data = Object.fromEntries(formData.entries());
 
-                  const requestBody = JSON.stringify(data);
+                const requestBody = JSON.stringify(data);
+                  console.log("Request Body:", requestBody);
                   fetch("/menuitem/add", {
                     method: "POST",
                     headers: {
@@ -218,6 +271,12 @@ fetch("/menuitem/data")
                 function updateItem(event) {
                   event.preventDefault();
                   const formData = new FormData(addForm);
+                  const fileInput = document.getElementById('meal_photo');
+
+                  if (fileInput.files[0]) {
+                    formData.append('meal_photo', '/Photo/Menu/' + fileInput.files[0].name);
+                  }
+                  
                   let data = Object.fromEntries(formData.entries());
                   data.older_id = mealId;
                   const requestBody = JSON.stringify(data);
