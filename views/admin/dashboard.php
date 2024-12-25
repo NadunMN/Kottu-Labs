@@ -9,32 +9,52 @@
 </head>
 <body>
 
-    <div class="details-card-wrapper">
+<div class="details-card-wrapper">
       
       <div class="card-container">
         <div class="card">
             <div class="card-body">
+              <div class="card-header">
                 <img src="/Photo/icon/wallet.png" alt="">
                 <p class="card-text">Wattala</p>
+
+                <div class="stat">
+                  <p>2.5%</p>
+                </div>
+              </div>
                 <p class="card-title">Rs. 150,000.00</p>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-body">
-                <img src="/Photo/icon/wallet.png" alt="">
-                <p class="card-text">Keleniya</p>
-                <p class="card-title">Rs.200,000.00</p>
-            </div>
-        </div>
 
         <div class="card">
             <div class="card-body">
+              <div class="card-header">
                 <img src="/Photo/icon/wallet.png" alt="">
-                <p class="card-text">Kotahena</p>
-                <p class="card-title">Rs.90,000.00</p>
+                <p class="card-text">Kelaniya</p>
+                <div class="stat">
+                  <p>2.5%</p>
+                </div>
+              </div>
+                <p class="card-title">Rs. 100,000.00</p>
             </div>
         </div>
+
+
+        <div class="card">
+            <div class="card-body">
+              <div class="card-header">
+                <img src="/Photo/icon/wallet.png" alt="">
+                <p class="card-text">Kotahena</p>
+                <div class="stat">
+                  <p>2.5%</p>
+                </div>
+              </div>
+                <p class="card-title">Rs. 90,000.00</p>
+            </div>
+        </div>
+
+        
       </div>
 
     </div>
@@ -55,6 +75,23 @@
       <canvas id="myChart2" style="width: 100%; height:300px;padding: 10px;"></canvas>
     </div>
 </div>
+
+
+<div class="another-part">
+
+  <div class="top-header">
+    <p>Top Meals</p>
+  </div>
+
+  <div class="top-body">
+    <p>Cheese Kottu</p>
+  </div>
+
+
+
+</div>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
