@@ -316,41 +316,314 @@ body {
 }
 
 /* Form Styling */
-.form-group {
-    margin-bottom: 15px;
+
+
+/* Container Styles */
+/* Form Container */
+.add-item-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    border-radius: 10px;
+    gap: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+.form-group-main{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.button-group{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-item-form.hidden {
+    display: none;
+}
+
+/* Form Header */
+.add-item-form h3 {
+    color: #111827;
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 1.25rem;
+    position: relative;
+}
+
+/* Labels */
 .form-group label {
     display: block;
-    font-weight: 400;
-    font-size: 1rem;
-    margin-bottom: 5px;
+    margin-bottom: 0.5rem;
+    color: #374151;
+    font-weight: 500;
+    font-size: 0.875rem;
 }
 
-.form-group input,
+.optional-text {
+    color: #9CA3AF;
+    font-size: 0.875rem;
+    font-weight: normal;
+    margin-left: 0.25rem;
+}
+
+/* Input Fields */
+.form-group input[type="text"],
+.form-group input[type="number"],
 .form-group select {
     width: 100%;
-    height: auto;
-    font-size: 1rem;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 0.625rem;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    font-size: 0.9375rem;
+    color: #111827;
+    background-color: #ffffff;
+    transition: border-color 0.15s ease;
+}
+
+#item-price, #item-name{
+    width: auto;
+}
+
+.form-group input[type="text"]:hover,
+.form-group input[type="number"]:hover,
+.form-group select:hover {
+    border-color: #D1D5DB;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group select:focus {
+    border-color: #3B82F6;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Card Input Specific */
+.card-input {
+    border: 1px solid #FCA5A5;
+    padding: 0.625rem;
+    border-radius: 6px;
+}
+
+/* Select Styling */
+.form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 0.75rem;
+    padding-right: 2.5rem;
+}
+
+/* Subscription Box */
+.subscription-box {
+    background: #F9FAFB;
+    border-radius: 8px;
+    padding: 1.25rem;
+}
+
+.subscription-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.modify-link {
+    color: #F87171;
+    font-size: 0.875rem;
+    text-decoration: none;
+}
+
+.modify-link:hover {
+    color: #EF4444;
+}
+
+/* Buttons */
+.cancel-btn {
+    padding: 0.625rem 1.25rem;
+    border: none;
+    background: #ffffff;
+    color: #4B5563;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.cancel-btn:hover {
+    background: #F3F4F6;
+}
+
+.subscribe-btn {
+    padding: 0.625rem 1.25rem;
+    border: none;
+    background: #F87171;
+    color: white;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.subscribe-btn:hover {
+    background: #EF4444;
+}
+
+/* Total Section */
+.total-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+.total-amount {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.tax-note {
+    color: #6B7280;
+    font-size: 0.75rem;
+}
+
+/* Small Text */
+.small-text {
+    font-size: 0.75rem;
+    color: #6B7280;
+    margin-top: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .add-item-form {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+}
+
+/* Image Upload Styles */
+.image-upload-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.image-preview {
+    width: 100%;
+    height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8fafc;
+    border: 2px dashed #e2e8f0;
+}
+
+.hidden-img{
+    display: none;
+}
+
+
+
+
+.image-preview:hover {
+    border-color: #3498db;
+    background-color: #f1f5f9;
+}
+
+.image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+}
+
+.image-preview.has-image img {
+    width:100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.upload-placeholder {
+    text-align: center;
+    color: #64748b;
+}
+
+.upload-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.image-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.image-help-text {
+    display: block;
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 0.5rem;
+}
+
+/* Drag & Drop States */
+.image-preview.drag-over {
+    border-color: #3498db;
+    background-color: #e8f4fd;
+}
+
+/* Error State */
+.image-preview.error {
+    border-color: #e74c3c;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
 }
 
 .cancel-item-btn{
     width: 100%;
     height: auto;
-    font-size: 1rem;
-    padding: 8px;
+    font-size: 0.8rem;
+    padding: 5px 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .save-item-btn {
     background-color: #28a745;
     color: white;
-    padding: 10px 15px;
+    padding: 5px 10px;
     border: none;
+    font-size: 0.8rem;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -363,10 +636,6 @@ body {
     background-color: #882121;
     color: white;
 }
-
-
-
-
 
 
 
