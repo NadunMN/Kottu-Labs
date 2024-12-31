@@ -230,6 +230,16 @@
 
     <script src="/JavaScript/addReview.js"></script>
 
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <p id="popup-message"></p>
+            <div class="popup-buttons">
+                <button id="popup-confirm">Yes</button>
+                <button id="popup-cancel">No</button>
+            </div>
+        </div>
+    </div>
+
 
 </body>
 

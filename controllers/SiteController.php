@@ -188,5 +188,24 @@ class SiteController extends Controller
         return $this->render('/admin/order-history');
     }
 
+    //steward
+    public function orderstatusSteward(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('/steward/order-status');
+    }
+
+    public function customerarrivalsSteward(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('/steward/customer-arrivals');
+    }
+
+    public function paymentsSteward(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('/steward/customer-payments');
+    }
+
 }
 ?>

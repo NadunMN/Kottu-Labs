@@ -119,6 +119,10 @@ $app->router->get('/profile/update-offers', [$siteController, 'updateoffersAdmin
 $app->router->get('/profile/feedbacks', [$siteController, 'feedbacksAdmin']);
 $app->router->get('/profile/order-history', [$siteController, 'orderhistoryAdmin']);
 
+//steward
+$app->router->get('/profile/view-order-status', [$siteController, 'orderstatusSteward']);
+$app->router->get('/profile/customer-arrivals', [$siteController, 'customerarrivalsSteward']);
+$app->router->get('/profile/customer-payments', [$siteController, 'paymentsSteward']);
 
 // Run the application
 $app->run();

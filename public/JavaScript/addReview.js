@@ -41,8 +41,6 @@ function fetchRatings() {
           element.textContent = quantityLine.toFixed(0) + " reviews";
         });
 
-
-    
         const avgRating1Line = document.getElementById("rating-line-1");
         const subject1 = document.getElementById("revire-subject-1");
 
@@ -143,7 +141,6 @@ function fetchRatings() {
 
         const line5 = document.getElementById("line-5");
         line5.style.width = location * 20 + "%";
-
       }
     })
     .catch((error) => console.error("Error fetching ratings:", error));
@@ -169,8 +166,6 @@ function fetchReviews() {
         data.sort((a, b) => {
           return new Date(b.created_at) - new Date(a.created_at);
         });
-
-
 
         data.forEach((review) => {
           const reviewDiv = document.createElement("div");
@@ -216,14 +211,17 @@ function fetchReviews() {
         // Add event listeners for delete buttons after reviews are generated
         document.querySelectorAll(".delete-icon").forEach((button) => {
           button.addEventListener("click", function () {
-            if (
-              confirm(
-                "Are you sure you want to delete this review? This action cannot be undone."
-              )
-            ) {
-              const reviewId = button.getAttribute("review-id");
+            const popup = document.getElementById("popup");
+            const popupMessage = document.getElementById("popup-message");
+            const confirmBtn = document.getElementById("popup-confirm");
+            const cancelBtn = document.getElementById("popup-cancel");
+            const reviewId = button.getAttribute("review-id");
+
+            popupMessage.textContent = "Are you sure you want to delete this review?";
+            popup.style.display = "block";
+
+            const confirmHandler = () => {
               const requestBody = JSON.stringify({ review_id: reviewId });
-              console.log("Request Body:", requestBody);
 
               fetch("/review/delete", {
                 method: "POST",
@@ -235,17 +233,30 @@ function fetchReviews() {
                 .then((response) => response.json())
                 .then((data) => {
                   if (data.success) {
-                    alert("The review has been deleted.");
-                    fetchReviews(); // Refresh the reviews
+                    showSuccessPopup("The review has been deleted successfully!");
+                    fetchReviews();
+                    fetchRatings();
                   } else {
-                    alert(
-                      "There was an error deleting the review: " + data.message
-                    );
-                    console.error("Error:", data.message);
+                    popup.style.display = "none";
+                    showErrorPopup("Error deleting the review: " + data.message);
                   }
                 })
-                .catch((error) => console.error("Error:", error));
-            }
+                .catch((error) => {
+                  popup.style.display = "none";
+                  showErrorPopup("An error occurred while deleting the review.");
+                });
+
+                confirmBtn.removeEventListener("click", confirmHandler);
+                cancelBtn.removeEventListener("click", cancelHandler);
+            };
+
+            const cancelHandler = () => {
+              popup.style.display = "none";
+              confirmBtn.removeEventListener("click", confirmHandler);
+              cancelBtn.removeEventListener("click", cancelHandler);
+            };
+            confirmBtn.addEventListener("click", confirmHandler);
+            cancelBtn.addEventListener("click", cancelHandler);
           });
         });
 
@@ -360,6 +371,49 @@ function fetchReviews() {
     })
     .catch((error) => console.error("Error fetching reviews:", error));
 }
+
+function showSuccessPopup(message) {
+  const popup = document.getElementById("popup");
+  const popupMessage = document.getElementById("popup-message");
+  const confirmBtn = document.getElementById("popup-confirm");
+  const cancelBtn = document.getElementById("popup-cancel");
+
+  popupMessage.textContent = message;
+  confirmBtn.style.display = "none";
+  cancelBtn.textContent = "Close";
+  popup.style.display = "block";
+
+  const closeHandler = () => {
+    popup.style.display = "none";
+    confirmBtn.style.display = "inline-block";
+    cancelBtn.textContent = "No";
+    cancelBtn.removeEventListener("click", closeHandler);
+  };
+
+  cancelBtn.addEventListener("click", closeHandler);
+}
+
+function showErrorPopup(message) {
+  const popup = document.getElementById("popup");
+  const popupMessage = document.getElementById("popup-message");
+  const confirmBtn = document.getElementById("popup-confirm");
+  const cancelBtn = document.getElementById("popup-cancel");
+
+  popupMessage.textContent = message;
+  confirmBtn.style.display = "none";
+  cancelBtn.textContent = "Close";
+  popup.style.display = "block";
+
+  const closeHandler = () => {
+    popup.style.display = "none";
+    confirmBtn.style.display = "inline-block";
+    cancelBtn.textContent = "No";
+    cancelBtn.removeEventListener("click", closeHandler);
+  };
+
+  cancelBtn.addEventListener("click", closeHandler);
+}
+
 // function rendering stars
 function renderStars(rating) {
   const maxStars = 5;
@@ -508,6 +562,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
           boxes.forEach((b) => b.classList.remove("hover"));
 
           fetchReviews();
+          fetchRatings();
 
           setTimeout(() => {
             errorDiv.textContent = "";

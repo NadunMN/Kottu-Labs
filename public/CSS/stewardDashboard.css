@@ -4,25 +4,27 @@
 
 body {
     margin: 0;
-    background-color: #f4f4f4; /* Light gray background */
+    background-color: #ffffff; /* Light gray background */
 }
 
 .dashboard-container {
     display: flex;
     height: 100vh;
-    padding: 10px; 
-    box-sizing: border-box;
+    padding: 10px;
     flex-direction: row;
 }
 
 .sidebar {
     width: 20%;
+    height: 100%;
     background-color: #000000; 
     color: #ffffff; 
     padding: 20px;
     border-radius: 10px; 
     margin-right: 10px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); 
+    position: sticky;
+    top: 10px;
 }
 
 .sidebar h2 {
@@ -76,10 +78,11 @@ body {
 
 .main-content {
     width: 100%;
-    min-height: 100%;
-    height: fit-content;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
     flex: 1;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     border-radius: 10px;
     padding: 20px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
