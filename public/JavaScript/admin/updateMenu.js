@@ -57,7 +57,7 @@ fetch("/menuitem/data")
 
         <div class="check-box-container">
           <div class="branch-group">
-              <input type="checkbox" id="wattala" name="branch1" value="1">
+              <input type="checkbox" id="wattala" name="menu_id" value="1">
               <label for="wattala">Wattala</label>
           </div>
 
