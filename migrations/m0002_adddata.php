@@ -2,8 +2,7 @@
 
 use app\core\Application;
 
-class m0002_addBranch
-{
+class m0002_adddata{
     public function up()
     {
         $db = Application::$app->db;
@@ -17,6 +16,19 @@ class m0002_addBranch
                     (1, 'Wattala'),
                     (2, 'Kelaniya'),
                     (3, 'Kotahena');";
+            $db->pdo->exec($SQL);
+        }
+
+
+        // Add menu data
+        $checkColumnSQL = "SELECT * FROM `menus`;";
+        $result = $db->pdo->query($checkColumnSQL)->fetch();
+        if (!$result) {
+            $SQL = "INSERT INTO menus (menu_id, branch_id)
+                    VALUES
+                    (1, 1),
+                    (2, 2),
+                    (3, 3);";
             $db->pdo->exec($SQL);
         }
     }

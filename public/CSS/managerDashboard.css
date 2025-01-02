@@ -268,14 +268,9 @@ body {
 }
 
 #add-form{
-    width: 90%;
-
-    max-width: 500px;
+    width: 50%;
     background-color: white;
-    padding-top: 30px;
-    padding-bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 30px;
     border-radius: 10px;
     margin: 20px;
 }
@@ -381,7 +376,7 @@ body {
 .form-group input[type="text"],
 .form-group input[type="number"],
 .form-group select {
-    width: 100%;
+    width: auto;
     padding: 0.625rem;
     border: 1px solid #E5E7EB;
     border-radius: 6px;
@@ -408,6 +403,59 @@ body {
     outline: none;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
+
+
+
+
+
+
+
+        .check-box-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px; /* Adds spacing between checkboxes */
+            font-family: Arial, sans-serif;
+            margin: 20px 0; /* Adds margin around the container */
+        }
+
+        .branch-group {
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px; /* Space between checkbox and label */
+            width: 18px;
+            height: 18px; /* Slightly larger checkboxes for better visibility */
+        }
+
+        label {
+            font-size: 16px;
+            color: #333; /* Dark gray color for readability */
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Card Input Specific */
 .card-input {

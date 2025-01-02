@@ -45,6 +45,7 @@ fetch("/menuitem/data")
             <input type="number" id="item-price" name="meal_price" placeholder="Enter price" min="0" step="0.01">
         </div>
 
+
         <div class="form-group">
             <label for="meal_description">Description</label>
             <select id="meal_description" name="meal_description" required>
@@ -54,10 +55,30 @@ fetch("/menuitem/data")
             </select>
         </div>
 
+        <div class="check-box-container">
+          <div class="branch-group">
+              <input type="checkbox" id="wattala" name="branch1" value="1">
+              <label for="wattala">Wattala</label>
+          </div>
+
+          <div class="branch-group">
+              <input type="checkbox" id="kelaniya" name="branch2" value="2">
+              <label for="kelaniya">Kelaniya</label>
+          </div>
+
+          <div class="branch-group">
+              <input type="checkbox" id="kotahena" name="branch3" value="3">
+              <label for="kotahena">Kotahena</label>
+          </div>
+    </div>
+
+
         </div>
 
 
         <!-- Image Upload Section -->
+
+        
         <div class="form-group">
             <label for="meal_photo">Item Image</label>
             <div class="image-upload-container">
@@ -100,6 +121,7 @@ fetch("/menuitem/data")
                                                         <th>Name</th>
                                                         <th>Type</th>
                                                         <th>Price</th>
+                                                        <th>Branch</th>
                                                         <th>Status</th>
                                                     </tr>
                                                 </thead>
@@ -146,6 +168,7 @@ fetch("/menuitem/data")
                                         <td>${meal.meal_name}</td>
                                         <td>${meal.meal_description}</td>
                                         <td>Rs.${meal.meal_price}</td>
+                                        <td>All</td>
                                         
                                         <td>
                                             
