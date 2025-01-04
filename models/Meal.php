@@ -4,6 +4,7 @@ namespace app\models;
 
 use app\core\db\DbModel;
 use app\core\Model\MealModel;
+use app\core\Application;
 
 class Meal extends DbModel
 {
@@ -104,21 +105,34 @@ public static function findAll($where=[])
 
     public function add()
     {
-        $tableName = static::tableName();
-        $attributes = $this->attributes();
-        $params = array_map(fn($attr) => ":$attr", $attributes);
+    $tableName = static::tableName();
+    $attributes = $this->attributes();
+    $params = array_map(fn($attr) => ":$attr", $attributes);
 
-        $sql = "INSERT INTO $tableName (" . implode(', ', $attributes) . ") 
-                VALUES (" . implode(', ', $params) . ")";
+    $sql = "INSERT INTO $tableName (" . implode(', ', $attributes) . ") 
+            VALUES (" . implode(', ', $params) . ")";
 
-        $statement = self::prepare($sql);
+    $statement = self::prepare($sql);
 
-        foreach ($attributes as $attribute) {
-            $statement->bindValue(":$attribute", $this->{$attribute});
-        }
-
-        return $statement->execute();
+    foreach ($attributes as $attribute) {
+        $statement->bindValue(":$attribute", $this->{$attribute});
     }
+
+    if ($statement->execute()) {
+        // Retrieve and set the last inserted ID
+        $lastInsertId = Application::$app->db->pdo->lastInsertId();
+        $primaryKey = static::primaryKey(); // Get the primary key attribute
+        $this->{$primaryKey} = $lastInsertId; // Assign the last insert ID to the primary key attribute
+        
+        // You can also explicitly assign it to the $meal_id property if needed
+        $this->meal_id = $lastInsertId;
+        
+        return $lastInsertId;
+    }
+
+    return false;
+}
+
     
 
     public function delete()
