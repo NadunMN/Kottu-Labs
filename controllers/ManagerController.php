@@ -6,15 +6,20 @@ use app\core\Controller;
 use app\core\Application;
 use app\models\Meal;
 use app\models\Reservation;
+use app\models\MealMenu;
 
 class ManagerController extends Controller
 {
     public function addmenuItems(){
         $meal = new Meal();
         $meal->load(Application::$app->request->getBody());
-
+        
         try {
             if ($meal->add()) {
+                
+                // var_dump($meal->meal_id);
+                // exit;
+                // $this->addMealMenu();
                 echo json_encode(['success' => true]);
             } else {
                 throw new \Exception('Meal validation or save failed: ' . json_encode($meal->errors));
@@ -24,6 +29,24 @@ class ManagerController extends Controller
             echo json_encode(['success' => false, 'errors' => $meal->errors, 'message' => $e->getMessage()]);
         }
     }
+
+    // public function addMealMenu(){
+    //     $mealMenu = new MealMenu();
+        
+    //     try {
+    //         if ($mealMenu->add()) {
+
+    //             echo json_encode(['success' => true]);
+    //         } else {
+    //             throw new \Exception('Meal validation or save failed: ' . json_encode($mealMenu->errors));
+    //         }
+    //     } catch (\Exception $e) {
+    //         error_log($e->getMessage());
+    //         echo json_encode(['success' => false, 'errors' => $mealMenu->errors, 'message' => $e->getMessage()]);
+    //     }
+    // }
+
+
 
     //get menu data
     public function getmenuItems()
