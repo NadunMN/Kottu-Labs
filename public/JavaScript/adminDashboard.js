@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     dashboard: '/profile/dashboard',
     staff: '/profile/staff',
     updatemenu: '/profile/update-menu',
-    viewreservations: '/profile/view-reservations',
     updateoffers: '/profile/update-offers',
     feedbacks: '/profile/feedbacks',
     orderhistory: '/profile/order-history'
