@@ -158,6 +158,7 @@ fetch("/menuitem/data")
       let mealId;
       // Dynamically generate meal elements
       data.forEach((meal) => {
+        // console.log(meal.branch_ids);
         // Create a new table row
         const row = document.createElement("tr");
 
@@ -167,7 +168,10 @@ fetch("/menuitem/data")
                                         <td>${meal.meal_name}</td>
                                         <td>${meal.meal_description}</td>
                                         <td>Rs.${meal.meal_price}</td>
-                                        <td>All</td>
+                                        <td>${
+                                          meal.branch_ids == "1" ? "Wattala" : meal.branch_ids == "2" ? "Kelaniya" : meal.branch_ids== "3" ? "Kotahena"
+                                          : meal.branch_ids == '1,2' ? "Wattala, Kelaniya" : meal.branch_ids == '1,3' ? "Wattala, Kotahena" : meal.branch_ids == '2,3' ? "Kelaniya, Kotahena" : "All Branches"
+                                          }</td>
                                         
                                         <td>
                                             
@@ -299,7 +303,7 @@ fetch("/menuitem/data")
         }
 
         let data = Object.fromEntries(formData.entries());
-        data.meal_id = mealId; // Add meal_id to the data object
+        data.meal_id = mealId;
         const requestBody = JSON.stringify(data);
         console.log("Request Body:", requestBody);
         fetch("/menuitem/update", {

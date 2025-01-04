@@ -50,24 +50,6 @@ class BranchMeal extends BranchMealModel
         ];
     }
 
-//     public static function findAll($where)
-// {
-//     $tableName = static::tableName();
-//     $attributes = array_keys($where);
-
-//     $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
-//     $statement = self::prepare("
-//         SELECT reviews.*, CONCAT(users.firstname, ' ', users.lastname) as userName 
-//         FROM $tableName 
-//         JOIN users ON reviews.user_id = users.id 
-//         WHERE $sql
-//     ");
-//     foreach ($where as $key => $value) {
-//         $statement->bindValue(":$key", $value);
-//     }
-//     $statement->execute();
-//     return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
-// }
 
 
 public static function findAll($where=[])
@@ -118,40 +100,38 @@ public static function findAll($where=[])
     {
         $tableName = static::tableName();
         $primaryKey = static::primaryKey();
-        $sql = "DELETE FROM $tableName WHERE $primaryKey = :$primaryKey";
-        $statement = self::prepare($sql);
-        $statement->bindValue(":$primaryKey", $this->{$primaryKey});
-        return $statement->execute();
+       
+        $deleteSql = "DELETE FROM $tableName WHERE $primaryKey = :meal_id AND branch_id = :branch_id";
+        $deleteStatement = self::prepare($deleteSql);
+        $deleteStatement->bindValue(':meal_id', $this->meal_id);
+        $deleteStatement->bindValue(':branch_id', $this->branch_id);
+        return $deleteStatement->execute();
     }
 
     public function update()
     {
-
         $tableName = static::tableName();
-        $attributes = $this->attributes();
-        $params = array_map(fn($attr) => "$attr = :$attr", $attributes);
-        
-        // Assuming primaryKey() returns a string key name
         $primaryKey = static::primaryKey();
-        $sql = "UPDATE $tableName SET " . implode(', ', $params) . " WHERE $primaryKey = :$primaryKey";
-        
-        // Ensure prepare method is available and connects to PDO
-        $statement = self::prepare($sql);  // Ensure `prepare` is implemented correctly
-        
-        // Bind attribute values
-        foreach ($attributes as $attribute) {
-            $statement->bindValue(":$attribute", $this->{$attribute});
+
+        // Step 1: Check if the branch_id already exists for the given meal_id
+        $checkSql = "SELECT 1 FROM $tableName WHERE $primaryKey = :meal_id AND branch_id = :branch_id";
+        $checkStatement = self::prepare($checkSql);
+        $checkStatement->bindValue(':meal_id', $this->meal_id);
+        $checkStatement->bindValue(':branch_id', $this->branch_id);
+        $checkStatement->execute();
+
+        if (!$checkStatement->fetch()) {
+            // Step 2: If the branch_id does not exist, insert it
+            $insertSql = "INSERT INTO $tableName (meal_id, branch_id, meal_status) VALUES (:meal_id, :branch_id, :meal_status)";
+            $insertStatement = self::prepare($insertSql);
+            $insertStatement->bindValue(':meal_id', $this->meal_id);
+            $insertStatement->bindValue(':branch_id', $this->branch_id);
+            $insertStatement->bindValue(':meal_status', $this->meal_status);
+            $insertStatement->execute();
         }
-        $statement->bindValue(":$primaryKey", $this->{$primaryKey});
-    
-        // Execute statement and return result
-        try {
-            return $statement->execute();
-        } catch (\Exception $e) {
-            // Error handling here
-            echo "Update failed: " . $e->getMessage();
-            return false;
-        }
+
+        return true;
+
     }
     
 
