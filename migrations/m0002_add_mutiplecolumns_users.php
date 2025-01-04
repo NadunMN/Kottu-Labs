@@ -2,7 +2,7 @@
 
 use app\core\Application;
 
-class m0003_add_mutiplecolumns_users
+class m0002_add_mutiplecolumns_users
 {
     public function up()
     {

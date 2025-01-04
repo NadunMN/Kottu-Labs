@@ -6,7 +6,7 @@ use app\core\Controller;
 use app\core\Application;
 use app\models\Meal;
 use app\models\Reservation;
-use app\models\MealMenu;
+use app\models\BranchMeal;
 
 class ManagerController extends Controller
 {
@@ -16,11 +16,38 @@ class ManagerController extends Controller
         
         try {
             if ($meal->add()) {
+
+                $mealId = $meal->meal_id;
+                $branchMeal = new BranchMeal();
+                $branchMeal->meal_id = $mealId;
+
+                $branches = [];
+                foreach (Application::$app->request->getBody() as $key => $value) {
+                    // Assuming branch keys are named like branch2, branch3, etc.
+                    if (strpos($key, 'branch') === 0) {
+                        $branches[] = $value;
+                    }
+                }
+
                 
-                // var_dump($meal->meal_id);
-                // exit;
-                // $this->addMealMenu();
+            if (count($branches) > 0) {
+                foreach ($branches as $branchId) {
+                    $branchMeal = new BranchMeal();
+                    $branchMeal->meal_id = $mealId;
+                    $branchMeal->branch_id = $branchId;
+
+                    if (!$branchMeal->add()) {
+                        throw new \Exception('Failed to add meal to branches_meal for branch ' . $branchId . ': ' . json_encode($branchMeal->errors));
+                    }
+                }
+
+                
                 echo json_encode(['success' => true]);
+            } else {
+                throw new \Exception('No branch IDs provided');
+            }
+
+            
             } else {
                 throw new \Exception('Meal validation or save failed: ' . json_encode($meal->errors));
             }
@@ -29,24 +56,6 @@ class ManagerController extends Controller
             echo json_encode(['success' => false, 'errors' => $meal->errors, 'message' => $e->getMessage()]);
         }
     }
-
-    // public function addMealMenu(){
-    //     $mealMenu = new MealMenu();
-        
-    //     try {
-    //         if ($mealMenu->add()) {
-
-    //             echo json_encode(['success' => true]);
-    //         } else {
-    //             throw new \Exception('Meal validation or save failed: ' . json_encode($mealMenu->errors));
-    //         }
-    //     } catch (\Exception $e) {
-    //         error_log($e->getMessage());
-    //         echo json_encode(['success' => false, 'errors' => $mealMenu->errors, 'message' => $e->getMessage()]);
-    //     }
-    // }
-
-
 
     //get menu data
     public function getmenuItems()

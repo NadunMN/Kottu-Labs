@@ -2,23 +2,24 @@
 
 namespace app\models;
 
-use app\core\Model\MenuMealModel;
+use app\core\Model\BranchMealModel;
 
-class MealMenu extends MenuMealModel
+class BranchMeal extends BranchMealModel
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 2;
 
     public string $meal_id = '';
-    public string $menu_id = '';
+    public string $branch_id = '';
+    public int $meal_status = self::STATUS_ACTIVE;
 
     
     
 
     public static function tableName(): string
     {
-        return 'menu_meals';
+        return 'branch_meals';
     }
 
     public static function primaryKey(): string
@@ -38,7 +39,7 @@ class MealMenu extends MenuMealModel
 
     public function attributes(): array
     {
-        return ['meal_id', 'menu_id'];
+        return ['meal_id', 'branch_id', 'meal_status'];
     }
 
     public function rules(): array
@@ -89,7 +90,8 @@ public static function findAll($where=[])
     {
         return [
                'meal_id' => $this->meal_id,
-                'menu_id' => $this->menu_id  
+                'branch_id' => $this->branch_id ,
+                'meal_status' => $this->meal_status 
         ];
     }
 

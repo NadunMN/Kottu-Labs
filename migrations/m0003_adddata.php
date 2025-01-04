@@ -2,7 +2,7 @@
 
 use app\core\Application;
 
-class m0002_adddata{
+class m0003_adddata{
     public function up()
     {
         $db = Application::$app->db;

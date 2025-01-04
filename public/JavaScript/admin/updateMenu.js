@@ -30,7 +30,6 @@ fetch("/menuitem/data")
 
                                             <div id="add-item-form" class="add-item-form hidden">
     <form id="add-form" action="">
-        <input type="hidden" id="item-id" name="meal_id">
         <h3>Add New Menu Item</h3>
         <div class="form-group-main">
         
@@ -57,7 +56,7 @@ fetch("/menuitem/data")
 
         <div class="check-box-container">
           <div class="branch-group">
-              <input type="checkbox" id="wattala" name="menu_id" value="1">
+              <input type="checkbox" id="wattala" name="branch1" value="1">
               <label for="wattala">Wattala</label>
           </div>
 
@@ -236,7 +235,6 @@ fetch("/menuitem/data")
 
           // Open the form and fill it with the existing data
           addItemForm.classList.remove("hidden");
-          document.getElementById("item-id").value = mealId;
           document.getElementById("item-name").value = mealName;
           document.getElementById("item-price").value = mealPrice;
           document.getElementById("meal_description").value = mealDescription;
@@ -301,7 +299,7 @@ fetch("/menuitem/data")
         }
 
         let data = Object.fromEntries(formData.entries());
-        data.older_id = mealId;
+        data.meal_id = mealId; // Add meal_id to the data object
         const requestBody = JSON.stringify(data);
         console.log("Request Body:", requestBody);
         fetch("/menuitem/update", {
@@ -332,7 +330,6 @@ fetch("/menuitem/data")
       // Function to reset the form
       function resetForm() {
         addForm.reset();
-        document.getElementById("item-id").value = "";
       }
 
       // Add event listeners to delete buttons

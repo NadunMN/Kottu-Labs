@@ -3,7 +3,7 @@
 namespace app\core\Model;
 use app\core\db\DbModel;
 
-abstract class MenuMealModel extends DbModel
+abstract class BranchMealModel extends DbModel
 {
 
     
