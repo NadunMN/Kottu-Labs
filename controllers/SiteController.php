@@ -164,12 +164,6 @@ class SiteController extends Controller
         return $this->render('/admin/update-menu');
     }
 
-    public function reservationAdmin(Request $request,Response $response)
-    {
-        $this->setLayout('auth');
-        return $this->render('/admin/view-reservations');
-    }
-
     public function updateoffersAdmin(Request $request,Response $response)
     {
         $this->setLayout('auth');

@@ -48,7 +48,15 @@ $app->router->get('/logout', [$authController, 'logout']);
 // $app->router->get('/profile', [$siteController, 'userProfile']);
 
 if (Application::$app->user && Application::$app->user->position == 'admin') {
+    //admin routes
     $app->router->get('/profile', [$siteController, 'adminDashboard']);
+    $app->router->get('/profile/dashboard', [$siteController, 'dashboardAdmin']);
+    $app->router->get('/profile/staff', [$siteController, 'staffAdmin']);
+    $app->router->get('/profile/update-menu', [$siteController, 'updatemenuAdmin']);
+    $app->router->get('/profile/update-offers', [$siteController, 'updateoffersAdmin']);
+    $app->router->get('/profile/feedbacks', [$siteController, 'feedbacksAdmin']);
+    $app->router->get('/profile/order-history', [$siteController, 'orderhistoryAdmin']);
+
 }else if(Application::$app->user && Application::$app->user->position == 'customer') {
     $app->router->get('/profile', [$siteController, 'userDashboard']);
     $app->router->get('/myaccount', [$siteController, 'userProfile']);
@@ -110,14 +118,7 @@ $app->router->get('/reservation/data', [$managerController, 'getReservation']);
 $app->router->post('/reservation/delete', [$managerController, 'deleteReservation']);
 $app->router->post('/reservation/update', [$managerController, 'updateReservation']);
 
-//admin
-$app->router->get('/profile/dashboard', [$siteController, 'dashboardAdmin']);
-$app->router->get('/profile/staff', [$siteController, 'staffAdmin']);
-$app->router->get('/profile/update-menu', [$siteController, 'updatemenuAdmin']);
-$app->router->get('/profile/view-reservations', [$siteController, 'reservationAdmin']);
-$app->router->get('/profile/update-offers', [$siteController, 'updateoffersAdmin']);
-$app->router->get('/profile/feedbacks', [$siteController, 'feedbacksAdmin']);
-$app->router->get('/profile/order-history', [$siteController, 'orderhistoryAdmin']);
+
 
 //steward
 $app->router->get('/profile/view-order-status', [$siteController, 'orderstatusSteward']);
