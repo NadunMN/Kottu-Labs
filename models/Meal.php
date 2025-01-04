@@ -5,6 +5,7 @@ namespace app\models;
 use app\core\db\DbModel;
 use app\core\Model\MealModel;
 use app\core\Application;
+use PDO;
 
 class Meal extends DbModel
 {
@@ -55,41 +56,24 @@ class Meal extends DbModel
         ];
     }
 
-//     public static function findAll($where)
-// {
-//     $tableName = static::tableName();
-//     $attributes = array_keys($where);
-
-//     $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
-//     $statement = self::prepare("
-//         SELECT reviews.*, CONCAT(users.firstname, ' ', users.lastname) as userName 
-//         FROM $tableName 
-//         JOIN users ON reviews.user_id = users.id 
-//         WHERE $sql
-//     ");
-//     foreach ($where as $key => $value) {
-//         $statement->bindValue(":$key", $value);
-//     }
-//     $statement->execute();
-//     return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
-// }
-
-
-public static function findAll($where=[])
-{
-    $tableName = static::tableName();
-    $attributes = array_keys($where);
-    $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
-    $statement = self::prepare("SELECT * FROM $tableName");
-    foreach ($where as $key => $item) {
-        $statement->bindValue(":$key", $item);
+    public static function findAll($where = [])
+    {
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+        $sql = "SELECT $tableName.*, b.branch_id, b.meal_status FROM $tableName
+                JOIN branch_meals b ON $tableName.meal_id = b.meal_id
+                group by $tableName.meal_id
+                ";
+        if (!empty($attributes)) {
+            $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+        }
+        $statement = self::prepare($sql);
+        foreach ($where as $key => $item) {
+            $statement->bindValue(":$key", $item);
+        }
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS, static::class);
     }
-    $statement->execute();
-    return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
-}
-
-
-
 
     public function toArray(): array
     {
