@@ -23,7 +23,7 @@ class m0001_initial
             lastname VARCHAR(255) NOT NULL,
             status TINYINT NOT NULL DEFAULT 0,
             position VARCHAR(20) NOT NULL,
-            branch_id INT NOT NULL,
+            branch_id INT DEFAULT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (branch_id) REFERENCES branches(branch_id) ON DELETE CASCADE,
             INDEX (branch_id)
@@ -106,13 +106,13 @@ class m0001_initial
 
 
         // menu table
-        $SQL = "CREATE TABLE IF NOT EXISTS menus (
-            menu_id INT AUTO_INCREMENT PRIMARY KEY,
-            branch_id INT NOT NULL,
-            FOREIGN KEY (branch_id) REFERENCES branches(branch_id) ON DELETE CASCADE,
-            INDEX (branch_id)
-        ) ENGINE=INNODB;";
-        $db->pdo->exec($SQL);
+        // $SQL = "CREATE TABLE IF NOT EXISTS menus (
+        //     menu_id INT AUTO_INCREMENT PRIMARY KEY,
+        //     branch_id INT NOT NULL,
+        //     FOREIGN KEY (branch_id) REFERENCES branches(branch_id) ON DELETE CASCADE,
+        //     INDEX (branch_id)
+        // ) ENGINE=INNODB;";
+        // $db->pdo->exec($SQL);
 
         // meals table
         $SQL = "CREATE TABLE IF NOT EXISTS meals (
@@ -120,8 +120,7 @@ class m0001_initial
             meal_name VARCHAR(255) NOT NULL,
             meal_price DECIMAL(10,2) NOT NULL,
             meal_description TEXT NOT NULL,
-            meal_photo VARCHAR(255) NOT NULL,
-            meal_status TINYINT NOT NULL DEFAULT 0
+            meal_photo VARCHAR(255) NOT NULL
         ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);
 
@@ -135,14 +134,14 @@ class m0001_initial
         ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);
 
-
-        // menu_meal table
-        $SQL = "CREATE TABLE menu_meals (
+        // branch_meals table
+        $SQL = "CREATE TABLE branch_meals (
             meal_id INT NOT NULL,
-            menu_id INT NOT NULL,
-            PRIMARY KEY (meal_id, menu_id),
+            branch_id INT NOT NULL,
+            meal_status TINYINT NOT NULL DEFAULT 0,
+            PRIMARY KEY (meal_id, branch_id),
             FOREIGN KEY (meal_id) REFERENCES meals(meal_id) ON DELETE CASCADE,
-            FOREIGN KEY (menu_id) REFERENCES menus(menu_id) ON DELETE CASCADE
+            FOREIGN KEY (branch_id) REFERENCES branches(branch_id) ON DELETE CASCADE
         ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);
 
@@ -161,7 +160,7 @@ class m0001_initial
         $db = Application::$app->db;
         $tables = [
             'order_items', 'meal_offers', 'offers', 'meals', 'orders', 'payments', 
-            'reservations', 'reviews', 'users', 'branches', 'menus', 'menu_meals' 
+            'reservations', 'reviews', 'users', 'branches', 'menus', 'branch_meals' 
         ];
         foreach ($tables as $table) {
             $SQL = "DROP TABLE IF EXISTS $table;";

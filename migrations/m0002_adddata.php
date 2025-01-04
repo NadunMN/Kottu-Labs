@@ -19,18 +19,19 @@ class m0002_adddata{
             $db->pdo->exec($SQL);
         }
 
-
-        // Add menu data
-        $checkColumnSQL = "SELECT * FROM `menus`;";
+        // Add users data
+        $checkColumnSQL = "SELECT * FROM `users`;";
         $result = $db->pdo->query($checkColumnSQL)->fetch();
         if (!$result) {
-            $SQL = "INSERT INTO menus (menu_id, branch_id)
+            $SQL = "INSERT INTO users (email, firstname, lastname, status, position,mobile_number, branch_id)
                     VALUES
-                    (1, 1),
-                    (2, 2),
-                    (3, 3);";
+                    ('admin@gmail.com', 'Nadun', 'Madusanka', 1, 'admin','+94764659122', 1),
+                    ('customer@gmail.com', 'Ranuga', 'Lekawasam', 0, 'customer','+94764659123', 2),
+                    ('steward@gmail.com', 'Mahesh', 'Kumara', 0, 'steward','+94764659124', 3),
+                    ('manager@gmail.com', 'Thirani', 'Athukorala', 0, 'manager','+94764659125', 1);";
             $db->pdo->exec($SQL);
         }
+
     }
 
     public function down()
