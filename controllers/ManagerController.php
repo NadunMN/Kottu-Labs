@@ -71,9 +71,6 @@ class ManagerController extends Controller
                 $mealData[] = $meal;
             }
 
-            // var_dump($mealData);
-            // exit;
-
 
             echo json_encode($mealData);
         } else {
