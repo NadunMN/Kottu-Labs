@@ -14,6 +14,8 @@ iframe {
     display: block;         /* Remove inline spacing issues */
     height: auto;           /* Allow dynamic height adjustment */
     transition: height 0.3s ease; /* Smooth height transition for dynamic resizing */
+    
+
 }
 
 /* Hide scrollbars in WebKit browsers (Chrome, Safari) */
@@ -47,7 +49,6 @@ iframe {
                         ['id' => 'updatemenu', 'icon' => '/Photo/icon/burger-bar.png', 'text' => 'Update Menu'],
                         ['id' => 'updateoffers', 'icon' => '/Photo/icon/shopping-basket.png', 'text' => 'Update Offers'],
                         ['id' => 'feedbacks', 'icon' => '/Photo/icon/review.png', 'text' => 'Feedbacks'],
-                        ['id' => 'orderhistory', 'icon' => '/Photo/icon/shopping-bag.png', 'text' => 'Order History'],
                     ];
                     foreach ($menuItems as $item) {
                         echo "<li id='{$item['id']}' class='menu-item'>

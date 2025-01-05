@@ -176,11 +176,6 @@ class SiteController extends Controller
         return $this->render('/admin/feedbacks');
     }
 
-    public function orderhistoryAdmin(Request $request,Response $response)
-    {
-        $this->setLayout('auth');
-        return $this->render('/admin/order-history');
-    }
 
     //steward
     public function orderstatusSteward(Request $request,Response $response)

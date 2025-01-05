@@ -21,16 +21,16 @@ body {
 
 .sidebar {
     display: flex;
+    align-items: center;
     width: auto;
-    height: auto;
-    background-color:transparent; /* White background */
+    background-color: transparent; /* White background */
     color: #000000; /* White text */
-    padding: 10px;
     padding-right: 40px;
-    border-radius: 10px; /* Smooth corners */
+    border-radius: 5px; /* Smooth corners */
     margin-right: 10px; /* Gap between sidebar and main content */
     top: 10px;
 }
+
 
 .sidebar h2 {
     font-size: 2rem;
@@ -47,23 +47,29 @@ body {
 }
 
 .sidebar ul li {
-    margin-bottom: 10px;
     display: flex;
     align-items: center;
     padding: 10px; 
-    border-radius: 5px;
     font-weight: 400;
     transition: color 0.3s, background-color 0.3s;
 }
 
 .sidebar ul li:hover {
-    background-color: rgba(149, 149, 149, 0.1); /* Subtle highlight on hover */
+    background-color: rgba(149, 149, 149, 0.1);
+    border-top-left-radius:10px ;
+    border-top-right-radius:10px ;
 }
 
 .sidebar ul li.selected {
-    background-color: rgba(138, 138, 138, 0.2);
-    color: #f44336; /* Red text for the selected item */
+    /* background-color: rgba(138, 138, 138, 0.2); */
+    z-index: 1;
+    background-color: rgb(255, 255, 255);
+    color:black; /* Red text for the selected item */
     font-weight: bold; /* Makes it more noticeable */
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+    box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+
 }
 
 .sidebar ul li a {
@@ -75,15 +81,15 @@ body {
 }
 
 .sidebar ul li img {
-    width: 24px; /* Icon size */
-    height: 24px; /* Icon size */
-    margin-right: 10px; /* Space between icon and text */
+    width: 24px; 
+    height: 24px; 
+    margin-right: 10px;
 }
 
-/* Highlight only the text of the selected item in red */
+/* Highlight only the text of the selected item in red
 .sidebar ul li.selected a {
     color: #f44336;
-}
+} */
 
 .main-content {
     width:100%;
@@ -94,9 +100,11 @@ body {
     overflow-x: hidden; /* Hide horizontal scrollbar */
     flex: 1;
     background-color: rgb(255, 255, 255);
-    border-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
     padding: 20px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
 }
 
 .admin-main-content{
@@ -106,9 +114,12 @@ body {
     overflow: hidden;
     flex: 1;
     background-color: rgb(255, 255, 255);
-    border-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+
     padding: 20px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
 }
 
 
@@ -165,6 +176,9 @@ body {
 }
 
 .view-branch-menu-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
     height: auto;
     border-radius: 10px;
@@ -712,12 +726,9 @@ body {
 /* Update Offers Section */
 /* General Styling */
 .update-offers-section {
-    max-width: 1200px;
-    margin: 30px auto;
-    padding: 20px;
+    width: 90%;
     background: #ffffff;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .update-offers-section h2,

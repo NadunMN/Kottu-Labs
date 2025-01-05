@@ -22,8 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     staff: '/profile/staff',
     updatemenu: '/profile/update-menu',
     updateoffers: '/profile/update-offers',
-    feedbacks: '/profile/feedbacks',
-    orderhistory: '/profile/order-history'
+    feedbacks: '/profile/feedbacks'
   };
 
   menuItems.forEach(item => {

@@ -55,7 +55,6 @@ if (Application::$app->user && Application::$app->user->position == 'admin') {
     $app->router->get('/profile/update-menu', [$siteController, 'updatemenuAdmin']);
     $app->router->get('/profile/update-offers', [$siteController, 'updateoffersAdmin']);
     $app->router->get('/profile/feedbacks', [$siteController, 'feedbacksAdmin']);
-    $app->router->get('/profile/order-history', [$siteController, 'orderhistoryAdmin']);
 
 }else if(Application::$app->user && Application::$app->user->position == 'customer') {
     $app->router->get('/profile', [$siteController, 'userDashboard']);
