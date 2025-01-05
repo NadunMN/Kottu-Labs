@@ -97,10 +97,17 @@ class m0001_initial
             offer_name VARCHAR(255) NOT NULL,
             offer_price DECIMAL(10,2) NOT NULL,
             offer_description TEXT NOT NULL,
-            offer_photo VARCHAR(255) NOT NULL,
+            offer_photo VARCHAR(255) NOT NULL
+        ) ENGINE=INNODB;";
+        $db->pdo->exec($SQL);
+
+        // branch_offers table
+        $SQL = "CREATE TABLE branch_offers (
+            offer_id INT NOT NULL,
             branch_id INT NOT NULL,
-            FOREIGN KEY (branch_id) REFERENCES branches(branch_id) ON DELETE CASCADE,
-            INDEX (branch_id)
+            PRIMARY KEY (offer_id, branch_id),
+            FOREIGN KEY (offer_id) REFERENCES offers(offer_id) ON DELETE CASCADE,
+            FOREIGN KEY (branch_id) REFERENCES branches(branch_id) ON DELETE CASCADE
         ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);
 
@@ -159,7 +166,7 @@ class m0001_initial
     {
         $db = Application::$app->db;
         $tables = [
-            'order_items', 'meal_offers', 'offers', 'meals', 'orders', 'payments', 
+            'order_items', 'meal_offers', 'offers','branch_offers', 'meals', 'orders', 'payments', 
             'reservations', 'reviews', 'users', 'branches', 'menus', 'branch_meals' 
         ];
         foreach ($tables as $table) {
