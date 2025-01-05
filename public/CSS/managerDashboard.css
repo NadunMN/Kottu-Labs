@@ -7,25 +7,28 @@ body {
     background-color: #ffffff; /* Light gray background */
 }
 
+
 .dashboard-container {
     display: flex;
-    height: 100vh;
+    height: auto; /* Full height */
+    min-height: 100vh; /* Full height */
+    width: auto;
     padding: 10px; /* Adds space around the dashboard */
-    flex-direction: row;
+    flex-direction: column;
 }
 
 
 
 .sidebar {
-    width: 20%;
-    height: 100%;
-    background-color: #000000; /* Black background */
-    color: #ffffff; /* White text */
-    padding : 20px;
+    display: flex;
+    width: auto;
+    height: auto;
+    background-color:transparent; /* White background */
+    color: #000000; /* White text */
+    padding: 10px;
+    padding-right: 40px;
     border-radius: 10px; /* Smooth corners */
     margin-right: 10px; /* Gap between sidebar and main content */
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-    position: sticky;
     top: 10px;
 }
 
@@ -36,6 +39,9 @@ body {
 }
 
 .sidebar ul {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
     list-style: none;
     padding: 0;
 }
@@ -51,18 +57,18 @@ body {
 }
 
 .sidebar ul li:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Subtle highlight on hover */
+    background-color: rgba(149, 149, 149, 0.1); /* Subtle highlight on hover */
 }
 
 .sidebar ul li.selected {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(138, 138, 138, 0.2);
     color: #f44336; /* Red text for the selected item */
     font-weight: bold; /* Makes it more noticeable */
 }
 
 .sidebar ul li a {
     text-decoration: none;
-    color: white;
+    color: rgb(0, 0, 0);
     font-size: 1rem;
     padding-left: 10px;
     transition: color 0.3s;
@@ -80,8 +86,9 @@ body {
 }
 
 .main-content {
-    width: 100%;
-    height: 100%;
+    width:100%;
+    height: auto;
+    min-height: 100%;
     /* height: fit-content; */
     overflow-y: auto; /* Scrollable content */
     overflow-x: hidden; /* Hide horizontal scrollbar */
@@ -93,13 +100,14 @@ body {
 }
 
 .admin-main-content{
-    width: 100%;
-    height: 100%;
+    width: auto;
+    height: auto;
+    min-height: 100%;
     overflow: hidden;
     flex: 1;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
-    padding: 10px;
+    padding: 20px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
@@ -253,7 +261,7 @@ body {
 /* Form Container Styles */
 /* Popup Form */
 .add-item-form {
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
@@ -268,7 +276,11 @@ body {
 }
 
 #add-form{
+    position: absolute;
+    top: 0;
+    left: 25%;
     width: 50%;
+    max-width: 600px;
     background-color: white;
     padding: 30px;
     border-radius: 10px;
