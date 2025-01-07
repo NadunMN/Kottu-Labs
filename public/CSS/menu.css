@@ -263,7 +263,7 @@ h1 {
     padding: 0 20px;
     background-color: #198754;
     color: rgb(255, 255, 255);
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: bold;
     display: flex;
     justify-content: center;
@@ -283,6 +283,8 @@ h1 {
   }
 
   .card-image {
+    padding: 10px;
+    border-radius: 10px;
     width: 100%;
     height: 200px;
     object-fit: cover;
@@ -460,7 +462,6 @@ h1 {
     color: black;
 }
 
-/* Sidebar footer (total and checkout button) fixed at the bottom */
 .sidebar--footer {
     position: sticky;
     bottom: 0;
@@ -502,7 +503,7 @@ h1 {
     }
 }
 
-.category-dropdown {
+/* .category-dropdown {
     display: flex;
     justify-content: center;
     margin: 20px auto;
@@ -518,4 +519,4 @@ h1 {
     border-radius: 5px;
     border: 1px solid #cccccc;
     background-color: #ffffff;
-}
+} */
