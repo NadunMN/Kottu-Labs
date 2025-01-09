@@ -12,7 +12,7 @@
 
   <div class="menu-topic">
     <h1>Kottu Labs Offers</h1>
-    <p>At Kottu Labs, Your dining experience with our exclusive special deals!</p>
+    <p>Your dining experience with our exclusive special deals!</p>
   </div>
 
   <div class="search-container-wrapper">
@@ -61,7 +61,7 @@
           <p class="card-description">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
           </p>
-          <button class="view-button">View Details</button>
+          <button class="view-button">VIEW DETAILS</button>
         </div>
       </div>
 
@@ -77,7 +77,7 @@
           <p class="card-description">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
           </p>
-          <button class="view-button">View Details</button>
+          <button class="view-button">VIEW DETAILS</button>
         </div>
       </div>
 
@@ -93,7 +93,7 @@
           <p class="card-description">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
           </p>
-          <button class="view-button">View Details</button>
+          <button class="view-button">VIEW DETAILS</button>
         </div>
       </div>
       
@@ -108,7 +108,7 @@
           <p class="card-description">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
           </p>
-          <button class="view-button">View Details</button>
+          <button class="view-button">VIEW DETAILS</button>
         </div>
       </div>
 

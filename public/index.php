@@ -5,6 +5,7 @@ use app\controllers\SiteController;
 use app\controllers\AuthController;
 use app\controllers\UserController;
 use app\controllers\ManagerController;
+use app\controllers\MealController;
 use app\controllers\sendOtp;
 use app\models\User;
 
@@ -31,6 +32,7 @@ $siteController = new SiteController();
 $authController = new AuthController();
 $userController = new UserController();
 $managerController = new ManagerController();
+$mealController = new MealController();
 
 
 // Define routes
@@ -123,6 +125,12 @@ $app->router->post('/reservation/update', [$managerController, 'updateReservatio
 $app->router->get('/profile/view-order-status', [$siteController, 'orderstatusSteward']);
 $app->router->get('/profile/customer-arrivals', [$siteController, 'customerarrivalsSteward']);
 $app->router->get('/profile/customer-payments', [$siteController, 'paymentsSteward']);
+
+//menu
+$app->router->get('/getMealsmenu', function() use ($mealController) {
+    $branchId = $_GET['branchId'] ?? null;
+    $mealController->mealsByBranch($branchId);
+});
 
 // Run the application
 $app->run();
