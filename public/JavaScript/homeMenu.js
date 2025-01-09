@@ -21,17 +21,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 
                 const mealCards = data.map(meal => `
+                    
                     <div class="card">
-                        <div class="card-lable ${meal.meal_status? '' : 'not-available'}">
-                            <p>${meal.meal_status ? 'AVAILABLE' : 'NOT AVAILABLE'}</p>
+                        <div class="image-div">
+                            <img src="${meal.meal_photo}" alt="Product Image" class="card-image" />
                         </div>
-                        <img src="${meal.meal_photo}" alt="Meal Image" class="card-image">
+                        <div class="card-label-wrapper">
+                            <div class="card-label ${meal.meal_status ? '' : 'not-available'}">
+                            <p>${meal.meal_status ? 'Available' : 'Not Available'}</p>
+                            </div>
+                            <div class="card-label">
+                            <p>${meal.meal_description}</p>
+                            </div>
+                        </div>
                         <div class="card-content">
                             <h2 class="card-title">${meal.meal_name}</h2>
-                            <div class="card-price">Rs. ${meal.meal_price}/=</div>
+                            <div class="card-price">Rs. ${meal.meal_price}.00</div>
                             <button class="view-button">ADD TO CART</button>
                         </div>
-                    </div>
+                        </div>
+
                 `).join('');
 
                 
