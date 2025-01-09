@@ -26,21 +26,21 @@
         </select>
 
 
-        <select class="search-select-2">
-            <option value="Appetizers">All</option>
-            <option value="Classic Kottu">Classic Kottu</option>
-            <option value="Dolphin Kottu">Dolphin Kottu</option>
-            <option value="Cheese Kottu">Cheese Kottu</option>
-            <option value="String Hopper Kottu">String Hopper Kottu</option>
-            <option value="KL Special Fried Rice">KL Special Fried Rice</option>
-            <option value="Pasta">Pasta</option>
-            <option value="Appetizers">Appetizers</option>
-            <option value="KL Inventions">KL Inventions</option>
-            <option value="Wraps & Rotti Sandwiches">Wraps & Rotti Sandwiches</option>
-            <option value="Parata">Parata</option>
-            <option value="Devilled Portions">Devilled Portions</option>
-            <option value="Mocktails">Mocktails</option>
-            <option value="Beverages">Beverages</option>
+        <select class="search-select-2" id="search-selection-2">
+            <option  value="1">All</option>
+            <option  value="2">Classic Kottu</option>
+            <option  value="3">Dolphin Kottu</option>
+            <option  value="4">Cheese Kottu</option>
+            <option  value="5">String Hopper Kottu</option>
+            <option  value="6">KL Special Fried Rice</option>
+            <option  value="7">Pasta</option>
+            <option  value="8">Appetizers</option>
+            <option  value="9">KL Inventions</option>
+            <option  value="10">Wraps & Rotti Sandwiches</option>
+            <option  value="11">Parata</option>
+            <option  value="12">Devilled Portions</option>
+            <option  value="13">Mocktails</option>
+            <option  value="14">Beverages</option>
         </select>
 
         <div class="search-bar">

@@ -48,9 +48,20 @@ fetch("/menuitem/data")
         <div class="form-group">
             <label for="meal_description">Description</label>
             <select id="meal_description" name="meal_description" required>
-                <option value="Appetizers">Appetizers</option>
-                <option value="Pasta">Pasta</option>
-                <!-- ... other options ... -->
+                <option  value="1">All</option>
+            <option  value="2">Classic Kottu</option>
+            <option  value="3">Dolphin Kottu</option>
+            <option  value="4">Cheese Kottu</option>
+            <option  value="5">String Hopper Kottu</option>
+            <option  value="6">KL Special Fried Rice</option>
+            <option  value="7">Pasta</option>
+            <option  value="8">Appetizers</option>
+            <option  value="9">KL Inventions</option>
+            <option  value="10">Wraps & Rotti Sandwiches</option>
+            <option  value="11">Parata</option>
+            <option  value="12">Devilled Portions</option>
+            <option  value="13">Mocktails</option>
+            <option  value="14">Beverages</option>
             </select>
         </div>
 

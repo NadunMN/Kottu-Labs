@@ -129,7 +129,8 @@ $app->router->get('/profile/customer-payments', [$siteController, 'paymentsStewa
 //menu
 $app->router->get('/getMealsmenu', function() use ($mealController) {
     $branchId = $_GET['branchId'] ?? null;
-    $mealController->mealsByBranch($branchId);
+    $selectionId = $_GET['selectionId'] ?? null;
+    $mealController->mealsByBranch($branchId, $selectionId);
 });
 
 // Run the application

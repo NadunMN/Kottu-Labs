@@ -1,15 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     const branchSelect = document.getElementById("branch-select");
+    const searchSelection = document.getElementById("search-selection-2");
     const menuContainer = document.querySelector(".menu-items");
 
 
-    function loadMeals(branchId) {
+    function loadMeals(branchId, selectionId) {
+        console.log(selectionId);
         
         menuContainer.innerHTML = "<p>Loading...</p>";
 
         
-        fetch(`/getMealsmenu?branchId=${branchId}`)
+        fetch(`/getMealsmenu?branchId=${branchId}&selectionId=${selectionId}`)
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
@@ -42,9 +44,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     
-    loadMeals(branchSelect.value);
+    loadMeals(branchSelect.value, searchSelection.value);
 
     branchSelect.addEventListener("change", function () {
-        loadMeals(this.value);
+        loadMeals(this.value, searchSelection.value);
+    });
+
+    searchSelection.addEventListener("change", function () {
+        loadMeals(branchSelect.value, this.value);
     });
 });
