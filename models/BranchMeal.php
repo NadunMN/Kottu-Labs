@@ -133,6 +133,16 @@ public static function findAll($where=[])
         return true;
 
     }
+
+
+    public static function findAllByBranch($branchId)
+    {
+        $sql = "SELECT * FROM branch_meals WHERE branch_id = :branch_id";
+        $statement = self::prepare($sql);
+        $statement->bindValue(':branch_id', $branchId);
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_OBJ);
+    }
     
 
     

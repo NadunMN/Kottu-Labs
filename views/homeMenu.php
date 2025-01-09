@@ -19,26 +19,26 @@
 
 
 
-        <select class="search-select">
-            <option value="All">Wattala</option>
-            <option value="All">Kelaniya</option>
-            <option value="All">Kotahena</option>
+        <select class="search-select" id="branch-select">
+            <option value="1">Wattala</option>
+            <option value="2">Kelaniya</option>
+            <option value="3">Kotahena</option>
         </select>
 
 
         <select class="search-select-2">
             <option value="Appetizers">All</option>
-            <option value="Appetizers">Appetizers</option>
-            <option value="Pasta">Pasta</option>
+            <option value="Classic Kottu">Classic Kottu</option>
             <option value="Dolphin Kottu">Dolphin Kottu</option>
+            <option value="Cheese Kottu">Cheese Kottu</option>
+            <option value="String Hopper Kottu">String Hopper Kottu</option>
+            <option value="KL Special Fried Rice">KL Special Fried Rice</option>
+            <option value="Pasta">Pasta</option>
+            <option value="Appetizers">Appetizers</option>
             <option value="KL Inventions">KL Inventions</option>
             <option value="Wraps & Rotti Sandwiches">Wraps & Rotti Sandwiches</option>
             <option value="Parata">Parata</option>
             <option value="Devilled Portions">Devilled Portions</option>
-            <option value="KL Special Fried Rice">KL Special Fried Rice</option>
-            <option value="Classic Kottu">Classic Kottu</option>
-            <option value="Cheese Kottu">Cheese Kottu</option>
-            <option value="String Hopper Kottu">String Hopper Kottu</option>
             <option value="Mocktails">Mocktails</option>
             <option value="Beverages">Beverages</option>
         </select>
@@ -63,6 +63,7 @@
     <div class="menu-container">
         <p class="how-many">Showing 12 Meals</p>
         <div class="menu-items">
+<!--             
         <div class="card">
             <div class="card-lable">
                 <p>AVAILABLE</p>
@@ -135,11 +136,14 @@
             </div>
         </div>
 
-        
+         -->
         </div>
     </div>
 
     <script src="/JavaScript/homeMenu.js"></script>
+
+    
+
 </body>
 </html>
 
