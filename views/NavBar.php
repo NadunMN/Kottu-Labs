@@ -36,9 +36,9 @@
             <div class="drop-down">
                 <a href="#" onclick="toggleMenuprofile()"><img src="/Photo/icon/user.png" alt="Profile"></a>
                 <div class="dropdown-content">
-                    <a href="/profile"> <img src="/Photo/icon/dashboard.png" alt=""> DASHBOARD </a>
+                    <a href="/profile"> <img src="/Photo/icon/dashboard - Copy.png" alt=""> DASHBOARD </a>
                     <hr style="width: 100%; height: 1px;  margin: auto; opacity:0.1;">
-                    <a href="/offer"> <img src="/Photo/icon/shopping-basket.png" alt=""> SPECIAL OFFERS</a>
+                    <a href="/offer"> <img src="/Photo/icon/shopping-basket - Copy.png" alt=""> SPECIAL OFFERS</a>
                     <?php if (\app\core\Application::$app->user ==null): ?>
                         <a href="/login"> <img src="/Photo/icon/enter.png" alt=""> LOG IN</a>
                         <?php else: ?>

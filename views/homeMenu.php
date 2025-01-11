@@ -69,80 +69,22 @@
             <img src="/Photo/offers/_Start your forever with a delightful symphony of flavors at our wedding breakfast!.jpg" alt="Product Image" class="card-image">
             </div>
             <div class="card-label-wrapper">
-            <div class="card-lable">
+            <div class="card-label">
                 <p>Available</p>
             </div>
 
-            <div class="card-lable">
+            <div class="card-label-2">
                 <p>Classic Kottu</p>
             </div>
             </div>
             <div class="card-content">
             <h2 class="card-title">Product Name</h2>
             <div class="card-price">Rs. 2500/=</div>
-            <button class="view-button">ADD TO CART</button>
+            <button class="view-button"><img src="/Photo/icon/shopping-cart.png" alt="">ADD TO CART</button>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-lable">
-                <p>AVAILABLE</p>
-            </div>
-            <img src="/Photo/Menu/චිකන් කොත්තු ගෙදරදී හදමු - SmartLady.jpg" alt="Product Image" class="card-image">
-            <div class="card-content">
-            <h2 class="card-title">Product Name</h2>
-            <div class="card-price">Rs. 2500/=</div>
-            <button class="view-button">ADD TO CART</button>
-            </div>
-        </div>
 
-        <div class="card">
-            <div class="card-lable not-available">
-                <p>NOT AVAILABLE</p>
-            </div>
-            <img src="/Photo/Menu/chocolate.jpg" alt="Product Image" class="card-image">
-            <div class="card-content">
-            <h2 class="card-title">Product Name</h2>
-            <div class="card-price">Rs. 2500/=</div>
-            <button class="view-button">ADD TO CART</button>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-lable">
-                <p>AVAILABLE</p>
-            </div>
-            <img src="/Photo/Menu/Chicken Kothu Parotta.jpg" alt="Product Image" class="card-image">
-            <div class="card-content">
-            <h2 class="card-title">Product Name</h2>
-            <div class="card-price">Rs. 2500/=</div>
-            <button class="view-button">ADD TO CART</button>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-lable">
-                <p>AVAILABLE</p>
-            </div>
-            <img src="/Photo/offers/_Start your forever with a delightful symphony of flavors at our wedding breakfast!.jpg" alt="Product Image" class="card-image">
-            <div class="card-content">
-            <h2 class="card-title">Product Name</h2>
-            <div class="card-price">Rs. 2500/=</div>
-            <button class="view-button">ADD TO CART</button>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-lable">
-                <p>AVAILABLE</p>
-            </div>
-            <img src="/Photo/offers/_Start your forever with a delightful symphony of flavors at our wedding breakfast!.jpg" alt="Product Image" class="card-image">
-            <div class="card-content">
-            <h2 class="card-title">Product Name</h2>
-            <div class="card-price">Rs. 2500/=</div>
-            <button class="view-button">ADD TO CART</button>
-            </div>
-        </div>
 
         
         </div>
