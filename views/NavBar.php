@@ -45,7 +45,7 @@
                             <a href="/logout"> <img src="/Photo/icon/logout.png" alt=""> LOG OUT</a>
                     <?php endif; ?>
                     <hr style="width: 100%; height: 1px;  margin: auto;opacity:0.1; ">
-                    <a href="#"> WHY CREATE AN ACCOUNT?</a>
+                    <a onclick="window.location.href='/about#container3'"> WHY CREATE AN ACCOUNT?</a>
 
                 </div>
             </div>

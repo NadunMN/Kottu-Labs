@@ -14,12 +14,21 @@ body {
     align-items: flex-start;
     width: 90%;
     max-width: 1310px;
-    padding: 10px 10px;
+    padding: 30px 20px;
     margin: 10px auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    background-image: url('/Photo/1454.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #ffffff;
+    font-weight: 600;
+    
 }
 
 .menu-topic h1{
-    color: #000000;
+    color: #ffffff;
     font-size: 2rem;
     margin: 10px 0;
 }
