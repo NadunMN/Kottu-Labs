@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         </div>
                         <div class="card-content">
                             <h2 class="card-title">${meal.meal_name}</h2>
-                            <div class="card-price">Rs. ${meal.meal_price}.00</div>
+                            <div class="card-price">Rs. ${meal.meal_price}</div>
                             <button class="view-button"><img src="/Photo/icon/shopping-cart.png" alt="">ADD TO CART</button>
                         </div>
                         </div>

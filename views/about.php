@@ -32,7 +32,7 @@
             </p>    
         </section>
 
-        <section class="container3" aria-label="Our Story">
+        <section id="container3" class="container3" aria-label="Our Story">
             
             <h2>Why Create an Account?</h2> 
             <p>
