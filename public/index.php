@@ -65,6 +65,12 @@ if (Application::$app->user && Application::$app->user->position == 'admin') {
     $app->router->get('/profile', [$siteController, 'chefDashboard']);
 }else if(Application::$app->user && Application::$app->user->position == 'steward') {
     $app->router->get('/profile', [$siteController, 'stewardDashboard']);
+    
+    //steward
+    $app->router->get('/profile/view-order-status', [$siteController, 'orderstatusSteward']);
+    $app->router->get('/profile/customer-arrivals', [$siteController, 'customerarrivalsSteward']);
+    $app->router->get('/profile/customer-payments', [$siteController, 'paymentsSteward']);
+
 }else if(Application::$app->user && Application::$app->user->position == 'manager') {
     $app->router->get('/profile', [$siteController, 'managerDashboard']);
     $app->router->get('/myaccount', [$siteController, 'userProfile']);
@@ -121,10 +127,6 @@ $app->router->post('/reservation/update', [$managerController, 'updateReservatio
 
 
 
-//steward
-$app->router->get('/profile/view-order-status', [$siteController, 'orderstatusSteward']);
-$app->router->get('/profile/customer-arrivals', [$siteController, 'customerarrivalsSteward']);
-$app->router->get('/profile/customer-payments', [$siteController, 'paymentsSteward']);
 
 //menu
 $app->router->get('/getMealsmenu', function() use ($mealController) {
