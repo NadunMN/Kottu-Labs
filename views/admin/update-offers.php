@@ -18,7 +18,7 @@
                             <!-- Add New Offer -->
                             <div class="add-new-offer">
                                 <h3>Add New Offer</h3>
-                                <form class="update-offer-form">
+                                <form class="update-offer-form ">
                                     <div class="form-group">
                                         <label for="offer-image">Upload Offer Image</label>
                                         <input type="file" id="offer-image" name="offer-image" accept="image/*" />
