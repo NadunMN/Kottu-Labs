@@ -15,6 +15,7 @@ class Reservation extends ReservationModel
     public int $confirmation_status = 0;
     public string $branch_id = '';
     public string $user_id = '';
+    public string $otp;
     
     
 
@@ -56,6 +57,10 @@ class Reservation extends ReservationModel
             'user_id' => [self::RULE_REQUIRED],
             
         ];
+    }
+
+    public static function findOtp(){
+        return 1234;
     }
 
     public static function findAll($where)

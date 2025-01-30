@@ -200,6 +200,33 @@ class ManagerController extends Controller
         }
     }
 
+    // get otp
+    public function getOtp() {
+        try {
+            $reservationId = Application::$app->request->getBody()['reservation_no'] ?? null;
+            
+
+            if (!$reservationId) {
+                throw new \Exception('reservation ID not provided');
+            }
+
+            // Debugging statement
+            error_log("Reservation ID received: " . $reservationId);
+
+            $reservation = Reservation::findOtp(['reservation_no' => $reservationId]);
+
+            if (!$reservation) {
+                throw new \Exception('reservation not found');
+            }
+
+            echo json_encode(['success' => true]);
+        } catch (\Exception $e) {
+            // Log the exception or handle it as needed
+            error_log($e->getMessage());
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
         //reservation deletion
         public function deleteReservation(){
             try {

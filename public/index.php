@@ -122,6 +122,7 @@ $app->router->post('/menuitem/update', [$managerController, 'updatemenuItems']);
 //define route for reservations
 $app->router->post('/reservation/add', [$userController, 'addReservation']);
 $app->router->get('/reservation/data', [$managerController, 'getReservation']);
+$app->router->get('/reservation/otp', [$managerController, 'getOtp']);
 $app->router->post('/reservation/delete', [$managerController, 'deleteReservation']);
 $app->router->post('/reservation/update', [$managerController, 'updateReservation']);
 

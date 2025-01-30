@@ -1,126 +1,256 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // Sample data array
-    const arrivalsData = [
-        { reservationNo: "R001", time: "19:00", heads: "4", bookedBy: "Thirani Imanya", tableNumber: "12", arrived: "YES" },
-        { reservationNo: "R002", time: "20:30", heads: "2", bookedBy: "Nadun Madushanka", tableNumber: "5", arrived: "YES" },
-        { reservationNo: "R003", time: "18:45", heads: "6", bookedBy: "Imeth Methnuka", tableNumber: "8", arrived: "NO" },
-        { reservationNo: "R004", time: "21:00", heads: "3", bookedBy: "Praneesh Surendran", tableNumber: "3", arrived: "NO" }
-    ];
-
-    // Available tables for selection
-    const availableTables = Array.from({length: 8}, (_, i) => (i + 1).toString().padStart(2, '0'));
-
-    const mainContent = document.getElementById("main-content");
-
-    function renderCustomerArrivals() {
-        mainContent.innerHTML = `
-            <div class="customer-arrivals-section">
-                <h2>Customer Arrivals</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Reservation No.</th>
-                            <th>Time</th>
-                            <th>No. of Heads</th>
-                            <th>Booked By</th>
-                            <th>Table Number</th>
-                            <th>Arrived</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="arrivals-body">
-                    </tbody>
-                </table>
-            </div>`;
-
-        populateArrivalsTable();
-        addEventListeners();
+async function fetchReservations() {
+  try {
+    const response = await fetch("/reservation/data");
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
     }
 
-    function populateArrivalsTable() {
-        const arrivalsBody = document.getElementById("arrivals-body");
-        arrivalsBody.innerHTML = ''; // Clear existing content
-
-        arrivalsData.forEach(arrival => {
-            const row = document.createElement("tr");
-            const arrivalColor = arrival.arrived === "YES" ? "green" : "red";
-            row.innerHTML = `
-                <td>${arrival.reservationNo}</td>
-                <td>${arrival.time}</td>
-                <td>${arrival.heads}</td>
-                <td>${arrival.bookedBy}</td>
-                <td>
-                    <select class="table-select" data-reservation="${arrival.reservationNo}">
-                        <option value="">Select Table</option>
-                        ${availableTables.map(table => 
-                            `<option value="${table}" ${arrival.tableNumber === table ? 'selected' : ''}>
-                                ${table}
-                            </option>`
-                        ).join('')}
-                    </select>
-                </td>
-                <td style="color: ${arrivalColor};">${arrival.arrived}</td>
-                <td>
-                    ${arrival.arrived === "YES" ? 
-                        '<button class="confirm-btn">Confirm</button>' : 
-                        '<button class="delete-btn">Delete</button>'}
-                </td>
-            `;
-            arrivalsBody.appendChild(row);
-        });
+    const data = await response.json();
+    if (!Array.isArray(data)) {
+      console.error("Data is not an array");
+      document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
+      return;
     }
 
-    function addEventListeners() {
-        // Handle table selection changes
-        document.querySelectorAll('.table-select').forEach(select => {
-            select.addEventListener('change', (e) => {
-                const reservationNo = e.target.dataset.reservation;
-                const newTableNumber = e.target.value;
-                updateTableNumber(reservationNo, newTableNumber);
-            });
-        });
-
-        // Handle confirm button clicks
-        document.querySelectorAll('.confirm-btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const row = e.target.closest('tr');
-                handleConfirmation(row);
-            });
-        });
-
-        // Handle delete button clicks
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const row = e.target.closest('tr');
-                handleDeletion(row);
-            });
-        });
+    const reservationContent = document.getElementById("main-content");
+    if (!data || data.length === 0) {
+      reservationContent.innerHTML = "<p>No reservations available</p>";
+      return;
     }
 
-    function updateTableNumber(reservationNo, newTableNumber) {
-        // Find the reservation and update its table number
-        const reservation = arrivalsData.find(r => r.reservationNo === reservationNo);
-        if (reservation) {
-            reservation.tableNumber = newTableNumber;
-            // Here you would typically make an API call to update the backend
-            console.log(`Updated table number to ${newTableNumber} for reservation ${reservationNo}`);
+    // Fetch user branch ID before rendering
+    let branch_id = null;
+    try {
+      const userResponse = await fetch('/user/data');
+      const userData = await userResponse.json();
+      if (userData.error) {
+        console.error(userData.error);
+      } else {
+        branch_id = userData.branch_id;
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+
+    // Determine branch name
+    const branchName = branch_id === 1 ? 'Wattala' : branch_id === 2 ? 'Kelaniya' : 'Kotahena';
+
+    const currentDate = new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+
+    reservationContent.innerHTML = `
+      <div class="view-reservations-section">
+        <div class="topic-bar">
+          <div>
+            <h2>${branchName} <span>${currentDate}</span></h2>
+            <h5>${data.length} reservations available</h5>
+          </div>
+        </div>
+        <table class="menu-table" id="menu-table">
+          <thead>
+            <tr>
+              <th>Reservation No</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>No. Guests</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="table-content"></tbody>
+        </table>
+      </div>
+    `;
+
+    const tableContent = document.getElementById("table-content");
+    if (!tableContent) {
+      console.error("Table content element not found.");
+      return;
+    }
+
+    // Populate the table with reservation data
+    data.forEach((reservation) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td class="reservation-id">${reservation.reservation_no}</td>
+        <td>${reservation.reservation_date}</td>
+        <td>${reservation.reservation_time}</td>
+        <td>${reservation.number_of_guests}</td>
+        <td>
+          <button class="status-btn ${reservation.confirmation_status ? "available" : "unavailable"}">
+            ${reservation.confirmation_status ? "Confirmed" : "Pending"}
+          </button>
+        </td>
+        <td>
+          <div class="action-buttons">
+            <button class="delete-btn" reservation-no='${reservation.reservation_no}'>Delete</button>
+          </div>
+        </td>
+      `;
+      tableContent.appendChild(row);
+    });
+
+
+// Handle status button toggle
+document.querySelectorAll(".status-btn").forEach((button) => {
+  button.addEventListener("click", async () => {
+    const isAvailable = button.classList.contains("available");
+    // Get reservation number from the row
+    const reservationNo = button.closest('tr').querySelector('.reservation-id').textContent;
+
+    if (!isAvailable) {
+      const otp = prompt("Please enter the OTP sent to customer:");
+      if (!otp) {
+        alert("OTP cannot be empty!");
+        return;
+      }
+      let asd;
+      try {
+        // Fetch OTP for specific reservation
+        const otpResponse = await fetch('/reservation/otp');
+        const otpData = await otpResponse.json();
+        console.log(otpData);
+
+        
+        if (otpData.error) {
+          console.error(otpData.error);
+        } else {
+          alert("hi");
         }
-    }
+  
 
-    function handleConfirmation(row) {
-        // Here you would typically make an API call to confirm the arrival
-        const reservationNo = row.cells[0].textContent;
-        console.log(`Confirmed arrival for reservation ${reservationNo}`);
-        row.remove();
-    }
+        if (otp == otpData) {
+          // If we get here, OTP verification was successful
+          button.classList.remove("unavailable");
+          button.classList.add("available");
+          button.textContent = "Confirmed";
 
-    function handleDeletion(row) {
-        // Here you would typically make an API call to delete the reservation
-        const reservationNo = row.cells[0].textContent;
-        console.log(`Deleted reservation ${reservationNo}`);
-        row.remove();
-    }
+          const updateResponse = await fetch('/reservation/update', {
+            method: 'POST',
+            headers: { 
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              confirmation_status: 1,
+              reservation_no: reservationNo
+            })
+          });
+          const updateResult = await updateResponse.json();
+              if (!updateResult.success) {
+                console.error("Failed to update reservation status:", updateResult.message);
+                alert("Failed to update reservation status. Please try again.");
+              }
+            } else {
+              alert("Invalid OTP. Please try again.");
+              return;
+            }
+          } catch (error) {
+            console.error('Error verifying OTP:', error);
+            alert("Failed to verify OTP. Please try again.");
+          }
+        }
+      });
+    });
 
-    // Initial render
-    renderCustomerArrivals();
-});
+
+
+
+
+    // // Handle status button toggle
+    // document.querySelectorAll(".status-btn").forEach((button) => {
+    //   button.addEventListener("click", async () => {
+    //     const isAvailable = button.classList.contains("available");
+
+    //     if (!isAvailable) {
+    //       const otp = prompt("Please enter the OTP sent to customer:");
+    //       if (!otp) {
+    //         alert("OTP cannot be empty!");
+    //         return;
+    //       }
+
+    //       let otp_no;
+    //       try {
+    //         const userResponse = await fetch('/reservation/data');
+    //         const userData = await userResponse.json();
+    //         if (userData.error) {
+    //           console.error(userData.error);
+    //         } else {
+    //           otp_no = userData.otp;
+    //         }
+    //       } catch (error) {
+    //         console.error('Error fetching user data:', error);
+    //       }
+
+    //       if(otp_no==otp){
+            
+    //         // If we get here, OTP verification was successful
+    //         button.classList.remove("unavailable");
+    //         button.classList.add("available");
+    //         button.textContent = "Confirmed";
+
+    //         const updateResponse = await fetch('/reservation/update', {
+    //           method: 'POST',
+    //           headers: { 
+    //             "Content-Type": "application/json",
+    //           },
+    //           body: JSON.stringify({
+    //             confirmation_status: 1,
+    //             reservation_no: reservationNo
+    //           })
+    //         });
+
+    //         const updateResult = await updateResponse.json();
+    //         if (!updateResult.success) {
+    //           console.error("Failed to update reservation status:", updateResult.message);
+    //           alert("Failed to update reservation status. Please try again.");
+    //         }
+    //       }
+    //       else{
+    //         alert(result.message || "Invalid OTP. Please try again.");
+    //         return;
+    //       }
+    //     }
+    //   });
+    // });
+          
+
+    // Handle delete button click
+    document.querySelectorAll(".delete-btn").forEach((button) => {
+      button.addEventListener("click", async () => {
+        if (confirm("Are you sure you want to delete this reservation? This action cannot be undone.")) {
+          const reservationNo = button.getAttribute("reservation-no");
+
+          try {
+            const response = await fetch("/reservation/delete", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ reservation_no: reservationNo }),
+            });
+
+            const result = await response.json();
+            if (result.success) {
+              alert("The reservation has been deleted.");
+              button.closest("tr").remove();
+            } else {
+              alert("There was an error deleting the reservation: " + result.message);
+              console.error("Error:", result.message);
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("Failed to delete the reservation.");
+          }
+        }
+      });
+    });
+
+  } catch (error) {
+    console.error("Fetch error:", error);
+    document.getElementById("main-content").innerHTML = "<p>Error loading reservations.</p>";
+  }
+}
+
+// Call the function to fetch and display reservations
+fetchReservations();
