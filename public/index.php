@@ -130,7 +130,6 @@ $app->router->post('/reservation/update', [$managerController, 'updateReservatio
 //offers
 $app->router->post('/offer/add', [$offerController, 'addOffer']);
 $app->router->get('/addMeal', [$siteController, 'addMeal']);
-$app->router->post('/offer/postmealids', [$offerController, 'findMealData']);
 
 
 
