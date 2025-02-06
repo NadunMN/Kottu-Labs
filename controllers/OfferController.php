@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\core\Controller;
 use app\core\Application;
 use app\models\BranchOffer;
+use app\models\MealOffers;
 use app\models\Offer;
 
 
@@ -22,15 +23,20 @@ class OfferController extends Controller
             $branchOffer = new BranchOffer();
             $branchOffer->offer_id = $offerId;
 
+            $mealOffer = new MealOffers();
+            $mealOffer->offer_id = $offerId;
+
+
             $branches = [];
+            $meals = [];
+
             foreach (Application::$app->request->getBody() as $key => $value) {
                 // Assuming branch keys are named like branch2, branch3, etc.
                 if (strpos($key, 'branch') === 0) {
                     $branches[] = $value;
                 }
             }
-
-            
+  
         if (count($branches) > 0) {
             foreach ($branches as $branchId) {
                 $branchOffer = new BranchOffer();
@@ -47,6 +53,31 @@ class OfferController extends Controller
         } else {
             throw new \Exception('No branch IDs provided');
         }
+
+        
+
+        foreach (Application::$app->request->getBody() as $key => $value) {
+            // Assuming meal keys are named like meal2, meal3, etc.
+            if (strpos($key, 'meal') === 0) {
+                $meals[] = $value;
+            }
+        }
+
+        if (count($meals) > 0) {
+            foreach ($meals as $mealId) {
+
+                $mealOffer = new MealOffers();
+                $mealOffer->offer_id = $offerId;
+                $mealOffer->meal_id = $mealId;
+
+                if (!$mealOffer->add()) {
+                    throw new \Exception('Failed to add offer to meal_offer for branch ' . $mealId . ': ' . json_encode($mealOffer->errors));
+                }
+            }
+        } else {
+            throw new \Exception('No meal IDs provided');
+        }
+
 
         
         } else {

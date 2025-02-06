@@ -13,6 +13,7 @@ use app\core\Model\MealModel;
 use app\core\Model\ReservationModel;
 use app\core\Model\BranchMealModel;
 use app\core\Model\BranchOfferModel;
+use app\core\Model\MealOfferModel;
 use app\core\Model\OfferModel;
 
 class Application
@@ -32,6 +33,7 @@ class Application
     public ReservationModel $reservation;
     public BranchMealModel $branchMeal;
     public BranchOfferModel $branchOffer;
+    public MealOfferModel $mealOffer;
     public OfferModel $offer;
     public View $view;
 

@@ -53,8 +53,11 @@ window.addEventListener("load", () => {
 
             // Combine form data and selectedMeals into one object
             const requestBody = {
-                ...formObject, // Spread form data
-                selectedMeals, // Add selectedMeals array
+                ...formObject,
+                ...selectedMeals.reduce((acc, mealId, index) => {
+                    acc[`meal${index + 1}`] = mealId; // Add meal keys at the root level
+                    return acc;
+                }, {})
             };
 
             console.log(requestBody);
