@@ -585,3 +585,30 @@ h1 {
     border: 1px solid #cccccc;
     background-color: #ffffff;
 } */
+
+#done-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    width: 50%;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+}
+
+/* Styles for the enabled state */
+#done-button:enabled {
+    background-color: #000000; /* Black background */
+    color: #ffffff; /* White text */
+}
+
+/* Styles for the disabled state */
+#done-button:disabled {
+    background-color: #cccccc; /* Light gray background */
+    color: #666666; /* Dark gray text */
+    cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+}

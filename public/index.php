@@ -6,6 +6,7 @@ use app\controllers\AuthController;
 use app\controllers\UserController;
 use app\controllers\ManagerController;
 use app\controllers\MealController;
+use app\controllers\OfferController;
 use app\controllers\sendOtp;
 use app\models\User;
 
@@ -33,6 +34,7 @@ $authController = new AuthController();
 $userController = new UserController();
 $managerController = new ManagerController();
 $mealController = new MealController();
+$offerController = new OfferController();
 
 
 // Define routes
@@ -124,6 +126,11 @@ $app->router->post('/reservation/add', [$userController, 'addReservation']);
 $app->router->get('/reservation/data', [$managerController, 'getReservation']);
 $app->router->post('/reservation/delete', [$managerController, 'deleteReservation']);
 $app->router->post('/reservation/update', [$managerController, 'updateReservation']);
+
+//offers
+$app->router->post('/offer/add', [$offerController, 'addOffer']);
+$app->router->get('/addMeal', [$siteController, 'addMeal']);
+$app->router->post('/offer/postmealids', [$offerController, 'findMealData']);
 
 
 
