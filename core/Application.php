@@ -12,6 +12,8 @@ use app\core\Model\UserModel;
 use app\core\Model\MealModel;
 use app\core\Model\ReservationModel;
 use app\core\Model\BranchMealModel;
+use app\core\Model\BranchOfferModel;
+use app\core\Model\OfferModel;
 
 class Application
 {
@@ -29,6 +31,8 @@ class Application
     public MealModel $meal;
     public ReservationModel $reservation;
     public BranchMealModel $branchMeal;
+    public BranchOfferModel $branchOffer;
+    public OfferModel $offer;
     public View $view;
 
     public static Application $app;

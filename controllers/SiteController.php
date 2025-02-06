@@ -196,5 +196,11 @@ class SiteController extends Controller
         return $this->render('/steward/customer-payments');
     }
 
+    public function addMeal(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('/addMeals');
+    }
+
 }
 ?>
