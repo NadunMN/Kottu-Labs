@@ -200,6 +200,28 @@ class ManagerController extends Controller
         }
     }
 
+    
+
+    // get otp
+    
+    public function getOtp() {
+        // $pin = $_GET['pin'] ?? '';
+        $pin = '12345';
+        error_log("Received PIN: " . $pin);
+        $otp = '12345'; 
+    
+        if ($pin === $otp) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false]);
+        }
+    }
+    
+
+    private function fetchOtpFromDatabase() {
+        return 12345;
+
+    }
         //reservation deletion
         public function deleteReservation(){
             try {
