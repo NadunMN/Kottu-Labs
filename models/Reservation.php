@@ -59,8 +59,21 @@ class Reservation extends ReservationModel
         ];
     }
 
-    public static function findOtp(){
-        return 1234;
+    public static function findOtp($reservationNo){
+        $tableName = static::tableName();
+        $sql = "SELECT otp FROM $tableName WHERE reservation_no = :reservation_no LIMIT 1";
+    
+        $statement = self::prepare($sql);
+        $statement->bindValue(":reservation_no", $reservationNo);
+    
+        try {
+            $statement->execute();
+            $result = $statement->fetch(\PDO::FETCH_ASSOC);
+            return $result ? $result['otp'] : null; // Return OTP if found, otherwise null
+        } catch (\PDOException $e) {
+            error_log("Error fetching OTP: " . $e->getMessage());
+            return null;
+        }
     }
 
     public static function findAll($where)
@@ -107,8 +120,8 @@ class Reservation extends ReservationModel
             'number_of_guests' => $this->number_of_guests,
             'confirmation_status' => $this->confirmation_status,
             'branch_id' => $this->branch_id,
-            'user_id' => $this->user_id     
-            
+            'user_id' => $this->user_id,     
+            'otp' => $this->otp
         ];
     }
 

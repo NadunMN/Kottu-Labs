@@ -49,6 +49,7 @@ async function fetchReservations() {
             <h5>${data.length} reservations available</h5>
           </div>
         </div>
+        
         <table class="menu-table" id="menu-table">
           <thead>
             <tr>
@@ -79,10 +80,10 @@ async function fetchReservations() {
         <td>${reservation.reservation_date}</td>
         <td>${reservation.reservation_time}</td>
         <td>${reservation.number_of_guests}</td>
-        <td>
-          <button class="status-btn ${reservation.confirmation_status ? "available" : "unavailable"}">
-            ${reservation.confirmation_status ? "Confirmed" : "Pending"}
-          </button>
+        <td class="status">
+            <span class="status-${reservation.status}">
+                ${reservation.status === 'confirmed' ? "Confirmed" : reservation.status === 'pending' ? "Pending" : "Not Come"}
+            </span>
         </td>
         <td>
           <div class="action-buttons">
@@ -93,129 +94,6 @@ async function fetchReservations() {
       tableContent.appendChild(row);
     });
 
-
-// Handle status button toggle
-document.querySelectorAll(".status-btn").forEach((button) => {
-  button.addEventListener("click", async () => {
-    const isAvailable = button.classList.contains("available");
-    // Get reservation number from the row
-    const reservationNo = button.closest('tr').querySelector('.reservation-id').textContent;
-
-    if (!isAvailable) {
-      const otp = prompt("Please enter the OTP sent to customer:");
-      if (!otp) {
-        alert("OTP cannot be empty!");
-        return;
-      }
-      let asd;
-      try {
-        // Fetch OTP for specific reservation
-        const otpResponse = await fetch('/reservation/otp');
-        const otpData = await otpResponse.json();
-        console.log(otpData);
-
-        
-        if (otpData.error) {
-          console.error(otpData.error);
-        } else {
-          alert("hi");
-        }
-  
-
-        if (otp == otpData) {
-          // If we get here, OTP verification was successful
-          button.classList.remove("unavailable");
-          button.classList.add("available");
-          button.textContent = "Confirmed";
-
-          const updateResponse = await fetch('/reservation/update', {
-            method: 'POST',
-            headers: { 
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              confirmation_status: 1,
-              reservation_no: reservationNo
-            })
-          });
-          const updateResult = await updateResponse.json();
-              if (!updateResult.success) {
-                console.error("Failed to update reservation status:", updateResult.message);
-                alert("Failed to update reservation status. Please try again.");
-              }
-            } else {
-              alert("Invalid OTP. Please try again.");
-              return;
-            }
-          } catch (error) {
-            console.error('Error verifying OTP:', error);
-            alert("Failed to verify OTP. Please try again.");
-          }
-        }
-      });
-    });
-
-
-
-
-
-    // // Handle status button toggle
-    // document.querySelectorAll(".status-btn").forEach((button) => {
-    //   button.addEventListener("click", async () => {
-    //     const isAvailable = button.classList.contains("available");
-
-    //     if (!isAvailable) {
-    //       const otp = prompt("Please enter the OTP sent to customer:");
-    //       if (!otp) {
-    //         alert("OTP cannot be empty!");
-    //         return;
-    //       }
-
-    //       let otp_no;
-    //       try {
-    //         const userResponse = await fetch('/reservation/data');
-    //         const userData = await userResponse.json();
-    //         if (userData.error) {
-    //           console.error(userData.error);
-    //         } else {
-    //           otp_no = userData.otp;
-    //         }
-    //       } catch (error) {
-    //         console.error('Error fetching user data:', error);
-    //       }
-
-    //       if(otp_no==otp){
-            
-    //         // If we get here, OTP verification was successful
-    //         button.classList.remove("unavailable");
-    //         button.classList.add("available");
-    //         button.textContent = "Confirmed";
-
-    //         const updateResponse = await fetch('/reservation/update', {
-    //           method: 'POST',
-    //           headers: { 
-    //             "Content-Type": "application/json",
-    //           },
-    //           body: JSON.stringify({
-    //             confirmation_status: 1,
-    //             reservation_no: reservationNo
-    //           })
-    //         });
-
-    //         const updateResult = await updateResponse.json();
-    //         if (!updateResult.success) {
-    //           console.error("Failed to update reservation status:", updateResult.message);
-    //           alert("Failed to update reservation status. Please try again.");
-    //         }
-    //       }
-    //       else{
-    //         alert(result.message || "Invalid OTP. Please try again.");
-    //         return;
-    //       }
-    //     }
-    //   });
-    // });
-          
 
     // Handle delete button click
     document.querySelectorAll(".delete-btn").forEach((button) => {

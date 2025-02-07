@@ -734,7 +734,6 @@ body {
 .update-offers-section h3 {
     color: #333;
     margin-bottom: 20px;
-    border-bottom: 2px solid #3498db;
     padding-bottom: 5px;
     text-transform: uppercase;
 }
@@ -778,7 +777,7 @@ body {
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 30px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
 }
 
 /* Cards Section */
@@ -801,7 +800,7 @@ body {
     transition: transform 0.3s;
 }
 
-.offer-card:hover,
+
 .notice-card:hover {
     transform: scale(1.02);
 }

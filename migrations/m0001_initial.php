@@ -105,6 +105,7 @@ class m0001_initial
         $SQL = "CREATE TABLE branch_offers (
             offer_id INT NOT NULL,
             branch_id INT NOT NULL,
+            offer_status TINYINT NOT NULL DEFAULT 1,
             PRIMARY KEY (offer_id, branch_id),
             FOREIGN KEY (offer_id) REFERENCES offers(offer_id) ON DELETE CASCADE,
             FOREIGN KEY (branch_id) REFERENCES branches(branch_id) ON DELETE CASCADE
