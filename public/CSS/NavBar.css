@@ -73,7 +73,7 @@ body {
     color: #ffffff;
     font-size: 0.9rem;;
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .nav-links a img {
@@ -83,10 +83,10 @@ body {
 }
 
 
-
-.nav-links a:hover {
-    color: #EE3E3F;
-}
+  .nav-links a:hover {
+    color: #7b0404;
+  }
+  
 
 .icon-box {
     display: flex;

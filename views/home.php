@@ -11,10 +11,10 @@
 
 
 
-    <div class="home-top-main">
+    <div class="home-top-main" id="home-top-main">
         <div class="first-background-img">
             <div class="first-background-overlay">
-                <p class="Header-text">Enjoy your,<br/> SL Comfort Food Kottu</p>
+                <p class="Header-text">Enjoy your,<br/> SL Comfort <span>Food</span> Kottu</p>
                 <p class="Sub-text">
                 Experience the authentic taste of Sri Lanka with our signature Kottu dishes!</br>
                 we’re ready to serve you with freshly made Kottu that's packed with flavor.
@@ -22,7 +22,7 @@
                 <div class="button-div">
                 <div class="button-container button-container-second">
 
-                    <button onclick="window.location.href='#topic-head'">BOOKING</button>
+                    <button class="button1" onclick="window.location.href='#topic-head'">BOOKING</button>
                 <?php if (\app\core\Application::$app->user ==null): ?>
                         <button onclick="window.location.href='/register'">SIGN UP</button>
                     <?php else: ?>
