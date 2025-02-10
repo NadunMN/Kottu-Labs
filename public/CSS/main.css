@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
+
 
 * {
     font-family: 'Roboto', sans-serif;
@@ -31,6 +33,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 
 .first-background-img {
@@ -71,10 +74,10 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     gap: 30px;
     border-radius: inherit;
-    
+    padding-left: 100px;
 }
 
 
@@ -82,13 +85,23 @@ main {
 .first-background-overlay .Header-text {
     background-color: transparent;
     color: white;
-    font-family:'Times New Roman', Times, serif;
+    font-family: "Fjalla One", serif;
     font-size: 100px;
-    text-align: center;
+    text-align: left;
     margin-top: -50px;
-    font-weight: bolder;
+    font-weight: 500;
     
     
+}
+
+
+.first-background-overlay .Header-text span{
+color: #EE3E3F;
+font-family: "Fjalla One", serif;
+    font-size: 100px;
+    text-align: left;
+    margin-top: -50px;
+    font-weight: 500;
 }
 
 .first-background-overlay .Sub-text {
@@ -112,16 +125,20 @@ main {
 }
 
 .button-container button {
-    padding: 5px 30px;
-    height: 55px;
-    width: 250px;
+    padding:15px 40px;
     font-size: 25px;
     font-weight: 450;
     cursor: pointer;
-    border-radius: 50px;
+    border-radius: 10px;
     border: none;
     color: black;
     font-weight: bold;
+}
+
+.button-container .button1{
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
 }
 
 .button-container-second button{
@@ -147,9 +164,7 @@ main {
 
 }
 
-/* .button-container button:first-child {
-    margin-right: 15px;
-} */
+
 
 .card-head-topic {
     text-align: center;
