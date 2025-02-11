@@ -1,124 +1,82 @@
-document.addEventListener("DOMContentLoaded", function() {
-    let dateInput = document.getElementById("reservationDate");
-    let today = new Date();
-    let maxDate = new Date();
-    maxDate.setDate(today.getDate() + 14);
+document.addEventListener("DOMContentLoaded", function () {
+    const reservationForm = document.getElementById('reservationForm');
+    const dateInput = document.getElementById('reservation-date');
+    const randomNumber = Math.floor(Math.random() * 900000) + 100000;
 
-    let minDateStr = today.toISOString().split("T")[0];
-    let maxDateStr = maxDate.toISOString().split("T")[0];
+    let userId;  // Declare userId for later use
 
-    dateInput.setAttribute("min", minDateStr);
-    dateInput.setAttribute("max", maxDateStr);
-});
+    // Set date range for the reservation date
+    const today = new Date();
+    const oneMonthLater = new Date();
+    oneMonthLater.setMonth(today.getMonth() + 1);
 
-document.getElementById('reservationForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+    const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
 
-    let isValid = true;
-    let reservationDate = document.getElementById('reservationDate').value;
-    let dateError = document.getElementById('dateError');
+    dateInput.setAttribute('min', formatDate(today));
+    dateInput.setAttribute('max', formatDate(oneMonthLater));
 
-    let today = new Date();
-    let maxDate = new Date();
-    maxDate.setDate(today.getDate() + 14);
+    // Fetch user data from the backend
+    fetch('/user/data')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.error) {
+                console.error(data.error);
+            } else {
+                userId = data.id;  // Store user ID
+                console.log('User:', userId);
+            }
+        })
+        .catch(error => console.error('Error fetching user data:', error));
 
-    function normalizeDate(date) {
-        return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    }
+    // Single submit event listener
+    reservationForm.addEventListener('submit', function (event) {
+        event.preventDefault();  // Prevent default form submission
 
-    let selectedDate = normalizeDate(new Date(reservationDate));
-    let todayNormalized = normalizeDate(today);
-    let maxDateNormalized = normalizeDate(maxDate);
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+        data.user_id = userId;  // Add user ID to the form data
+        data.confirmation_number = randomNumber;  // Add confirmation number to the form data
+        const requestBody = JSON.stringify(data);
 
-    if (selectedDate < todayNormalized || selectedDate > maxDateNormalized) {
-        dateError.innerText = "Reservations can only be made within the next 14 days.";
-        dateError.style.color = "red";
-        isValid = false;
-    } else {
-        dateError.innerText = "";
-    }
+        console.log('Request Body:', requestBody);  // Log the request body for debugging
 
-    let timeDropdown = document.getElementById("reservationTime");
+        fetch("/reservation/add", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: requestBody,
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Success:", data);
+            const form = event.target;
+            form.action = `/reservationNumber?random=${randomNumber}`;
 
-    // // Function to generate time slots from 3 PM to 11 PM
-    // function generateTimeSlots(startHour, endHour) {
-    //     let times = [];
-    //     for (let hour = startHour; hour < endHour; hour++) {
-    //         let formattedHour = hour.toString().padStart(2, '0');
-    //         times.push(`${formattedHour}:00`);
-    //     }
-    //     return times;
-    // }
+            // Submit the form programmatically
+            form.submit();
 
-    // // 3 PM to 11 PM
-    // let validTimes = generateTimeSlots(15, 23); // 3 PM (15) to 11 PM (23)
-
-    // // Add the time options to the dropdown
-    // validTimes.forEach(time => {
-    //     let option = document.createElement("option");
-    //     option.value = time;
-    //     option.textContent = time;
-    //     timeDropdown.appendChild(option);
-    // });
-
-    // Validate the time selection on form submission
-    document.getElementById('reservationForm').addEventListener('submit', function(event) {
-        let selectedTime = timeDropdown.value;
-        let timeError = document.getElementById("timeError");
-
-        if (!selectedTime || selectedTime === "hour-select") {
-            timeError.innerText = "Please select a valid reservation time.";
-            event.preventDefault(); // Prevent form submission
-        } else {
-            timeError.innerText = ""; // Clear the error
-        }
+            alert("Reservation successful!");  // Example success message
+            reservationForm.reset();  // Reset the form after successful submission
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("An error occurred while submitting your reservation. Please try again.");
+        });
     });
-
-    // Phone Number Validation
-    let phoneNumber = document.getElementById("phoneNumber").value;
-    let phoneError = document.getElementById("phoneError");
-
-    // Regex for validating phone number (US format as an example)
-    let phoneRegex = /^[\+]?[0-9]{1,4}[-\s]?(\(?\d{3}\)?[-\s]?)?\d{3}[-\s]?\d{4}$/;
-
-    if (!phoneRegex.test(phoneNumber)) {
-        phoneError.innerText = "Please enter a valid phone number.";
-        phoneError.style.color = "red";
-        isValid = false;
-    } else {
-        phoneError.innerText = "";
-    }
-
-    if (isValid) {
-        // Generate a random reservation number
-        let reservationNumber = Math.floor(Math.random() * 900000) + 100000; // Random 6-digit number
-
-        // Show the success popup with the reservation number
-        showPopup(reservationNumber);
-    }
 });
-
-// Function to show the popup
-function showPopup(reservationNumber) {
-    let popup = document.getElementById("popup");
-    let popupMessage = popup.querySelector("p");
-    popupMessage.innerText = `Reservation Successful. Reservation number has been sent to the phone number.`;
-
-    popup.style.display = "block";  // Show the popup
-}
-
-// Function to close the popup and reset the form
-function closePopup() {
-    let popup = document.getElementById("popup");
-    popup.style.display = "none";  // Hide the popup
-
-    // Reset the form fields
-    let reservationForm = document.getElementById("reservationForm");
-    reservationForm.reset();  // Resets all the form fields to their initial values
-
-    // Clear any error messages
-    let errorMessages = document.querySelectorAll(".error");
-    errorMessages.forEach(error => {
-        error.innerText = "";
-    });
-}

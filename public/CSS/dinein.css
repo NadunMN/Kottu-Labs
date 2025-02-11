@@ -1,143 +1,197 @@
-body {
+/* Root Variables */
+:root {
+  --primary-color: #040817;
+  --secondary-color: #eb0909;
+  --accent-color: #ffc107;
+  --background-color: #f6f5ed;
+  --text-color: #2c2c2c;
+  --input-bg-color: #ffffff;
+  --border-color: #ddd;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --transition-speed: 0.3s;
+  --font-family: 'Poppins', sans-serif;
+  --border-radius: 10px;
+  --spacing: 1.5rem;
+}
+
+/* Reset */
+* {
   margin: 0;
   padding: 0;
-  font-family: 'Poppins', sans-serif;
+  /* box-sizing: border-box; */
 }
 
-.form-container {
-  background-color: white;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  width: 550px;
+body {
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  min-height: 100vh;
+  /* margin: 0; */
+}
+
+/* Container */
+/* .page-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  padding: var(--spacing);
+} */
+
+/* Header Styles */
+/* .page-header {
   text-align: center;
-  margin: 0 auto;
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
+  margin-bottom: var(--spacing);
+} */
 
-h2 {
+.headline {
+  font-size: 4rem; /* Increased font size for prominence */
+  font-weight: 700;
+  color: var(--primary-color); /* Retains the primary brand color */
+  text-shadow: 2px 2px 5px var(--shadow-color), 0px 0px 8px rgba(0, 0, 0, 0.2); /* Adds depth with a soft glow */
+  font-family: "Playfair Display", serif; /* A modern, elegant font */
   text-align: center;
-  color: black; /* Solid black for strong contrast */
-  font-size: 40px; /* Increased size */
-  font-weight: 700; /* Bold font weight */
-  text-transform: uppercase;
-  letter-spacing: 1.5px; /* Adds a stylish touch */
-  margin-bottom: 25px;
-  position: relative;
-  display: inline-block;
-  padding-bottom: 8px;
-  font-family:Georgia, 'Times New Roman', Times, serif
+  margin-bottom: 30px;
+  margin-top: 30px;
+  letter-spacing: 1px; /* Slightly spaced letters for readability */
+  line-height: 1.2; /* Ensures compact but readable spacing */
+  background: linear-gradient(90deg, var(--highlight-color), var(--primary-color));
+  /* -webkit-background-clip: text; */
+  /* -webkit-text-fill-color: transparent; Gradient text effect */
+  transition: transform 0.3s ease, color 0.3s ease; /* Smooth animations */
+}
 
+.headline:hover {
+  transform: scale(1.05); /* Slight zoom-in effect on hover */
+  color: var(--secondary-color); /* Change to a secondary brand color on hover */
 }
 
 
-label {
+/* Card Styles */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing);
+  justify-content: center;
+}
+
+.card-content {
+  background: var(--input-bg-color);
+  border-radius: var(--border-radius);
+  padding: var(--spacing);
+  box-shadow: 0 8px 20px var(--shadow-color);
+  flex: 1 1 800px; /* Wider form */
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  margin: 15px auto;
+  justify-content: center;
+}
+
+/* .card-content .card-img img {
   display: block;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #060606; /* Dark grey for better readability */
-  text-align: left;
-  margin-left: 20px;
-  font-size: 16px;
-  margin-top: 20px;
+  margin: 0 auto;
+  width: "200";
+  height: "200";
+} */
 
+.card-content .form-title {
+  font-size: 2.5rem; /* Increase the font size */
+  font-weight: 700; /* Bold font */
+  color: var(--primary-color); /* Use the primary color */
+  text-align: center; /* Center align the text */
+  text-transform: uppercase; /* Convert text to uppercase */
+  letter-spacing: 2px; /* Add spacing between letters */
+  margin-bottom: var(--spacing); /* Add space below the title */
+  text-shadow: 1px 1px 3px var(--shadow-color); /* Subtle text shadow for depth */
+  position: relative; 
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 
-input, textarea {
-  width: 90%;
-  padding: 12px;
-  border: 2px solid #cecbcb;
-  border-radius: 6px;
-  font-size: 14px;
-  transition: 0.3s;
-  /* margin-bottom: 20px; */
+/* Form Styles */
+.reservation-form {
+  display: grid; /* Use grid layout for two columns */
+  grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+  gap: 2rem; /* Space between rows and columns */
+  width: 100%;
+  align-items: center;
 }
 
-input:focus, textarea:focus {
-  border-color: red; /* Highlighted red border on focus */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  background: var(--input-bg-color);
+  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.form-input:focus,
+.form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 5px var(--primary-color);
   outline: none;
-  box-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
 }
 
-p 
-{
-  color: #333;
-  margin-bottom: 20px;
-  margin-top:0px;
-  font-size: 14px; 
-  color: grey;
-  text-align: right; 
-  margin-right: 20px;
-}
-
-select {
-  width: 90%;  /* Same width as input fields */
-  padding: 12px;  /* Same padding for consistency */
-  border: 2px solid #cecbcb;  /* Same border color */
-  border-radius: 6px;  /* Rounded corners for consistency */
-  font-size: 14px;  /* Same font size */
-  transition: 0.3s;  /* Smooth transition for focus effect */
-  margin-bottom: 20px;  /* Space below the field */
-}
-
-select:focus {
-  border-color: red;  /* Highlighted red border on focus */
-  outline: none;  /* Remove the default focus outline */
-  box-shadow: 0 0 8px rgba(255, 0, 0, 0.3);  /* Subtle shadow on focus */
+.helper-text {
+  font-size: 0.875rem;
+  color: var(--secondary-color);
 }
 
 button {
-  width: 70%;
-  padding: 12px;
-  background-color: black;
-  color: white;
+  grid-column: span 2; /* Button spans both columns */
+  padding: 0.75rem 1.5rem;
+  background: var(--primary-color);
+  color: #fff;
   border: none;
-  border-radius: 6px;
-  font-size: 20px;
+  border-radius: var(--border-radius);
+  font-size: 1.125rem;
   cursor: pointer;
-  transition: 0.3s;
-  margin-top: 20px;
+  text-transform: uppercase;
+  transition: background-color var(--transition-speed), transform var(--transition-speed);
+
 }
 
 button:hover {
-  background-color: red; /* Red on hover */
+  background: var(--secondary-color);
+  transform: translateY(-2px);
 }
 
-.popup {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  text-align: center;
-
+button:active {
+  transform: translateY(0);
 }
 
-.popup p {
-  margin-bottom: 20px;
-  font-size: 20px;
-  color: #333;
-  text-align: center;
+button:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 2px;
 }
 
-.popup button {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.3s;
-  margin-top: 20px;
-  width: 100px;
-}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .card-content {
+    max-width: 100%;
+  }
 
-.popup button:hover {
-  background-color: black;
+  .reservation-form {
+    grid-template-columns: 1fr; /* Single column for smaller screens */
+  }
+
+  button {
+    grid-column: span 1; /* Button spans single column on mobile */
+  }
 }
