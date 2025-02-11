@@ -25,12 +25,12 @@
             <h2 class="form-title">Add a Reservation</h2>
             <form id="reservationForm" action="/reservationNumber" class="reservation-form" method="POST">
   <div class="form-group">
-    <label for="fullname" class="form-label">Full Name</label>
-    <input type="text" id="fullname" name="fullname" class="form-input" required>
+    <label for="fullname" class="form-label" >Full Name</label>
+    <input type="text" id="fullname" name="fullname" class="form-input" placeholder="Enter Full Name" required>
 </div>
 <div class="form-group">
     <label for="email" class="form-label">Email</label>
-    <input type="email" id="email" name="email" class="form-input" required>
+    <input type="email" id="email" name="email" class="form-input" placeholder="Enter Emailgit " required>
     <small class="small-texts">** The reservation number will be sent to this email</small>
 </div>
 <div class="form-group">
