@@ -15,6 +15,7 @@ use app\core\Model\BranchMealModel;
 use app\core\Model\BranchOfferModel;
 use app\core\Model\MealOfferModel;
 use app\core\Model\OfferModel;
+use app\core\SendMail;
 
 class Application
 {
@@ -36,6 +37,7 @@ class Application
     public MealOfferModel $mealOffer;
     public OfferModel $offer;
     public View $view;
+    public SendMail $sendMail;
 
     public static Application $app;
     public ?Controller $controller = null;

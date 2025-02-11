@@ -80,7 +80,7 @@
 
                                 <div>
                                     <label for="offer-image" class="file-label">Upload Image</label>
-                                    <input type="file" id="offer-image" name="offer_photo" />
+                                    <input type="file" id="offer_photo" name="offer_photo" />
                                 </div>
 
                             </div>
@@ -171,6 +171,8 @@
                 <h3>Existing Offers</h3>
                 <div class="offers-container">
                     <!-- Example Offer Cards -->
+
+
                     <div class="offer-card">
                         <img src="path/to/image1.jpg" alt="Offer Image 1" class="offer-image" />
                         <div class="offer-content">
@@ -179,6 +181,8 @@
                             <button class="btn delete-btn">Delete</button>
                         </div>
                     </div>
+
+
                     <div class="offer-card">
                         <img src="path/to/image2.jpg" alt="Offer Image 2" class="offer-image" />
                         <div class="offer-content">
@@ -187,6 +191,8 @@
                             <button class="btn delete-btn">Delete</button>
                         </div>
                     </div>
+
+                    
                 </div>
             </div>
 

@@ -15,7 +15,7 @@ class Reservation extends ReservationModel
     public int $confirmation_status = 0;
     public string $branch_id = '';
     public string $user_id = '';
-    public string $otp;
+    public string $confirmation_number = '';
     
     
 
@@ -42,7 +42,7 @@ class Reservation extends ReservationModel
     public function attributes(): array
     {
         return ['reservation_no','reservation_date', 'reservation_time', 'number_of_guests', 
-        'confirmation_status', 'branch_id', 'user_id'];
+        'confirmation_status', 'branch_id', 'user_id', 'confirmation_number'];
     }
 
     public function rules(): array
@@ -121,7 +121,7 @@ class Reservation extends ReservationModel
             'confirmation_status' => $this->confirmation_status,
             'branch_id' => $this->branch_id,
             'user_id' => $this->user_id,     
-            'otp' => $this->otp
+            'confirmation_number' => $this->confirmation_number,
         ];
     }
 

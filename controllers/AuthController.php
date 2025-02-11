@@ -8,6 +8,7 @@ use app\core\Response;
 use app\models\User;
 use app\models\LoginForm;
 use app\core\middlewares\AuthMiddleware;
+use app\core\SendMail;
 
 
 
@@ -74,6 +75,40 @@ class AuthController extends Controller
     {
         
         return $this->render('profile');
+    }
+
+    public function reservationNumberGenerator()
+    {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $name = $_POST['fullname'];
+            $email = $_POST['email'];
+            $randomNumber = $_GET['random'];
+
+            // var_dump($randomNumber);
+            // exit;
+
+            // do {
+            //     $randomNumber = rand(100000, 999999);
+            // } while (isset($_SESSION['previousNumbers']) && in_array($randomNumber, $_SESSION['previousNumbers']));
+
+
+            // // Store the random number in session to track it
+            // $_SESSION['previousNumbers'][] = $randomNumber;
+
+            // echo "Unique random number: " . $randomNumber;
+
+
+
+
+            // Ensure SendMail is initialized
+            if (!isset(SendMail::$sendmail)) {
+                new SendMail();
+            }
+        
+            SendMail::$sendmail->sendMail($email, $name, $randomNumber);
+
+        }
+
     }
 }
 ?>

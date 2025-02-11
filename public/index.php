@@ -144,5 +144,8 @@ $app->router->get('/getMealsmenu', function() use ($mealController) {
     $mealController->mealsByBranch($branchId, $selectionId);
 });
 
+//reservation Number
+$app->router->post('/reservationNumber', [$authController, 'reservationNumberGenerator']);
+
 // Run the application
 $app->run();

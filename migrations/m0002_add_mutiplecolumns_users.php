@@ -48,6 +48,7 @@ class m0002_add_mutiplecolumns_users
             $db->pdo->exec($SQL);
         }
 
+
         
     }
 

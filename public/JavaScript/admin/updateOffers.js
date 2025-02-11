@@ -2,6 +2,8 @@ window.addEventListener("load", () => {
     console.log("Page loaded");
     const form = document.getElementById("update-form");
 
+    
+
     // Retrieve selectedMeals from localStorage
     const selectedMealsJSON = localStorage.getItem("selectedMeals");
     const selectedMeals = JSON.parse(selectedMealsJSON);
@@ -48,7 +50,16 @@ window.addEventListener("load", () => {
 
         if (isConfirmed) {
             // Create an object to hold form data
+            const fileInput = document.getElementById("offer_photo");
             const formData = new FormData(form);
+
+            if (fileInput.files[0]) {
+                formData.append(
+                  "offer_photo",
+                  "/Photo/offers/" + fileInput.files[0].name
+                );
+              }
+
             const formObject = Object.fromEntries(formData.entries());
 
             // Combine form data and selectedMeals into one object
