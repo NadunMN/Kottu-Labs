@@ -23,28 +23,24 @@
 
 body {
   font-family: var(--font-family);
-  background-color: var(--background-color);
-  color: var(--text-color);
-  line-height: 1.6;
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
-  min-height: 100vh;
-  /* margin: 0; */
+  height: auto;
+  background-image: url('/Photo/Untitled-3.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+
+  
 }
 
-/* Container */
-/* .page-wrapper {
-  width: 100%;
-  max-width: 1200px;
-  padding: var(--spacing);
-} */
+.reservation-section{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  height: 85vh;
+}
 
-/* Header Styles */
-/* .page-header {
-  text-align: center;
-  margin-bottom: var(--spacing);
-} */
 
 .headline {
   font-size: 4rem; /* Increased font size for prominence */
@@ -78,45 +74,50 @@ body {
 }
 
 .card-content {
-  background: var(--input-bg-color);
-  border-radius: var(--border-radius);
-  padding: var(--spacing);
-  box-shadow: 0 8px 20px var(--shadow-color);
-  flex: 1 1 800px; /* Wider form */
-  max-width: 1000px;
+  background:rgba(0, 0, 0, 0.348);
+  box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.1);
+  
+  width: auto;
+  height: auto;
+
+  border-radius: 10px;
+  padding: 30px;
+  gap: 150px;
   display: flex;
-  flex-direction: column;
-  margin: 15px auto;
   justify-content: center;
+  align-items: center;
 }
 
-/* .card-content .card-img img {
-  display: block;
-  margin: 0 auto;
-  width: "200";
-  height: "200";
-} */
+.card-content-left{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
 
 .card-content .form-title {
-  font-size: 2.5rem; /* Increase the font size */
-  font-weight: 700; /* Bold font */
-  color: var(--primary-color); /* Use the primary color */
+  font-size: 1.5rem; /* Increase the font size */
+  color:#ddd; /* Use the primary color */
   text-align: center; /* Center align the text */
-  text-transform: uppercase; /* Convert text to uppercase */
-  letter-spacing: 2px; /* Add spacing between letters */
-  margin-bottom: var(--spacing); /* Add space below the title */
+  text-transform:capitalize; /* Convert text to uppercase */
+  margin-bottom: 20px; /* Add space below the title */
   text-shadow: 1px 1px 3px var(--shadow-color); /* Subtle text shadow for depth */
   position: relative; 
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 /* Form Styles */
 .reservation-form {
-  display: grid; /* Use grid layout for two columns */
-  grid-template-columns: repeat(2, 1fr); /* Two equal columns */
-  gap: 2rem; /* Space between rows and columns */
-  width: 100%;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  width: 500px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0);
+  border-radius: 10px;
 }
 
 .form-group {
@@ -125,60 +126,54 @@ body {
 }
 
 .form-label {
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 0.5rem;
-  color: var(--text-color);
+  color: #ffffff;
+}
+
+.small-texts{
+  font-size: 0.8rem;
+  color: #ffffff61;
+  margin-top: 5px;
 }
 
 .form-input,
 .form-select {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  font-size: 1rem;
-  background: var(--input-bg-color);
-  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .form-input:focus,
 .form-select:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 5px var(--primary-color);
+  border-color: #EE3E3F;
+  box-shadow: 0 0 5px rgba(238, 62, 63, 0.5);
   outline: none;
 }
 
-.helper-text {
-  font-size: 0.875rem;
-  color: var(--secondary-color);
-}
-
 button {
-  grid-column: span 2; /* Button spans both columns */
+  grid-column: span 2;
   padding: 0.75rem 1.5rem;
-  background: var(--primary-color);
-  color: #fff;
+  background: #333;
+  color: white;
   border: none;
-  border-radius: var(--border-radius);
-  font-size: 1.125rem;
+  border-radius: 8px;
+  font-size: 1rem;
   cursor: pointer;
   text-transform: uppercase;
-  transition: background-color var(--transition-speed), transform var(--transition-speed);
-
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 button:hover {
-  background: var(--secondary-color);
+  background: #EE3E3F;
   transform: translateY(-2px);
 }
 
 button:active {
   transform: translateY(0);
-}
-
-button:focus-visible {
-  outline: 3px solid var(--accent-color);
-  outline-offset: 2px;
 }
 
 /* Responsive Design */
