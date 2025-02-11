@@ -17,112 +17,63 @@
 </head>
 
 <body>
-    <!-- Header Section -->
-    <header>
-        <h1 class="headline">Reserve Your Spot & Enjoy!</h1>
-    </header>
 
     <!-- Reservation Section -->
-    <section>
+    <section class="reservation-section">
         <div class="card-content">
-            <h2 class="form-title">Make a Reservation</h2>
+            <div class="card-content-left">
+            <h2 class="form-title">Add a Reservation</h2>
             <form id="reservationForm" action="/reservationNumber" class="reservation-form" method="POST">
+  <div class="form-group">
+    <label for="fullname" class="form-label">Full Name</label>
+    <input type="text" id="fullname" name="fullname" class="form-input" required>
+</div>
+<div class="form-group">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" id="email" name="email" class="form-input" required>
+    <small class="small-texts">** The reservation number will be sent to this email</small>
+</div>
+<div class="form-group">
+    <label for="reservation-date" class="form-label">Reservation Date</label>
+    <input type="date" id="reservation-date" name="reservation_date" class="form-input" required>
+</div>
+  <div class="form-group">
+      <label for="reservation-time" class="form-label">Reservation Time</label>
+    <select id="reservation-time" name="reservation_time" class="form-select" required>
+        <option value="">Select a time slot</option>
+      <optgroup label="Afternoon">
+          <option value="15:00">3:00 PM - 4:00 PM</option>
+        <option value="16:00">4:00 PM - 5:00 PM</option>
+        <option value="17:00">5:00 PM - 6:00 PM</option>
+      </optgroup>
+      <optgroup label="Evening">
+          <option value="18:00">6:00 PM - 7:00 PM</option>
+          <option value="19:00">7:00 PM - 8:00 PM</option>
+        <option value="20:00">8:00 PM - 9:00 PM</option>
+      </optgroup>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="reservation-branch" class="form-label">Branch</label>
+    <select id="reservation-branch" name="branch_id" class="form-select" required>
+        <option value="">Select a Branch</option>
+        <option value="1">Wattala</option>
+        <option value="2">Keleniya</option>
+        <option value="3">Kotahena</option>
+    </select>
+</div>
+<div class="form-group">
+    <label for="guests" class="form-label">Number of Guests</label>
+    <input type="number" id="guests" name="number_of_guests" class="form-input" required min="1" max="20" placeholder="Enter number of guests">
+    <small class="small-texts">** You cannot enter more than 20 guests.</small>
+</div>
+<button type="submit" class="submit-button">Confirm Reservation</button>
+</form>
 
-                <!-- Date Field -->
-                <div class="form-group">
-                    <label for="fullname" class="form-label">Full Name</label>
-                    <input
-                        type="text"
-                        id="fullname"
-                        name="fullname"
-                        class="form-input"
-                        required>
-                </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="email" class="form-label">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        class="form-input"
-                        required>
-                </div>
+            
 
-                <div class="form-group">
-                    <label for="reservation-date" class="form-label">Reservation Date</label>
-                    <input
-                        type="date"
-                        id="reservation-date"
-                        name="reservation_date"
-                        class="form-input"
-                        required>
-                </div>
-
-                <!-- Time Field -->
-                <div class="form-group">
-                    <label for="reservation-time" class="form-label">Reservation Time</label>
-                    <select
-                        id="reservation-time"
-                        name="reservation_time"
-                        class="form-select"
-                        required>
-                        <option value="">Select a time slot</option>
-                        <optgroup label="Afternoon">
-                            <option value="15:00">3:00 PM - 4:00 PM</option>
-                            <option value="16:00">4:00 PM - 5:00 PM</option>
-                            <option value="17:00">5:00 PM - 6:00 PM</option>
-                        </optgroup>
-                        <optgroup label="Evening">
-                            <option value="18:00">6:00 PM - 7:00 PM</option>
-                            <option value="19:00">7:00 PM - 8:00 PM</option>
-                            <option value="20:00">8:00 PM - 9:00 PM</option>
-                            <option value="21:00">9:00 PM - 10:00 PM</option>
-                            <option value="22:00">10:00 PM - 11:00 PM</option>
-                        </optgroup>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="reservation-branch" class="form-label">Reservation Time</label>
-                    <select
-                        id="reservation-branch"
-                        name="branch_id"
-                        class="form-select"
-                        required>
-                        <option value="">Select a Branch</option>
-
-                        <option value="1">Wattala</option>
-                        <option value="2">Keleniya</option>
-                        <option value="3">Kotahena</option>
-
-                    </select>
-                </div>
-
-
-                <!-- Number of Guests Field -->
-                <div class="form-group">
-                    <label for="guests" class="form-label">Number of Guests</label>
-                    <input
-                        type="number"
-                        id="guests"
-                        name="number_of_guests"
-                        class="form-input"
-                        required
-                        min="1"
-                        max="20"
-                        placeholder="Enter number of guests">
-                    <small id="guestHelp" class="helper-text">Maximum 20 guests per reservation</small>
-                </div>
-
-
-                <!-- Form Controls -->
-                <button
-                    type="submit"
-                    class="submit-button">
-                    Confirm Reservation
-                </button>
-            </form>
         </div>
     </section>
 

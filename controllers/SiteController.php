@@ -87,7 +87,7 @@ class SiteController extends Controller
 
     public function dinein(Request $request,Response $response)
     {
-        //$this->setLayout('auth');
+        $this->setLayout('dashboard');
         return $this->render('dinein');
     }
 

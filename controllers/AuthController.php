@@ -87,19 +87,6 @@ class AuthController extends Controller
             // var_dump($randomNumber);
             // exit;
 
-            // do {
-            //     $randomNumber = rand(100000, 999999);
-            // } while (isset($_SESSION['previousNumbers']) && in_array($randomNumber, $_SESSION['previousNumbers']));
-
-
-            // // Store the random number in session to track it
-            // $_SESSION['previousNumbers'][] = $randomNumber;
-
-            // echo "Unique random number: " . $randomNumber;
-
-
-
-
             // Ensure SendMail is initialized
             if (!isset(SendMail::$sendmail)) {
                 new SendMail();
