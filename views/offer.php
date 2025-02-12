@@ -21,12 +21,12 @@
 
 
 
-      <select class="search-select">
-        <option value="All">All</option>
-        <option value="All">Wattala</option>
-        <option value="All">Kelaniya</option>
-        <option value="All">Kotahena</option>
-      </select>
+    <select class="search-select" id="branch-select">
+            <option value="1">Wattala</option>
+            <option value="2">Kelaniya</option>
+            <option value="3">Kotahena</option>
+        </select>
+
 
       <div class="search-bar">
         <input type="text" id="search" placeholder="Search menu items...">
@@ -66,61 +66,10 @@
       </div>
 
 
-      <div class="card">
-        <div class="card-lable">
-          <p>AVAILABLE</p>
-        </div>
-        <img src="/Photo/offers/AZEEZ RESTAURANT.jpg" alt="Product Image" class="card-image">
-        <div class="card-content">
-          <h2 class="card-title">Product Name</h2>
-          <div class="card-price">Rs. 1999/=</div>
-          <p class="card-description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
-          </p>
-          <button class="view-button">VIEW DETAILS</button>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-lable">
-          <p>AVAILABLE</p>
-        </div>
-        <img src="/Photo/offers/AZEEZ RESTAURANT.jpg" alt="Product Image" class="card-image">
-        <div class="card-content">
-          <h2 class="card-title">Product Name</h2>
-          <div class="card-price">Rs. 1999/=</div>
-          <p class="card-description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
-          </p>
-          <button class="view-button">VIEW DETAILS</button>
-        </div>
-      </div>
-      
-      <div class="card">
-        <div class="card-lable">
-          <p>AVAILABLE</p>
-        </div>
-        <img src="/Photo/offers/AZEEZ RESTAURANT.jpg" alt="Product Image" class="card-image">
-        <div class="card-content">
-          <h2 class="card-title">Product Name</h2>
-          <div class="card-price">Rs. 1999/=</div>
-          <p class="card-description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
-          </p>
-          <button class="view-button">VIEW DETAILS</button>
-        </div>
-      </div>
-
-
-
-
-
-
     </div>
   </div>
 
-  <script src="/JavaScript/homeMenu.js"></script>
+  <script src="/JavaScript/offer.js"></script>
 </body>
 
 </html>

@@ -89,6 +89,24 @@ class OfferController extends Controller
     }
 }
 
+    //get menu data
+    public function offersByBranch($branchId)
+    {
+        if (Application::$app->user) {
+            // Fetch meals by branch ID
+            
+                $offers = Offer::findAllWithoutGroup(['branch_id' => $branchId]);
+            
+            $offerData = [];
+            foreach ($offers as $offer) {
+                $offerData[] = $offer;
+            }
+            echo json_encode($offerData);
+        } else {
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+
 
 
     // public function findMealData(){
