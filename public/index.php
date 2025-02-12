@@ -144,6 +144,14 @@ $app->router->get('/getMealsmenu', function() use ($mealController) {
     $mealController->mealsByBranch($branchId, $selectionId);
 });
 
+
+//offer
+$app->router->get('/getofferlist', function() use ($offerController) {
+    $branchId = $_GET['branchId'] ?? null;
+    // $selectionId = $_GET['selectionId'] ?? null;
+    $offerController->offersByBranch($branchId);
+});
+
 //reservation Number
 $app->router->post('/reservationNumber', [$authController, 'reservationNumberGenerator']);
 

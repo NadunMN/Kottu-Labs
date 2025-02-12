@@ -30,7 +30,7 @@
 </div>
 <div class="form-group">
     <label for="email" class="form-label">Email</label>
-    <input type="email" id="email" name="email" class="form-input" placeholder="Enter Emailgit " required>
+    <input type="email" id="email" name="email" class="form-input" placeholder="Enter Email" required>
     <small class="small-texts">** The reservation number will be sent to this email</small>
 </div>
 <div class="form-group">

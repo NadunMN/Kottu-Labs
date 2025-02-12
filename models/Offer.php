@@ -64,8 +64,8 @@ class Offer extends OfferModel
                     GROUP_CONCAT(b.branch_id) as branch_ids
                     -- GROUP_CONCAT(b.meal_status) as meal_statuses
                 FROM $tableName                 
-                JOIN branch_meals b ON $tableName.meal_id = b.meal_id                 
-                GROUP BY $tableName.meal_id
+                JOIN branch_offers b ON $tableName.offer_id = b.offre_id                 
+                GROUP BY $tableName.offer_id
                 ";
         if (!empty($attributes)) {
             $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
@@ -82,8 +82,8 @@ class Offer extends OfferModel
     {
         $tableName = static::tableName();
         $attributes = array_keys($where);
-        $sql = "SELECT $tableName.*, b.branch_id, b.meal_status FROM $tableName                 
-                JOIN branch_meals b ON $tableName.meal_id = b.meal_id                 
+        $sql = "SELECT $tableName.*, b.branch_id, b.offer_status FROM $tableName                 
+                JOIN branch_offers b ON $tableName.offer_id = b.offer_id                 
                 ";
         if (!empty($attributes)) {
             $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
