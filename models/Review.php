@@ -5,7 +5,7 @@ namespace app\models;
 use app\core\db\DbModel;
 use app\core\Model\ReviewModel;
 
-class Review extends DbModel
+class Review extends ReviewModel
 {
 
     public string $review_id = '';
@@ -60,6 +60,27 @@ class Review extends DbModel
         JOIN users ON reviews.user_id = users.id
         JOIN branches ON users.branch_id = branches.branch_id
         WHERE $sql
+    ");
+    foreach ($where as $key => $value) {
+        $statement->bindValue(":$key", $value);
+    }
+    $statement->execute();
+    return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
+}
+
+
+    public static function findAlladmin($where)
+{
+    $tableName = static::tableName();
+    $attributes = array_keys($where);
+
+    $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+    $statement = self::prepare("
+        SELECT reviews.*, CONCAT(users.firstname, ' ', users.lastname) as userName, branches.branch_name as branchName
+        FROM $tableName 
+        JOIN users ON reviews.user_id = users.id
+        JOIN branches ON users.branch_id = branches.branch_id;
+        
     ");
     foreach ($where as $key => $value) {
         $statement->bindValue(":$key", $value);

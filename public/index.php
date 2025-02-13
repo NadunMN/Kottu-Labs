@@ -8,6 +8,7 @@ use app\controllers\ManagerController;
 use app\controllers\MealController;
 use app\controllers\OfferController;
 use app\controllers\ReservationController;
+use app\controllers\FeedbacksController;
 use app\controllers\sendOtp;
 use app\models\User;
 
@@ -37,6 +38,7 @@ $managerController = new ManagerController();
 $mealController = new MealController();
 $offerController = new OfferController();
 $reservationController = new ReservationController();
+$feedbacksController = new FeedbacksController();
 
 
 // Define routes
@@ -134,6 +136,7 @@ $app->router->get('/reservation/otp', [$managerController, 'getOtp']);
 $app->router->post('/reservation/delete', [$managerController, 'deleteReservation']);
 $app->router->post('/reservation/update', [$managerController, 'updateReservation']);
 
+
 //offers
 $app->router->post('/offer/add', [$offerController, 'addOffer']);
 $app->router->get('/addMeal', [$siteController, 'addMeal']);
@@ -168,6 +171,11 @@ $app->router->get('/reservation/otp', function() use ($reservationController) {
 
 //reservation Number
 $app->router->post('/reservationNumber', [$authController, 'reservationNumberGenerator']);
+
+//define route for feedbacks
+$app->router->get('/feedback/get', [$feedbacksController, 'getReviews']);
+$app->router->post('/feedback/delete', [$feedbacksController, 'deleteReviews']);
+
 
 
 // Run the application
