@@ -30,18 +30,18 @@ document.addEventListener('DOMContentLoaded', function() {
             pin += input.value;
         });
 
-        if (pin.length !== 5) {
+        if (pin.length !== 6) {
             messageDiv.textContent = 'Please enter all 5 digits';
             return;
         }
 
         messageDiv.textContent = 'Verifying PIN...';
+
+        console.log(pin);
         
         try {
-            const response = await fetch('/reservation/otp?pin=${encodeURIComponent(pin)}', {
+            const response = await fetch(`/reservation/otp?pin=${pin}`, {
                 method: 'GET',
-                
-                
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -51,6 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const result = await response.json();
             console.log(result);
+
+            console.log(result.reservation.reservation_no);
             
             if (result.success) {
                 alert("PIN verified successfully!"); 

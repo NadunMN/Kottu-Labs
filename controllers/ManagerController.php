@@ -202,8 +202,7 @@ class ManagerController extends Controller
 
     
 
-    // get otp
-    
+    // get reservation number
     public function getOtp() {
         // $pin = $_GET['pin'] ?? '';
         $pin = '12345';

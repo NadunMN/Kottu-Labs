@@ -107,12 +107,26 @@ class OfferController extends Controller
         }
     }
 
+        //get menu data
+        public function getOffers()
+        {
+            if (Application::$app->user) {
+    
+                
+                $offers = Offer::findAll([]);
+    
+                $offerData = [];
+    
+                foreach ($offers as $offer) {
+                    $offerData[] = $offer;
+                }
+    
+    
+                echo json_encode($offerData);
+            } else {
+                echo json_encode(['error' => 'No user is logged in']);
+            }
+        }
 
 
-    // public function findMealData(){
-    //     $meal = new Meal();
-    //     $meal->load(Application::$app->request->getBody());
-    //     $mealData = $meal->findMealData();
-    //     echo json_encode($mealData);
-    // }
 }
