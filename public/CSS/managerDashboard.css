@@ -1066,6 +1066,10 @@ hr {
     background-color: #fff;
 }
 
+.description-offer{
+    width: 30%;
+}
+
 /* Table styles */
 .menu-table {
     width: 100%;
@@ -1078,7 +1082,7 @@ hr {
 
 .menu-table th, .menu-table td {
     padding: 15px 10px;
-    text-align: center;
+    text-align: left;
     border-bottom: 1px solid #ddd;
     font-size: 1rem;
     /* padding: 15px 0; */

@@ -128,5 +128,19 @@ class OfferController extends Controller
             }
         }
 
+        //delete offer
+        public function deleteOffer()
+        {
+            $offer = new Offer();
+            $offer->load(Application::$app->request->getBody());
+    
+            if ($offer->delete()) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'errors' => $offer->errors]);
+            }
+        }
+        
+
 
 }
