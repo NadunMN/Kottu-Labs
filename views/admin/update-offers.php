@@ -169,31 +169,11 @@
             <!-- Existing Offers -->
             <div class="existing-offers">
                 <h3>Existing Offers</h3>
-                <div class="offers-container">
-                    <!-- Example Offer Cards -->
 
-
-                    <div class="offer-card">
-                        <img src="path/to/image1.jpg" alt="Offer Image 1" class="offer-image" />
-                        <div class="offer-content">
-                            <h4>50% Off on All Kottu</h4>
-                            <p>Enjoy half-price Kottu this weekend!</p>
-                            <button class="btn delete-btn">Delete</button>
-                        </div>
-                    </div>
-
-
-                    <div class="offer-card">
-                        <img src="path/to/image2.jpg" alt="Offer Image 2" class="offer-image" />
-                        <div class="offer-content">
-                            <h4>Free Drink with Any Meal</h4>
-                            <p>Get a free drink with every meal purchase over $10.</p>
-                            <button class="btn delete-btn">Delete</button>
-                        </div>
-                    </div>
-
+                <div class="offers-container" id="offers-container">                    
                     
                 </div>
+
             </div>
 
 

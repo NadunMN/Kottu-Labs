@@ -15,11 +15,12 @@
     <div class="pin-container">
         <div class="pin-box">
             <div class="pin-input-container">
-                <input type="password" maxlength="1" class="pin-digit">
-                <input type="password" maxlength="1" class="pin-digit">
-                <input type="password" maxlength="1" class="pin-digit">
-                <input type="password" maxlength="1" class="pin-digit">
-                <input type="password" maxlength="1" class="pin-digit">
+                <input type="text" maxlength="1" class="pin-digit">
+                <input type="text" maxlength="1" class="pin-digit">
+                <input type="text" maxlength="1" class="pin-digit">
+                <input type="text" maxlength="1" class="pin-digit">
+                <input type="text" maxlength="1" class="pin-digit">
+                <input type="text" maxlength="1" class="pin-digit">
             </div>
             <div class="pin-message">
                 <!-- Error or success messages will appear here -->

@@ -64,7 +64,7 @@ class Offer extends OfferModel
                     GROUP_CONCAT(b.branch_id) as branch_ids
                     -- GROUP_CONCAT(b.meal_status) as meal_statuses
                 FROM $tableName                 
-                JOIN branch_offers b ON $tableName.offer_id = b.offre_id                 
+                JOIN branch_offers b ON $tableName.offer_id = b.offer_id                 
                 GROUP BY $tableName.offer_id
                 ";
         if (!empty($attributes)) {

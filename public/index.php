@@ -7,6 +7,7 @@ use app\controllers\UserController;
 use app\controllers\ManagerController;
 use app\controllers\MealController;
 use app\controllers\OfferController;
+use app\controllers\ReservationController;
 use app\controllers\sendOtp;
 use app\models\User;
 
@@ -35,6 +36,7 @@ $userController = new UserController();
 $managerController = new ManagerController();
 $mealController = new MealController();
 $offerController = new OfferController();
+$reservationController = new ReservationController();
 
 
 // Define routes
@@ -121,6 +123,10 @@ $app->router->get('/menuitem/data', [$managerController, 'getmenuItems']);
 $app->router->post('/mealitem/delete', [$managerController, 'deletemenuItems']);
 $app->router->post('/menuitem/update', [$managerController, 'updatemenuItems']);
 
+
+//define route for offers
+$app->router->get('/offer/get', [$offerController, 'getOffers']);
+
 //define route for reservations
 $app->router->post('/reservation/add', [$userController, 'addReservation']);
 $app->router->get('/reservation/data', [$managerController, 'getReservation']);
@@ -152,8 +158,15 @@ $app->router->get('/getofferlist', function() use ($offerController) {
     $offerController->offersByBranch($branchId);
 });
 
+
+$app->router->get('/reservation/otp', function() use ($reservationController) {
+    $pin = $_GET['pin'] ?? null;
+    $reservationController->getReservationNumber($pin);
+});
+
 //reservation Number
 $app->router->post('/reservationNumber', [$authController, 'reservationNumberGenerator']);
+
 
 // Run the application
 $app->run();
