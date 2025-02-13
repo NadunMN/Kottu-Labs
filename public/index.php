@@ -158,6 +158,8 @@ $app->router->get('/getofferlist', function() use ($offerController) {
     $offerController->offersByBranch($branchId);
 });
 
+$app->router->post('/offer/delete', [$offerController, 'deleteOffer']);
+
 
 $app->router->get('/reservation/otp', function() use ($reservationController) {
     $pin = $_GET['pin'] ?? null;

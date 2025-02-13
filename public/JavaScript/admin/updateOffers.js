@@ -121,13 +121,10 @@ window.addEventListener("load", () => {
                                     <div class="view-branch-menu-section">
                                             <div class="topic-bar">
                                                 <div>
-                                                    <h2 style="margin:0;">Meals</h2>
                                                     <h5 style="margin:0;">${data.length} meals available</h5>
                                                 </div>
 
-                                                <div>
-                                                    <button class="add-item-btn">Add New Item</button>
-                                                </div>
+                                                
 
                                             </div>
 
@@ -150,22 +147,8 @@ window.addEventListener("load", () => {
 
         <div class="form-group">
             <label for="meal_description">Description</label>
-            <select id="meal_description" name="meal_description" required>
-                <option  value="1">All</option>
-            <option  value="2">Classic Kottu</option>
-            <option  value="3">Dolphin Kottu</option>
-            <option  value="4">Cheese Kottu</option>
-            <option  value="5">String Hopper Kottu</option>
-            <option  value="6">KL Special Fried Rice</option>
-            <option  value="7">Pasta</option>
-            <option  value="8">Appetizers</option>
-            <option  value="9">KL Inventions</option>
-            <option  value="10">Wraps & Rotti Sandwiches</option>
-            <option  value="11">Parata</option>
-            <option  value="12">Devilled Portions</option>
-            <option  value="13">Mocktails</option>
-            <option  value="14">Beverages</option>
-            </select>
+            <textarea id="meal_description" name="meal_description" placeholder="Enter description"></textarea>
+           
         </div>
 
         <div class="check-box-container">
@@ -278,9 +261,9 @@ window.addEventListener("load", () => {
                           
                                   // Populate row HTML
                                   row.innerHTML = `
-                                                                  <td class="meal-id" >${offer.offer_id}</td>
+                                                                  <td class="offer-id" >${offer.offer_id}</td>
                                                                   <td>${offer.offer_name}</td>
-                                                                  <td>${offer.offer_description}</td>
+                                                                  <td class="description-offer">${offer.offer_description}</td>
                                                                   <td>Rs.${offer.offer_price}</td>
                                                                   <td>${
                                                                     offer.branch_ids == "1" ? "Wattala" : offer.branch_ids == "2" ? "Kelaniya" : offer.branch_ids== "3" ? "Kotahena"
@@ -291,8 +274,8 @@ window.addEventListener("load", () => {
                                                                       
                           
                                                                       <div class="action-buttons">
-                                                                          <button class="edit-btn" meal-id='${offer.offer_id}'>Edit</button>
-                                                                          <button class="delete-btn" meal-id ='${offer.offer_id}'>Delete</button>
+                                                                          <button class="edit-btn" offer-id='${offer.offer_id}'>Edit</button>
+                                                                          <button class="delete-btn" offer-id ='${offer.offer_id}'>Delete</button>
                                                                       </div>
                                                                   </td>
                                                               `;
@@ -302,6 +285,50 @@ window.addEventListener("load", () => {
                                 });
 
                             }
+
+                            // Add event listeners to delete buttons
+      const deleteButtons = document.querySelectorAll(".delete-btn");
+      deleteButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+          // const row = button.closest('tr');
+          // row.remove();
+
+          if (
+            confirm(
+              "Are you sure you want to delete this offer? This action cannot be undone."
+            )
+          ) {
+            const offerId = button.getAttribute("offer-id");
+
+            const requestBody = JSON.stringify({ offer_id: offerId });
+            console.log("Request Body:", requestBody);
+
+            fetch("/offer/delete", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: requestBody,
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success) {
+                  alert("The offer has been deleted.");
+                  button.closest("tr").remove();
+                } else {
+                  alert(
+                    "There was an error deleting the offer: " + data.message
+                  );
+                  console.error("Error:", data.message);
+                }
+              })
+              .catch((error) => console.error("Error:", error));
+          }
+        });
+      });
+
+
+
         })
         .catch((error) => {
             console.error("Error fetching menu item data:", error);
