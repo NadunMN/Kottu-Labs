@@ -462,26 +462,6 @@ body {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Card Input Specific */
 .card-input {
     border: 1px solid #FCA5A5;
@@ -709,15 +689,6 @@ body {
     background-color: #882121;
     color: white;
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -971,13 +942,14 @@ hr {
 /* Feedbacks Section */
 .feedbacks-section {
     font-size: 16px;
+    width: 90%;
 }
 
 .feedbacks-section table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-}
+    }
 
 .feedbacks-section table th,
 .feedbacks-section table td {
@@ -1068,6 +1040,10 @@ hr {
 
 .description-offer{
     width: 30%;
+}
+
+.description-review{
+    width: 50%;
 }
 
 /* Table styles */
