@@ -130,21 +130,21 @@ font-family: "Fjalla One", serif;
     align-items: center;
     gap: 10px;
     padding-left:20px;
-    padding-right: 10px;
+    padding-right: 20px;
     padding-top:10px;
     padding-bottom: 10px;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 450;
     cursor: pointer;
-    border-radius: 50px;
+    border-radius: 20px;
     border: none;
     color: black;
     font-weight: bold;
 }
 
 .button-circle-1{
-    width: 45px;
-    height: 45px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     background-color: #000000;
 }

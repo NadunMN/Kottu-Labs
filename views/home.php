@@ -27,13 +27,13 @@
                             <img src="/Photo/icon/right-arrow.png" alt="">
                         </div>
                     </button>
-                <!-- <?php if (\app\core\Application::$app->user ==null): ?>
+                <?php if (\app\core\Application::$app->user ==null): ?>
                         <button onclick="window.location.href='/register'">SIGN UP</button>
                     <?php else: ?>
                         <button onclick="window.location.href='#'">MENU</button>
-                        <?php endif; ?> -->
+                        <?php endif; ?>
                     
-                    <!-- <button onclick="window.location.href='/login'">SIGN UP</button> -->
+                     <!-- <button onclick="window.location.href='/login'">SIGN UP</button>  -->
                 </div>
                
                 </div>
