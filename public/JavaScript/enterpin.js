@@ -13,15 +13,21 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Handle backspace
         input.addEventListener('keydown', function(e) {
             if (e.key === 'Backspace' && !this.value && index > 0) {
                 inputs[index - 1].focus();
             }
         });
-    });
     
-        inputs[0].focus(); // Focus the first input
+    
+        input.addEventListener('keydown',function(e){
+            if(e.key === 'Enter'){
+                e.preventDefault();
+                submitButton.click();
+            }
+        });
+    });
+    inputs[0].focus();
     
     // Submit handler
     submitButton.addEventListener('click', async function() {
@@ -31,13 +37,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         if (pin.length !== 6) {
-            messageDiv.textContent = 'Please enter all 5 digits';
+            messageDiv.textContent = 'Please enter 6 digits';
             return;
         }
 
         messageDiv.textContent = 'Verifying PIN...';
-
-        console.log(pin);
         
         try {
             const response = await fetch(`/reservation/otp?pin=${pin}`, {
@@ -46,20 +50,39 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Content-Type': 'application/json'
                 }
             });
-            console.log(response);
             
-            
-            const result = await response.json();
-            console.log(result);
+            const text = await response.text();
+            const result = JSON.parse(text);
 
-            console.log(result.reservation.reservation_no);
-            
             if (result.success) {
-                alert("PIN verified successfully!"); 
-            } else {
+                pinEntrySection.style.display = 'none'; 
+                document.getElementById('modalMessage').textContent = ''; 
+                document.getElementById('reservationModal').style.display = 'block';
+                
+                document.getElementById('reservationDate').value = result.reservation.reservation_date; 
+                document.getElementById('reservationTime').value= result.reservation.reservation_time; 
+                document.getElementById('numberOfGuests').value = result.reservation.number_of_guests; 
+                
+                const branch_id = result.reservation.branch_id;
+                const branchName = branch_id === '1' ? 'Wattala' : branch_id === '2' ? 'Kelaniya' : 'Kotahena';
+                document.getElementById('branch').value = branchName;
+
+                 // check with the current date
+                 const currentDate = new Date();
+                 const formattedCurrentDate = currentDate.toISOString().split('T')[0]; 
+                 const reservationDate= result.reservation.reservation_date;
+                 const reservationDateInput = document.getElementById('reservationDate'); 
+                 if (reservationDate === formattedCurrentDate) {
+                     reservationDateInput.style.color = ''; 
+                    } 
+                    else {
+                     reservationDateInput.style.color = 'red'; 
+                    }
+            }
+            else {
                 messageDiv.textContent = 'Invalid PIN. Please try again.';
                 inputs.forEach(input => {
-                    input.value = ''; // Clear each input
+                    input.value = ''; 
                 });
                 inputs[0].focus();
             }
@@ -68,4 +91,10 @@ document.addEventListener('DOMContentLoaded', function() {
             messageDiv.textContent = 'Failed to verify PIN.';
         }
     });
+     window.onclick = function(event) {
+        const modal = document.getElementById('reservationModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    }
 });

@@ -19,7 +19,7 @@ class ReservationController extends Controller
        if ($reservation) {
            echo json_encode(['success' => true, 'reservation' => $reservation]);
        } else {
-           echo json_encode(['error' => 'Reservation not found']);
+        echo json_encode(['success' => false, 'message' => 'Invalid PIN.']);
        }
    }
 
