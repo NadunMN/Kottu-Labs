@@ -78,3 +78,135 @@ body {
 .submit-button:hover {
     background-color: #0056b3;
 }
+
+.reservation-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    height: 85vh;
+  }
+
+  
+  
+/* Card Styles */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing);
+    justify-content: center;
+  }
+  
+  .card-content {
+    background:rgba(0, 0, 0, 0.541);
+    box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.1);
+    
+    width: auto;
+    height: auto;
+  
+    border-radius: 10px;
+    padding: 30px;
+    gap: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card-content-left{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  
+
+.card-content .form-title {
+    font-size: 1.5rem; /* Increase the font size */
+    color:#ddd; /* Use the primary color */
+    text-align: center; /* Center align the text */
+    text-transform:capitalize; /* Convert text to uppercase */
+    margin-bottom: 20px; /* Add space below the title */
+    text-shadow: 1px 1px 3px var(--shadow-color); /* Subtle text shadow for depth */
+    position: relative; 
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+  
+  /* Form Styles */
+  .reservation-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    width: 500px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0);
+    border-radius: 10px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+  }
+
+
+  .form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  
+.form-input:focus,
+.form-select:focus {
+  border-color: #EE3E3F;
+  box-shadow: 0 0 5px rgba(238, 62, 63, 0.5);
+  outline: none;
+}
+
+button {
+    grid-column: span 2;
+    padding: 0.75rem 1.5rem;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+
+  button:hover {
+    background: #EE3E3F;
+    transform: translateY(-2px);
+  }
+  
+  button:active {
+    transform: translateY(0);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .card-content {
+      max-width: 100%;
+    }
+  
+    .reservation-form {
+      grid-template-columns: 1fr; /* Single column for smaller screens */
+    }
+  
+    button {
+      grid-column: span 1; /* Button spans single column on mobile */
+    }
+  }  
