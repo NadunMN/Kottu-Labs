@@ -68,7 +68,11 @@ if (Application::$app->user && Application::$app->user->position == 'admin') {
     $app->router->get('/profile', [$siteController, 'userDashboard']);
     $app->router->get('/myaccount', [$siteController, 'userProfile']);
 }else if(Application::$app->user && Application::$app->user->position == 'chef') {
+
     $app->router->get('/profile', [$siteController, 'chefDashboard']);
+    $app->router->get('/profile/view-order', [$siteController, 'viewOrderChef']);
+    $app->router->get('/profile/update-menu', [$siteController, 'updateMenuChef']);
+
 }else if(Application::$app->user && Application::$app->user->position == 'steward') {
     $app->router->get('/profile', [$siteController, 'stewardDashboard']);
     
@@ -171,6 +175,7 @@ $app->router->get('/reservation/otp', function() use ($reservationController) {
 
 //reservation Number
 $app->router->post('/reservationNumber', [$authController, 'reservationNumberGenerator']);
+$app->router->post('/reservation/addtable', [$reservationController, 'addtableReservation']);
 
 //define route for feedbacks
 $app->router->get('/feedback/get', [$feedbacksController, 'getReviews']);

@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
 * {
     font-family: 'Roboto', sans-serif;
@@ -48,6 +49,33 @@ main {
     background-color: #000000b2;
 }
 
+.back-white-circle{
+    position: absolute;
+    top:15%;
+    border-radius: 50%;
+    width: 400px;
+    height: 400px;
+    background-color: rgba(255, 255, 255, 0.767);
+    z-index:-1;
+    filter: blur(400px);
+}
+/* 
+.pic-1{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index:-1;
+    opacity: 0.05;
+}
+
+
+.pic-1 img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+} */
+
+
 .first-background-img::before {
     content: "";
     position: absolute;
@@ -55,7 +83,7 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('/Photo/bundo-kim-Pb9bUzH1nD8-unsplash.jpg') no-repeat center center;
+    /* background: url('/Photo/snapinsta.jpg') no-repeat center center; */
     background-size: cover;
     /* filter: blur(10px); */
     z-index: -1; /* Places the blurred background behind the content */
@@ -68,16 +96,16 @@ main {
 
 
 .first-background-overlay{
-    background-color: rgba(0, 0, 0, 0.347);
+    background-color: rgb(0, 0, 0);
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     gap: 30px;
     border-radius: inherit;
-    padding-left: 100px;
+    z-index: 100;
 }
 
 
@@ -87,21 +115,32 @@ main {
     color: white;
     font-family: "Fjalla One", serif;
     font-size: 100px;
-    text-align: left;
+    text-align: center;
     margin-top: -50px;
     font-weight: 500;
+    line-height: 1.2;
+
     
-    
+}
+
+.first-background-overlay .Header-text .under-text-part{
+    font-size: 100px;
+    /* font-family: "Cabin Sketch", serif; */
+    font-family: "Pacifico", serif;
+    font-weight: 500;
+    background: linear-gradient(to right, #ffffff, #EE3E3F); /* Adjust colors */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 
 .first-background-overlay .Header-text span{
 color: #EE3E3F;
-font-family: "Fjalla One", serif;
-    font-size: 100px;
+font-family: "Cabin Sketch", serif;
+font-size: 100px;
     text-align: left;
     margin-top: -50px;
-    font-weight: 500;
+    font-weight: bolder;
 }
 
 .first-background-overlay .Sub-text {

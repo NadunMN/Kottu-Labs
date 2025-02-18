@@ -16,6 +16,14 @@ class m0004_colum_reservation
             $db->pdo->exec($SQL);
         }
 
+        // Add table_number column
+        $checkColumnSQL = "SHOW COLUMNS FROM reservations LIKE 'table_number';";
+        $result = $db->pdo->query($checkColumnSQL)->fetch();
+        if (!$result) {
+            $SQL = "ALTER TABLE reservations ADD COLUMN table_number INT;";
+            $db->pdo->exec($SQL);
+        }
+
     }
 
     public function down()
@@ -24,6 +32,10 @@ class m0004_colum_reservation
 
         // Drop confirmation_number column
         $SQL = "ALTER TABLE reservations DROP COLUMN confirmation_number;";
+        $db->pdo->exec($SQL);
+
+        // Drop table_number column
+        $SQL = "ALTER TABLE reservations DROP COLUMN table_number;";
         $db->pdo->exec($SQL);
 
        

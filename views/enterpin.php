@@ -39,7 +39,7 @@
                 <div class="card-content">
                     <div class="card-content-left">
                         <h2 class="form-title">Reservation Confimation</h2>
-                        <form id="reservationConfirmationForm" action="/reservationNumber" class="reservation-form" method="POST">
+                        <form id="reservationConfirmationForm" class="reservation-form" method="POST">
                             <div class="form-group">
                                 <label for="fullname" class="form-label" >Full Name</label>
                                 <input type="text" id="fullname" name="fullname" class="form-input">

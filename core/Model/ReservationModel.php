@@ -11,6 +11,7 @@ abstract class ReservationModel extends DbModel
     abstract public function save();
     abstract public function delete();
     abstract public function update();
+    // abstract public static function addTable();
 
 
 }

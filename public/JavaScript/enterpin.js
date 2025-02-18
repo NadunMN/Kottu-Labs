@@ -2,6 +2,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const inputs = document.querySelectorAll('.pin-digit');
     const submitButton = document.querySelector('.submit-button');
     const messageDiv = document.querySelector('.pin-message');
+    const reservationForm = document.getElementById('reservationConfirmationForm');
+
+    let userId;
+    let ReservationNo;
 
     // Auto-focus next input
     inputs.forEach((input, index) => {
@@ -53,15 +57,22 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const text = await response.text();
             const result = JSON.parse(text);
+            console.log(result);
+            console.log(result.reservation[0].userName);
+
+            
 
             if (result.success) {
                 pinEntrySection.style.display = 'none'; 
                 document.getElementById('modalMessage').textContent = ''; 
                 document.getElementById('reservationModal').style.display = 'block';
                 
-                document.getElementById('reservationDate').value = result.reservation.reservation_date; 
-                document.getElementById('reservationTime').value= result.reservation.reservation_time; 
-                document.getElementById('numberOfGuests').value = result.reservation.number_of_guests; 
+                document.getElementById('fullname').value = result.reservation[0].userName; 
+                document.getElementById('reservationDate').value = result.reservation[0].reservation_date; 
+                document.getElementById('reservationTime').value= result.reservation[0].reservation_time; 
+                document.getElementById('numberOfGuests').value = result.reservation[0].number_of_guests; 
+
+                ReservationNo = result.reservation[0].reservation_time;
                 
                 const branch_id = result.reservation.branch_id;
                 const branchName = branch_id === '1' ? 'Wattala' : branch_id === '2' ? 'Kelaniya' : 'Kotahena';
@@ -91,10 +102,53 @@ document.addEventListener('DOMContentLoaded', function() {
             messageDiv.textContent = 'Failed to verify PIN.';
         }
     });
+
+
+
+     // Single submit event listener
+     reservationForm.addEventListener('submit', function (event) {
+        event.preventDefault();  // Prevent default form submission
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+        data.reservation_no = ReservationNo;  // Add user ID to the form data
+        
+        const requestBody = JSON.stringify(data);
+
+        console.log('Request Body:', requestBody);  // Log the request body for debugging
+
+        fetch("/reservation/addtable", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: requestBody,
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Success:", data);
+            alert("Reservation successful!");  // Example success message
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("An error occurred while submitting your reservation. Please try again.");
+        });
+    });
+
+
+
      window.onclick = function(event) {
         const modal = document.getElementById('reservationModal');
         if (event.target === modal) {
             modal.style.display = 'none';
         }
     }
+
+    
+    
 });

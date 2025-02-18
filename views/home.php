@@ -14,7 +14,12 @@
     <div class="home-top-main" id="home-top-main">
         <div class="first-background-img">
             <div class="first-background-overlay">
-                <p class="Header-text">Enjoy your,<br/> SL Comfort <span>Food</span> Kottu</p>
+                <div class="back-white-circle"></div>
+                <!-- <div class="pic-1">
+                    <img src="/Photo/download (1).jpeg" alt="">
+                </div> -->
+                
+                <p class="Header-text">Enjoy your, SL <br/><span class="under-text-part"> Comfort Food <span>Kottu</span></span></p>
                 <p class="Sub-text">
                 Experience the authentic taste of Sri Lanka with our signature Kottu dishes!</br>
                 we’re ready to serve you with freshly made Kottu that's packed with flavor.

@@ -59,22 +59,38 @@ class Reservation extends ReservationModel
         ];
     }
 
-    public static function findOtp($reservationNo){
+    public static function findOne($where)
+    {
         $tableName = static::tableName();
-        $sql = "SELECT otp FROM $tableName WHERE reservation_no = :reservation_no LIMIT 1";
+        $attributes = array_keys($where);
     
-        $statement = self::prepare($sql);
-        $statement->bindValue(":reservation_no", $reservationNo);
+        // Generate the WHERE clause dynamically
+        $sql = implode(" AND ", array_map(fn($attr) => "`$attr` = :$attr", $attributes));
     
+        $statement = self::prepare("
+            SELECT 
+                $tableName.*, 
+                CONCAT(users.firstname, ' ', users.lastname) AS userName
+            FROM `$tableName`
+            JOIN users ON $tableName.user_id = users.id
+            where $sql
+        ");
+    
+        foreach ($where as $key => $value) {
+            $statement->bindValue(":$key", $value);
+        }
+    
+        // Error handling for the SQL execution
         try {
             $statement->execute();
-            $result = $statement->fetch(\PDO::FETCH_ASSOC);
-            return $result ? $result['otp'] : null; // Return OTP if found, otherwise null
+            return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
         } catch (\PDOException $e) {
-            error_log("Error fetching OTP: " . $e->getMessage());
-            return null;
+            // Log or handle the error appropriately
+            echo "Error: " . $e->getMessage();
+            return false;
         }
     }
+
 
     public static function findAll($where)
     {
@@ -133,6 +149,23 @@ class Reservation extends ReservationModel
 
         $sql = "INSERT INTO $tableName (" . implode(', ', $attributes) . ") 
                 VALUES (" . implode(', ', $params) . ")";
+
+        $statement = self::prepare($sql);
+
+        foreach ($attributes as $attribute) {
+            $statement->bindValue(":$attribute", $this->{$attribute});
+        }
+
+        return $statement->execute();
+    }
+
+    public function addTable()
+    {
+        $tableName = static::tableName();
+        $attributes = $this->attributes();
+        $params = array_map(fn($attr) => ":$attr", $attributes);
+
+        $sql = "UPDATE $tableName SET table_number = :table_number WHERE reservation_no = :reservation_no";
 
         $statement = self::prepare($sql);
 

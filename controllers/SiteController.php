@@ -208,5 +208,17 @@ class SiteController extends Controller
         return $this->render('enterpin');
     }
 
+    public function viewOrderChef(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('/chef/view-order');
+    }
+
+    public function updateMenuChef(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('/chef/update-menu');
+    }
+
 }
 ?>
