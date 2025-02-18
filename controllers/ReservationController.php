@@ -23,4 +23,15 @@ class ReservationController extends Controller
        }
    }
 
+   public function addtableReservation(){
+         $data = Application::$app->request->getBody();
+         $reservation = new Reservation();
+         $reservation->load($data);
+         if ($reservation->addTable()) {
+              echo json_encode(['success' => true, 'message' => 'Reservation added successfully']);
+         } else {
+              echo json_encode(['success' => false, 'message' => 'Failed to add reservation']);
+         }
+   }
+
 }
