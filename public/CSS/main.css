@@ -59,6 +59,22 @@ main {
     z-index:-1;
     filter: blur(400px);
 }
+/* 
+.pic-1{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index:-1;
+    opacity: 0.05;
+}
+
+
+.pic-1 img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+} */
+
 
 .first-background-img::before {
     content: "";
@@ -67,7 +83,7 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    /* background: url('/Photo/bundo-kim-Pb9bUzH1nD8-unsplash.jpg') no-repeat center center; */
+    /* background: url('/Photo/snapinsta.jpg') no-repeat center center; */
     background-size: cover;
     /* filter: blur(10px); */
     z-index: -1; /* Places the blurred background behind the content */
