@@ -65,13 +65,13 @@ class Reservation extends ReservationModel
         $attributes = array_keys($where);
     
         // Generate the WHERE clause dynamically
-        $sql = implode(" AND ", array_map(fn($attr) => "`$attr` = :$attr", $attributes));
+        $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
     
         $statement = self::prepare("
             SELECT 
                 $tableName.*, 
                 CONCAT(users.firstname, ' ', users.lastname) AS userName
-            FROM `$tableName`
+            FROM $tableName
             JOIN users ON $tableName.user_id = users.id
             where $sql
         ");
@@ -91,40 +91,40 @@ class Reservation extends ReservationModel
         }
     }
 
-
     public static function findAll($where)
     {
         $tableName = static::tableName();
         $attributes = array_keys($where);
     
-        // Generate the WHERE clause dynamically
-        $sql = implode(" AND ", array_map(fn($attr) => "`$attr` = :$attr", $attributes));
+        // Generate the WHERE clause dynamically if conditions exist
+        $sql = $attributes ? " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes)) : "";
     
         $statement = self::prepare("
             SELECT 
                 $tableName.*, 
                 CONCAT(users.firstname, ' ', users.lastname) AS userName, 
                 branches.branch_name AS branchName
-            FROM `$tableName`
+            FROM $tableName
             JOIN users ON $tableName.user_id = users.id
             JOIN branches ON $tableName.branch_id = branches.branch_id
-            
+            $sql
         ");
     
         foreach ($where as $key => $value) {
             $statement->bindValue(":$key", $value);
         }
     
-        // Error handling for the SQL execution
         try {
             $statement->execute();
-            return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
+            
+            // Fetch as an associative array to avoid dynamic property issues
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
-            // Log or handle the error appropriately
             echo "Error: " . $e->getMessage();
             return false;
         }
     }
+    
     
 
     public function toArray(): array
@@ -199,7 +199,7 @@ class Reservation extends ReservationModel
         $sql = "UPDATE $tableName SET " . implode(', ', $params) . " WHERE $primaryKey = :$primaryKey";
         
         // Ensure prepare method is available and connects to PDO
-        $statement = self::prepare($sql);  // Ensure `prepare` is implemented correctly
+        $statement = self::prepare($sql);  // Ensure prepare is implemented correctly
         
         // Bind attribute values
         foreach ($attributes as $attribute) {
