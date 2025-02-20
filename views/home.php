@@ -20,6 +20,9 @@
                 </div> -->
                 
                 <p class="Header-text">Enjoy your, SL <br/><span class="under-text-part"> Comfort Food <span>Kottu</span></span></p>
+                
+
+
                 <p class="Sub-text">
                 Experience the authentic taste of Sri Lanka with our signature Kottu dishes!</br>
                 we’re ready to serve you with freshly made Kottu that's packed with flavor.
@@ -291,7 +294,7 @@
     
 
     
-
+<!-- <script src="/JavaScript/home.js"></script> -->
 
 
 

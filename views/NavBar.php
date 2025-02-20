@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/CSS/NavBar.css">
 </head>
 <body>
-    <div class="main-div">
+    <div class="main-div home-main-div">
         <div class="logo">
             <div class="logo-img">
                 
