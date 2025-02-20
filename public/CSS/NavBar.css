@@ -15,7 +15,6 @@ body {
     align-items: center;
     padding: 0 30px;
     background: #000000;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     height: 65px;
     /* position: sticky; */
     top: 0;
