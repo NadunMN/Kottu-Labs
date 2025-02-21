@@ -223,7 +223,7 @@ class SiteController extends Controller
 
     public function successReservation(Request $request,Response $response)
     {
-        $this->setLayout('dashboard');
+        $this->setLayout('auth');
         return $this->render('successReservation');
     }
 
