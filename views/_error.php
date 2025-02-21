@@ -22,7 +22,6 @@
 
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--background-gradient);
             min-height: 100vh;
             display: flex;
             align-items: center;
