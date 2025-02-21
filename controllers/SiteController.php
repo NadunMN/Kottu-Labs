@@ -220,5 +220,18 @@ class SiteController extends Controller
         return $this->render('/chef/update-menu');
     }
 
+
+    public function successReservation(Request $request,Response $response)
+    {
+        $this->setLayout('dashboard');
+        return $this->render('successReservation');
+    }
+
+    public function confirmReservation(Request $request,Response $response)
+    {
+        $this->setLayout('dashboard');
+        return $this->render('confirmReservation');
+    }
+
 }
 ?>
