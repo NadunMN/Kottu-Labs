@@ -140,6 +140,19 @@ class OfferController extends Controller
                 echo json_encode(['success' => false, 'errors' => $offer->errors]);
             }
         }
+
+        //publish offer
+        public function publishOffer()
+        {
+            $offer = new Offer();
+            $offer->load(Application::$app->request->getBody());
+    
+            if ($offer->updatePublish()) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'errors' => $offer->errors]);
+            }
+        }
         
 
 
