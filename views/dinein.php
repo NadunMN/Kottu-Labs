@@ -78,6 +78,7 @@
     </section>
 
     <script src="/JavaScript/dinein.js"></script>
+    <script src="/JavaScript/confirmationReservation.js"></script>
 
 </body>
 

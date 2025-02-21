@@ -40,43 +40,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Single submit event listener
     reservationForm.addEventListener('submit', function (event) {
-        event.preventDefault();  // Prevent default form submission
-
+        event.preventDefault(); // Prevent default form submission
+    
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
         data.user_id = userId;  // Add user ID to the form data
         data.confirmation_number = randomNumber;  // Add confirmation number to the form data
         const requestBody = JSON.stringify(data);
-
+    
         console.log('Request Body:', requestBody);  // Log the request body for debugging
-
-        fetch("/reservation/add", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: requestBody,
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log("Success:", data);
-            const form = event.target;
-            form.action = `/reservationNumber?random=${randomNumber}`;
-
-            // Submit the form programmatically
-            form.submit();
-
-            alert("Reservation successful!");  // Example success message
-            reservationForm.reset();  // Reset the form after successful submission
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("An error occurred while submitting your reservation. Please try again.");
-        });
+        localStorage.setItem('reservationData', requestBody);  // Store reservation data in local storage
+    
+        // Change form action
+        reservationForm.action = `/reservationNumber?random=${randomNumber}`;
+        
+        // Submit the form programmatically after ensuring action is set
+        setTimeout(() => {
+            reservationForm.submit(); 
+        }, 100); // Add a slight delay to ensure `action` is set
+    
+        // Redirect only **after** form submission is processed
+        setTimeout(() => {
+            window.location.href = '/confirmreservation';
+        }, 500);
     });
+    
 });

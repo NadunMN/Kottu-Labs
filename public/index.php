@@ -86,7 +86,8 @@ if (Application::$app->user && Application::$app->user->position == 'admin') {
     $app->router->get('/myaccount', [$siteController, 'userProfile']);
 }
 
-$app->router->get('/otp', [$siteController, 'otp']);
+$app->router->get('/successreservation', [$siteController, 'successReservation']);
+$app->router->get('/confirmreservation', [$siteController, 'confirmReservation']);
 $app->router->get('/cart', [$siteController, 'cart']);
 $app->router->get('/offer', [$siteController, 'offer']);
 
