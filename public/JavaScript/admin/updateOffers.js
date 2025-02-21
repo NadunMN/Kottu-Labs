@@ -260,25 +260,31 @@ window.addEventListener("load", () => {
                                   const row = document.createElement("tr");
                           
                                   // Populate row HTML
-                                  row.innerHTML = `
-                                                                  <td class="offer-id" >${offer.offer_id}</td>
-                                                                  <td>${offer.offer_name}</td>
-                                                                  <td class="description-offer">${offer.offer_description}</td>
-                                                                  <td>Rs.${offer.offer_price}</td>
-                                                                  <td>${
-                                                                    offer.branch_ids == "1" ? "Wattala" : offer.branch_ids == "2" ? "Kelaniya" : offer.branch_ids== "3" ? "Kotahena"
-                                                                    : offer.branch_ids == '1,2' ? "Wattala, Kelaniya" : offer.branch_ids == '1,3' ? "Wattala, Kotahena" : offer.branch_ids == '2,3' ? "Kelaniya, Kotahena" : "All Branches"
-                                                                    }</td>
-                                                                  
-                                                                  <td>
-                                                                      
-                          
-                                                                      <div class="action-buttons">
-                                                                          <button class="edit-btn" offer-id='${offer.offer_id}'>Edit</button>
-                                                                          <button class="delete-btn" offer-id ='${offer.offer_id}'>Delete</button>
-                                                                      </div>
-                                                                  </td>
-                                                              `;
+                                    row.innerHTML = `
+                                        <td class="offer-id">${offer.offer_id}</td>
+                                        <td>${offer.offer_name}</td>
+                                        <td class="description-offer">${offer.offer_description}</td>
+                                        <td>Rs.${offer.offer_price}</td>
+                                        <td>${
+                                            offer.branch_ids == "1" ? "Wattala" 
+                                            : offer.branch_ids == "2" ? "Kelaniya" 
+                                            : offer.branch_ids == "3" ? "Kotahena"
+                                            : offer.branch_ids == '1,2' ? "Wattala, Kelaniya" 
+                                            : offer.branch_ids == '1,3' ? "Wattala, Kotahena" 
+                                            : offer.branch_ids == '2,3' ? "Kelaniya, Kotahena" 
+                                            : "All Branches"
+                                        }</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="publish-btn" offer-id="${offer.offer_id}" publish-id="${offer.publish_status}">
+                                                    ${offer.publish_status == '1' ? 'Published' : 'Publish'}
+                                                </button>
+                                                <button class="edit-btn" offer-id="${offer.offer_id}">Edit</button>
+                                                <button class="delete-btn" offer-id="${offer.offer_id}">Delete</button>
+                                            </div>
+                                        </td>
+                                    `;
+
                           
                                   // Append the row directly to the table body
                                   document.getElementById("table-content").appendChild(row);
@@ -326,6 +332,53 @@ window.addEventListener("load", () => {
           }
         });
       });
+
+
+// Add event listeners to publish buttons
+const publishButtons = document.querySelectorAll(".publish-btn");
+publishButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    if (confirm("Are you sure you want to publish this offer?")) {
+      const offerId = button.getAttribute("offer-id");
+      let publishId = button.getAttribute("publish-id");
+
+      // Toggle publish status
+      publishId = publishId === '1' ? '0' : '1';
+
+      const requestBody = JSON.stringify({ offer_id: offerId, publish_status: publishId });
+      console.log("Request Body:", requestBody);
+
+      fetch("/offer/publish", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: requestBody,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            alert("The offer has been published.");
+
+            // Update button text and attribute
+            button.setAttribute("publish-id", publishId);
+            button.innerHTML = publishId === '1' ? 'Published' : 'Publish';
+          } else {
+            alert("There was an error publishing the offer: " + data.message);
+            console.error("Error:", data.message);
+          }
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+  });
+});
+
+
+
+
+
+
+
 
 
 

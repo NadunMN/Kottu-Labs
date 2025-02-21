@@ -18,6 +18,7 @@ class Offer extends OfferModel
     public string $offer_price = '';
     public string $offer_description = '';
     public string $offer_photo = '';
+    public int $publish_status = 0;
 
     
     
@@ -44,7 +45,7 @@ class Offer extends OfferModel
 
     public function attributes(): array
     {
-        return ['offer_id', 'offer_name', 'offer_price', 'offer_description', 'offer_photo'];
+        return ['offer_id', 'offer_name', 'offer_price', 'offer_description', 'offer_photo', 'publish_status'];
     }
 
     public function rules(): array
@@ -180,6 +181,35 @@ class Offer extends OfferModel
             return false;
         }
     }
+
+    public function updatePublish()
+    {
+
+        $tableName = static::tableName();
+        $attributes = $this->attributes();
+        $params = array_map(fn($attr) => "$attr = :$attr", $attributes);
+        
+        // Assuming primaryKey() returns a string key name
+        $primaryKey = static::primaryKey();
+        $sql = "UPDATE $tableName SET publish_status = :publish_status WHERE $primaryKey = :$primaryKey";
+        
+        // Ensure prepare method is available and connects to PDO
+        $statement = self::prepare($sql);  // Ensure `prepare` is implemented correctly
+        
+        
+        $statement->bindValue(":publish_status", $this->publish_status);
+        $statement->bindValue(":$primaryKey", $this->{$primaryKey});
+    
+        // Execute statement and return result
+        try {
+            return $statement->execute();
+        } catch (\Exception $e) {
+            // Error handling here
+            echo "Update failed: " . $e->getMessage();
+            return false;
+        }
+    }
+
     
 
     
