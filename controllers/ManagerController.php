@@ -217,10 +217,6 @@ class ManagerController extends Controller
     }
     
 
-    private function fetchOtpFromDatabase() {
-        return 12345;
-
-    }
         //reservation deletion
         public function deleteReservation(){
             try {

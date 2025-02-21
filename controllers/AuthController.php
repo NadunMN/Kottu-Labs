@@ -80,7 +80,7 @@ class AuthController extends Controller
     public function reservationNumberGenerator()
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $name = $_POST['fullname'];
+            $name = $_POST['reservation_name'];
             $email = $_POST['email'];
             $randomNumber = $_GET['random'];
 

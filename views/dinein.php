@@ -26,7 +26,7 @@
             <form id="reservationForm" action="/reservationNumber" class="reservation-form" method="POST">
   <div class="form-group">
     <label for="fullname" class="form-label" >Full Name</label>
-    <input type="text" id="fullname" name="fullname" class="form-input" placeholder="Enter Full Name" required>
+    <input type="text" id="fullname" name="reservation_name" class="form-input" placeholder="Enter Full Name" required>
 </div>
 <div class="form-group">
     <label for="email" class="form-label">Email</label>

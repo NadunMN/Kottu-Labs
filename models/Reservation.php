@@ -16,6 +16,7 @@ class Reservation extends ReservationModel
     public string $branch_id = '';
     public string $user_id = '';
     public string $confirmation_number = '';
+    public string $reservation_name = '';
     
     
 
@@ -42,7 +43,7 @@ class Reservation extends ReservationModel
     public function attributes(): array
     {
         return ['reservation_no','reservation_date', 'reservation_time', 'number_of_guests', 
-        'confirmation_status', 'branch_id', 'user_id', 'confirmation_number'];
+        'confirmation_status', 'branch_id', 'user_id', 'confirmation_number', 'reservation_name'];
     }
 
     public function rules(): array
