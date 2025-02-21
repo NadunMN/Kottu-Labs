@@ -7,6 +7,7 @@
     height: auto;
     overflow: hidden;
     position: relative;
+    margin: 20px auto;
     /* background-color: #333; */
 }
 
@@ -22,11 +23,12 @@
 
 .card {
     width: 300px;
-    height: auto;
+    height: 100%;
     border-radius: 10px;
     text-align: center;
     display: grid;
     place-content: center;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
     /* background-color: aqua; */
 }
 
@@ -70,7 +72,7 @@
 .card-wapper {
     background-color: #fff;
     border-radius: 15px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); */
     overflow: hidden;
     width: 300px;
     height: auto;
@@ -94,29 +96,39 @@
 }
 
 .card-title {
-    font-size: 22px;
-    margin: 0 0 10px;
-    color: #333;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 8px;
 }
 
 .card-text {
-    font-size: 16px;
-    color: #777;
-    margin: 0 0 20px;
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .card-btn {
-    display: inline-block;
-    background-color: #4976ba;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
+    width: 100%;
+    padding: 12px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 10px;
 }
 
 .card-btn:hover {
-    background-color: #0056b3;
+    background-color: #EE3E3F;
 }
 
 @media (max-width: 620px) {

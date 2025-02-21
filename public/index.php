@@ -184,6 +184,9 @@ $app->router->get('/feedback/get', [$feedbacksController, 'getReviews']);
 $app->router->post('/feedback/delete', [$feedbacksController, 'deleteReviews']);
 
 
+$app->router->get('/offer/getpublished', [$offerController, 'getAllPublishedOffers']);
+
+
 
 // Run the application
 $app->run();
