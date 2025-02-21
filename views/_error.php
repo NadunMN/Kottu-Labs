@@ -173,7 +173,7 @@
             <?php echo $friendlyMessage; ?>
         </h1>
 
-        <?php if (defined('APP_DEBUG') && APP_DEBUG): ?>
+        <?php if (defined('APP_DEBUG')): ?>
         <div class="error-details">
             <strong>Technical Details:</strong><br>
             <?php echo $errorMessage; ?><br>
