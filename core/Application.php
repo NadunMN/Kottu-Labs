@@ -75,6 +75,7 @@ class Application
         } catch (\Exception $e) {
             $statusCode = is_int($e->getCode()) ? $e->getCode() : 500;
             $this->response->setStatusCode($statusCode);
+            $this->layout = 'auth'; // Change layout to 'auth'
             echo $this->view->renderView('_error', [
                 'exception' => $e
             ]);
