@@ -131,6 +131,15 @@
     background-color: #EE3E3F;
 }
 
+/* .no-offers {
+    color: red;
+    font-size: 16px;
+    text-align: center;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+} */
+
 @media (max-width: 620px) {
 
     .carousel {
