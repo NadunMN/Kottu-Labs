@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
                color: #343a40; 
                margin-bottom: 0.5rem; 
                font-weight: 600;">
-        No Offers Available
+        No Offers published yet!
     </h3>
 
     <p style="color: #6c757d; 
