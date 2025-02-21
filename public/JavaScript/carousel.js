@@ -1,59 +1,103 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const carousels = document.querySelectorAll('.carousel-container');
 
     carousels.forEach(carousel => {
         const prevBtn = carousel.querySelector('.prev-btn');
         const nextBtn = carousel.querySelector('.next-btn');
         const carouselInner = carousel.querySelector('.carousel');
-        const cards = carouselInner.querySelectorAll('.card');
 
         let currentIndex = 0;
         let maxVisibleCards = getVisibleCardsCount();
+        let cards = []; // Will be populated after fetch
 
         // Function to calculate how many cards should be visible based on screen width
         function getVisibleCardsCount() {
             const screenWidth = window.innerWidth;
-            if (screenWidth <= 620) {
-                return 2; 
-            } else if (screenWidth <= 940) {
-                return 2; // For tablets
-            } else if (screenWidth <= 1260) {
-                return 3; // For desktops
-            } else {
-                return 4; // For large desktops
-            }
+            if (screenWidth <= 620) return 2;
+            if (screenWidth <= 940) return 2;
+            if (screenWidth <= 1260) return 3;
+            return 4;
         }
 
         // Update the carousel when the current index changes
         function updateCarousel() {
+            if (cards.length === 0) return; // No cards yet
             const cardWidth = cards[0].offsetWidth + 20; // Assuming margin/gap
             const newTransformValue = -(currentIndex * cardWidth);
             carouselInner.style.transform = `translateX(${newTransformValue}px)`;
         }
 
         // Handle next button click
-        nextBtn.addEventListener('click', () => {
+        function handleNext() {
             if (currentIndex < cards.length - maxVisibleCards) {
                 currentIndex++;
                 updateCarousel();
             }
-        });
+        }
 
         // Handle previous button click
-        prevBtn.addEventListener('click', () => {
+        function handlePrev() {
             if (currentIndex > 0) {
                 currentIndex--;
                 updateCarousel();
             }
-        });
+        }
+
+        // Attach event listeners to buttons
+        prevBtn.addEventListener('click', handlePrev);
+        nextBtn.addEventListener('click', handleNext);
 
         // Handle screen resize
         window.addEventListener('resize', () => {
             maxVisibleCards = getVisibleCardsCount(); // Recalculate based on new window size
-            currentIndex = 0; // Reset index to avoid out-of-bound errors
+            currentIndex = Math.min(currentIndex, cards.length - maxVisibleCards); // Ensure index is within bounds
             updateCarousel(); // Update the view
         });
 
-        updateCarousel(); // Initialize the carousel view
+        // Show loading state
+        carouselInner.innerHTML = "<p class='width-window'>Loading...</p>";
+
+        // Fetch data and update carousel
+        fetch('/offer/getpublished')
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error('Error fetching offers:', data.error);
+                    carouselInner.innerHTML = "<p>Failed to load offers. Please try again later.</p>";
+                    return;
+                }
+
+                if (data.length === 0) {
+                    carouselInner.innerHTML = "<p>No offers found</p>";
+                    return;
+                }
+
+                // Generate cards HTML
+                const offerCards = data.map(offer => `
+                    <div class="card">
+                        <div class="card-wapper">
+                            <img src="${offer.offer_photo}" alt="Card image" class="card-img">
+                            <div class="card-content">
+                                <h3 class="card-title">${offer.offer_name || 'Card Title'}</h3>
+                                <p class="card-text">${offer.offer_description || 'This is a brief description of the card content.'}</p>
+                                <button href="#" class="card-btn">Learn More</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Update carousel content
+                carouselInner.innerHTML = offerCards;
+
+                // Reinitialize cards and update carousel
+                cards = carouselInner.querySelectorAll('.card');
+                maxVisibleCards = getVisibleCardsCount();
+                currentIndex = 0; // Reset index
+                updateCarousel(); // Initialize the carousel view
+            })
+            .catch(error => {
+                console.error('Error fetching offers:', error);
+                carouselInner.innerHTML = "<p>Failed to load offers. Please try again later.</p>";
+            });
     });
 });

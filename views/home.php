@@ -35,10 +35,16 @@
                             <img src="/Photo/icon/right-arrow.png" alt="">
                         </div>
                     </button>
+
+                    
+
+                    
                 <?php if (\app\core\Application::$app->user ==null): ?>
                         <button onclick="window.location.href='/register'">SIGN UP</button>
+                        
                     <?php else: ?>
                         <button onclick="window.location.href='#'">MENU</button>
+                        
                         <?php endif; ?>
                     
                      <!-- <button onclick="window.location.href='/login'">SIGN UP</button>  -->
@@ -52,9 +58,31 @@
     <div class="offers-section">
         <div class="topic-head">
             <p class="card-head-topic">Special Offers</p>
-            <button onclick="window.location.href='/offer'">View All</button>
+            <!-- <button onclick="window.location.href='/offer'">View All</button> -->
+            
+            <!-- From Uiverse.io by Creatlydev --> 
+            <button class="cta" onclick="window.location.href='/offer'">
+            <span class="hover-underline-animation"> View all </span>
+            <svg
+                id="arrow-horizontal"
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="10"
+                viewBox="0 0 46 16"
+            >
+                <path
+                id="Path_10"
+                data-name="Path 10"
+                d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
+                transform="translate(30)"
+                ></path>
+            </svg>
+            </button>
+
+
+
         </div>
-        <hr class="styled-hr">
+        <!-- <hr class="styled-hr"> -->
         <?php include __DIR__ . '../carousel.php'; ?>
     </div>
 
@@ -72,8 +100,76 @@
 
                 <div class="topic-head">
                     <!-- <button>LEARN MORE</button> -->
-                    <button onclick="window.location.href='/selectBranch'">TAKE AWAY</button>
-                    <button onclick="window.location.href='/dinein'">DINE IN</button>
+                    <!-- <button onclick="window.location.href='/selectBranch'">TAKE AWAY</button> -->
+                    <!-- From Uiverse.io by Creatlydev --> 
+                    <button href="#" class="button" style="--clr:rgb(0, 0, 0)" onclick="window.location.href='/selectBranch'">
+                    <span class="button__icon-wrapper">
+                        <svg
+                        viewBox="0 0 14 15"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="button__icon-svg"
+                        width="10"
+                        >
+                        <path
+                            d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                            fill="currentColor"
+                        ></path>
+                        </svg>
+
+                        <svg
+                        viewBox="0 0 14 15"
+                        fill="none"
+                        width="10"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="button__icon-svg button__icon-svg--copy"
+                        >
+                        <path
+                            d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                            fill="currentColor"
+                        ></path>
+                        </svg>
+                    </span>
+                    TAKE AWAY
+                    </button>
+
+
+                    <button href="#" class="button" style="--clr:rgb(0, 0, 0)" onclick="window.location.href='/dinein'">
+                    <span class="button__icon-wrapper">
+                        <svg
+                        viewBox="0 0 14 15"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="button__icon-svg"
+                        width="10"
+                        >
+                        <path
+                            d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                            fill="currentColor"
+                        ></path>
+                        </svg>
+
+                        <svg
+                        viewBox="0 0 14 15"
+                        fill="none"
+                        width="10"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="button__icon-svg button__icon-svg--copy"
+                        >
+                        <path
+                            d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                            fill="currentColor"
+                        ></path>
+                        </svg>
+                    </span>
+                    DINE IN
+                    </button>
+
+
+
+                    
+                    
+                    <!-- <button onclick="window.location.href='/dinein'">DINE IN</button> -->
                 </div>
             </div>
 

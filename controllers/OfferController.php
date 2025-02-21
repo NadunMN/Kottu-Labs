@@ -153,6 +153,19 @@ class OfferController extends Controller
                 echo json_encode(['success' => false, 'errors' => $offer->errors]);
             }
         }
+
+        public function getAllPublishedOffers(){
+            $offers = Offer::findAllOriginal(['publish_status' => 1]);
+    
+            $offerData = [];
+    
+            foreach ($offers as $offer) {
+                $offerData[] = $offer;
+            }
+    
+            echo json_encode($offerData);
+
+        }
         
 
 

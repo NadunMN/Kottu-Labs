@@ -250,27 +250,27 @@ font-size: 100px;
     width: 1260px;
 }
 
-.offers-section .topic-head button{
+/* .offers-section .topic-head button{
     background-color:transparent;
     border: 1px solid black;
     color: black;
-    /* border-radius: 20px; */
     width: auto;
     height: 30px;
     padding:  0 20px;
     font-size: 1rem;
     cursor: pointer;
-    /* border: none; */
-}
-.offers-section .topic-head button:hover{
+} */
+
+
+/* .offers-section .topic-head button:hover{
     background-color: #EE3E3F;
     transition: background-color 0.3s ease, transform 0.3s ease;
     transform: scale(1.05);
     border: none;
     color: white;
-}
+} */
 
-.topic-head button {
+/* .topic-head button {
     width: 150px;
     height: 40px;
     font-size: 20px;
@@ -282,15 +282,14 @@ font-size: 100px;
     transition: background-color 0.3s ease;
     border-radius: 10px;
 
-}
+} */
 
-.topic-head button:hover {
-    /* transform: translateY(-3px); */
+/* .topic-head button:hover {
     background-color: #EE3E3F;
     transition: background-color 0.3s ease, transform 0.3s ease;
     transform: scale(1.05);
 
-}
+} */
 
 
 
