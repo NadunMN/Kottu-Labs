@@ -24,6 +24,14 @@ class m0004_colum_reservation
             $db->pdo->exec($SQL);
         }
 
+        // Add reservation_name column
+        $checkColumnSQL = "SHOW COLUMNS FROM reservations LIKE 'reservation_name';";
+        $result = $db->pdo->query($checkColumnSQL)->fetch();
+        if (!$result) {
+            $SQL = "ALTER TABLE reservations ADD COLUMN reservation_name varchar(255);";
+            $db->pdo->exec($SQL);
+        }
+
     }
 
     public function down()
@@ -36,6 +44,10 @@ class m0004_colum_reservation
 
         // Drop table_number column
         $SQL = "ALTER TABLE reservations DROP COLUMN table_number;";
+        $db->pdo->exec($SQL);
+
+        // Drop reservation_name column
+        $SQL = "ALTER TABLE reservations DROP COLUMN reservation_name;";
         $db->pdo->exec($SQL);
 
        
