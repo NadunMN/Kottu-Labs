@@ -68,7 +68,42 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 if (data.length === 0) {
-                    carouselInner.innerHTML = "<p>No offers found</p>";
+                    carouselInner.innerHTML = `
+                    <div class="no-offers-container" 
+     style="text-align: center; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 2rem; 
+            
+            border-radius: 10px; 
+             
+            margin: 20px; 
+            ">
+
+    <i class="fas fa-box-open" 
+       style="font-size: 3rem; 
+              color: #6c757d; 
+              margin-bottom: 1rem;"></i>
+
+    <h3 style="font-size: 1.5rem; 
+               color: #343a40; 
+               margin-bottom: 0.5rem; 
+               font-weight: 600;">
+        No Offers Available
+    </h3>
+
+    <p style="color: #6c757d; 
+             font-size: 1rem; 
+             max-width: 400px; 
+             line-height: 1.5;">
+        We'll notify you when new offers arrive!
+    </p>
+</div>
+                `;                    
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
                     return;
                 }
 
