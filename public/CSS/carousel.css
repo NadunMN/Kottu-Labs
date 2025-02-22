@@ -4,10 +4,10 @@
     align-items: center;
     justify-content: center;
     max-width: 1260px;
-    height: auto;
+    height: 450px;
     overflow: hidden;
     position: relative;
-    margin: 20px auto;
+    margin-top: 20px;
     /* background-color: #333; */
 }
 
@@ -16,7 +16,7 @@
     justify-content: flex-start;
     transition: transform 0.5s ease-in-out;
     width: 100%;
-    height: auto;
+    height: 400px;
     gap: 20px;
     /* background-color: #0056b3; */
 }
@@ -30,6 +30,7 @@
     place-content: center;
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
     /* background-color: aqua; */
+    cursor: pointer;
 }
 
 .prev-btn, .next-btn {
@@ -81,7 +82,7 @@
 }
 
 .card:hover {
-    /* transform: translateY(-10px); */
+    transform: translateY(-10px);
     transition:transform 0.3s ease;
 }
 
@@ -124,7 +125,6 @@
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.2s;
-    margin-top: 10px;
 }
 
 .card-btn:hover {

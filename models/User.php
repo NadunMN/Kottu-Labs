@@ -75,10 +75,10 @@ class User extends UserModel
     public function labels(): array
     {
         return [
-            'firstname' => 'First Name',
-            'lastname' => 'Last Name',
-            'email' => 'Your Email',
-            'mobile_number' => 'Mobile Number',
+            'firstname' => 'First Name(Eg:Kottu)',
+            'lastname' => 'Last Name(Eg:Labs)',
+            'email' => 'Your Email(Eg:example@gmail.com)',
+            'mobile_number' => 'Mobile Number(Eg:+94000000000)',
             // 'gender' => 'Gender',
             // 'address' => 'Address',
             // 'nationality' => 'Nationality',
