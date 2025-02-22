@@ -38,7 +38,7 @@ body {
   justify-content: center;
   align-items: center;
   margin: auto;
-  height: 85vh;
+  height: 90vh;
 }
 
 
@@ -99,14 +99,14 @@ body {
 
 
 .card-content .form-title {
-  font-size: 1.5rem; /* Increase the font size */
+  font-size: 2rem; /* Increase the font size */
   color:#ddd; /* Use the primary color */
   text-align: center; /* Center align the text */
   text-transform:capitalize; /* Convert text to uppercase */
   margin-bottom: 20px; /* Add space below the title */
   text-shadow: 1px 1px 3px var(--shadow-color); /* Subtle text shadow for depth */
   position: relative; 
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: "Playfair Display", serif; /* A modern, elegant font */
 }
 
 /* Form Styles */
