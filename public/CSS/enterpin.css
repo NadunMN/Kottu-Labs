@@ -1,212 +1,226 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+:root {
+  /* Color palette */
+  --color-primary: #007bff;
+  --color-primary-dark: #0056b3;
+  --color-danger: #dc3545;
+  --color-text-primary: #333;
+  --color-text-secondary: #666;
+  --color-background: #f5f5f5;
+  --color-white: #fff;
+  --color-border: #ddd;
+  --color-accent: #EE3E3F;
+  
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 2.5rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 0 20px 5px rgba(0, 0, 0, 0.1);
+  
+  /* Border radius */
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
 }
 
+/* Reset */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* Layout Components */
 .pin-topic {
-    text-align: center;
-    padding: 40px 20px;
-    background-color: #f5f5f5;
+  text-align: center;
+  padding: var(--spacing-xl) var(--spacing-sm);
+  background-color: var(--color-background);
 }
 
 .pin-topic h1 {
-    margin: 0;
-    color: #333;
+  margin: 0;
+  color: var(--color-text-primary);
 }
 
 .pin-topic p {
-    margin: 10px 0 0;
-    color: #666;
+  margin: var(--spacing-xs) 0 0;
+  color: var(--color-text-secondary);
 }
 
 .pin-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-xl) var(--spacing-sm);
 }
 
+/* PIN Input Styles */
 .pin-box {
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
+  background: var(--color-white);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  width: 100%;
+  max-width: 400px;
 }
 
 .pin-input-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-sm);
 }
 
 .pin-digit {
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    font-size: 24px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    outline: none;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 1.5rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.3s ease;
 }
 
 .pin-digit:focus {
-    border-color: #007bff;
+  border-color: var(--color-primary);
 }
 
 .pin-message {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #dc3545;
-    min-height: 20px;
+  text-align: center;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-danger);
+  min-height: 20px;
 }
 
-.submit-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+/* Reservation Section */
+.reservation-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 85vh;
+  padding: var(--spacing-md);
 }
 
-.submit-button:hover {
-    background-color: #0056b3;
-}
-
-.reservation-section{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    height: 85vh;
-  }
-
-  
-  
 /* Card Styles */
 .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing);
-    justify-content: center;
-  }
-  
-  .card-content {
-    background:rgba(0, 0, 0, 0.541);
-    box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.1);
-    
-    width: auto;
-    height: auto;
-  
-    border-radius: 10px;
-    padding: 30px;
-    gap: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .card-content-left{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  
-
-.card-content .form-title {
-    font-size: 1.5rem; /* Increase the font size */
-    color:#ddd; /* Use the primary color */
-    text-align: center; /* Center align the text */
-    text-transform:capitalize; /* Convert text to uppercase */
-    margin-bottom: 20px; /* Add space below the title */
-    text-shadow: 1px 1px 3px var(--shadow-color); /* Subtle text shadow for depth */
-    position: relative; 
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  }
-  
-  /* Form Styles */
-  .reservation-form {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    width: 500px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0);
-    border-radius: 10px;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-  }
-
-  
-.form-label {
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    color: #ffffff;
-  }
-
-
-  .form-input {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.5);
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-
-  
-.form-input:focus,
-.form-select:focus {
-  border-color: #EE3E3F;
-  box-shadow: 0 0 5px rgba(238, 62, 63, 0.5);
-  outline: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  justify-content: center;
 }
 
+.card-content {
+  background: rgba(0, 0, 0, 0.85);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  display: flex;
+  gap: var(--spacing-xl);
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(8px);
+}
+
+.card-content-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Form Styles */
+.form-title {
+  font-size: 1.5rem;
+  color: var(--color-white);
+  text-align: center;
+  text-transform: capitalize;
+  margin-bottom: var(--spacing-sm);
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  position: relative;
+}
+
+.reservation-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+  width: 100%;
+  max-width: 500px;
+  padding: var(--spacing-sm);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.form-label {
+  font-weight: 500;
+  color: var(--color-white);
+}
+
+.form-input {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-white);
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 5px rgba(238, 62, 63, 0.5);
+  outline: none;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Button Styles */
+.submit-button,
 button {
-    grid-column: span 2;
-    padding: 0.75rem 1.5rem;
-    background: #333;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+  width: 100%;
+  padding: var(--spacing-sm);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 1rem;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover,
+button:hover {
+  background-color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.submit-button:active,
+button:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .card-content {
+    flex-direction: column;
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
   }
 
+  .reservation-form {
+    grid-template-columns: 1fr;
+  }
 
-  button:hover {
-    background: #EE3E3F;
-    transform: translateY(-2px);
+  button {
+    grid-column: 1 / -1;
   }
-  
-  button:active {
-    transform: translateY(0);
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .card-content {
-      max-width: 100%;
-    }
-  
-    .reservation-form {
-      grid-template-columns: 1fr; /* Single column for smaller screens */
-    }
-  
-    button {
-      grid-column: span 1; /* Button spans single column on mobile */
-    }
-  }  
+}

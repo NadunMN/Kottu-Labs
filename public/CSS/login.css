@@ -1,175 +1,245 @@
-*{
+* {
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
 }
 
-.upper-part{
+.upper-part {
     width: 100%;
     height: 50px;
-    background-image: url('/Photo/13682.jpg');
-    background-size:cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-color: #111;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.upper-part .logo-img{
+.upper-part .logo-img {
     width: auto;
     height: 50px;
-    background-image: url('/Photo/icon/logonew.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: violet;
     cursor: pointer;
+    filter: invert(1);
 }
-.form-login{
-    width:100%;
+
+.form-login {
+    width: 100%;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('/Photo/13682.jpg');
-    background-size:cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}  
- 
-
-
-.form-login .second-part{
-    padding: 50px 0;
-    width: 500px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 20px;
-    background-color: white;
-    /* background-image: url('/Photo/13682.jpg');
-    background-size:cover;
-    background-position: center;
-    background-repeat: no-repeat; */
-    
-    box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.1);
+    background-color: #111;
 }
 
-.form-login .second-part h1{
-    font-size: 1.8rem;
+.form-login .second-part {
+    padding: 2rem;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 12px;
+    background-color: #222;
+    /* box-shadow: 0 0px 20px 2px rgba(255, 255, 255, 0.141); */
+}
+
+.form-login .second-part h1 {
+    font-size: 2rem;
     font-weight: 600;
-    text-align: left;
-    width: 80%;
+    
+    color: #fff;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.form-login .second-part h3{
-    font-size: 0.9rem;
-    font-weight: 300;
-    margin-bottom: 20px;
-    text-align: left;
-    width: 80%;
-    opacity: 0.5;
-    /* background-color: turquoise; */
+/* .form-login .second-part h1::before {
+    content: "";
+    width: 24px;
+    height: 24px;
+    background-color: #fff;
+    border-radius: 50%;
+} */
+
+.form-login .second-part h3 {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    color: #aaa;
 }
 
-form{
-    width: 500px;
-    height: auto;
+form {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0;
-    /* background-color: violet; */
+    gap: 1rem;
 }
 
-.form-group{
-    width: 80%;
-    height: auto;
+.form-group {
+    width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    height: auto;
-    margin: 5px 0;
-    /* background-color: yellow;   */
+    gap: 0.25rem;
+    position: relative;
 }
 
-.form-control{
+.form-group::before {
+    content: "";
+    position: absolute;
+    left: 14px;
+    top: 45%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    filter: invert(0.6);
+    z-index: 2;
+}
+
+.form-group[data-icon="user"]::before {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3zm9 11v-1a7 7 0 0 0-7-7h-4a7 7 0 0 0-7 7v1h2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"/></svg>');
+}
+
+.form-group[data-icon="email"]::before {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4.7-8 5.3-8-5.3V6l8 5.3 8-5.3z"/></svg>');
+}
+
+.form-group[data-icon="lock"]::before {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 10h-1V7a7 7 0 0 0-14 0v3H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2zM8 7a4 4 0 0 1 8 0v3H8zm12 13H4v-8h16z"/></svg>');
+}
+
+.name-group {
+    display: flex;
+    gap: 1rem;
+}
+
+.name-group .form-group {
+    flex: 1;
+}
+
+.form-control {
     width: 100%;
-    height: 50px;
-    border-radius: 10px;
-    border: 1px solid #cbcbcb;
-    padding-left: 10px;
+    height: 48px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    padding: 0 16px 0 40px;
     font-size: 1rem;
+    color: #fff;
+    transition: all 0.3s ease;
+    background-color: #333;
+    position: relative;
+    z-index: 1;
 }
 
-.form-control:focus{
-    font-size: 1rem;
-
+.form-control:focus {
+    border-color: #fff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
 }
 
-.form-control::placeholder{
-    font-size: 1rem;
+.form-control::placeholder {
+    color: #888;
 }
 
-.invalid-feedback{
-    color: #c91432;
-    margin-top: 5px;
-    font-size: 0.8rem;
+.invalid-feedback {
+    color: #ff4444;
+    font-size: 0.75rem;
+}
+
+.btn {
     width: 100%;
-
-}
-
-.btn{
-    width: 82%;
-    height: 50px;
+    height: 48px;
     font-size: 1rem;
-    border-radius: 10px;
+    font-weight: 600;
+    border-radius: 8px;
     border: none;
-    background-color: #000000;
+    background-color: #000;
     color: white;
     cursor: pointer;
-    margin-top: 10px;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+    letter-spacing: 0.5px;
 }
 
-.btn:hover{
-    transition: transform 0.3s ,background-color 0.3s ease;
-    transform: scale(1.01);
-    background-color:#EE3E3F;
-
+.btn:hover {
+    background-color: #222;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
-.or{
-    width: 75%;
+.or {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+    color: #666;
+}
+
+.or::before,
+.or::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #333;
+}
+
+.btn-google {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #444;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-
-    opacity: 0.5;
-
+    gap: 0.5rem;
+    transition: all 0.3s ease;
 }
 
-.btn-google{
-    background-color: rgb(241, 241, 241);
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
+.btn-google:hover {
+    background-color: #444;
+    border-color: #555;
+    transform: translateY(-1px);
 }
 
-.btn-google img{
-    width: 20px;
-    height: auto;
-
+.btn-google img {
+    width: 18px;
+    height: 18px;
+    filter: invert(1);
 }
 
+.second-part p {
+    width: 100%;
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: #aaa;
+}
 
+.second-part p a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
 
+.second-part p a:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
 
+@media (max-width: 480px) {
+    .form-login .second-part {
+        width: 90%;
+        margin: 1rem;
+    }
+
+    .name-group {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+.form-group[data-icon="phone"]::before {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 10.999h2C22 5.869 18.127 2 12.99 2v2C17.052 4 20 6.943 20 10.999z"/><path d="M13 8c2.103 0 3 .897 3 3h2c0-3.225-1.775-5-5-5v2zm3.422 5.443a1.001 1.001 0 0 0-1.391.043l-2.393 2.461c-.576-.11-1.734-.471-2.926-1.66-1.192-1.193-1.553-2.354-1.66-2.926l2.459-2.394a1 1 0 0 0 .043-1.391L6.859 3.513a1 1 0 0 0-1.391-.087l-2.17 1.861a1 1 0 0 0-.29.649c-.015.25-.301 6.172 4.291 10.766C11.305 20.707 16.323 21 17.705 21c.202 0 .326-.006.359-.008a.99.99 0 0 0 .648-.291l1.86-2.171a1 1 0 0 0-.086-1.391l-4.064-3.696z"/></svg>');
+}

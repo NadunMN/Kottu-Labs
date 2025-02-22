@@ -66,7 +66,7 @@
         }
 
         h2 {
-            color: #2c3e50;
+            color:rgb(0, 0, 0);
             margin-bottom: 20px;
             font-size: 28px;
         }
@@ -80,7 +80,7 @@
         }
 
         .reservation-details p {
-            color: #495057;
+            color:rgb(0, 0, 0);
             margin: 10px 0;
             font-size: 16px;
             line-height: 1.5;
@@ -110,7 +110,7 @@
         }
 
         .btn-primary {
-            background-color: #2c3e50;
+            background-color:rgb(0, 0, 0);
             color: white;
         }
 
