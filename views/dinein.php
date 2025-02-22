@@ -22,7 +22,7 @@
     <section class="reservation-section">
         <div class="card-content">
             <div class="card-content-left">
-            <h2 class="form-title">Reserve your Dining Experience !</h2>
+            <h2 class="form-title">Add Reservation</h2>
             <form id="reservationForm" action="/reservationNumber" class="reservation-form" method="POST">
   <div class="form-group">
     <label for="fullname" class="form-label" >Full Name</label>
