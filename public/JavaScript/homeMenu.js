@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const branchSelect = document.getElementById("branch-select");
     const searchSelection = document.getElementById("search-selection-2");
     const menuContainer = document.querySelector(".menu-items");
+    const lengthMenu = document.querySelector(".how-many");
 
     const mealDescriptions = {
         1: "All",
@@ -36,8 +37,45 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 if (data.length === 0) {
-                    menuContainer.innerHTML = "<p class=\"width-window\" >No meals found</p>";
+                    menuContainer.innerHTML = `
+                        <div class="no-offers-container" 
+                            style="text-align: center; 
+                                    display: flex; 
+                                    flex-direction: column; 
+                                    align-items: center; 
+                                    justify-content: center; 
+                                    padding: 2rem; 
+                                    width: 100%;
+                                    height: 300px;
+                                    border-radius: 10px; 
+                                    
+                                    margin: 20px; 
+                                    ">
+
+                            <i class="fa-solid fa-bowl-food" 
+                            style="font-size: 3rem; 
+                                    color: #6c757d; 
+                                    margin-bottom: 1rem;"></i>
+
+                            <h3 style="font-size: 1.5rem; 
+                                    color: #343a40; 
+                                    margin-bottom: 0.5rem; 
+                                    font-weight: 600;">
+                                No Meals Found!
+                            </h3>
+
+                            <p style="color: #6c757d; 
+                                    font-size: 1rem; 
+                                    max-width: 400px; 
+                                    line-height: 1.5;">
+                                We'll notify you when new meals arrive!
+                            </p>
+                        </div>
+                    `;
+                    lengthMenu.innerHTML = "0 Meals Available";
                     return;
+                }else{
+                    lengthMenu.innerHTML = data.length + " Meals Available";
                 }
 
                 

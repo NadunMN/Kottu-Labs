@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu - Kottu Labs</title>
     <link rel="stylesheet" href="/CSS/menu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
 <body>
 
@@ -61,7 +63,7 @@
     
 
     <div class="menu-container">
-        <p class="how-many">Showing 12 Meals</p>
+        <p class="how-many">12 Meals Available</p>
         <div class="menu-items">
             
         <div class="card">
