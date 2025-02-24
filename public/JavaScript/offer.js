@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <p class="card-description">
                                 ${offer.offer_description}
                             </p>
-                            <button class="view-button">VIEW DETAILS</button>
+                            <button class="view-button" onclick="window.location.href='/offer/offerview'">VIEW DETAILS</button>
                             </div>
                         </div>
 

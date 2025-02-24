@@ -133,6 +133,7 @@ $app->router->post('/menuitem/update', [$managerController, 'updatemenuItems']);
 
 //define route for offers
 $app->router->get('/offer/get', [$offerController, 'getOffers']);
+$app->router->get('/offer/offerview', [$siteController, 'viewOfferMain']);
 
 //define route for reservations
 $app->router->post('/reservation/add', [$userController, 'addReservation']);

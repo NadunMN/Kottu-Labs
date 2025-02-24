@@ -145,6 +145,12 @@ class SiteController extends Controller
         return $this->render('offer');
     }
 
+    public function viewOfferMain(Request $request,Response $response)
+    {
+        $this->setLayout('dashboard');
+        return $this->render('offerView');
+    }
+
     //admin
     public function dashboardAdmin(Request $request,Response $response)
     {

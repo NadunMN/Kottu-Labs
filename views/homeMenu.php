@@ -63,7 +63,7 @@
     
 
     <div class="menu-container">
-        <p class="how-many">12 Meals Available</p>
+        <p class="how-many">0 Meals Available</p>
         <div class="menu-items">
             
         <div class="card">
