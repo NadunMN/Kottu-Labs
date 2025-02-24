@@ -79,7 +79,7 @@ class Meal extends DbModel
         return $statement->fetchAll(PDO::FETCH_CLASS, static::class);
     }
 
-    public static function findAllWithoutGroup($where)
+    public static function findAllWithoutGroup($where, $searchTerm)
     {
         $tableName = static::tableName();
         $attributes = array_keys($where);
@@ -87,7 +87,7 @@ class Meal extends DbModel
                 JOIN branch_meals b ON $tableName.meal_id = b.meal_id                 
                 ";
         if (!empty($attributes)) {
-            $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+            $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes)) . " AND meal_name LIKE '%$searchTerm%'";
         }
         $statement = self::prepare($sql);
         foreach ($where as $key => $item) {

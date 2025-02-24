@@ -79,7 +79,7 @@ class Offer extends OfferModel
         return $statement->fetchAll(PDO::FETCH_CLASS, static::class);
     }
 
-    public static function findAllWithoutGroup($where)
+    public static function findAllWithoutGroup($where, $searchTerm)
     {
         $tableName = static::tableName();
         $attributes = array_keys($where);
@@ -87,7 +87,7 @@ class Offer extends OfferModel
                 JOIN branch_offers b ON $tableName.offer_id = b.offer_id                 
                 ";
         if (!empty($attributes)) {
-            $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+            $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes)) . " AND offer_name LIKE '%$searchTerm%'";
         }
         $statement = self::prepare($sql);
         foreach ($where as $key => $item) {

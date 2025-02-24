@@ -90,12 +90,12 @@ class OfferController extends Controller
 }
 
     //get menu data
-    public function offersByBranch($branchId)
+    public function offersByBranch($branchId, $searchTerm)
     {
         if (Application::$app->user) {
             // Fetch meals by branch ID
             
-                $offers = Offer::findAllWithoutGroup(['branch_id' => $branchId]);
+                $offers = Offer::findAllWithoutGroup(['branch_id' => $branchId], $searchTerm);
             
             $offerData = [];
             foreach ($offers as $offer) {

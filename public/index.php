@@ -156,15 +156,16 @@ $app->router->get('/enterpin', [$siteController, 'enterpin']);
 $app->router->get('/getMealsmenu', function() use ($mealController) {
     $branchId = $_GET['branchId'] ?? null;
     $selectionId = $_GET['selectionId'] ?? null;
-    $mealController->mealsByBranch($branchId, $selectionId);
+    $searchTerm = $_GET['search'] ?? null;
+    $mealController->mealsByBranch($branchId, $selectionId, $searchTerm);
 });
 
 
 //offer
 $app->router->get('/getofferlist', function() use ($offerController) {
     $branchId = $_GET['branchId'] ?? null;
-    // $selectionId = $_GET['selectionId'] ?? null;
-    $offerController->offersByBranch($branchId);
+    $searchTerm = $_GET['search'] ?? null;
+    $offerController->offersByBranch($branchId, $searchTerm);
 });
 
 $app->router->post('/offer/delete', [$offerController, 'deleteOffer']);

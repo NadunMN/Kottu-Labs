@@ -32,8 +32,8 @@
         <input type="text" id="search" placeholder="Search menu items...">
         <div class="search-icon">
           <img src="/Photo/icon/search.png" alt="">
-          <button>Search</button>
-        </div>
+          <button class="search-button-menu" >Search</button>
+          </div>
       </div>
 
 
