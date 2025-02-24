@@ -46,7 +46,7 @@
 
 
   <div class="menu-container">
-    <p class="how-many">Showing 12 Meals</p>
+    <p class="how-many">0 offers Available</p>
     <div class="menu-items">
 
 
@@ -61,7 +61,7 @@
           <p class="card-description">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
           </p>
-          <button class="view-button">VIEW DETAILS</button>
+          <button class="view-button" onclick="window.location.href='/offer/offerview'">VIEW DETAILS</button>
         </div>
       </div>
 
