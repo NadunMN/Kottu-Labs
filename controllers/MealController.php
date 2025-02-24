@@ -9,14 +9,14 @@ use app\models\Meal;
 class MealController extends Controller
 {
     //get menu data
-    public function mealsByBranch($branchId, $selectionId)
+    public function mealsByBranch($branchId, $selectionId, $searchTerm )
     {
         if (Application::$app->user) {
             // Fetch meals by branch ID
             if($selectionId == 1){
-                $meals = Meal::findAllWithoutGroup(['branch_id' => $branchId]);
+                $meals = Meal::findAllWithoutGroup(['branch_id' => $branchId], $searchTerm);
             } else {
-                $meals = Meal::findAllWithoutGroup(['branch_id' => $branchId, 'meal_description'=> $selectionId]);
+                $meals = Meal::findAllWithoutGroup(['branch_id' => $branchId, 'meal_description'=> $selectionId], $searchTerm);
             }
             $mealData = [];
             foreach ($meals as $meal) {

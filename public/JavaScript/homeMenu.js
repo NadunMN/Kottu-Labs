@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-
     const branchSelect = document.getElementById("branch-select");
     const searchSelection = document.getElementById("search-selection-2");
     const menuContainer = document.querySelector(".menu-items");
     const lengthMenu = document.querySelector(".how-many");
+    const searchInput = document.getElementById("search");
+    const searchButton = document.querySelector(".search-button-menu");
 
     const mealDescriptions = {
         1: "All",
@@ -22,13 +23,13 @@ document.addEventListener("DOMContentLoaded", function () {
         14: "Beverages"
     };
 
-    function loadMeals(branchId, selectionId) {
+    function loadMeals(branchId, selectionId, searchTerm = "") {
         console.log(selectionId);
         
         menuContainer.innerHTML = "<p class=\"width-window\">Loading...</p>";
 
-        
-        fetch(`/getMealsmenu?branchId=${branchId}&selectionId=${selectionId}`)
+        // Include the search term in the fetch request
+        fetch(`/getMealsmenu?branchId=${branchId}&selectionId=${selectionId}&search=${searchTerm}`)
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
@@ -74,15 +75,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     `;
                     lengthMenu.innerHTML = "0 Meals Available";
                     return;
-                }else{
+                } else {
                     lengthMenu.innerHTML = data.length + " Meals Available";
+                    console.log(data);
+                    
                 }
 
-                
-                const mealCards = data.map(meal => `
 
-                    
-                    
+                const mealCards = data.map(meal => `
                     <div class="card">
                         <div class="image-div">
                             <img src="${meal.meal_photo}" alt="Product Image" class="card-image" />
@@ -100,13 +100,9 @@ document.addEventListener("DOMContentLoaded", function () {
                             <div class="card-price">Rs. ${meal.meal_price}</div>
                             <button class="view-button"><img src="/Photo/icon/shopping-cart.png" alt="">ADD TO CART</button>
                         </div>
-                        </div>
-
-
-                        
+                    </div>
                 `).join('');
 
-                
                 menuContainer.innerHTML = mealCards;
             })
             .catch(error => {
@@ -115,14 +111,31 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    
+    // Initial load without search term
     loadMeals(branchSelect.value, searchSelection.value);
 
+    // Event listener for branch select change
     branchSelect.addEventListener("change", function () {
-        loadMeals(this.value, searchSelection.value);
+        loadMeals(this.value, searchSelection.value, searchInput.value.trim());
     });
 
+    // Event listener for search selection change
     searchSelection.addEventListener("change", function () {
-        loadMeals(branchSelect.value, this.value);
+        loadMeals(branchSelect.value, this.value, searchInput.value.trim());
+    });
+
+    // Event listener for search button click
+    searchButton.addEventListener("click", function () {
+        const searchTerm = searchInput.value.trim();
+        console.log(searchTerm);
+        loadMeals(branchSelect.value, searchSelection.value, searchTerm);
+    });
+
+    // Event listener for Enter key in search input
+    searchInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            const searchTerm = searchInput.value.trim();
+            loadMeals(branchSelect.value, searchSelection.value, searchTerm);
+        }
     });
 });

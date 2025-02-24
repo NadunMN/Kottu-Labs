@@ -2,14 +2,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const branchSelect = document.getElementById("branch-select");
     const menuContainer = document.querySelector(".menu-items");
+    const searchInput = document.getElementById("search");
+    const searchButton = document.querySelector(".search-button-menu");
 
 
-    function loadMeals(branchId) {
+    function loadMeals(branchId, searchTerm = "") {
         
         menuContainer.innerHTML = "<p class=\"width-window\">Loading...</p>";
 
         
-        fetch(`/getofferlist?branchId=${branchId}`)
+        fetch(`/getofferlist?branchId=${branchId}&search=${searchTerm}`)
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
@@ -59,7 +61,22 @@ document.addEventListener("DOMContentLoaded", function () {
     loadMeals(branchSelect.value);
 
     branchSelect.addEventListener("change", function () {
-        loadMeals(this.value);
+        loadMeals(this.value, searchInput.value.trim());
+    });
+
+    // Event listener for search button click
+    searchButton.addEventListener("click", function () {
+        const searchTerm = searchInput.value.trim();
+        console.log(searchTerm);
+        loadMeals(branchSelect.value, searchTerm);
+    });
+
+    // Event listener for Enter key in search input
+    searchInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            const searchTerm = searchInput.value.trim();
+            loadMeals(branchSelect.value, searchTerm);
+        }
     });
 
 });
