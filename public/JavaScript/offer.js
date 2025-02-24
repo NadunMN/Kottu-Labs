@@ -8,12 +8,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function loadMeals(branchId, searchTerm = "") {
         
-        menuContainer.innerHTML = "<p class=\"width-window\">Loading...</p>";
+        menuContainer.innerHTML = "<div class = \"loder-wrapper\"><div class=\"loader\"></div></div>";
 
         
         fetch(`/getofferlist?branchId=${branchId}&search=${searchTerm}`)
             .then(response => response.json())
             .then(data => {
+
+                setTimeout(() => {
                 if (data.error) {
                     menuContainer.innerHTML = `<p>${data.error}</p>`;
                     return;
@@ -50,6 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 
                 menuContainer.innerHTML = offerCards;
+                },1000);
             })
             .catch(error => {
                 console.error('Error fetching meals:', error);
