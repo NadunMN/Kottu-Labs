@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitButton = document.querySelector('.submit-button');
     const messageDiv = document.querySelector('.pin-message');
     const reservationForm = document.getElementById('reservationConfirmationForm');
+    const successModal = document.getElementById('successModal');
+    const closeButton = document.querySelector('.close-button');
 
     let userId;
     let ReservationNo;
@@ -54,34 +56,35 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Content-Type': 'application/json'
                 }
             });
-            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const text = await response.text();
             const result = JSON.parse(text);
-            console.log(result);
-            console.log(result.reservation[0].userName);
+            
 
             
 
             if (result.success) {
                 pinEntrySection.style.display = 'none'; 
-                document.getElementById('modalMessage').textContent = ''; 
+                // document.getElementById('modalMessage').textContent = ''; 
                 document.getElementById('reservationModal').style.display = 'block';
-                
-                document.getElementById('fullname').value = result.reservation[0].userName; 
-                document.getElementById('reservationDate').value = result.reservation[0].reservation_date; 
-                document.getElementById('reservationTime').value= result.reservation[0].reservation_time; 
-                document.getElementById('numberOfGuests').value = result.reservation[0].number_of_guests; 
+                document.getElementById('fullname').textContent = result.reservation[0].userName;
+                document.getElementById('reservationDate').textContent = result.reservation[0].reservation_date; 
+                document.getElementById('reservationTime').textContent= result.reservation[0].reservation_time; 
+                document.getElementById('numberOfGuests').textContent = result.reservation[0].number_of_guests; 
 
-                ReservationNo = result.reservation[0].reservation_time;
+                ReservationNo = result.reservation[0].reservation_no;
                 
                 const branch_id = result.reservation.branch_id;
                 const branchName = branch_id === '1' ? 'Wattala' : branch_id === '2' ? 'Kelaniya' : 'Kotahena';
-                document.getElementById('branch').value = branchName;
+                document.getElementById('branch').textContent = branchName;
 
                  // check with the current date
                  const currentDate = new Date();
                  const formattedCurrentDate = currentDate.toISOString().split('T')[0]; 
-                 const reservationDate= result.reservation.reservation_date;
+
+                 const reservationDate= result.reservation[0].reservation_date;
                  const reservationDateInput = document.getElementById('reservationDate'); 
                  if (reservationDate === formattedCurrentDate) {
                      reservationDateInput.style.color = ''; 
@@ -111,12 +114,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
-        data.reservation_no = ReservationNo;  // Add user ID to the form data
-        
+        data.reservation_no = ReservationNo;  
+
         const requestBody = JSON.stringify(data);
-
-        console.log('Request Body:', requestBody);  // Log the request body for debugging
-
         fetch("/reservation/addtable", {
             method: "POST",
             headers: {
@@ -132,7 +132,14 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
             console.log("Success:", data);
-            alert("Reservation successful!");  // Example success message
+            const successMessage = document.getElementById('successMessage');
+            reservationForm.style.display = 'none';
+            successMessage.style.display = 'block';
+
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+                pinEntrySection.style.display = 'block';
+            }, 2000);
         })
         .catch(error => {
             console.error("Error:", error);
@@ -140,14 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-
-
-     window.onclick = function(event) {
-        const modal = document.getElementById('reservationModal');
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    }
+     
 
     
     

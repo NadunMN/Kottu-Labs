@@ -27,6 +27,8 @@ class ReservationController extends Controller
          $data = Application::$app->request->getBody();
          $reservation = new Reservation();
          $reservation->load($data);
+
+         $reservation->confirmation_status = '1';
          if ($reservation->addTable()) {
               echo json_encode(['success' => true, 'message' => 'Reservation added successfully']);
          } else {
