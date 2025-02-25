@@ -1,4 +1,9 @@
-  // Quantity Selector
+document.addEventListener("DOMContentLoaded", function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const offerId = urlParams.get('id');
+    console.log(offerId);
+
+      // Quantity Selector
   document.querySelectorAll('.quantity-btn').forEach(button => {
     button.addEventListener('click', () => {
         const input = document.querySelector('.quantity-number');
@@ -10,14 +15,6 @@
             value = value > 1 ? value - 1 : 1;
         }
         input.value = value;
-    });
-});
-
-// Color Selection
-document.querySelectorAll('.color-circle').forEach(color => {
-    color.addEventListener('click', () => {
-        document.querySelectorAll('.color-circle').forEach(c => c.classList.remove('active'));
-        color.classList.add('active');
     });
 });
 
@@ -34,10 +31,14 @@ document.querySelectorAll('.tab').forEach(tab => {
     });
 });
 
-// Image Gallery
-document.querySelectorAll('.thumbnail').forEach(thumb => {
-    thumb.addEventListener('click', () => {
-        const mainImage = document.querySelector('.main-image');
-        mainImage.src = thumb.src.replace('thumbnail', 'main-image');
-    });
+    if (offerId) {
+        fetch(`/get/offer?offerId=${offerId}`)
+            .then(response => response.json())
+            .then(offer => {
+                
+            });
+    } else {
+        // Handle missing ID case
+        window.location.href = '/offers'; // Redirect if no ID
+    }
 });

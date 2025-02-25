@@ -169,6 +169,12 @@ $app->router->get('/getofferlist', function() use ($offerController) {
     $offerController->offersByBranch($branchId, $searchTerm);
 });
 
+$app->router->get('/get/offer', function() use ($offerController) {
+    $offerId = $_GET['offerId'] ?? null;
+    
+    $offerController->offerview($offerId);
+});
+
 $app->router->post('/offer/delete', [$offerController, 'deleteOffer']);
 
 

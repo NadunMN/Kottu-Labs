@@ -13,11 +13,7 @@
 
     <div class="product-container">
         <div class="product-gallery">
-
             <img src="/Photo/Snapinst.app_461933561_586941926993289_4010305730132216112_n_1080.jpg" class="main-image" alt="Blue Burton Backpack">
-            <!-- <div class="thumbnail-images">
-                <img src="/Photo/Snapinst.app_356642489_321255753561909_7795049026627078398_n_1080.jpg" class="thumbnail" alt="Backpack thumbnail 1">
-            </div> -->
         </div>
 
         <div class="product-info">

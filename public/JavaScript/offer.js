@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const menuContainer = document.querySelector(".menu-items");
     const searchInput = document.getElementById("search");
     const searchButton = document.querySelector(".search-button-menu");
+    const lengthMenu = document.querySelector(".how-many");
+
 
 
     function loadMeals(branchId, searchTerm = "") {
@@ -22,8 +24,45 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 if (data.length === 0) {
-                    menuContainer.innerHTML = "<p class=\"width-window\" >No Offer found</p>";
+                    menuContainer.innerHTML = `
+                            <div class="no-offers-container" 
+                                style="text-align: center; 
+                                        display: flex; 
+                                        flex-direction: column; 
+                                        align-items: center; 
+                                        justify-content: center; 
+                                        padding: 2rem; 
+                                        width: 100%;
+                                        height: 300px;
+                                        border-radius: 10px; 
+                                        margin: 20px;">
+    
+                                <i class="fa-solid fa-bowl-food" 
+                                style="font-size: 3rem; 
+                                        color: #6c757d; 
+                                        margin-bottom: 1rem;"></i>
+    
+                                <h3 style="font-size: 1.5rem; 
+                                        color: #343a40; 
+                                        margin-bottom: 0.5rem; 
+                                        font-weight: 600;">
+                                    No Offers Found!
+                                </h3>
+    
+                                <p style="color: #6c757d; 
+                                        font-size: 1rem; 
+                                        max-width: 400px; 
+                                        line-height: 1.5;">
+                                    We'll notify you when new offers arrive!
+                                </p>
+                            </div>
+                        `;
+                        lengthMenu.innerHTML = "0 Meals Available";
+
                     return;
+                } else {
+                    lengthMenu.innerHTML = data.length + " Offers Available";
+                    // console.log(data);
                 }
 
 
@@ -42,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <p class="card-description">
                                 ${offer.offer_description}
                             </p>
-                            <button class="view-button" onclick="window.location.href='/offer/offerview'">VIEW DETAILS</button>
+                            <button class="view-button" offer-id="${offer.offer_id}">VIEW DETAILS</button>
                             </div>
                         </div>
 
@@ -52,6 +91,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 
                 menuContainer.innerHTML = offerCards;
+
+                menuContainer.addEventListener('click', function(e) {
+            const button = e.target.closest('.view-button');
+            if (button) {
+                const offerId = button.getAttribute('offer-id');
+                if (offerId) {
+                    window.location.href = `/offer/offerview?id=${encodeURIComponent(offerId)}`;
+                }
+            }
+        });
+                
                 },1000);
             })
             .catch(error => {
