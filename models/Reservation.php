@@ -17,6 +17,7 @@ class Reservation extends ReservationModel
     public string $user_id = '';
     public string $confirmation_number = '';
     public string $reservation_name = '';
+    public string $table_number = '';
     
     
 
@@ -43,7 +44,7 @@ class Reservation extends ReservationModel
     public function attributes(): array
     {
         return ['reservation_no','reservation_date', 'reservation_time', 'number_of_guests', 
-        'confirmation_status', 'branch_id', 'user_id', 'confirmation_number', 'reservation_name'];
+        'confirmation_status', 'branch_id', 'user_id', 'confirmation_number', 'reservation_name', 'table_number'];
     }
 
     public function rules(): array
@@ -84,7 +85,7 @@ class Reservation extends ReservationModel
         // Error handling for the SQL execution
         try {
             $statement->execute();
-            return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             // Log or handle the error appropriately
             echo "Error: " . $e->getMessage();
@@ -159,21 +160,22 @@ class Reservation extends ReservationModel
 
         return $statement->execute();
     }
-
     public function addTable()
     {
         $tableName = static::tableName();
-        $attributes = $this->attributes();
-        $params = array_map(fn($attr) => ":$attr", $attributes);
-
-        $sql = "UPDATE $tableName SET table_number = :table_number WHERE reservation_no = :reservation_no";
-
-        $statement = self::prepare($sql);
-
-        foreach ($attributes as $attribute) {
-            $statement->bindValue(":$attribute", $this->{$attribute});
+        
+        // Ensure table_number and reservation_no are properties
+        if (!isset($this->table_number) || !isset($this->reservation_no)) {
+            throw new \Exception("Table number or reservation number is not set.");
         }
-
+    
+        $sql = "UPDATE $tableName SET table_number = :table_number, confirmation_status = :confirmation_status WHERE reservation_no = :reservation_no";
+    
+        $statement = self::prepare($sql);
+        $statement->bindValue(':table_number', $this->table_number);
+        $statement->bindValue(':reservation_no', $this->reservation_no);
+        $statement->bindValue(':confirmation_status', $this->confirmation_status);
+    
         return $statement->execute();
     }
     
