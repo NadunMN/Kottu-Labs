@@ -59,16 +59,7 @@ $currentPath = $_SERVER['REQUEST_URI'];
                 <div class="circle-name-wrapper">
                     <h1 id="user-name"></h1>
                     <h4 id="user-email"></h4>
-                    <div class="circle-name-numbers">
-                        <div class="ON-wrapper">
-                            <h4>ON:</h4>
-                            <h4>0234</h4>
-                        </div>
-                        <div class="ON-wrapper">
-                            <h4>TN:</h4>
-                            <h4>0234</h4>
-                        </div>
-                    </div>
+                    
 
                 </div>
 
