@@ -70,7 +70,7 @@ class Meal extends DbModel
                 ";
         if (!empty($attributes)) {
             $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
-        }
+        } 
         $statement = self::prepare($sql);
         foreach ($where as $key => $item) {
             $statement->bindValue(":$key", $item);

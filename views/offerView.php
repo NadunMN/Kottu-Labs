@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/CSS/offerView.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/CSS/menu.css">
+
 </head>
 <body>
     
@@ -64,7 +65,8 @@
 
     <!-- Add this section after the product-container div -->
 <section class="related-products">
-    <h2>YOU MIGHT ALSO LIKE</h2>
+    <h2 class="h2-product">Exclusive Meal Deals</h2>
+    
     <div class="product-grid">
         <!-- Product Card 1 -->
         <div class="card">
@@ -86,48 +88,6 @@
             <button class="view-button"><img src="/Photo/icon/shopping-cart.png" alt="">ADD TO CART</button>
             </div>
         </div>
-
-        <!-- Product Card 2 -->
-        <div class="card">
-            <div class="image-div">
-            <img src="/Photo/offers/_Start your forever with a delightful symphony of flavors at our wedding breakfast!.jpg" alt="Product Image" class="card-image">
-            </div>
-            <div class="card-label-wrapper">
-            <div class="card-label">
-                <p>Available</p>
-            </div>
-
-            <div class="card-label-2">
-                <p>Classic Kottu</p>
-            </div>
-            </div>
-            <div class="card-content">
-            <h2 class="card-title">Product Name</h2>
-            <div class="card-price">Rs. 2500/=</div>
-            <button class="view-button"><img src="/Photo/icon/shopping-cart.png" alt="">ADD TO CART</button>
-            </div>
-        </div>
-        <!-- Product Card 2 -->
-        <div class="card">
-            <div class="image-div">
-            <img src="/Photo/offers/_Start your forever with a delightful symphony of flavors at our wedding breakfast!.jpg" alt="Product Image" class="card-image">
-            </div>
-            <div class="card-label-wrapper">
-            <div class="card-label">
-                <p>Available</p>
-            </div>
-
-            <div class="card-label-2">
-                <p>Classic Kottu</p>
-            </div>
-            </div>
-            <div class="card-content">
-            <h2 class="card-title">Product Name</h2>
-            <div class="card-price">Rs. 2500/=</div>
-            <button class="view-button"><img src="/Photo/icon/shopping-cart.png" alt="">ADD TO CART</button>
-            </div>
-        </div>
-        
 
         <!-- Add more product cards as needed -->
     </div>

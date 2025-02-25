@@ -132,6 +132,29 @@ public static function findAll($where=[])
 
     }
 
+    public static function findAllMeals($where = [])
+    {
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+        $sql = "SELECT 
+                    $tableName.*,
+                    GROUP_CONCAT(b.meal_id) as meal_ids
+                    -- GROUP_CONCAT(b.meal_status) as meal_statuses
+                FROM $tableName                 
+                JOIN branch_meals b ON $tableName.meal_id = b.meal_id                 
+                GROUP BY $tableName.meal_id
+                ";
+        if (!empty($attributes)) {
+            $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+        } 
+        $statement = self::prepare($sql);
+        foreach ($where as $key => $item) {
+            $statement->bindValue(":$key", $item);
+        }
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
+
 
     // public static function findAllByBranch($branchId)
     // {

@@ -223,6 +223,33 @@ class Offer extends OfferModel
         }
     }
 
+    public static function findAllMealsOffers($where)
+    {
+    $tableName = static::tableName();
+    $attributes = array_keys($where);
+    
+    // Build base query without GROUP BY initially
+    $sql = "SELECT 
+                $tableName.*,
+                GROUP_CONCAT(b.meal_id) as meal_ids
+            FROM $tableName                 
+            JOIN meal_offers b ON $tableName.offer_id = b.offer_id";
+    
+    // Add WHERE clause before GROUP BY
+    if (!empty($attributes)) {
+        $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$tableName.$attr = :$attr", $attributes));
+    }
+    
+    // Add GROUP BY after WHERE
+    $sql .= " GROUP BY $tableName.offer_id";
+    
+    $statement = self::prepare($sql);
+    foreach ($where as $key => $item) {
+        $statement->bindValue(":$key", $item);
+    }
+    $statement->execute();
+    return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
     
 
     

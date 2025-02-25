@@ -168,7 +168,7 @@ class OfferController extends Controller
         }
 
         public function offerview($offerId){
-            $offer = Offer::findOneWithMeals(['offer_id' => $offerId]);
+            $offer = Offer::findAllMealsOffers(['offer_id' => $offerId]);
             $offerData = [];
             $offerData[] = $offer;
             echo json_encode($offerData);
