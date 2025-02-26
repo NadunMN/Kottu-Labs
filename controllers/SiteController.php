@@ -37,7 +37,7 @@ class SiteController extends Controller
 
     public function userDashboard()
     { 
-        $this->setLayout('profile');
+        $this->setLayout('dashboard');
         return $this->render('userdashboard');
     }
 

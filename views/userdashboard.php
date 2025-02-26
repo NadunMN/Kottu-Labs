@@ -5,15 +5,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/CSS/customerProfile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
 
 <body>
+
+<script>
+
+// Fetch user data from the backend
+fetch('/user/data')
+       .then(response => response.json())
+       .then(data => {
+           if (data.error) {
+               console.error(data.error);
+           } else {
+               // Display user data in the frontend
+               document.getElementById('user-name').textContent = `${data.firstname} ${data.lastname}`;
+               document.getElementById('user-email').textContent = `${data.email}`;
+           }
+       })
+       .catch(error => console.error('Error fetching user data:', error));
+
+</script>
+
+    <!-- profile name -->
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="account-info">
+                <div class="profile-avatar">NM</div>
+                <div class="profile-details">
+                    <h1 id= "user-name" class="profile-name">John Doe</h1>
+                    <p id="user-email" class="profile-email">john.doe@example.com</p>
+                    <span class="profile-status">Active Member</span>
+                </div>
+            </div>
+            <button class="edit-profile-btn">
+                <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                Edit Profile
+            </button>
+        </div>
+        
+        
+    </div>
+    <!-- profile name -->
 
             <div class="horizontal-line"></div>
         <div class="order-history">
             <!-- order list -->
             <div class="order-list-container">
                 <h2>Reservation History</h2>
+
+                <div class="order-list-button">
+                    <button>Add Reservation</button>
+                </div>
                 
             </div>
 
@@ -23,49 +72,42 @@
 
                 <!-- Table Header -->
                 <div class="table-header">
-                    <div>CODE</div>
-                    <div>NAME</div>
-                    <div>QUANTITY</div>
+                    <div>Reservation Number</div>
+                    <div>Reservation Name</div>
+                    <div>Reservation Date</div>
                     <div>TYPE</div>
                     <div>STATUS</div>
-                    <div>UNIT PRICE</div>
+                    <div>Action</div>
                 </div>
 
                 <!-- Table Rows -->
                 <div class="table-row">
                     <div>001</div>
-                    <div>Product A</div>
-                    <div>10</div>
+                    <div>Nadun Madusanka</div>
+                    <div>2025-02-25</div>
                     <div>Dine in</div>
-                    <div>In Stock</div>
-                    <div>$15.00</div>
+                    <div>Pending</div>
+                    <div>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </div>
                 </div>
+
                 <div class="table-row">
                     <div>002</div>
-                    <div>Product B</div>
-                    <div>5</div>
-                    <div>Take away</div>
-                    <div>Out of Stock</div>
-                    <div>$25.00</div>
+                    <div>Dinuka Sahan</div>
+                    <div>2025-02-22</div>
+                    <div>Dine in</div>
+                    <div>confirmed</div>
+                    <div>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </div>
                 </div>
-                <div class="table-row">
-                    <div>003</div>
-                    <div>Product C</div>
-                    <div>12</div>
-                    <div>Take away</div>
-                    <div>Low Stock</div>
-                    <div>$18.00</div>
-                </div>
-
+                
             </div>
 
-            <div class="order-list-container order-list-container-down">
-                <!-- <h2>Order History</h2> -->
-                <div class="order-list-button">
-                    <button>View More</button>
-                    <button>Add Reservation</button>
-                </div>
-            </div>
+            
 
         </div>
 

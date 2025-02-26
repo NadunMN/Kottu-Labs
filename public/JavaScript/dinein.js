@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const data = Object.fromEntries(formData.entries());
         data.user_id = userId;  // Add user ID to the form data
         data.confirmation_number = randomNumber;  // Add confirmation number to the form data
+        data.type = 'dinein';  // Add reservation type to the form data
         const requestBody = JSON.stringify(data);
     
         console.log('Request Body:', requestBody);  // Log the request body for debugging
