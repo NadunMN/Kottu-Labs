@@ -158,7 +158,39 @@ function fetchReviews() {
         const reviewsContent = document.getElementById("reviewsContent");
 
         if (data == null || data.length === 0) {
-          reviewsContent.innerHTML = "No reviews available";
+          reviewsContent.innerHTML =  `
+          <div class="no-offers-container" 
+              style="text-align: center; 
+                      display: flex; 
+                      flex-direction: column; 
+                      align-items: center; 
+                      justify-content: center; 
+                      padding: 2rem; 
+                      width: 100%;
+                      height: 100px;
+                      border-radius: 10px; 
+                      margin: 20px;">
+
+              <i class="fa-solid fa-comment" 
+              style="font-size: 3rem; 
+                      color: #6c757d; 
+                      margin-bottom: 1rem;"></i>
+
+              <h3 style="font-size: 1.5rem; 
+                      color: #343a40; 
+                      margin-bottom: 0.5rem; 
+                      font-weight: 600;">
+                  No Reviews Found!
+              </h3>
+
+              <p style="color: #6c757d; 
+                      font-size: 1rem; 
+                      max-width: 400px; 
+                      line-height: 1.5;">
+                  Add a review!
+              </p>
+          </div>
+      `;
         } else {
           reviewsContent.innerHTML = "";
         }
