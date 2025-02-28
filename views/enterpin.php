@@ -31,34 +31,18 @@
         </div>
     </div>
 
-    <div class="modal" id="reservationModal" style="display:none;">
-        <section class="reservation-section">
-            <div class="card-content">
+    <div id="reservationModal" style="display:none;">
+        <div class="pin-topic">
+            <h1>Reservation Details</h1>
+            <span id="clock"></span>
+        </div>
+        <div class="pin-container">
+            <div class="confirmation-box">
                 <form id="reservationConfirmationForm" class="reservation-form" method="POST">
-                    <div class="form-group">
-                        <label for="fullname" class="form-label">Full Name</label>
-                        <span id="fullname"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="reservationDate" class="form-label">Reservation Date</label>
-                        <span id="reservationDate"></span>
-                        </div>
-                    <div class="form-group">
-                        <label for="reservationTime" class="form-label">Reservation Time</label>
-                        <span id="reservationTime"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="branch" class="form-label">Branch</label>
-                        <span id="branch"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="numberOfGuests" class="form-label">Number of Guests</label>
-                        <span id="numberOfGuests"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="tableNumber" class="form-label" >Table Number</label>
+                    <div class="name-table">
+                        <h2><span id="fullname"></span></h2>
                         <select name="table_number" id="tableNumber" class="form-input" required>
-                            <option value="" disabled selected>Select a table</option> <!-- Placeholder option -->
+                            <option value="" disabled selected>Select a table</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -68,11 +52,28 @@
                             <option value="7">7</option>
                         </select>
                     </div>
-                    <button type="submit" class="submit-button">Confirm Reservation</button>
+                    <div>
+                        <div class="date-time">
+                            <span id="reservationDate"></span>
+                            <span id="reservationTime"></span>
+                        </div>
+                        <h4><span id="branch"></span> Branch</h4>
+                        <div class="dining-option">
+                            <label id="dineInLabel"> Dine In <span class="strike-through"></span></label>
+                            <label id="takeAwayLabel"> Take Away <span class="strike-through"></span></label>
+                        </div>
+                        <div>
+                            <h4>Number of Guest is <span id="numberOfGuests"></span></h4>
+                        </div>
+                        <div class="buttons">
+                            <button type="submit" class="confirm-button">Confirm Reservation</button>
+                            <span class="confirmed-text">Already Confirmed!</span>
+                            <button type="button" class="close-button">Close</button>
+                        </div>
+                    </div>
                 </form>
-                <div id="modalMessage"></div>
             </div>
-        </section>
+        </div>
     </div>
 
     <div id="successMessage" class="success-pop">
@@ -80,5 +81,6 @@
     </div>
 
     <script src="/JavaScript/enterpin.js"></script>
+
 </body>
 </html>

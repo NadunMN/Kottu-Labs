@@ -15,9 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
         
         mainContent.innerHTML = `
             <div class="customer-payment-section">
-                <div class="payment-header">
-                    <h2>Customer Payments</h2>
-                    <span>${currentDate}</span>
+                <div class="header">
+                    <h2>Customer Payments ${currentDate}</h2>
                 </div>
                 <div class="filter-section">
                     <input type="text" id="tableFilter" placeholder="Filter by Table No...">
