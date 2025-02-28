@@ -4,15 +4,15 @@
 
 body {
     margin: 0;
-    background-color: #ffffff; /* Light gray background */
+    background-color: #ffffff;
 }
 
 .dashboard-container {
     display: flex;
-    height: auto; /* Full height */
-    min-height: 100vh; /* Full height */
-    width: auto;
-    padding: 10px; /* Adds space around the dashboard */
+    height: auto; 
+    min-height: 100vh; 
+    width: 100%;
+    padding: 10px; 
     flex-direction: column;
 }
 
@@ -87,37 +87,38 @@ body {
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
     padding: 20px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* View Users Table */
-.view-users-section {
+/* Order Status Table */
+.order-status-section {
     font-size: 16px;
+    margin: 20px 0;
 }
 
-.view-users-section table {
+.order-status-section table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.view-users-section table th,
-.view-users-section table td {
+.order-status-section table th,
+.order-status-section table td {
     text-align: left;
     padding: 12px;
     border-bottom: 1px solid #ddd;
 }
 
-.view-users-section table th {
+.order-status-section table th {
     background-color: #f2f2f2;
     font-weight: bold;
 }
 
-.view-users-section table tr:nth-child(even) {
+.order-status-section table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.view-users-section table tr:hover {
+.order-status-section table tr:hover {
     background-color: #f1f1f1;
 }
 
@@ -150,7 +151,7 @@ body {
     opacity: 0.9;
 }
 
-.view-users-section .done-btn {
+.order-status-section .done-btn {
     background-color: #007bff; 
     color: white;
     border: none;
@@ -159,12 +160,19 @@ body {
     border-radius: 5px;
 }
 
-.view-users-section .done-btn:hover {
+.order-status-section .done-btn:hover {
     background-color: #0056b3;
 }
 
-/* View Customer Arrivals Table */
-.customer-arrivalss-section {
+.date-filter-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 10px; 
+}
+
+/* Customer Arrivals Table */
+.customer-arrivals-section {
     font-size: 16px;
 }
 
@@ -194,43 +202,120 @@ body {
     background-color: #f1f1f1;
 }
 
-.customer-arrivals-section table th:last-child {
-    width: 100px; /* Adjust width as needed */
-}
-
+.customer-arrivals-section table th:last-child,
 .customer-arrivals-section table td:last-child {
-    text-align: center;
+    text-align: left; 
+    width: auto;
 }
 
-.customer-arrivals-section .confirm-btn {
-    background-color: #007bff;
+.topic-bar{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.topic-bar-text h2 {
+    font-size: 1.6rem;
+    margin: 0 0 5px 0;
+    color: #333;
+    font-weight: 600;
+}
+
+
+.topic-bar-text span {
+    display: block;
+    color: #666;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.topic-bar-text h4{
+    font-size: 0.95rem;
+    color: #555;
+    font-weight: 500;
+    margin: 5px 0 0 0;;
+}
+
+.date-filter-container {
+    display: flex;
+    flex-direction: column; 
+    gap: 12px;
+    min-width: 260px;
+}
+
+.date-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+.date-input-group label {
+    font-size: 0.9rem;
+    color: #444;
+    font-weight: 500;
+    white-space: nowrap;
+}
+  
+#date-filter {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    flex-grow: 1;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#date-filter:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    outline: none;
+}
+
+#current-date-button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 5px 10px;
+    border-radius: 6px;
     cursor: pointer;
-    border-radius: 5px;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 88%;
+}
+  
+#current-date-button:hover {
+    background-color: #3d8b40;
+    transform: translateY(-2px);
+}
+  
+#current-date-button:active {
+    transform: translateY(0);
 }
 
-.customer-arrivals-section .confirm-btn:hover {
-    background-color: #0056b3;
-}
-
-.customer-arrivals-section .delete-btn {
-    background-color: #ff4444;
-    color: white;
-    border: none;
+.status-1, .status-0 {
+    display: inline-block;
     padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+.status-1 {
+    color: green;
 }
 
-.customer-arrivals-section .delete-btn:hover {
-    background-color: #cc0000;
+.status-0 {
+    color: red;
 }
 
 /* Customer Payment Section */
 .customer-payment-section {
     font-size: 16px;
+    margin: 20px 0; 
 }
 
 .customer-payment-section table {
@@ -260,7 +345,7 @@ body {
 }
 
 .customer-payment-section table th:last-child {
-    width: 100px; /* Adjust width as needed */
+    width: 100px; 
 }
 
 .customer-payment-section table td:last-child {
@@ -268,7 +353,7 @@ body {
 }
 
 .customer-payment-section .confirm-btn {
-    background-color: #007bff; /* Orange */
+    background-color: #007bff; 
     color: white;
     border: none;
     padding: 5px 10px;
@@ -280,296 +365,14 @@ body {
     background-color: #0056b3;
 }
 
-/* ... existing code ... */
-
-/* Mobile responsiveness */
+/* Responsive Design */
 @media (max-width: 768px) {
-    .dashboard-container {
-        flex-direction: column;
-        height: auto;
-        padding: 10px;
-    }
-
-    .sidebar {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 20px;
-    }
-
-    .main-content {
-        width: 100%;
-        padding: 15px;
-    }
-
-    /* Table responsiveness */
-    .view-users-section table,
-    .customer-arrivals-section table,
-    .customer-payment-section table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-
-    /* Filter section responsiveness */
-    .filter-section {
+    .personal-information-form-information {
         flex-direction: column;
     }
-
-    .filter-section input,
-    .filter-section button {
+  
+    .personal-information-container-first,
+    .personal-information-container-second {
         width: 100%;
-        margin-bottom: 10px;
     }
-
-    /* Button sizing */
-    .confirm-btn,
-    .delete-btn,
-    .done-btn {
-        width: 100%;
-        margin: 5px 0;
-        padding: 10px;
-    }
-
-    /* Font size adjustments */
-    .sidebar h2 {
-        font-size: 24px;
-    }
-
-    .sidebar ul li a {
-        font-size: 16px;
-    }
-
-    table th,
-    table td {
-        padding: 8px;
-        font-size: 14px;
-    }
-}
-
-/* Additional breakpoint for very small devices */
-@media (max-width: 480px) {
-    .dashboard-container {
-        padding: 5px;
-    }
-
-    .sidebar,
-    .main-content {
-        padding: 10px;
-    }
-
-    table th,
-    table td {
-        padding: 6px;
-        font-size: 12px;
-    }
-}
-
-
-
-
-/* View Reservations Table */
-.view-reservations-section {
-    font-size: 16px;
-}
-
-.view-reservations-section h2{
-    color: #0056b3;
-    margin: none;
-}
-
-.view-reservations-section h5{
-    color: #2487c9;
-    margin: none;
-}
-
-.view-reservations-section h2 span{
-    color: #b36e00;
-    margin: none;
-}
-
-.view-reservations-section table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.view-reservations-section table th,
-.view-reservations-section table td {
-    text-align: left;
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-}
-
-.view-reservations-section table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-}
-
-.view-reservations-section table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.view-reservations-section table tr:hover {
-    background-color: #f1f1f1;
-}
-
-/* Edit and Delete Buttons in View Reservations */
-.view-reservations-section table td .action-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.view-reservations-section table td .action-buttons button {
-    padding: 5px 10px;
-    background-color: #f44336;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-/*Enter pin nunmber  */
-.topic-bar {
-    display: flex;
-    justify-content: space-between;  /* This spreads out the content */
-    align-items: center;
-    width: 100%;
-    margin-bottom: 20px;
-}
-.pin-btn {
-    padding: 8px 16px;
-    background-color: #124d88;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: auto; 
-    margin-right: 400px; /* This pushes the button to the right */
-    height: fit-content;
   }
-  
-  .pin-btn:hover {
-    background-color: #0056b3;
-}
-  .modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-    z-index: 1000;
-  }
-  
-  .modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    min-width: 300px;
-  }
-  
-  .modal-content input {
-    margin: 15px 0;
-    padding: 8px;
-    width: 200px;
-  }
-  
-  .modal-buttons {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-#submitPin {
-    padding: 8px 20px;
-    background-color: #4CAF50;  /* Green color */
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-}
-
-#submitPin:hover {
-    background-color: #45a049;  /* Darker green on hover */
-}
-
-#cancelPin {
-    padding: 8px 20px;
-    background-color: #f44336;  /* Red color */
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-}
-
-#cancelPin:hover {
-    background-color: #da190b;  /* Darker red on hover */
-}
-
-/* Optional: Add focus styles for better accessibility */
-#submitPin:focus, #cancelPin:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
-}
-
-.status-confirmed {
-    color: #2ecc71;  /* Green color for confirmed */
-    font-weight: bold;
-}
-
-.status-pending {
-    color: #f1c40f;  /* Yellow/Orange color for pending */
-    font-weight: bold;
-}
-
-.status-not_come {
-    color: #e74c3c;  /* Red color for not come */
-    font-weight: bold;
-}
-
-.view-reservations-section table td .action-buttons button:hover {
-    background-color: #e53935;
-}
-
-.status-btn {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    color: white;
-    font-weight: bold;
-}
-
-.status-btn.available {
-    background-color: #2ecc71;
-}
-
-.status-btn.unavailable {
-    background-color: #e74c3c;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-

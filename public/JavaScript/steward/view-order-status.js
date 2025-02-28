@@ -13,8 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Render order status content
   function renderOrderStatus() {
       mainContent.innerHTML = `
-          <div class="view-users-section">
-              <h2>Order Status</h2>
+          <div class="order-status-section">
+            <div class="header">
+                <h2>Order Status</h2>
+            </div>
               <div class="filter-section">
                   <input type="text" id="tableFilter" placeholder="Filter by Table No...">
                   <button onclick="filterOrders()">Filter</button>

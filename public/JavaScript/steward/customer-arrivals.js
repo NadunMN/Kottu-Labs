@@ -1,4 +1,4 @@
-async function fetchReservations() {
+async function fetchReservations(selectedDate = null, selectedTime = null) {
   try {
     const response = await fetch("/reservation/data");
     if (!response.ok) {
@@ -34,21 +34,35 @@ async function fetchReservations() {
 
     // Determine branch name
     const branchName = branch_id === 1 ? 'Wattala' : branch_id === 2 ? 'Kelaniya' : 'Kotahena';
+    console.log('Branch name:', branchName);
+    const currentDate = selectedDate || new Date().toISOString().split('T')[0];
 
-    const currentDate = new Date().toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    // Filter reservations for the selected date and branch
+    const filteredData = data.filter(reservation => {
+      const reservationDate = new Date(reservation.reservation_date).toISOString().slice(0, 10);
+      return reservationDate === currentDate && reservation.branch_id === branch_id;
     });
 
+    // Count pending reservations
+    const pendingCount = filteredData.filter(reservation => reservation.confirmation_status !== 1).length;
+
     reservationContent.innerHTML = `
-      <div class="view-reservations-section">
+      <div class="customer-arrivals-section">
         <div class="topic-bar">
-          <div>
-            <h2>${branchName} <span>${currentDate}</span></h2>
-            <h5>${data.length} reservations available</h5>
+          <div class="topic-bar-text">
+            <h2>Customer Arrivals - ${branchName} </h2>
+            <span>${currentDate}</span>
+            <h4>${filteredData.length} reservations available  &emsp; ${pendingCount} pending reservations</h4>
           </div>
-        </div>
+          <div class="date-filter-container">
+            <div class="date-input-group">
+                <label for="date-filter">Select Date:</label>
+                <input type="date" id="date-filter" value="${currentDate}"  />
+            </div>
+            <button id="current-date-button">Go to Current Date</button>
+          </div>
+
+        </div> 
         
         <table class="menu-table" id="menu-table">
           <thead>
@@ -57,8 +71,8 @@ async function fetchReservations() {
               <th>Date</th>
               <th>Time</th>
               <th>No. Guests</th>
+              <th>Type</th>
               <th>Status</th>
-              <th>Actions</th>
             </tr>
           </thead>
           <tbody id="table-content"></tbody>
@@ -72,56 +86,44 @@ async function fetchReservations() {
       return;
     }
 
-    // Populate the table with reservation data
-    data.forEach((reservation) => {
+    // Sort reservations: pending first, then confirmed, sorted by time
+    filteredData.sort((a, b) => {
+      // Prioritize pending reservations over confirmed ones
+      if (a.confirmation_status !== 1 && b.confirmation_status === 1) return -1;
+      if (a.confirmation_status === 1 && b.confirmation_status !== 1) return 1;
+
+      // If both have the same status, sort by time
+      return a.reservation_time.localeCompare(b.reservation_time);
+    });
+
+    // Populate the table with filtered reservation data
+    filteredData.forEach((reservation) => {
+      
       const row = document.createElement("tr");
       row.innerHTML = `
         <td class="reservation-id">${reservation.reservation_no}</td>
         <td>${reservation.reservation_date}</td>
         <td>${reservation.reservation_time}</td>
         <td>${reservation.number_of_guests}</td>
+        <td>${reservation.type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
         <td class="status">
-            <span class="status-${reservation.status}">
-                ${reservation.status === 'confirmed' ? "Confirmed" : reservation.status === 'pending' ? "Pending" : "Not Come"}
+            <span class="status-${reservation.confirmation_status}">
+                ${reservation.confirmation_status === 1 ? "Confirmed" : 'pending'}
             </span>
-        </td>
-        <td>
-          <div class="action-buttons">
-            <button class="delete-btn" reservation-no='${reservation.reservation_no}'>Delete</button>
-          </div>
         </td>
       `;
       tableContent.appendChild(row);
     });
 
+    document.getElementById("date-filter").addEventListener("change", () => {
+      const selectedDate = new Date(document.getElementById("date-filter").value).toISOString().slice(0, 10);
+      fetchReservations(selectedDate);
+    });
 
-    // Handle delete button click
-    document.querySelectorAll(".delete-btn").forEach((button) => {
-      button.addEventListener("click", async () => {
-        if (confirm("Are you sure you want to delete this reservation? This action cannot be undone.")) {
-          const reservationNo = button.getAttribute("reservation-no");
-
-          try {
-            const response = await fetch("/reservation/delete", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ reservation_no: reservationNo }),
-            });
-
-            const result = await response.json();
-            if (result.success) {
-              alert("The reservation has been deleted.");
-              button.closest("tr").remove();
-            } else {
-              alert("There was an error deleting the reservation: " + result.message);
-              console.error("Error:", result.message);
-            }
-          } catch (error) {
-            console.error("Error:", error);
-            alert("Failed to delete the reservation.");
-          }
-        }
-      });
+    document.getElementById("current-date-button").addEventListener("click", () => {
+      const currentDate = new Date().toISOString().split('T')[0];
+      document.getElementById("date-filter").value = currentDate;
+      fetchReservations(currentDate);
     });
 
   } catch (error) {
@@ -130,5 +132,4 @@ async function fetchReservations() {
   }
 }
 
-// Call the function to fetch and display reservations
 fetchReservations();
