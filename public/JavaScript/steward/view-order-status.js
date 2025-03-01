@@ -32,6 +32,9 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
         let branch_id = null;
         try {
             const userResponse = await fetch('/user/data');
+            if (!userResponse.ok) {
+                throw new Error("Network response was not ok");
+            }
             const userData = await userResponse.json();
             if (userData.error) {
                 console.error(userData.error);
@@ -109,5 +112,10 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
         document.getElementById("main-content").innerHTML = "<p>Error loading reservations.</p>";
     }
 }
+
+// Refresh orders every minute
+setInterval(() => {
+    fetchOrders();
+}, 60000);
 
 fetchOrders();

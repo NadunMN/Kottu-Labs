@@ -22,6 +22,9 @@ async function fetchReservations(selectedDate = null, selectedTime = null) {
     let branch_id = null;
     try {
       const userResponse = await fetch('/user/data');
+      if (!userResponse.ok) {
+        throw new Error("Network response was not ok");
+      }
       const userData = await userResponse.json();
       if (userData.error) {
         console.error(userData.error);
@@ -115,6 +118,13 @@ async function fetchReservations(selectedDate = null, selectedTime = null) {
       tableContent.appendChild(row);
     });
 
+    // Remove existing event listeners to avoid duplication
+    const dateFilter = document.getElementById("date-filter");
+    const currentDateButton = document.getElementById("current-date-button");
+
+    dateFilter.replaceWith(dateFilter.cloneNode(true));
+    currentDateButton.replaceWith(currentDateButton.cloneNode(true));
+
     document.getElementById("date-filter").addEventListener("change", () => {
       const selectedDate = new Date(document.getElementById("date-filter").value).toISOString().slice(0, 10);
       fetchReservations(selectedDate);
@@ -131,5 +141,10 @@ async function fetchReservations(selectedDate = null, selectedTime = null) {
     document.getElementById("main-content").innerHTML = "<p>Error loading reservations.</p>";
   }
 }
+
+// Refresh reservations every minute
+setInterval(() => {
+  fetchReservations();
+}, 60000); 
 
 fetchReservations();
