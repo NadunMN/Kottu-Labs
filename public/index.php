@@ -8,6 +8,7 @@ use app\controllers\ManagerController;
 use app\controllers\MealController;
 use app\controllers\OfferController;
 use app\controllers\ReservationController;
+use app\controllers\OrderController;
 use app\controllers\FeedbacksController;
 use app\controllers\sendOtp;
 use app\models\User;
@@ -38,6 +39,7 @@ $managerController = new ManagerController();
 $mealController = new MealController();
 $offerController = new OfferController();
 $reservationController = new ReservationController();
+$orderController = new OrderController();
 $feedbacksController = new FeedbacksController();
 
 
@@ -194,7 +196,8 @@ $app->router->post('/feedback/delete', [$feedbacksController, 'deleteReviews']);
 
 $app->router->get('/offer/getpublished', [$offerController, 'getAllPublishedOffers']);
 
-
+// order data
+$app->router->get('/order/data', [$orderController, 'getOrderData']);
 
 // Run the application
 $app->run();
