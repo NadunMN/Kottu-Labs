@@ -1,101 +1,113 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Sample data array
-  const orderStatusData = [
-      { orderId: "097", name: "Thirani Imanya", order: "Prawns Dolphin Kottu", tableNo: "04", status: "Ready" },
-      { orderId: "101", name: "Nadun Madushabka", order: "Sea Food Kottu", tableNo: "02", status: "Ready" },
-      { orderId: "097", name: "Amal Perera", order: "Chicken Cheese Kottu", tableNo: "04", status: "Processing" },
-      { orderId: "102", name: "Abdul Raheem", order: "Mutton String Hopper Kottu", tableNo: "03", status: "Processing" },
-      { orderId: "102", name: "Kevin Silva", order: "Redbull", tableNo: "03", status: "Processing" }
-  ];
+async function fetchOrders(selectedDate = null, selectedTime = null) {
+    try {
+        // Fetch order data
+        const response = await fetch("/order/data");
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
 
-  const mainContent = document.getElementById("main-content");
+        const text = await response.text();
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (e) {
+            console.error("Response is not valid JSON:", text);
+            document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
+            return;
+        }
 
-  // Render order status content
-  function renderOrderStatus() {
-      mainContent.innerHTML = `
-          <div class="order-status-section">
-            <div class="header">
-                <h2>Order Status</h2>
+        if (!Array.isArray(data)) {
+            console.error("Data is not an array");
+            document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
+            return;
+        }
+
+        const orderContent = document.getElementById("main-content");
+        if (!data || data.length === 0) {
+            orderContent.innerHTML = "<p>No reservations available</p>";
+            return;
+        }
+
+        // Fetch user branch ID before rendering
+        let branch_id = null;
+        try {
+            const userResponse = await fetch('/user/data');
+            const userData = await userResponse.json();
+            if (userData.error) {
+                console.error(userData.error);
+            } else {
+                branch_id = userData.branch_id;
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+
+        // Determine branch name
+        const branchName = branch_id === 1 ? 'Wattala' : branch_id === 2 ? 'Kelaniya' : 'Kotahena';
+        console.log('Branch name:', branchName);
+        const currentDate = selectedDate || new Date().toISOString().split('T')[0];
+
+        // Count ready orders
+        const readyOrders = data.filter(order => order.order_status !== 0).length;
+
+        // Render order content
+        orderContent.innerHTML = `
+            <div class="main-section">
+                <div class="topic-bar">
+                    <div class="topic-bar-text">
+                        <h2>Order Status - ${branchName} </h2>
+                        <span>${currentDate}</span>
+                        <h4>Available orders - ${data.length} &emsp; Ready orders - ${readyOrders}</h4>
+                    </div>
+                    <div class="filter-section">
+                        <input type="text" id="tableFilter" placeholder="Filter by Table No...">
+                        <button onclick="filterOrders()">Filter</button>
+                        <button onclick="resetFilter()">Reset</button>
+                    </div>
+                </div> 
+                
+                <table class="menu-table" id="menu-table">
+                    <thead>
+                        <tr>
+                            <th>Order Id</th>
+                            <th>Date</th>
+                            <th>Reservation No</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-content"></tbody>
+                </table>
             </div>
-              <div class="filter-section">
-                  <input type="text" id="tableFilter" placeholder="Filter by Table No...">
-                  <button onclick="filterOrders()">Filter</button>
-                  <button onclick="resetFilter()">Reset</button>
-              </div>
-              <table>
-                  <thead>
-                      <tr>
-                          <th>Order ID</th>
-                          <th>Name</th>
-                          <th>Order</th>
-                          <th>Table No.</th>
-                          <th>Status</th>
-                          <th></th>
-                      </tr>
-                  </thead>
-                  <tbody id="order-status-body">
-                  </tbody>
-              </table>
-          </div>`;
+        `;
 
-      populateOrderTable();
-  }
+        const tableContent = document.getElementById("table-content");
+        if (!tableContent) {
+            console.error("Table content element not found.");
+            return;
+        }
 
-  // Populate order status table
-  function populateOrderTable() {
-      const orderStatusBody = document.getElementById("order-status-body");
-      orderStatusBody.innerHTML = ''; // Clear existing content
+        // Populate table with order data
+        data.forEach((order) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td class="order-id">${order.order_id}</td>
+                <td>${order.order_date}</td>
+                <td>${order.reservation_no}</td>
+                <td>${order.order_type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
+                <td class="status">
+                    <span class="status-${order.order_status}">
+                        ${order.order_status === 1 ? "Ready" : "Processing"}
+                    </span>
+                </td>
+            `;
+            tableContent.appendChild(row);
+        });
 
-      orderStatusData.forEach(order => {
-          const row = document.createElement("tr");
-          const statusColor = order.status === "Ready" ? "green" : "red";
-          row.innerHTML = `
-              <td>${order.orderId}</td>
-              <td>${order.name}</td>
-              <td>${order.order}</td>
-              <td>${order.tableNo}</td>
-              <td style="color: ${statusColor};">${order.status}</td>
-              <td>
-                  ${order.status === "Ready" ? '<button class="done-btn">Done</button>' : ''}
-              </td>
-          `;
-          orderStatusBody.appendChild(row);
-      });
-  }
+    } catch (error) {
+        console.error("Fetch error:", error);
+        document.getElementById("main-content").innerHTML = "<p>Error loading reservations.</p>";
+    }
+}
 
-  // Filter orders by table number
-  window.filterOrders = function() {
-      const filterValue = document.getElementById("tableFilter").value;
-      const filteredOrders = orderStatusData.filter(order => 
-          order.tableNo.includes(filterValue)
-      );
-      
-      const orderStatusBody = document.getElementById("order-status-body");
-      orderStatusBody.innerHTML = '';
-      
-      filteredOrders.forEach(order => {
-          const row = document.createElement("tr");
-          const statusColor = order.status === "Ready" ? "green" : "red";
-          row.innerHTML = `
-              <td>${order.orderId}</td>
-              <td>${order.name}</td>
-              <td>${order.order}</td>
-              <td>${order.tableNo}</td>
-              <td style="color: ${statusColor};">${order.status}</td>
-              <td>
-                  ${order.status === "Ready" ? '<button class="done-btn">Done</button>' : ''}
-              </td>
-          `;
-          orderStatusBody.appendChild(row);
-      });
-  };
-
-  // Reset filter
-  window.resetFilter = function() {
-      document.getElementById("tableFilter").value = '';
-      populateOrderTable();
-  };
-
-  // Initial render
-  renderOrderStatus();
-});
+fetchOrders();

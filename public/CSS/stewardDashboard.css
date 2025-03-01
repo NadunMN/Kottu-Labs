@@ -90,38 +90,74 @@ body {
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Order Status Table */
-.order-status-section {
+.main-section {
     font-size: 16px;
-    margin: 20px 0;
 }
 
-.order-status-section table {
+.main-section table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.order-status-section table th,
-.order-status-section table td {
+.main-section table th,
+.main-section table td {
     text-align: left;
     padding: 12px;
     border-bottom: 1px solid #ddd;
 }
 
-.order-status-section table th {
+.main-section table th {
     background-color: #f2f2f2;
     font-weight: bold;
 }
 
-.order-status-section table tr:nth-child(even) {
+.main-section table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.order-status-section table tr:hover {
+.main-section table tr:hover {
     background-color: #f1f1f1;
 }
 
+.main-section table th:last-child,
+.main-section table td:last-child {
+    text-align: left; 
+    width: auto;
+}
+
+.topic-bar{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.topic-bar-text h2 {
+    font-size: 1.6rem;
+    margin: 0 0 5px 0;
+    color: #333;
+    font-weight: 600;
+}
+
+.topic-bar-text span {
+    display: block;
+    color: #666;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.topic-bar-text h4{
+    font-size: 0.95rem;
+    color: #555;
+    font-weight: 500;
+    margin: 5px 0 0 0;;
+}
+
+ /* order status */
 .filter-section {
     margin: 20px 0;
     display: flex;
@@ -129,26 +165,44 @@ body {
 }
 
 .filter-section input {
-    padding: 8px;
+    padding: 8px 12px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 6px;
+    flex-grow: 1;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.filter-section input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    outline: none;
 }
 
 .filter-section button {
-    padding: 8px 16px;
+    padding: 10px 15px;
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 88%;
 }
 
 .filter-section button:last-child {
     background-color: #666;
 }
 
+.filter-section button:last-child:hover {
+    background-color: #555;
+}
 .filter-section button:hover {
-    opacity: 0.9;
+    background-color: #3d8b40;
+    transform: translateY(-2px);
 }
 
 .order-status-section .done-btn {
@@ -171,75 +225,7 @@ body {
     margin-top: 10px; 
 }
 
-/* Customer Arrivals Table */
-.customer-arrivals-section {
-    font-size: 16px;
-}
-
-.customer-arrivals-section table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.customer-arrivals-section table th,
-.customer-arrivals-section table td {
-    text-align: left;
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-}
-
-.customer-arrivals-section table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-}
-
-.customer-arrivals-section table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.customer-arrivals-section table tr:hover {
-    background-color: #f1f1f1;
-}
-
-.customer-arrivals-section table th:last-child,
-.customer-arrivals-section table td:last-child {
-    text-align: left; 
-    width: auto;
-}
-
-.topic-bar{
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 25px;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.topic-bar-text h2 {
-    font-size: 1.6rem;
-    margin: 0 0 5px 0;
-    color: #333;
-    font-weight: 600;
-}
-
-
-.topic-bar-text span {
-    display: block;
-    color: #666;
-    margin-bottom: 10px;
-    font-size: 0.95rem;
-}
-
-.topic-bar-text h4{
-    font-size: 0.95rem;
-    color: #555;
-    font-weight: 500;
-    margin: 5px 0 0 0;;
-}
-
+/* Customer Arrivals */
 .date-filter-container {
     display: flex;
     flex-direction: column; 
@@ -312,47 +298,9 @@ body {
     color: red;
 }
 
-/* Customer Payment Section */
-.customer-payment-section {
-    font-size: 16px;
-    margin: 20px 0; 
-}
+/* Customer Payment */
 
-.customer-payment-section table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.customer-payment-section table th,
-.customer-payment-section table td {
-    text-align: left;
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-}
-
-.customer-payment-section table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-}
-
-.customer-payment-section table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.customer-payment-section table tr:hover {
-    background-color: #f1f1f1;
-}
-
-.customer-payment-section table th:last-child {
-    width: 100px; 
-}
-
-.customer-payment-section table td:last-child {
-    text-align: center;
-}
-
-.customer-payment-section .confirm-btn {
+.main-section .confirm-btn {
     background-color: #007bff; 
     color: white;
     border: none;
@@ -361,7 +309,7 @@ body {
     border-radius: 5px;
 }
 
-.customer-payment-section .confirm-btn:hover {
+.main-section .confirm-btn:hover {
     background-color: #0056b3;
 }
 

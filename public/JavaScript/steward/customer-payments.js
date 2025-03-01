@@ -14,16 +14,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const currentDate = new Date().toISOString().slice(0, 10);
         
         mainContent.innerHTML = `
-            <div class="customer-payment-section">
-                <div class="header">
-                    <h2>Customer Payments ${currentDate}</h2>
+            <div class="main-section">
+                <div class="topic-bar">
+                    <div class="topic-bar-text">
+                        <h2>Customer Payments ${currentDate}</h2>
+                    </div>
+                    <div class="filter-section">
+                        <input type="text" id="tableFilter" placeholder="Filter by Table No...">
+                        <button onclick="filterPayments()">Filter</button>
+                        <button onclick="resetFilter()">Reset</button>
+                    </div>
                 </div>
-                <div class="filter-section">
-                    <input type="text" id="tableFilter" placeholder="Filter by Table No...">
-                    <button onclick="filterPayments()">Filter</button>
-                    <button onclick="resetFilter()">Reset</button>
-                </div>
-                <table>
+                <table class="menu-table" id="menu-table">
                     <thead>
                         <tr>
                             <th>Order ID</th>

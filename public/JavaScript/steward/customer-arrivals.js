@@ -47,7 +47,7 @@ async function fetchReservations(selectedDate = null, selectedTime = null) {
     const pendingCount = filteredData.filter(reservation => reservation.confirmation_status !== 1).length;
 
     reservationContent.innerHTML = `
-      <div class="customer-arrivals-section">
+      <div class="main-section">
         <div class="topic-bar">
           <div class="topic-bar-text">
             <h2>Customer Arrivals - ${branchName} </h2>
