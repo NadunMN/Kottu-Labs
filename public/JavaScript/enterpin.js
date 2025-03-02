@@ -48,6 +48,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitButton.click();
             }
         });
+
+        // Paste the pin
+        if (index === 0) {
+            input.addEventListener('paste', function(e) {
+                const pasteData = e.clipboardData.getData('text');
+                if (pasteData.length === inputs.length) {
+                    inputs.forEach((input, i) => {
+                        input.value = pasteData[i];
+                    });
+                    inputs[inputs.length - 1].focus();
+                }
+                e.preventDefault();
+            });
+        }
     });
     inputs[0].focus();
 
