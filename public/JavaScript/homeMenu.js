@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("search");
     const searchButton = document.querySelector(".search-button-menu");
 
+    let userId = null;
+
     const mealDescriptions = {
         1: "All",
         2: "Classic Kottu",
@@ -22,6 +24,36 @@ document.addEventListener("DOMContentLoaded", function () {
         13: "Mocktails",
         14: "Beverages"
     };
+
+        // Fetch user data from the backend
+        fetch('/user/data')
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error(data.error);
+            } else {
+                // Store user ID
+                userId = data.id;
+            }
+        })
+        .catch(error => console.error('Error fetching user data:', error));
+
+
+
+        fetch(`/getconfirmReservation?userId=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error(data.error);
+            } else {
+                
+                console.log(data);
+            }
+        })
+        .catch(error => console.error('Error fetching user data:', error));
+
+
+
 
     function loadMeals(branchId, selectionId, searchTerm = "") {
         console.log(selectionId);
@@ -138,4 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
             loadMeals(branchSelect.value, searchSelection.value, searchTerm);
         }
     });
+
+
+
 });

@@ -74,7 +74,6 @@ class m0001_initial
         $SQL = "CREATE TABLE IF NOT EXISTS orders (
             order_id INT AUTO_INCREMENT PRIMARY KEY,
             order_date DATE NOT NULL,
-            order_type VARCHAR(255) NOT NULL,
             order_status TINYINT NOT NULL DEFAULT 0,
             payment_id INT NOT NULL,
             branch_id INT NOT NULL,
