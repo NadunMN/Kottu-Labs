@@ -36,19 +36,19 @@
             <div class="drop-down">
                 <a href="#" onclick="toggleMenuprofile()"><img src="/Photo/icon/user.png" alt="Profile"></a>
                 <div class="dropdown-content">
-                    <a href="/profile"> <img src="/Photo/icon/dashboard - Copy.png" alt=""> DASHBOARD </a>
-                    <hr style="width: 100%; height: 1px;  margin: auto; opacity:0.1;">
-                    <a href="/offer"> <img src="/Photo/icon/shopping-basket - Copy.png" alt=""> SPECIAL OFFERS</a>
+                    <a href="/profile"> <img class="drop-icon" src="/Photo/icon/dahsboard.png" alt=""> Dashboard </a>
+                    <hr style="width: 100%; height: 2px; border:2px solid black; background:black; margin: auto; ">
+                    <a href="/offer"> <img class="drop-icon" src="/Photo/icon/special-offer.png" alt=""> Special Offers</a>
                     <?php if (\app\core\Application::$app->user !== null && \app\core\Application::$app->user->position === 'steward'): ?>
-                        <a href="/enterpin"> <img src="/Photo/icon/key.png" alt=""> ENTER PIN</a>
+                        <a href="/enterpin"> <img class="drop-icon" src="/Photo/icon/enterpin.png" alt=""> Enter Pin</a>
                     <?php endif; ?>
                     <?php if (\app\core\Application::$app->user ==null): ?>
-                        <a href="/login"> <img src="/Photo/icon/enter.png" alt=""> LOG IN</a>
+                        <a href="/login"> <img class="drop-icon" src="/Photo/icon/login.png" alt=""> Log In</a>
                         <?php else: ?>
-                            <a href="/logout"> <img src="/Photo/icon/logout.png" alt=""> LOG OUT</a>
+                            <a href="/logout"> <img class="drop-icon" src="/Photo/icon/logout.png" alt=""> Log Out</a>
                     <?php endif; ?>
-                    <hr style="width: 100%; height: 1px;  margin: auto;opacity:0.1; ">
-                    <a onclick="window.location.href='/about#container3'"> WHY CREATE AN ACCOUNT?</a>
+                    <hr style="width: 100%; height: 2px; border:2px solid black; background:black; margin: auto; ">
+                    <a onclick="window.location.href='/about#container3'"> Why create an Account?</a>
 
                 </div>
             </div>
