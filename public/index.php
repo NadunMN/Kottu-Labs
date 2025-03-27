@@ -199,5 +199,14 @@ $app->router->get('/offer/getpublished', [$offerController, 'getAllPublishedOffe
 // order data
 $app->router->get('/order/data', [$orderController, 'getOrderData']);
 
+
+
+//get reservationData
+$app->router->get('/getconfirmReservation', function() use ($reservationController) {
+    $userId = $_GET['userId'] ?? null;
+    $reservationController->findReservation($userId);
+});
+
+
 // Run the application
 $app->run();

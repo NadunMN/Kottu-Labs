@@ -36,4 +36,25 @@ class ReservationController extends Controller
          }
    }
 
+   public function findReservation($userID) {
+     $reservation = Reservation::findOneCR([
+         'confirmation_status' => '1', 
+         'user_id' => $userID
+     ]);
+ 
+     if ($reservation !== null) {
+         // Success: Reservation found
+         echo json_encode([
+             'success' => true,
+             'reservation' => $reservation
+         ]);
+     } else {
+         // No reservation found
+         echo json_encode([
+             'success' => false,
+             'message' => 'No reservation found.'
+         ]);
+     }
+ }
+                                       
 }

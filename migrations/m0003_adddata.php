@@ -28,7 +28,8 @@ class m0003_adddata{
                     ('admin@gmail.com', 'Nadun', 'Madusanka', 1, 'admin','+94764659122', 1),
                     ('customer@gmail.com', 'Ranuga', 'Lekawasam', 0, 'customer','+94764659123', 2),
                     ('steward@gmail.com', 'Mahesh', 'Kumara', 0, 'steward','+94764659124', 3),
-                    ('manager@gmail.com', 'Thirani', 'Athukorala', 0, 'manager','+94764659125', 1);";
+                    ('manager@gmail.com', 'Thirani', 'Athukorala', 0, 'manager','+94764659125', 1),
+                    ('chef@gmail.com', 'Eraji', 'Thenuwara', 0, 'chef','+94764659125', 1);";
             $db->pdo->exec($SQL);
         }
 

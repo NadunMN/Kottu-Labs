@@ -94,6 +94,35 @@ class Reservation extends ReservationModel
         }
     }
 
+    public static function findOneCR($where)
+    {
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+    
+        // Generate the WHERE clause dynamically
+        $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+    
+        $statement = self::prepare("
+            SELECT $tableName.*
+            FROM $tableName
+            where $sql
+        ");
+    
+        foreach ($where as $key => $value) {
+            $statement->bindValue(":$key", $value);
+        }
+    
+        // Error handling for the SQL execution
+        try {
+            $statement->execute();
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            // Log or handle the error appropriately
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
     public static function findAll($where)
     {
         $tableName = static::tableName();

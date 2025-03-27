@@ -114,9 +114,13 @@ body {
 }
 
 .icon-box img {
-    width: 20px;
-    height: 20px;
-    object-fit: cover;
+    width: 19px;
+    height: 19px;
+    object-fit: cover;   
+}
+
+.drop-icon{
+    filter: invert(1);
 }
 
 .drop-down{
@@ -129,56 +133,52 @@ body {
     top: 75px;
     right: 10px;
     font-size: 0.9rem;
-    background: rgb(0, 0, 0); /* Semi-transparent background */
-    
-    width: 250px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: rgb(26, 26, 26); /* Dark gray background to match the image */
+    width: 200px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: none;
+    border-radius: 6px;
     z-index: 10000;
     overflow: hidden;
     max-height: 0;
     opacity: 0;
     transform: translateY(-10px);
     transition: max-height 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
-    /* border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px; */
-    border-radius: 10px;
 }
 
 .dropdown-content a {
-    color: rgb(255, 255, 255);
+    color: white;
     text-decoration: none;
     display: flex;
     align-items: center;
     gap: 10px;
     justify-content: flex-start;
     cursor: pointer;
-    padding-left: 20px;
-    margin: 10px 0px;
-    width: 100%;
+    padding: 20px 20px;
     border-radius: 0;
+    width: 100%;
     text-align: left;
-    font-weight: 500;
-  }
+    font-weight: 400;
+    transition: background-color 0.3s ease;
+}
 
-  .dropdown-content.show1  {
+.dropdown-content.show1 {
     max-height: 250px;
     opacity: 1;
     transform: translateY(0);
 }
 
-.dropdown-content a:last-child {
-    margin-bottom: 10px; 
-}
-  
-
 .dropdown-content a:hover {
-    color: #272727;
-    /* background-color: #000000; */
-    transition: color 0.3s ease;
-    
+    color: #ffffff;
+    border-radius: none;
+    background-color: #30303042;
+    /* border: 2px solid #EE3E3F; */
 }
 
+/* Added selected state */
+.dropdown-content a.selected {
+    background-color: rgba(255, 255, 255, 0.2);
+}
 .login-button-special{
     background-color: transparent;
     color: white;
