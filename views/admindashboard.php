@@ -44,11 +44,11 @@ iframe {
             <ul>
                 <?php
                     $menuItems = [
-                        ['id' => 'dashboard', 'icon' => '/Photo/icon/dashboard.png', 'text' => 'DashBoard'],
-                        ['id' => 'staff', 'icon' => '/Photo/icon/receptionist.png', 'text' => 'Update Staff'],
-                        ['id' => 'updatemenu', 'icon' => '/Photo/icon/burger-bar.png', 'text' => 'Update Menu'],
-                        ['id' => 'updateoffers', 'icon' => '/Photo/icon/shopping-basket.png', 'text' => 'Update Offers'],
-                        ['id' => 'feedbacks', 'icon' => '/Photo/icon/review.png', 'text' => 'Feedbacks'],
+                        ['id' => 'dashboard', 'icon' => '/Photo/icon/dahsboard.png', 'text' => 'DashBoard'],
+                        ['id' => 'staff', 'icon' => '/Photo/icon/group.png', 'text' => 'Update Staff'],
+                        ['id' => 'updatemenu', 'icon' => '/Photo/icon/menu.png', 'text' => 'Update Menu'],
+                        ['id' => 'updateoffers', 'icon' => '/Photo/icon/special-offer.png', 'text' => 'Update Offers'],
+                        ['id' => 'feedbacks', 'icon' => '/Photo/icon/ratings.png', 'text' => 'Feedbacks'],
                     ];
                     foreach ($menuItems as $item) {
                         echo "<li id='{$item['id']}' class='menu-item'>
