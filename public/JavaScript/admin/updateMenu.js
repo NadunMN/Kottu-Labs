@@ -167,6 +167,26 @@ fetch("/menuitem/data")
       });
 
       let mealId;
+
+
+      const mealDescriptions = {
+        1: "All",
+        2: "Classic Kottu",
+        3: "Dolphin Kottu",
+        4: "Cheese Kottu",
+        5: "String Hopper Kottu",
+        6: "KL Special Fried Rice",
+        7: "Pasta",
+        8: "Appetizers",
+        9: "KL Inventions",
+        10: "Wraps & Rotti Sandwiches",
+        11: "Parata",
+        12: "Devilled Portions",
+        13: "Mocktails",
+        14: "Beverages"
+    };
+
+
       // Dynamically generate meal elements
       data.forEach((meal) => {
         // console.log(meal.branch_ids);
@@ -177,7 +197,7 @@ fetch("/menuitem/data")
         row.innerHTML = `
                                         <td class="meal-id" >${meal.meal_id}</td>
                                         <td>${meal.meal_name}</td>
-                                        <td>${meal.meal_description}</td>
+                                        <td meal-description= '${meal.meal_description}'>${mealDescriptions[meal.meal_description]}</td>
                                         <td>Rs.${meal.meal_price}</td>
                                         <td>${
                                           meal.branch_ids == "1" ? "Wattala" : meal.branch_ids == "2" ? "Kelaniya" : meal.branch_ids== "3" ? "Kotahena"
@@ -243,7 +263,7 @@ fetch("/menuitem/data")
           const row = button.closest("tr");
           const mealName = row.querySelector("td:nth-child(2)").innerText;
           const mealDescription =
-            row.querySelector("td:nth-child(3)").innerText;
+            row.querySelector("td:nth-child(3)").getAttribute("meal-description");
           const mealPrice = row
             .querySelector("td:nth-child(4)")
             .innerText.replace("Rs.", "");

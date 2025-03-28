@@ -49,7 +49,7 @@ window.addEventListener("load", () => {
                     // Populate row HTML
                     row.innerHTML = `
                         <td class="review-id">${review.rating}/5</td>
-                        <td class="description-review">${review.review}</td>
+                        <td class="description-review" style= "text-align: left;">${review.review}</td>
                         <td >${review.userName}</td>
                         <td>${review.created_at}</td>
                         <td>

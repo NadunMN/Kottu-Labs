@@ -263,7 +263,7 @@ window.addEventListener("load", () => {
                                     row.innerHTML = `
                                         <td class="offer-id">${offer.offer_id}</td>
                                         <td>${offer.offer_name}</td>
-                                        <td class="description-offer">${offer.offer_description}</td>
+                                        <td class="description-offer" style= "text-align: left;">${offer.offer_description}</td>
                                         <td>Rs.${offer.offer_price}</td>
                                         <td>${
                                             offer.branch_ids == "1" ? "Wattala" 
