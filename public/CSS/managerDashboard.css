@@ -1059,7 +1059,7 @@ hr {
 
 .menu-table th, .menu-table td {
     padding: 15px 10px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #ddd;
     font-size: 1rem;
     /* padding: 15px 0; */
