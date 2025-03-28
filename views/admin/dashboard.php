@@ -58,49 +58,53 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 20px 0;
+            /* margin-top: -50px; */
             width: 100%;
             height: auto;
               gap:20px;
         }
 
         .card-part{
+            text-align: left;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
+            align-items: left;
             margin: 20px 0;
-            width: 60%;
-            height: auto;
+            width: 50%;
+            height: 350px;
             gap:20px;
+            box-shadow: 0 0px 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+
 
         }
 
         .upper-card{
             /* margin-top: -50px; */
             width: 100%;
-            height: 330px;
+            height: 280px;
             /* background-color: var(--primary-color); */
             padding: 10px;
             border-radius: 10px;
             display: flex;
             justify-content: center;
-                        box-shadow: 0 0px 6px rgba(0,0,0,0.1);
         }
 
       
 
         .card-part-2{
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             margin: 20px 0;
-            width: 40%;
-            height: 330px;
+            width: 50%;
+            height: 350px;
             padding-bottom: 20px;
             /* background-color: black; */
             border-radius: 10px;
-            box-shadow: 0 0px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 0px 20px rgba(0,0,0,0.1);
 
             /* background-color: var(--primary-color); */
 
@@ -132,16 +136,18 @@
         }
 
         .stat-card {
-            background-color: var(--background-light);
-            background-image: url('/Photo/13682.jpg');
-            background-size: cover;
+            cursor: pointer;
+            background-color: white;
+            
+            /* background-image: url('/Photo/13682.jpg'); */
+            /* background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
+            background-repeat: no-repeat; */
             border-radius: 8px;
             padding: 20px;
             width: 95%;
             text-align: left;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 0px 20px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
             display: flex;
             justify-content: space-evenly;
@@ -195,24 +201,33 @@
         }
 
         .activity-section {
+            margin-top: 20px;
+            margin-bottom: 30px;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
+            
         }
 
         .activity-item {
+            display: flex;
+            /* flex-direction: column; */
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
             background-color: var(--background-light);
             border-radius: 8px;
             padding: 15px;
             text-align: center;
+            height: 100px;
         }
 
 
         /* chart */
         .chart-container {
-          width: 300px;
-          max-width: 90%;
-          height: 100%;
+            width: 100%;
+            /* height: 300px; */
+        
           /* position: relative; */
         }
 
@@ -233,58 +248,68 @@
             <div class="section">
                 <div class="dashboard-header">
                     <h1 class="dashboard-title">Admin Dashboard</h1>
-                    <span class="highlight">September 2023</span>
+                    <!-- <span class="highlight">September 2023</span> -->
                 </div>
 
                 <div class="quick-stats">
                     <div class="stat-card">
                       <div>
                         <h3>Wattala</h3>
-                        <div class="value">75</div>
+                        <div class="value" style="font-size: 1.5rem;">75</div>
                       </div>
                       <div>
-                        <img src="/Photo/icon/group.png" alt="Wattala" style="width: 50px; height: 50px;">
+                        <img src="/Photo/icon/partners.png" alt="Wattala" style="width: 60px; height: 60px;">
                       </div>
                     </div>
 
                     <div class="stat-card">
                       <div>
                         <h3>Kelaniya</h3>
-                        <div class="value">80</div>
+                        <div class="value" style="font-size: 1.5rem;">80</div>
                       </div>
                       <div>
-                        <img src="/Photo/icon/group.png" alt="Kelaniya" style="width: 50px; height: 50px;">
+                        <img src="/Photo/icon/partners.png" alt="Kelaniya" style="width: 60px; height: 60px;">
                       </div>
                     </div>
 
                     <div class="stat-card">
                       <div>
                         <h3>Kotahena</h3>
-                        <div class="value">80</div>
+                        <div class="value" style="font-size: 1.5rem;">80</div>
                       </div>
                       <div>
-                        <img src="/Photo/icon/group.png" alt="Kotahena" style="width: 50px; height: 50px;">
+                        <img src="/Photo/icon/partners.png" alt="Kotahena" style="width: 60px; height: 60px;">
                       </div>
                     </div>
                 </div>
 
-                <h2>Recent Activities</h2>
-
-
-              <div class="card-part-main">
-                <div class="card-part">
+                
+                
+                <div class="card-part-main">
+                    <div class="card-part">
+                    <h2 style="margin-top: 20px; margin-left:20px">Order Statistics</h2>
+                    <p style="margin:0 20px; font-size:0.9rem; opacity:0.5">Track and analyze order trends with the Order Statistics Chart, 
+                        providing real-time insights into sales performance.</p>
 
                     <div class="upper-card">
-                    <div class="chart-container-bar">
+                    <div class="chart-container-bar"  style="height: 200px">
                       <canvas id="lineChart"></canvas>
                     </div>
                     </div>
                 </div>
 
                 <div class="card-part-2">
+                
+                <div style="padding-top: 10px; padding-left:20px; padding-right :20px; width:100%; text-align:left" >
+                <h2>Reservation Statistics</h2>
+                <p style="margin-top:10px; font-size:0.9rem; opacity:0.5;">Visual representation of reservation trends, 
+                    showing booking patterns over time for better management.</p>
+                </div>
 
-                <div class="chart-container">
-                  <canvas id="pieChart"></canvas>
+                <div>
+                <div class="chart-container" style=" width: 430px; height: 200px;">
+                  <canvas id="pieChart" style="width: 100%;"></canvas>
+                </div>
                 </div>
 
                 </div>
@@ -298,26 +323,38 @@
 
         <!-- Right Column -->
         <div class="right-column">
-            <div class="section">
+            <div class="section" style="box-shadow: 0 0px 20px rgba(0,0,0,0.1); margin-right: 10px;">
                 <h2>Financial Summary</h2>
                 
                 <div class="activity-section">
                     <div class="activity-item">
-                        <h3>Income</h3>
-                        <div class="value highlight">$78,500</div>
-                        <small>+12% from last month</small>
+                        <div class="money-first">
+                        <h3 style="margin-bottom: 5px;">Income</h3>
+                        <div class="value highlight" style="font-size: 1.2rem;">$78,500</div>
+                        </div>
+
+                        <div>
+                        <img src="/Photo/icon/statistics.png" alt="Income" style="width: 50px; height: 50px;">
+                        </div>
+                        <!-- <small>+12% from last month</small> -->
                     </div>
                     <div class="activity-item">
-                        <h3>Expenses</h3>
-                        <div class="value negative">$45,200</div>
-                        <small>-5% from last month</small>
+
+                    <div class="money-first" >
+                        <h3 style="margin-bottom: 5px;">Expenses</h3>
+                        <div class="value negative" style="font-size: 1.2rem;">$45,200</div>
+                    </div>
+
+                    <div>
+                    <img src="/Photo/icon/trend.png" alt="expenses" style="width: 50px; height: 50px;">
+                    </div>
+
+                        
+                        <!-- <small>-5% from last month</small> -->
                     </div>
                 </div>
 
-                <div class="chart-container">
-                    <canvas id="expenseChart"></canvas>
-                </div>
-
+                
                 <h2>Top Categories</h2>
                 <table>
                     <thead>
@@ -346,86 +383,95 @@
 
     <script>
 
-        // Expense Chart
-        new Chart(document.getElementById('expenseChart'), {
-            type: 'bar',
-            data: {
-                labels: ['Marketing', 'Operations', 'R&D', 'HR'],
-                datasets: [{
-                    label: 'Expenses',
-                    data: [15000, 25000, 12000, 10000],
-                    backgroundColor: ['#e74c3c', '#3498db', '#2ecc71', '#f39c12']
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    title: { display: true, text: 'Expense Breakdown' },
-                    legend: { display: false }
-                }
-            }
-        });
+  
 
-
-        // Radar Chart
-        // Chart.js Radar Chart Configuration
-        // Get the canvas context
-    const ctx = document.getElementById('pieChart').getContext('2d');
-
-// Create a gradient to simulate lighting effect
-const gradient1 = ctx.createLinearGradient(0, 0, 0, 400);
-gradient1.addColorStop(0, "#1E90FF");  // Blue
-gradient1.addColorStop(1, "#187bcd");
-
-const gradient2 = ctx.createLinearGradient(0, 0, 0, 400);
-gradient2.addColorStop(0, "#2ECC71");  // Green
-gradient2.addColorStop(1, "#1f9b50");
-
-const gradient3 = ctx.createLinearGradient(0, 0, 0, 400);
-gradient3.addColorStop(0, "#E74C3C");  // Red
-gradient3.addColorStop(1, "#b52d22");
+         // Get the canvas context
+  const ctx = document.getElementById('pieChart').getContext('2d');
 
 // Data
 const data = {
-  labels: ["Wattala", "Kelaniya", "Kotahena"],
-  datasets: [{
-    data: [300, 150, 100],
-    backgroundColor: [gradient1, gradient2, gradient3],
-    hoverOffset: 10,
-    borderColor: "#ccc",
-    borderWidth: 0,
-  }]
+  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"], // X-axis labels
+  datasets: [
+    {
+      label: "Wattala",
+      data: [65, 59, 80, 81, 56, 55, 40], // Y-axis data
+      borderColor: "#1E90FF", // Blue
+      backgroundColor: "rgb(30, 143, 255)",
+      fill: true,
+      borderRadius: 5,
+      tension: 0.4, // Smooth curve
+    },
+    {
+      label: "Kelaniya",
+      data: [28, 48, 40, 19, 86, 27, 90],
+      borderColor: "#2ECC71", // Green
+      backgroundColor: "rgb(46, 204, 112)",
+      fill: true,
+      borderRadius: 5,
+      tension: 0.4,
+    },
+    {
+      label: "Kotahena",
+      data: [18, 32, 70, 45, 76, 65, 55],
+      borderColor: "#E74C3C", // Red
+      backgroundColor: "rgb(231, 77, 60)",
+      fill: true,
+      borderRadius: 5,
+      tension: 0.4,
+    }
+  ]
 };
 
 // Options
 const options = {
   responsive: true,
-  cutout: '40%',  // Creates the donut shape for a 3D illusion
+  maintainAspectRatio: false,
   plugins: {
     legend: {
-      display:false,
+      display: false,
+      position: "top",
     },
     title: {
-      display: true,
-      text: "Registration Statistics",
-      font: {
-        size: 18
-      }
+      display: false,
+      text: "Registration Trends Over Time",
+      font: { size: 18 }
     }
   },
-  animation: {
-    animateRotate: true,
-    animateScale: true
+  scales: {
+    x: {
+      grid: { display: false },
+      title: {
+        display: false,
+        text: "Months",
+        font: { size: 14 }
+      }
+    },
+    y: {
+    grid: { display: false },
+      beginAtZero: false,
+      title: {
+        display: false,
+        text: "Registrations",
+        font: { size: 14 }
+      },
+      ticks: {
+                color: "#666",
+                stepSize: 20,
+                callback: function(value) {
+                    return value === 100 ? '100' : value;
+                }
+            }
+
+    }
   }
 };
 
 // Create Chart
 new Chart(ctx, {
-  type: 'doughnut',  // Doughnut instead of Pie to create depth
+  type: 'bar',
   data: data,
   options: options
 });
-
 
 
 
@@ -460,7 +506,7 @@ const lineOptions = {
             display: false
         },
         title: {
-            display: true,
+            display: false,
             text: "Order Statistics",
             padding: 20,
             font: {
@@ -485,7 +531,7 @@ const lineOptions = {
             },
             ticks: {
                 color: "#666",
-                stepSize: 50,
+                stepSize: 20,
                 callback: function(value) {
                     return value === 100 ? '100' : value;
                 }
