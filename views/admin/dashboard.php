@@ -70,7 +70,6 @@
             flex-direction: column;
             justify-content: center;
             align-items: left;
-            margin: 20px 0;
             width: 50%;
             height: 350px;
             gap:20px;
@@ -203,8 +202,9 @@
         .activity-section {
             margin-top: 20px;
             margin-bottom: 30px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             gap: 15px;
             
         }
@@ -236,9 +236,10 @@
           height: 300px;
           /* position: relative; */
         }
-
-      
+     
         /* chart */
+
+
     </style>
 </head>
 <body>
@@ -255,30 +256,30 @@
                     <div class="stat-card">
                       <div>
                         <h3>Wattala</h3>
-                        <div class="value" style="font-size: 1.5rem;">75</div>
+                        <div class="value" style="font-size: 1.5rem;">Rs.75,000</div>
                       </div>
                       <div>
-                        <img src="/Photo/icon/partners.png" alt="Wattala" style="width: 60px; height: 60px;">
+                        <img src="/Photo/icon/statistics.png" alt="Wattala" style="width: 60px; height: 60px;">
                       </div>
                     </div>
 
                     <div class="stat-card">
                       <div>
                         <h3>Kelaniya</h3>
-                        <div class="value" style="font-size: 1.5rem;">80</div>
+                        <div class="value" style="font-size: 1.5rem;">Rs.80,000</div>
                       </div>
                       <div>
-                        <img src="/Photo/icon/partners.png" alt="Kelaniya" style="width: 60px; height: 60px;">
+                        <img src="/Photo/icon/statistics.png" alt="Kelaniya" style="width: 60px; height: 60px;">
                       </div>
                     </div>
 
                     <div class="stat-card">
                       <div>
                         <h3>Kotahena</h3>
-                        <div class="value" style="font-size: 1.5rem;">80</div>
+                        <div class="value" style="font-size: 1.5rem;">Rs.80,000</div>
                       </div>
                       <div>
-                        <img src="/Photo/icon/partners.png" alt="Kotahena" style="width: 60px; height: 60px;">
+                        <img src="/Photo/icon/statistics.png" alt="Kotahena" style="width: 60px; height: 60px;">
                       </div>
                     </div>
                 </div>
@@ -286,18 +287,7 @@
                 
                 
                 <div class="card-part-main">
-                    <div class="card-part">
-                    <h2 style="margin-top: 20px; margin-left:20px">Order Statistics</h2>
-                    <p style="margin:0 20px; font-size:0.9rem; opacity:0.5">Track and analyze order trends with the Order Statistics Chart, 
-                        providing real-time insights into sales performance.</p>
-
-                    <div class="upper-card">
-                    <div class="chart-container-bar"  style="height: 200px">
-                      <canvas id="lineChart"></canvas>
-                    </div>
-                    </div>
-                </div>
-
+                
                 <div class="card-part-2">
                 
                 <div style="padding-top: 10px; padding-left:20px; padding-right :20px; width:100%; text-align:left" >
@@ -313,9 +303,56 @@
                 </div>
 
                 </div>
+
+                <div class="card-part">
+                    <h2 style="margin-top: 20px; margin-left:20px">Order Wattala</h2>
+                    <p style="margin:0 20px; font-size:0.9rem; opacity:0.5">Track and analyze order trends with the Order Statistics Chart, 
+                        providing real-time insights into sales performance.</p>
+
+                    <div class="upper-card">
+                    <div class="chart-container-bar"  style="height: 200px">
+                      <canvas id="lineChart"></canvas>
+                    </div>
+                    </div>
+                </div>
+
                 
               </div>
 
+
+
+              
+              <div class="card-part-main">
+                <div class="card-part">
+                    <h2 style="margin-top: 20px; margin-left:20px">Order Kaleniya</h2>
+                    <p style="margin:0 20px; font-size:0.9rem; opacity:0.5">Track and analyze order trends with the Order Statistics Chart, 
+                        providing real-time insights into sales performance.</p>
+
+                    <div class="upper-card">
+                    <div class="chart-container-bar"  style="height: 200px">
+                      <canvas id="lineChart-2"></canvas>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="card-part">
+                    <h2 style="margin-top: 20px; margin-left:20px">Order Kotahena</h2>
+                    <p style="margin:0 20px; font-size:0.9rem; opacity:0.5">Track and analyze order trends with the Order Statistics Chart, 
+                        providing real-time insights into sales performance.</p>
+
+                    <div class="upper-card">
+                    <div class="chart-container-bar"  style="height: 200px">
+                      <canvas id="lineChart-3"></canvas>
+                    </div>
+                    </div>
+                </div>
+                
+                
+              </div>
+
+
+
+            
                 
 
             </div>
@@ -329,29 +366,16 @@
                 <div class="activity-section">
                     <div class="activity-item">
                         <div class="money-first">
-                        <h3 style="margin-bottom: 5px;">Income</h3>
-                        <div class="value highlight" style="font-size: 1.2rem;">$78,500</div>
+                        <h3 style="margin-bottom: 5px;">Registrations</h3>
+                        <div class="value highlight" style="font-size: 1.2rem;">85</div>
                         </div>
 
                         <div>
-                        <img src="/Photo/icon/statistics.png" alt="Income" style="width: 50px; height: 50px;">
+                        <img src="/Photo/icon/partners.png" alt="Income" style="width: 50px; height: 50px;">
                         </div>
                         <!-- <small>+12% from last month</small> -->
                     </div>
-                    <div class="activity-item">
-
-                    <div class="money-first" >
-                        <h3 style="margin-bottom: 5px;">Expenses</h3>
-                        <div class="value negative" style="font-size: 1.2rem;">$45,200</div>
-                    </div>
-
-                    <div>
-                    <img src="/Photo/icon/trend.png" alt="expenses" style="width: 50px; height: 50px;">
-                    </div>
-
-                        
-                        <!-- <small>-5% from last month</small> -->
-                    </div>
+                    
                 </div>
 
                 
@@ -370,11 +394,14 @@
                             <td>$89,500</td>
                             <td class="highlight">+15%</td>
                         </tr>
+
                         <tr>
                             <td>Consulting</td>
                             <td>$67,300</td>
                             <td class="highlight">+10%</td>
                         </tr>
+
+                        
                     </tbody>
                 </table>
             </div>
@@ -544,6 +571,147 @@ new Chart(lineCtx, {
     type: 'bar',
     data: lineData,
     options: lineOptions
+});
+
+
+//line-2 chart
+    // --------------- Yearly Line Chart ---------------
+     // --------------- Yearly Line Chart ---------------
+ const lineCtx2 = document.getElementById('lineChart-2').getContext('2d');
+
+// Abbreviated day labels
+const weekDays_2 = ["M", "T", "W", "T", "F", "S", "S"];
+
+const lineData2 = {
+    labels: weekDays_2,
+    datasets: [{
+        label: "Orders",
+        data: [60, 50, 60, 50, 30, 40, 10],
+        backgroundColor: "#2ecc71",
+        borderWidth: 0,
+        borderRadius: 5,
+        tension: 0.4,
+        fill: true,
+        pointRadius: 0
+    }]
+};
+
+const lineOptions2 = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+        legend: {
+            display: false
+        },
+        title: {
+            display: false,
+            text: "Order Statistics",
+            padding: 20,
+            font: {
+                size: 18,
+                weight: '600'
+            }
+        }
+    },
+    scales: {
+        x: {
+            grid: {
+                display: false
+            },
+            ticks: {
+                color: "#666"
+            }
+        },
+        y: {
+            beginAtZero: true,
+            grid: {
+                display: false
+            },
+            ticks: {
+                color: "#666",
+                stepSize: 20,
+                callback: function(value) {
+                    return value === 100 ? '100' : value;
+                }
+            }
+        }
+    }
+};
+
+new Chart(lineCtx2, {
+    type: 'bar',
+    data: lineData2,
+    options: lineOptions2
+});
+
+
+//line-3 chart
+ // --------------- Yearly Line Chart ---------------
+ const lineCtx3 = document.getElementById('lineChart-3').getContext('2d');
+
+// Abbreviated day labels
+const weekDays_3 = ["M", "T", "W", "T", "F", "S", "S"];
+
+const lineData3 = {
+    labels: weekDays_3,
+    datasets: [{
+        label: "Orders",
+        data: [60, 50, 60, 50, 30, 40, 10],
+        backgroundColor: "#3498db",
+        borderWidth: 0,
+        borderRadius: 5,
+        tension: 0.4,
+        fill: true,
+        pointRadius: 0
+    }]
+};
+
+const lineOptions3 = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+        legend: {
+            display: false
+        },
+        title: {
+            display: false,
+            text: "Order Statistics",
+            padding: 20,
+            font: {
+                size: 18,
+                weight: '600'
+            }
+        }
+    },
+    scales: {
+        x: {
+            grid: {
+                display: false
+            },
+            ticks: {
+                color: "#666"
+            }
+        },
+        y: {
+            beginAtZero: true,
+            grid: {
+                display: false
+            },
+            ticks: {
+                color: "#666",
+                stepSize: 20,
+                callback: function(value) {
+                    return value === 100 ? '100' : value;
+                }
+            }
+        }
+    }
+};
+
+new Chart(lineCtx3, {
+    type: 'bar',
+    data: lineData3,
+    options: lineOptions3
 });
     </script>
 </body>
