@@ -15,7 +15,7 @@
                 <h1>Shopping Cart</h1>
                 <div class="header-buttons">
                     <button class="btn btn-outline" id="clearCartBtn">Clear Cart</button>
-                    <button class="btn btn-dark" id="addItemBtn">Add Item</button>
+                    <button class="btn btn-dark" id="addItemBtn" onclick="window.location.href='/homeMenu'">Add Item</button>
                 </div>
             </div>
 
