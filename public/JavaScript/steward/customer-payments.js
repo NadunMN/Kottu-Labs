@@ -1,139 +1,155 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // Sample data array
-    const paymentsData = [
-        { orderId: "#1001", time: "18:30", customerName: "Thirani Imanya", totalAmount: "$45.00", paymentMethod: "Cash", tableNo: "02", status: "Pending", isReadyToPay: true },
-        { orderId: "#1002", time: "21:20", customerName: "Abdul Raheem", totalAmount: "$60.00", paymentMethod: "Cash", tableNo: "04", status: "Pending", isReadyToPay: true },
-        { orderId: "#1003", time: "19:00", customerName: "Gihan Perera", totalAmount: "$25.00", paymentMethod: "-", tableNo: "01", status: "Pending", isReadyToPay: false },
-        { orderId: "#1004", time: "20:15", customerName: "Kevin Silva", totalAmount: "$60.00", paymentMethod: "Cash", tableNo: "02", status: "Completed", isReadyToPay: true },
-        { orderId: "#1005", time: "17:45", customerName: "Jehan Fonseka", totalAmount: "$30.00", paymentMethod: "Card", tableNo: "03", status: "Completed", isReadyToPay: true }
-    ];
+async function fetchPayments(selectedDate = null, selectedTime = null) {
+    try {
+      const response = await fetch("/payment/data");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      
+      const text = await response.text();
+      let data;
+      try {
+          data = JSON.parse(text);
+      } catch (e) {
+          console.error("Response is not valid JSON:", text);
+          document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
+          return;
+      }
 
-    const mainContent = document.getElementById("main-content");
-
-    function renderCustomerPayments() {
-        const currentDate = new Date().toISOString().slice(0, 10);
-        
-        mainContent.innerHTML = `
-            <div class="main-section">
-                <div class="topic-bar">
-                    <div class="topic-bar-text">
-                        <h2>Customer Payments ${currentDate}</h2>
-                    </div>
-                    <div class="filter-section">
-                        <input type="text" id="tableFilter" placeholder="Filter by Table No...">
-                        <button onclick="filterPayments()">Filter</button>
-                        <button onclick="resetFilter()">Reset</button>
-                    </div>
-                </div>
-                <table class="menu-table" id="menu-table">
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Time</th>
-                            <th>Customer Name</th>
-                            <th>Total Amount</th>
-                            <th>Payment Method</th>
-                            <th>Table No.</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="payment-table-body">
-                    </tbody>
-                </table>
-            </div>`;
-
-        populatePaymentsTable(paymentsData);
-        addEventListeners();
-    }
-
-    function populatePaymentsTable(data) {
-        const tableBody = document.getElementById("payment-table-body");
-        tableBody.innerHTML = ''; // Clear existing content
-
-        data.forEach(payment => {
-            const row = document.createElement("tr");
-            const statusColor = payment.status === "Completed" ? "green" : "red";
-            row.innerHTML = `
-                <td>${payment.orderId}</td>
-                <td>${payment.time}</td>
-                <td>${payment.customerName}</td>
-                <td>${payment.totalAmount}</td>
-                <td>${payment.paymentMethod}</td>
-                <td>${payment.tableNo}</td>
-                <td style="color: ${statusColor};">${payment.status}</td>
-                <td>
-                    ${payment.status === "Pending" && payment.isReadyToPay
-                        ? `<button class="confirm-btn" data-order="${payment.orderId}">Confirm</button>`
-                        : ""}
-                </td>
-            `;
-            tableBody.appendChild(row);
-        });
-    }
-
-    function addEventListeners() {
-        // Handle confirm button clicks
-        document.querySelectorAll('.confirm-btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const orderId = e.target.dataset.order;
-                handlePaymentConfirmation(orderId, e.target.closest('tr'));
-            });
-        });
-    }
-
-    function handlePaymentConfirmation(orderId, row) {
-        // Here you would typically make an API call to confirm the payment
-        console.log(`Confirming payment for order ${orderId}`);
-
-        // Update the row to show completed status
-        row.querySelector('td:nth-child(7)').innerHTML = `<span style="color: green;">Completed</span>`;
-        row.querySelector('td:last-child').innerHTML = ''; // Remove confirm button
-
-        // Update the data
-        const payment = paymentsData.find(p => p.orderId === orderId);
-        if (payment) {
-            payment.status = "Completed";
+      if (!Array.isArray(data)) {
+        console.error("Data is not an array");
+        document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
+        return;
+      }
+  
+      const paymentContent = document.getElementById("main-content");
+      if (!data || data.length === 0) {
+        paymentContent.innerHTML = "<p>No payments available</p>";
+        return;
+      }
+  
+      // Fetch user branch ID before rendering
+      let branch_id = null;
+      try {
+        const userResponse = await fetch('/user/data');
+        if (!userResponse.ok) {
+          throw new Error("Network response was not ok");
         }
-    }
-
-    // Filter payments by table number
-    window.filterPayments = function() {
-        const filterValue = document.getElementById("tableFilter").value;
-        const filteredPayments = paymentsData.filter(payment => 
-            payment.tableNo.includes(filterValue)
-        );
-        populatePaymentsTable(filteredPayments);
-    };
-
-    // Reset filter
-    window.resetFilter = function() {
-        document.getElementById("tableFilter").value = '';
-        populatePaymentsTable(paymentsData);
-    };
-
-    // Calculate daily totals
-    function calculateDailyTotals() {
-        const completedPayments = paymentsData.filter(payment => payment.status === "Completed");
-        const totalAmount = completedPayments.reduce((sum, payment) => {
-            const amount = parseFloat(payment.totalAmount.replace('$', ''));
-            return sum + amount;
-        }, 0);
+        const userData = await userResponse.json();
+        if (userData.error) {
+          console.error(userData.error);
+        } else {
+          branch_id = userData.branch_id;
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+  
+      const branchName = branch_id === 1 ? 'Wattala' : branch_id === 2 ? 'Kelaniya' : 'Kotahena';
+      const currentDate = selectedDate || new Date().toISOString().split('T')[0];
+  
+      // Filter payments for the selected date and branch
+      const filteredData = data.filter(payment => {
+        const paymentDate = new Date(payment.payment_date).toISOString().slice(0, 10);
+        return paymentDate === currentDate && payment.branch_id === branch_id;
+      });
+  
+      // Count pending payments
+      const pendingCount = filteredData.filter(payment => payment.payment_status !== 1).length;
+      
+      paymentContent.innerHTML = `
+        <div class="main-section">
+          <div class="topic-bar">
+            <div class="topic-bar-text">
+              <h2>Payments - ${branchName} </h2>
+              <span>${currentDate}</span>
+              <h4>${filteredData.length} payments available  &emsp; ${pendingCount} pending payments</h4>
+            </div>
+            <div class="date-filter-container">
+              <div class="date-input-group">
+                  <label for="date-filter">Select Date:</label>
+                  <input type="date" id="date-filter" value="${currentDate}"  />
+              </div>
+              <button id="current-date-button">Go to Current Date</button>
+            </div>
+          </div> 
+          
+          <table class="menu-table" id="menu-table">
+            <thead>
+              <tr>
+                <th>Payment Id</th>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="table-content"></tbody>
+          </table>
+        </div>
+      `;
+  
+      const tableContent = document.getElementById("table-content");
+      if (!tableContent) {
+        console.error("Table content element not found.");
+        return;
+      }
+  
+      // Sort payments: pending first, then confirmed, sorted by time
+      filteredData.sort((a, b) => {
+        if (a.payment_status !== 1 && b.payment_status === 1) return -1;
+        if (a.payment_status === 1 && b.payment_status !== 1) return 1;
         
-        const cashPayments = completedPayments.filter(payment => payment.paymentMethod === "Cash");
-        const cardPayments = completedPayments.filter(payment => payment.paymentMethod === "Card");
+        //time eka add karala sort karanna ona
+        // If both have the same status, sort by time
+        // return a.payment_time.localeCompare(b.payment_time);
 
-        return {
-            totalAmount: totalAmount.toFixed(2),
-            cashCount: cashPayments.length,
-            cardCount: cardPayments.length
-        };
+      });
+  
+      // Populate the table with filtered payment data
+      filteredData.forEach((payment) => {
+        
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td class="payment-id">${payment.payment_id}</td>
+          <td>${payment.payment_date}</td>
+          <td>${payment.payment_type === 'cash' ? 'Cash' : 'Card'}</td>
+          <td>${payment.payment_amount}</td>
+          <td class="status">
+              <span class="status-${payment.payment_status}">
+                  ${payment.payment_status === 1 ? "Done" : 'Pending'}
+              </span>
+          </td>
+        `;
+        tableContent.appendChild(row);
+      });
+  
+      // Remove existing event listeners to avoid duplication
+      const dateFilter = document.getElementById("date-filter");
+      const currentDateButton = document.getElementById("current-date-button");
+  
+      dateFilter.replaceWith(dateFilter.cloneNode(true));
+      currentDateButton.replaceWith(currentDateButton.cloneNode(true));
+  
+      document.getElementById("date-filter").addEventListener("change", () => {
+        const selectedDate = new Date(document.getElementById("date-filter").value).toISOString().slice(0, 10);
+        fetchPayments(selectedDate);
+      });
+  
+      document.getElementById("current-date-button").addEventListener("click", () => {
+        const currentDate = new Date().toISOString().split('T')[0];
+        document.getElementById("date-filter").value = currentDate;
+        fetchPayments(currentDate);
+      });
+  
+    } catch (error) {
+      console.error("Fetch error:", error);
+      document.getElementById("main-content").innerHTML = "<p>Error loading payments.</p>";
     }
-
-    // Initial render
-    renderCustomerPayments();
-
-    // You might want to add a function to update the view periodically
-    // Uncomment the following line if you want auto-refresh every 5 minutes
-    // setInterval(renderCustomerPayments, 300000);
-});
+  }
+  
+  // Refresh payments every minute
+  setInterval(() => {
+    fetchPayments();
+  }, 60000); 
+  
+  fetchPayments();

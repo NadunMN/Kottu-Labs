@@ -63,5 +63,5 @@ function showCashPayment() {
 
 function continuePayment() {
     alert("You chose to pay by cash. A waiter will assist you.");
-    window.location.href = "http://localhost:8080/offer";
+    window.location.href = "http://localhost:8080/payment";
 }

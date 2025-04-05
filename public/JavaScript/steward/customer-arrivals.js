@@ -37,7 +37,6 @@ async function fetchReservations(selectedDate = null, selectedTime = null) {
 
     // Determine branch name
     const branchName = branch_id === 1 ? 'Wattala' : branch_id === 2 ? 'Kelaniya' : 'Kotahena';
-    console.log('Branch name:', branchName);
     const currentDate = selectedDate || new Date().toISOString().split('T')[0];
 
     // Filter reservations for the selected date and branch
@@ -64,7 +63,6 @@ async function fetchReservations(selectedDate = null, selectedTime = null) {
             </div>
             <button id="current-date-button">Go to Current Date</button>
           </div>
-
         </div> 
         
         <table class="menu-table" id="menu-table">

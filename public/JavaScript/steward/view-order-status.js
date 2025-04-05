@@ -24,7 +24,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
 
         const orderContent = document.getElementById("main-content");
         if (!data || data.length === 0) {
-            orderContent.innerHTML = "<p>No reservations available</p>";
+            orderContent.innerHTML = "<p>No orders available</p>";
             return;
         }
 
@@ -45,13 +45,10 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
             console.error('Error fetching user data:', error);
         }
 
-        // Determine branch name
         const branchName = branch_id === 1 ? 'Wattala' : branch_id === 2 ? 'Kelaniya' : 'Kotahena';
-        console.log('Branch name:', branchName);
         const currentDate = selectedDate || new Date().toISOString().split('T')[0];
-
-        // Count ready orders
-        const readyOrders = data.filter(order => order.order_status !== 0).length;
+        const todayOrders = data.filter(order => order.order_date === currentDate && order.branch_id === branch_id);
+        const readyOrders = todayOrders.filter(order => order.order_status !== 0).length;
 
         // Render order content
         orderContent.innerHTML = `
@@ -60,7 +57,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                     <div class="topic-bar-text">
                         <h2>Order Status - ${branchName} </h2>
                         <span>${currentDate}</span>
-                        <h4>Available orders - ${data.length} &emsp; Ready orders - ${readyOrders}</h4>
+                        <h4>Available orders - ${todayOrders.length} &emsp; Ready orders - ${readyOrders}</h4>
                     </div>
                     <div class="filter-section">
                         <input type="text" id="tableFilter" placeholder="Filter by Table No...">
@@ -73,7 +70,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                     <thead>
                         <tr>
                             <th>Order Id</th>
-                            <th>Date</th>
+                            <th>Time</th>
                             <th>Reservation No</th>
                             <th>Type</th>
                             <th>Status</th>
@@ -90,12 +87,22 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
             return;
         }
 
-        // Populate table with order data
-        data.forEach((order) => {
+         // Sort reservations: pending first, then confirmed, sorted by time
+        todayOrders.sort((a, b) => {
+            // Prioritize pending reservations over confirmed ones
+            if (a.order_status !== 1 && b.order_status === 1) return -1;
+            if (a.order_status === 1 && b.order_status !== 1) return 1;
+    
+            // If both have the same status, sort by time
+            return a.order_time.localeCompare(b.order_time);
+        });
+
+        // Populate table with today's order data
+        todayOrders.forEach((order) => {
             const row = document.createElement("tr");
             row.innerHTML = `
                 <td class="order-id">${order.order_id}</td>
-                <td>${order.order_date}</td>
+                <td>${order.order_time}</td>
                 <td>${order.reservation_no}</td>
                 <td>${order.order_type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
                 <td class="status">

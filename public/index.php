@@ -11,6 +11,7 @@ use app\controllers\ReservationController;
 use app\controllers\OrderController;
 use app\controllers\FeedbacksController;
 use app\controllers\sendOtp;
+use app\controllers\PaymentController; // Add missing import
 use app\models\User;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -41,6 +42,7 @@ $offerController = new OfferController();
 $reservationController = new ReservationController();
 $orderController = new OrderController();
 $feedbacksController = new FeedbacksController();
+$paymentController = new PaymentController(); // Add PaymentController instance
 
 
 // Define routes
@@ -207,6 +209,7 @@ $app->router->get('/getconfirmReservation', function() use ($reservationControll
     $reservationController->findReservation($userId);
 });
 
+<<<<<<< Updated upstream
 //cart
 $app->router->post('/cart/add', [$orderController, 'addToCart']);
 
@@ -225,6 +228,10 @@ $app->router->get('/getReservationDataOrder', function() use ($orderController) 
     $userId = $_GET['userId'] ?? null;
     $orderController->getReservationData($userId);
 });
+=======
+//get payment data
+$app->router->get('/payment/data', [$paymentController, 'getPaymentData']); // Fix route definition
+>>>>>>> Stashed changes
 
 // Run the application
 $app->run();
