@@ -25,53 +25,30 @@ document.addEventListener("DOMContentLoaded", function () {
         14: "Beverages"
     };
 
-        // Fetch user data from the backend
-        fetch('/user/data')
+    // Fetch user data from the backend
+    fetch('/user/data')
         .then(response => response.json())
         .then(data => {
             if (data.error) {
                 console.error(data.error);
             } else {
-                // Store user ID
                 userId = data.id;
             }
         })
         .catch(error => console.error('Error fetching user data:', error));
 
-
-
-        fetch(`/getconfirmReservation?userId=${userId}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                console.error(data.error);
-            } else {
-                
-                console.log(data);
-            }
-        })
-        .catch(error => console.error('Error fetching user data:', error));
-
-
-
-
     function loadMeals(branchId, selectionId, searchTerm = "") {
-        console.log(selectionId);
-    
-        // Display the loader immediately
-        menuContainer.innerHTML = "<div class = \"loder-wrapper\"><div class=\"loader\"></div></div>";
-    
-        // Fetch data from the server
+        menuContainer.innerHTML = "<div class=\"loder-wrapper\"><div class=\"loader\"></div></div>";
+
         fetch(`/getMealsmenu?branchId=${branchId}&selectionId=${selectionId}&search=${searchTerm}`)
             .then(response => response.json())
             .then(data => {
-                // Use setTimeout to delay the rendering of the data by 1 second
                 setTimeout(() => {
                     if (data.error) {
                         menuContainer.innerHTML = `<p>${data.error}</p>`;
                         return;
                     }
-    
+
                     if (data.length === 0) {
                         menuContainer.innerHTML = `
                             <div class="no-offers-container" 
@@ -85,19 +62,16 @@ document.addEventListener("DOMContentLoaded", function () {
                                         height: 300px;
                                         border-radius: 10px; 
                                         margin: 20px;">
-    
                                 <i class="fa-solid fa-bowl-food" 
                                 style="font-size: 3rem; 
                                         color: #6c757d; 
                                         margin-bottom: 1rem;"></i>
-    
                                 <h3 style="font-size: 1.5rem; 
                                         color: #343a40; 
                                         margin-bottom: 0.5rem; 
                                         font-weight: 600;">
                                     No Meals Found!
                                 </h3>
-    
                                 <p style="color: #6c757d; 
                                         font-size: 1rem; 
                                         max-width: 400px; 
@@ -110,9 +84,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         return;
                     } else {
                         lengthMenu.innerHTML = data.length + " Meals Available";
-                        console.log(data);
                     }
-    
+
                     const mealCards = data.map(meal => `
                         <div class="card">
                             <div class="image-div">
@@ -129,13 +102,17 @@ document.addEventListener("DOMContentLoaded", function () {
                             <div class="card-content">
                                 <h2 class="card-title">${meal.meal_name}</h2>
                                 <div class="card-price">Rs. ${meal.meal_price}</div>
-                                <button class="view-button"><img src="/Photo/icon/shopping-cart.png" alt="">ADD TO CART</button>
+                                <button class="view-button add-to-cart" 
+                                    data-meal-id="${meal.meal_id}">
+                                    <img src="/Photo/icon/shopping-cart.png" alt="">
+                                    ADD TO CART
+                                </button>
                             </div>
                         </div>
                     `).join('');
-    
+
                     menuContainer.innerHTML = mealCards;
-                }, 1000); // Delay rendering by 1 second (1000 milliseconds)
+                }, 1000);
             })
             .catch(error => {
                 console.error('Error fetching meals:', error);
@@ -143,34 +120,61 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    // Initial load without search term
-    loadMeals(branchSelect.value, searchSelection.value);
+    // Event delegation for add-to-cart buttons
+    menuContainer.addEventListener('click', function(event) {
+        const button = event.target.closest('.add-to-cart');
+        if (button) {
+            if (!userId) {
+                alert('Please log in to add items to your cart.');
+                return;
+            }
+            
+            const mealId = button.getAttribute('data-meal-id');
 
-    // Event listener for branch select change
-    branchSelect.addEventListener("change", function () {
-        loadMeals(this.value, searchSelection.value, searchInput.value.trim());
-    });
-
-    // Event listener for search selection change
-    searchSelection.addEventListener("change", function () {
-        loadMeals(branchSelect.value, this.value, searchInput.value.trim());
-    });
-
-    // Event listener for search button click
-    searchButton.addEventListener("click", function () {
-        const searchTerm = searchInput.value.trim();
-        console.log(searchTerm);
-        loadMeals(branchSelect.value, searchSelection.value, searchTerm);
-    });
-
-    // Event listener for Enter key in search input
-    searchInput.addEventListener("keypress", function (e) {
-        if (e.key === "Enter") {
-            const searchTerm = searchInput.value.trim();
-            loadMeals(branchSelect.value, searchSelection.value, searchTerm);
+            const requestBody = JSON.stringify({ meal_id: mealId, user_id: userId, quantity: 1 });
+            console.log("Request Body:", requestBody);
+            
+            fetch('/cart/add', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                },
+                body: requestBody,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Added to cart successfully!');
+                } else {
+                    alert('Failed to add to cart: ' + (data.message || 'Please try again.'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
         }
     });
 
+    // Initial load
+    loadMeals(branchSelect.value, searchSelection.value);
 
+    // Event listeners
+    branchSelect.addEventListener("change", function() {
+        loadMeals(this.value, searchSelection.value, searchInput.value.trim());
+    });
 
+    searchSelection.addEventListener("change", function() {
+        loadMeals(branchSelect.value, this.value, searchInput.value.trim());
+    });
+
+    searchButton.addEventListener("click", function() {
+        loadMeals(branchSelect.value, searchSelection.value, searchInput.value.trim());
+    });
+
+    searchInput.addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+            loadMeals(branchSelect.value, searchSelection.value, this.value.trim());
+        }
+    });
 });

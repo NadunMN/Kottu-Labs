@@ -1,234 +1,240 @@
-     // Initial data
-     const cartItems = [
-        {
-            id: 1,
-            name: 'Special Cheese kottu',
-            unitPrice: 850,
-            quantity: 2,
-            status: 'complete',
-            image: '/api/placeholder/100/100'
-        },
-        {
-            id: 2,
-            name: 'Chocolate Milkshake',
-            unitPrice: 500,
-            quantity: 1,
-            status: 'complete',
-            image: '/api/placeholder/100/100'
-        },
-        {
-            id: 3,
-            name: 'Seafood kottu',
-            unitPrice: 700,
-            quantity: 1,
-            status: 'preparing',
-            image: '/api/placeholder/100/100'
-        },
-        {
-            id: 4,
-            name: 'Chicken kottu',
-            unitPrice: 600,
-            quantity: 1,
-            status: 'preparing',
-            image: '/api/placeholder/100/100'
-        }
-    ];
+// Initial data
+const cartItems = [];
+const bookedItems = []; // Your original booked items array
 
-    const bookedItems = [
-        {
-            id: 1,
-            name: 'Special Cheese kottu',
-            price: 850,
-            image: '/api/placeholder/60/60'
-        },
-        {
-            id: 2,
-            name: 'Special Cheese kottu',
-            price: 850,
-            image: '/api/placeholder/60/60'
-        },
-        {
-            id: 3,
-            name: 'Special Cheese kottu',
-            price: 850,
-            image: '/api/placeholder/60/60'
-        }
-    ];
+let userId;
 
-    // DOM Elements
-    const cartItemsContainer = document.getElementById('cartItemsContainer');
-    const bookedItemsContainer = document.getElementById('bookedItemsContainer');
-    const subtotalElement = document.getElementById('subtotal');
-    const bookingBtn = document.getElementById('bookingBtn');
-    const clearCartBtn = document.getElementById('clearCartBtn');
-    const addItemBtn = document.getElementById('addItemBtn');
-    const payNowBtn = document.getElementById('payNowBtn');
+// DOM Elements
+const cartItemsContainer = document.getElementById('cartItemsContainer');
+const bookedItemsContainer = document.getElementById('bookedItemsContainer');
+const subtotalElement = document.getElementById('subtotal');
+const menuContainer = document.getElementById('menuContainer');
 
-    // Render cart items
-    function renderCartItems() {
-        if (cartItems.length === 0) {
-            cartItemsContainer.innerHTML = `
-                <div class="empty-cart">
-                    <i class="fas fa-shopping-cart"></i>
-                    <p>Your cart is empty</p>
-                    <button class="btn btn-dark" id="startShoppingBtn">Start Shopping</button>
-                </div>
-            `;
+// Fetch user data and initialize cart
+fetch('/user/data')
+.then(response => response.json())
+.then(userData => {
+    if (userData.error) {
+        console.error(userData.error);
+        return;
+    }
+    
+    userId = userData.id;
+    
+    // Fetch cart items after getting user ID
+    fetch(`/getMealscart?userId=${userId}`)
+    .then(response => response.json())
+    .then(cartData => {
+        if (cartData.error) {
+            menuContainer.innerHTML = `<p>${cartData.error}</p>`;
             return;
         }
-
-        cartItemsContainer.innerHTML = '';
         
-        cartItems.forEach(item => {
-            const totalPrice = item.unitPrice * item.quantity;
-            const cartItemElement = document.createElement('div');
-            cartItemElement.className = 'cart-item';
-            cartItemElement.innerHTML = `
-                <div class="cart-item-image">
-                    <img src="/Photo/Menu/cheese_kottu.jpg" alt="${item.name}">
-                </div>
-                <div class="cart-item-details">
-                    <div class="item-top">
-                        <h3 class="item-name">${item.name}</h3>
-                        <h3 class="item-price">Rs.${totalPrice.toFixed(2)}</h3>
-                    </div>
-                    <div class="item-middle">
-                        <div class="unit-price">Unit Price - <span>Rs.${item.unitPrice.toFixed(2)}</span></div>
-                        <div class="status status-${item.status.toLowerCase()}">${item.status}</div>
-                    </div>
-                    <div class="item-bottom">
-                        <button class="delete-btn" data-id="${item.id}">
-                            <i class="fas fa-trash-alt"></i> Delete
-                        </button>
-                        <div class="quantity-control">
-                            <button class="quantity-btn minus" data-id="${item.id}">-</button>
-                            <span class="quantity-value">${item.quantity}</span>
-                            <button class="quantity-btn plus" data-id="${item.id}">+</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            cartItemsContainer.appendChild(cartItemElement);
-        });
-
-        // Add event listeners for delete buttons
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const id = parseInt(e.currentTarget.getAttribute('data-id'));
-                removeItem(id);
+        // Transform backend data to frontend structure
+        cartData.forEach(backendItem => {
+            cartItems.push({
+                id: backendItem.meal_id,
+                name: backendItem.meal_name,
+                price: parseFloat(backendItem.meal_price),
+                quantity: backendItem.quantity,
+                description: backendItem.meal_description,
+                image: backendItem.meal_photo,
+                status: 'Not Ordered' // Default status
             });
         });
-
-        // Add event listeners for quantity buttons
-        document.querySelectorAll('.quantity-btn.plus').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const id = parseInt(e.currentTarget.getAttribute('data-id'));
-                updateQuantity(id, 1);
-            });
-        });
-
-        document.querySelectorAll('.quantity-btn.minus').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const id = parseInt(e.currentTarget.getAttribute('data-id'));
-                updateQuantity(id, -1);
-            });
-        });
-    }
-
-    // Render booked items
-    function renderBookedItems() {
-        bookedItemsContainer.innerHTML = '';
         
-        bookedItems.forEach(item => {
-            const bookedItemElement = document.createElement('div');
-            bookedItemElement.className = 'booked-item';
-            bookedItemElement.innerHTML = `
-                <div class="booked-img">
-                    <img src="/Photo/Menu/pasta-Sea food.jpg" alt="${item.name}">
+        // Render after data transformation
+        renderCartItems();
+        updateSubtotal();
+    })
+    .catch(error => {
+        console.error('Error fetching cart:', error);
+        menuContainer.innerHTML = "<p>Failed to load cart. Please try again later.</p>";
+    });
+})
+.catch(error => console.error('Error fetching user data:', error));
+
+// Render cart items
+function renderCartItems() {
+    if (cartItems.length === 0) {
+        cartItemsContainer.innerHTML = `
+            <div class="empty-cart">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Your cart is empty</p>
+                <button class="btn btn-dark" id="startShoppingBtn">Start Shopping</button>
+            </div>
+        `;
+        return;
+    }
+    
+    cartItemsContainer.innerHTML = '';
+    
+    cartItems.forEach(item => {
+        const totalPrice = item.price * item.quantity;
+        const cartItemElement = document.createElement('div');
+        cartItemElement.className = 'cart-item';
+        cartItemElement.innerHTML = `
+            <div class="cart-item-image">
+                <img src="${item.image}" alt="${item.name}">
+            </div>
+            <div class="cart-item-details">
+                <div class="item-top">
+                    <h3 class="item-name">${item.name}</h3>
+                    <h3 class="item-price">Rs.${totalPrice.toFixed(2)}</h3>
                 </div>
-                <div class="booked-info">
-                    <div class="booked-name">${item.name}</div>
-                    <div class="booked-price">Rs.${item.price.toFixed(2)}</div>
+                <div class="item-middle">
+                    <div class="unit-price">Unit Price - <span>Rs.${item.price.toFixed(2)}</span></div>
+                    <div class="status status-${item.status.toLowerCase()}">${item.status}</div>
                 </div>
-                <button class="view-btn">View</button>
-            `;
-            bookedItemsContainer.appendChild(bookedItemElement);
+                <div class="item-bottom">
+                    <button class="delete-btn" data-id="${item.id}">
+                        <i class="fas fa-trash-alt"></i> Delete
+                    </button>
+                    <div class="quantity-control">
+                        <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                        <span class="quantity-value">${item.quantity}</span>
+                        <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        cartItemsContainer.appendChild(cartItemElement);
+    });
+
+    addCartEventListeners(); // Ensure event listeners are re-attached
+}
+
+// Event listeners for cart interactions
+function addCartEventListeners() {
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const id = parseInt(e.currentTarget.dataset.id);
+            const cartItemElement = e.currentTarget.closest('.cart-item'); // Get the row element
+            if (confirm('Are you sure you want to delete this item?')) {
+                fetch('/removeFromCart', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        user_id: userId,
+                        meal_id: id
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Deletion failed');
+                    // Remove the item from the cartItems array
+                    const index = cartItems.findIndex(item => item.id === id);
+                    if (index !== -1) {
+                        cartItems.splice(index, 1);
+                    }
+                    // Remove the row from the DOM
+                    cartItemElement.remove();
+                    updateSubtotal(); // Update subtotal after deletion
+                })
+                .catch(error => console.error('Deletion error:', error));
+            }
         });
+    });
+
+    document.querySelectorAll('.quantity-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const id = parseInt(e.currentTarget.dataset.id);
+            console.log('Button clicked:', id);
+            const isPlus = button.classList.contains('plus');
+            updateQuantity(id, isPlus ? 1 : -1);
+        });
+    });
+}
+
+// Update quantity with server sync
+function updateQuantity(id, change) {
+    const item = cartItems.find(item => item.id === id);
+    if (!item) return;
+
+    const newQuantity = item.quantity + change;
+    if (newQuantity > 0) {
+        item.quantity = newQuantity;
+    } else {
+        removeItem(id);
+        return;
     }
 
-    // Calculate and update subtotal
-    function updateSubtotal() {
-        const subtotal = cartItems.reduce((sum, item) => {
-            return sum + (item.unitPrice * item.quantity);
-        }, 0);
+    // console.log('Updating quantity:', { userId, meal_id: id, quantity: newQuantity }); // Debugging log
+
+    fetch('/updateCartQuantity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            user_id: userId,
+            meal_id: id,
+            quantity: newQuantity
+        })
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Update failed');
+        return response.json(); // Parse response if needed
+    })
+    .then(data => {
+        console.log('Server response:', data); // Debugging log
+        renderCartItems();
+        updateSubtotal();
+    })
+    .catch(error => console.error('Update error:', error));
+}
+
+// Remove item with server sync
+function removeItem(id) {
+    if (!confirm('Are you sure you want to remove this item?')) return;
+
+    fetch('/removeFromCart', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            userId,
+            meal_id: id
+        })
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Removal failed');
         
-        subtotalElement.textContent = `Rs.${subtotal.toFixed(2)}`;
-        bookingBtn.textContent = `Booking(${cartItems.length})`;
-    }
-
-    // Remove item from cart
-    function removeItem(id) {
         const index = cartItems.findIndex(item => item.id === id);
         if (index !== -1) {
             cartItems.splice(index, 1);
             renderCartItems();
             updateSubtotal();
         }
-    }
+    })
+    .catch(error => console.error('Removal error:', error));
+}
 
-    // Update item quantity
-    function updateQuantity(id, change) {
-        const item = cartItems.find(item => item.id === id);
-        if (item) {
-            const newQuantity = item.quantity + change;
-            if (newQuantity > 0) {
-                item.quantity = newQuantity;
-                renderCartItems();
-                updateSubtotal();
-            } else if (newQuantity === 0) {
-                removeItem(id);
-            }
-        }
-    }
+// Calculate subtotal
+function updateSubtotal() {
+    const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    subtotalElement.textContent = `Rs.${subtotal.toFixed(2)}`;
+    document.getElementById('bookingBtn').textContent = `Booking (${cartItems.length})`;
+}
 
-    // Clear cart
-    clearCartBtn.addEventListener('click', () => {
-        if (confirm('Are you sure you want to clear your cart?')) {
+// Clear cart
+document.getElementById('clearCartBtn').addEventListener('click', () => {
+    if (confirm('Are you sure you want to clear your cart?')) {
+        fetch('/clearCart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: userId })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Clear failed');
             cartItems.length = 0;
             renderCartItems();
             updateSubtotal();
-        }
-    });
+        })
+        .catch(error => console.error('Clear error:', error));
+    }
+});
 
-    // Add item (dummy function for demo)
-    addItemBtn.addEventListener('click', () => {
-        const newItem = {
-            id: cartItems.length > 0 ? Math.max(...cartItems.map(item => item.id)) + 1 : 1,
-            name: 'New Item',
-            unitPrice: 500,
-            quantity: 1,
-            status: 'preparing',
-            image: '/api/placeholder/100/100'
-        };
-        
-        cartItems.push(newItem);
-        renderCartItems();
-        updateSubtotal();
-    });
+// Initial render
+renderBookedItems();
 
-    // Pay now button action
-    payNowBtn.addEventListener('click', () => {
-        alert('Proceeding to payment...');
-    });
-
-    // Initialize
-    renderCartItems();
-    renderBookedItems();
-    updateSubtotal();
-
-    // Add event listener for start shopping button if cart is empty
-    document.addEventListener('click', (e) => {
-        if (e.target.id === 'startShoppingBtn') {
-            alert('Redirecting to menu...');
-        }
-    });
+// Render booked items (keep your original function)
+function renderBookedItems() {
+    // Your existing booked items rendering logic
+}

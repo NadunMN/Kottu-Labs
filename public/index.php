@@ -197,7 +197,7 @@ $app->router->post('/feedback/delete', [$feedbacksController, 'deleteReviews']);
 $app->router->get('/offer/getpublished', [$offerController, 'getAllPublishedOffers']);
 
 // order data
-$app->router->get('/order/data', [$orderController, 'getOrderData']);
+// $app->router->get('/order/data', [$orderController, 'getOrderData']);
 
 
 
@@ -207,6 +207,17 @@ $app->router->get('/getconfirmReservation', function() use ($reservationControll
     $reservationController->findReservation($userId);
 });
 
+//cart
+$app->router->post('/cart/add', [$orderController, 'addToCart']);
+
+$app->router->get('/getMealscart', function() use ($orderController) {
+    $userId = $_GET['userId'] ?? null;
+    $orderController->getCartData($userId);
+});
+
+$app->router->post('/removeFromCart', [$orderController, 'deleteCart']);
+$app->router->post('/updateCartQuantity', [$orderController, 'updateCartQuantity']);
+$app->router->post('/clearCart', [$orderController, 'clearCart']);
 
 // Run the application
 $app->run();
