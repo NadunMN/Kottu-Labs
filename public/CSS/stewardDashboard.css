@@ -11,21 +11,20 @@ body {
     display: flex;
     height: auto; 
     min-height: 100vh; 
-    width: 100%;
+    width: auto;
     padding: 10px; 
     flex-direction: column;
 }
 
 .sidebar {
-    width: 20%;
-    height: 100%;
-    background-color: #000000; 
-    color: #ffffff; 
-    padding: 20px;
-    border-radius: 10px; 
-    margin-right: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); 
-    position: sticky;
+    display: flex;
+    align-items: center;
+    width: auto;
+    background-color: transparent; /* White background */
+    color: #000000; /* White text */
+    padding-right: 40px;
+    border-radius: 5px; /* Smooth corners */
+    margin-right: 10px; /* Gap between sidebar and main content */
     top: 10px;
 }
 
@@ -36,33 +35,40 @@ body {
 }
 
 .sidebar ul {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
     list-style: none;
     padding: 0;
 }
 
 .sidebar ul li {
-    margin-bottom: 10px; 
     display: flex;
     align-items: center;
     padding: 10px; 
-    border-radius: 5px;
     font-weight: 400;
     transition: color 0.3s, background-color 0.3s;
 }
 
 .sidebar ul li:hover {
-    background-color: rgba(255, 255, 255, 0.1); 
+    background-color: rgba(149, 149, 149, 0.1);
+    border-top-left-radius:10px ;
+    border-top-right-radius:10px ;
 }
 
 .sidebar ul li.selected {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #f44336; 
-    font-weight: bold;
+    z-index: 1;
+    background-color: rgb(255, 255, 255);
+    color:black; /* Red text for the selected item */
+    font-weight: bold; /* Makes it more noticeable */
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+    box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar ul li a {
     text-decoration: none;
-    color: white;
+    color: rgb(0, 0, 0);
     font-size: 1rem;
     padding-left: 10px;
     transition: color 0.3s;
@@ -74,24 +80,35 @@ body {
     margin-right: 10px;
 }
 
-.sidebar ul li.selected a {
-    color: #f44336;
-}
-
 .main-content {
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
+    width:100%;
+    height: auto;
+    min-height: 100%;
+    /* height: fit-content; */
+    overflow-y: auto; /* Scrollable content */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
     flex: 1;
     background-color: rgb(255, 255, 255);
-    border-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
     padding: 20px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
 }
 
+
 .main-section {
-    font-size: 16px;
+    width: auto;
+    height: auto;
+    min-height: 100%;
+    overflow: hidden;
+    flex: 1;
+    background-color: rgb(255, 255, 255);
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); 
 }
 
 .main-section table {
