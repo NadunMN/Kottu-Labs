@@ -139,7 +139,11 @@
     }
 
     // Set proper HTTP response code
-    http_response_code($exception->getCode() ?: 500);
+    if (isset($response_code) && is_numeric($response_code)) {
+        http_response_code((int)$response_code); // Ensure the response code is an integer
+    } else {
+        http_response_code(500); // Default to 500 if the response code is invalid
+    }
     
     // Configure error details
     $errorCode = $exception->getCode() ?: 500;

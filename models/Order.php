@@ -4,13 +4,14 @@ namespace app\models;
 
 use app\core\db\DbModel;
 use app\core\Model\OrderModel;
+use app\core\Application;
 use app\core\Model\ReservationModel;
 
 class Order extends OrderModel
 {
     public string $order_id = '';
     public string $order_date = '';
-    public string $order_type = '';
+    public string $order_time = '';
     public string $payment_id = '';
     public int $order_status = 0;
     public string $branch_id = '';
@@ -39,7 +40,7 @@ class Order extends OrderModel
 
     public function attributes(): array
     {
-        return ['order_id', 'order_date', 'order_type', 'payment_id', 'order_status', 'branch_id', 'reservation_no', 'user_id'];
+        return ['order_id', 'order_date', 'order_time', 'payment_id', 'order_status', 'branch_id', 'reservation_no', 'user_id'];
     }
 
     public function rules(): array
@@ -127,7 +128,7 @@ class Order extends OrderModel
         return [
             'order_id' => $this->order_id,
             'order_date' => $this->order_date,
-            'order_type' => $this->order_type,
+            'order_type' => $this->order_time,
             'payment_id' => $this->payment_id,
             'order_status' => $this->order_status,
             'branch_id' => $this->branch_id,
@@ -151,7 +152,21 @@ class Order extends OrderModel
             $statement->bindValue(":$attribute", $this->{$attribute});
         }
 
-        return $statement->execute();
+        try {
+            if ($statement->execute()) {
+                // Retrieve and set the last inserted ID
+                $lastInsertId = Application::$app->db->pdo->lastInsertId();
+                $primaryKey = static::primaryKey(); // Get the primary key attribute
+                $this->{$primaryKey} = $lastInsertId; // Assign the last insert ID to the primary key attribute
+                
+                return $lastInsertId;
+            }
+        } catch (\PDOException $e) {
+            // Log or handle the error appropriately
+            echo "Error saving record: " . $e->getMessage();
+        }
+
+        return false;
     }
 
     public function delete()
