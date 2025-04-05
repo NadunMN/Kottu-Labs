@@ -1,14 +1,17 @@
 // Initial data
 const cartItems = [];
-const bookedItems = []; // Your original booked items array
+let bookedItems = []; // Allow reassignment
 
 let userId;
+let reservationId;
+let branchId;
 
 // DOM Elements
 const cartItemsContainer = document.getElementById('cartItemsContainer');
 const bookedItemsContainer = document.getElementById('bookedItemsContainer');
 const subtotalElement = document.getElementById('subtotal');
 const menuContainer = document.getElementById('menuContainer');
+const bookbutton = document.getElementById('bookingBtn');
 
 // Fetch user data and initialize cart
 fetch('/user/data')
@@ -20,6 +23,27 @@ fetch('/user/data')
     }
     
     userId = userData.id;
+
+    //fetch reservation data
+    fetch(`/getReservationDataOrder?userId=${userId}`)
+    .then(response => response.json())
+    .then(reservationData => {
+        if (reservationData.error) {
+            console.error(reservationData.error);
+            return;
+        }
+        
+        reservationId = reservationData[0].reservation_no;
+        branchId = reservationData[0].branch_id;
+        console.log('Branch ID:', branchId);
+        console.log('Reservation ID:', reservationId);
+        
+        
+    })
+    .catch(error => {
+        console.error('Error fetching reservation:', error);
+    });
+
     
     // Fetch cart items after getting user ID
     fetch(`/getMealscart?userId=${userId}`)
@@ -107,41 +131,109 @@ function renderCartItems() {
 // Event listeners for cart interactions
 function addCartEventListeners() {
     document.querySelectorAll('.delete-btn').forEach(button => {
-        button.addEventListener('click', (e) => {
-            const id = parseInt(e.currentTarget.dataset.id);
-            const cartItemElement = e.currentTarget.closest('.cart-item'); // Get the row element
-            if (confirm('Are you sure you want to delete this item?')) {
-                fetch('/removeFromCart', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        user_id: userId,
-                        meal_id: id
-                    })
-                })
-                .then(response => {
-                    if (!response.ok) throw new Error('Deletion failed');
-                    // Remove the item from the cartItems array
-                    const index = cartItems.findIndex(item => item.id === id);
-                    if (index !== -1) {
-                        cartItems.splice(index, 1);
-                    }
-                    // Remove the row from the DOM
-                    cartItemElement.remove();
-                    updateSubtotal(); // Update subtotal after deletion
-                })
-                .catch(error => console.error('Deletion error:', error));
-            }
-        });
+        button.removeEventListener('click', handleDelete); // Remove existing listener
+        button.addEventListener('click', handleDelete); // Add new listener
     });
 
     document.querySelectorAll('.quantity-btn').forEach(button => {
-        button.addEventListener('click', (e) => {
-            const id = parseInt(e.currentTarget.dataset.id);
-            console.log('Button clicked:', id);
-            const isPlus = button.classList.contains('plus');
-            updateQuantity(id, isPlus ? 1 : -1);
-        });
+        button.removeEventListener('click', handleQuantityChange); // Remove existing listener
+        button.addEventListener('click', handleQuantityChange); // Add new listener
+    });
+
+    document.getElementById('bookingBtn').removeEventListener('click', handleBooking); // Remove existing listener
+    document.getElementById('bookingBtn').addEventListener('click', handleBooking); // Add new listener
+}
+
+// Define helper functions for event listeners
+function handleDelete(e) {
+    const id = parseInt(e.currentTarget.dataset.id);
+    const cartItemElement = e.currentTarget.closest('.cart-item');
+    if (confirm('Are you sure you want to delete this item?')) {
+        fetch('/removeFromCart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                user_id: userId,
+                meal_id: id
+            })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Deletion failed');
+            const index = cartItems.findIndex(item => item.id === id);
+            if (index !== -1) {
+                cartItems.splice(index, 1);
+            }
+            cartItemElement.remove();
+            updateSubtotal();
+        })
+        .catch(error => console.error('Deletion error:', error));
+    }
+}
+
+function handleQuantityChange(e) {
+    const id = parseInt(e.currentTarget.dataset.id);
+    const isPlus = e.currentTarget.classList.contains('plus');
+    updateQuantity(id, isPlus ? 1 : -1);
+}
+
+function handleBooking() {
+    if (cartItems.length === 0) {
+        alert('Your cart is empty! Please add items to your cart before booking.');
+        return;
+    }
+
+    if (!confirm('Are you sure you want to place this order?')) {
+        return;
+    }
+
+    bookedItems = [...cartItems]; // Copy cart items to booked itemstems
+    console.log('Booked items:', bookedItems); // Debugging log
+
+    
+
+
+    const orderData = {
+        order_date: new Date().toISOString().split('T')[0], // SQL date format (YYYY-MM-DD)
+        order_status: 0,
+        payment_id: '1',
+        branch_id: branchId,
+        reservation_no: reservationId,
+        user_id: userId,
+        order_time: new Date().toTimeString().split(' ')[0] // SQL time format (HH:MM:SS)
+    };
+
+    console.log('Placing order with data:', orderData); // Debugging log
+
+    fetch('/placeOrder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData)
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Order placement failed');
+        return response.json();
+    })
+    .then(() => {
+        cartItems.length = 0;
+            renderCartItems();
+            updateSubtotal();
+
+            fetch('/clearCart', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_id: userId })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Clear failed');
+                cartItems.length = 0;
+                renderCartItems();
+                updateSubtotal();
+            })
+            .catch(error => console.error('Clear error:', error));
+    })
+    .catch(error => {
+        console.error('Order placement error:', error);
+        // alert('Failed to place the order. Please try again.');
     });
 }
 
@@ -189,7 +281,7 @@ function removeItem(id) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-            userId,
+            user_id: userId, // Fixed variable name
             meal_id: id
         })
     })
@@ -211,6 +303,7 @@ function updateSubtotal() {
     const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     subtotalElement.textContent = `Rs.${subtotal.toFixed(2)}`;
     document.getElementById('bookingBtn').textContent = `Booking (${cartItems.length})`;
+
 }
 
 // Clear cart
@@ -236,5 +329,22 @@ renderBookedItems();
 
 // Render booked items (keep your original function)
 function renderBookedItems() {
-    // Your existing booked items rendering logic
+    if (bookedItems.length === 0) {
+        bookedItemsContainer.innerHTML = `<p>No booked items available.</p>`;
+        return;
+    }
+
+    bookedItemsContainer.innerHTML = '';
+    bookedItems.forEach(item => {
+        const bookedItemElement = document.createElement('div');
+        bookedItemElement.className = 'booked-item';
+        bookedItemElement.innerHTML = `
+            <div class="booked-item-details">
+                <h3>${item.name}</h3>
+                <p>${item.description}</p>
+                <p>Quantity: ${item.quantity}</p>
+            </div>
+        `;
+        bookedItemsContainer.appendChild(bookedItemElement);
+    });
 }

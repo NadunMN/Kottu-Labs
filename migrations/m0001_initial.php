@@ -152,14 +152,14 @@ class m0001_initial
         ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);
 
-        // order_items table
-        $SQL = "CREATE TABLE order_items (
-            order_id INT NOT NULL,
-            order_details INT NOT NULL,
-            PRIMARY KEY (order_id, order_details),
-            FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE
-        ) ENGINE=INNODB;";
-        $db->pdo->exec($SQL);
+        // // order_items table
+        // $SQL = "CREATE TABLE order_items (
+        //     order_id INT NOT NULL,
+        //     order_details INT NOT NULL,
+        //     PRIMARY KEY (order_id, order_details),
+        //     FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE
+        // ) ENGINE=INNODB;";
+        // $db->pdo->exec($SQL);
     }
 
     public function down()

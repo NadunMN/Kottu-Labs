@@ -12,7 +12,14 @@ class m0006_column_orders
         $checkColumnSQL = "SHOW COLUMNS FROM orders LIKE 'order_time';";
         $result = $db->pdo->query($checkColumnSQL)->fetch();
         if (!$result) {
-            $SQL = "ALTER TABLE orders ADD COLUMN order_time DATE NOT NULL;";
+            $SQL = "ALTER TABLE orders ADD COLUMN order_time TIME NOT NULL;";
+            $db->pdo->exec($SQL);
+        }
+
+        $checkColumnSQL = "SHOW COLUMNS FROM order_meals LIKE 'quantity';";
+        $result = $db->pdo->query($checkColumnSQL)->fetch();
+        if (!$result) {
+            $SQL = "ALTER TABLE order_meals ADD COLUMN quantity INT NOT NULL;";
             $db->pdo->exec($SQL);
         }
 
@@ -24,6 +31,9 @@ class m0006_column_orders
 
         // Drop confirmation_number column
         $SQL = "ALTER TABLE orders DROP COLUMN order_time;";
+        $db->pdo->exec($SQL);
+
+        $SQL = "ALTER TABLE order_meals DROP COLUMN quantity;";
         $db->pdo->exec($SQL);
 
        

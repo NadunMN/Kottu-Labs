@@ -156,6 +156,22 @@ class Reservation extends ReservationModel
             return false;
         }
     }
+
+    public static function findAllreservationOrder($where)
+{
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+        $sql = "SELECT $tableName.* FROM $tableName";
+        if (!empty($attributes)) {
+            $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes)) . " AND confirmation_status = 1";
+        }
+        $statement = self::prepare($sql);
+        foreach ($where as $key => $item) {
+            $statement->bindValue(":$key", $item);
+        }
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
+}
     
     
 

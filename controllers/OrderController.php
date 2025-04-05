@@ -30,6 +30,24 @@ class OrderController extends Controller
         }
     }
 
+    // Method to get cart data
+    public function getReservationData($user_id)
+    {
+        if (Application::$app->user) {
+            $reservations = Reservation::findAllreservationOrder(['user_id' => $user_id]);
+            $reservationData = [];
+
+            foreach ($reservations as $reservation) {
+                $reservationData[] = $reservation;
+            }
+
+            echo json_encode($reservationData);
+        } else {
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+
+
     //store order data in order table
     public function addToCart()
     {
@@ -92,6 +110,26 @@ class OrderController extends Controller
                 echo json_encode(['success' => 'Cart cleared successfully']);
             } else {
                 echo json_encode(['error' => 'Failed to clear cart']);
+            }
+        } else {
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+
+    //place order data in order table
+    public function placeOrder()
+    {
+        if (Application::$app->user) {
+            $order = new Order();
+            $order->loadData(Application::$app->request->getBody());
+
+           
+            if ($order->save()) {
+
+
+                echo json_encode(['success' => 'Order placed successfully']);
+            } else {
+                echo json_encode(['error' => 'Failed to place order']);
             }
         } else {
             echo json_encode(['error' => 'No user is logged in']);
