@@ -176,7 +176,7 @@ function handleQuantityChange(e) {
     updateQuantity(id, isPlus ? 1 : -1);
 }
 
-function handleBooking() {
+async function handleBooking() {
     if (cartItems.length === 0) {
         alert('Your cart is empty! Please add items to your cart before booking.');
         return;
@@ -186,56 +186,66 @@ function handleBooking() {
         return;
     }
 
-    bookedItems = [...cartItems]; // Copy cart items to booked itemstems
-    console.log('Booked items:', bookedItems); // Debugging log
-
-    
-
 
     const orderData = {
-        order_date: new Date().toISOString().split('T')[0], // SQL date format (YYYY-MM-DD)
+        order_date: new Date().toISOString().split('T')[0],
         order_status: 0,
         payment_id: '1',
         branch_id: branchId,
         reservation_no: reservationId,
         user_id: userId,
-        order_time: new Date().toTimeString().split(' ')[0] // SQL time format (HH:MM:SS)
+        order_time: new Date().toTimeString().split(' ')[0]
     };
 
-    console.log('Placing order with data:', orderData); // Debugging log
+    try {
+        // First, place the order and get order ID
+        const response = await fetch('/placeOrder', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(orderData)
+        });
 
-    fetch('/placeOrder', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderData)
-    })
-    .then(response => {
         if (!response.ok) throw new Error('Order placement failed');
-        return response.json();
-    })
-    .then(() => {
-        cartItems.length = 0;
-            renderCartItems();
-            updateSubtotal();
+        const result = await response.json();
+        const orderId = result.order_id; // Expect backend to return { order_id: xx }
 
-            fetch('/clearCart', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ user_id: userId })
-            })
-            .then(response => {
-                if (!response.ok) throw new Error('Clear failed');
-                cartItems.length = 0;
-                renderCartItems();
-                updateSubtotal();
-            })
-            .catch(error => console.error('Clear error:', error));
-    })
-    .catch(error => {
-        console.error('Order placement error:', error);
-        // alert('Failed to place the order. Please try again.');
-    });
+        console.log('Order placed with ID:', orderId);
+
+        const bookedItems = cartItems.map(item => ({
+            order_id: orderId,
+            id: item.id,
+            quantity: item.quantity
+        }));
+
+        // Then, place the order meals
+        const responseMeal = await fetch(`/placeOrderMeal`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(bookedItems)
+        });
+
+        if (!responseMeal.ok) throw new Error('Order meals placement failed');
+        const mealResult = await responseMeal.json();
+        console.log('Order meals result:', mealResult);
+
+        // Clear cart
+        cartItems.length = 0;
+        renderCartItems();
+        updateSubtotal();
+
+        await fetch('/clearCart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: userId })
+        });
+
+        console.log('Cart cleared successfully.');
+
+    } catch (error) {
+        console.error('Booking failed:', error);
+    }
 }
+
 
 // Update quantity with server sync
 function updateQuantity(id, change) {
