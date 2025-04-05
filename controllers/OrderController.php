@@ -10,6 +10,7 @@ use app\models\Offer;
 use app\models\Reservation;
 use app\models\Order;
 use app\models\Cart;
+use app\models\OrderMeals;
 
 class OrderController extends Controller
 {
@@ -125,9 +126,14 @@ class OrderController extends Controller
 
            
             if ($order->save()) {
+                $orderId = $order->order_id;
+                // $ordermeals = new OrderMeals();
+                // Call another function and pass the orderId
+                // $this->processOrderMeals($orderId);
+                // error_log(print_r($orderId, true)); // Log the order ID for debugging
 
-
-                echo json_encode(['success' => 'Order placed successfully']);
+                // echo json_encode(['order_id' => 'Order placed successfully']);
+                echo json_encode(['order_id' => $orderId]);
             } else {
                 echo json_encode(['error' => 'Failed to place order']);
             }
@@ -135,4 +141,41 @@ class OrderController extends Controller
             echo json_encode(['error' => 'No user is logged in']);
         }
     }
+
+    // New function to process order meals
+    public function processOrderMeals()
+{
+    if (Application::$app->user) {
+        // Retrieve purchased meals from the request body
+        $purchasedMeals = Application::$app->request->getBody();
+        // error_log(print_r($orderId, true)); // Log the purchased meals for debugging
+        // exit;
+
+        foreach ($purchasedMeals as $meal) {
+            // Dump meal ID
+            // error_log("Meal ID: " . $meal['id']);
+        
+            if (!isset($meal['id'], $meal['quantity'])) {
+                echo json_encode(['error' => 'Invalid meal data']);
+                return;
+            }
+        
+            $orderMeal = new OrderMeals();
+            $orderMeal->order_id = $meal['order_id']; // Assuming you have the order ID from the request
+            $orderMeal->meal_id = $meal['id'];
+            $orderMeal->quantity = $meal['quantity'];
+        
+            if (!$orderMeal->save()) {
+                echo json_encode(['error' => 'Failed to save order meal for meal ID ' . $meal['id']]);
+                return;
+            }
+        }
+        
+        
+
+        echo json_encode(['success' => 'Order meals processed successfully']);
+    } else {
+        echo json_encode(['error' => 'No user is logged in']);
+    }
+}
 }

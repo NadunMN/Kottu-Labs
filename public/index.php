@@ -223,6 +223,8 @@ $app->router->post('/updateCartQuantity', [$orderController, 'updateCartQuantity
 $app->router->post('/clearCart', [$orderController, 'clearCart']);
 
 $app->router->post('/placeOrder', [$orderController, 'placeOrder']);
+$app->router->post('/placeOrderMeal', [$orderController, 'processOrderMeals']);
+
 
 $app->router->get('/getReservationDataOrder', function() use ($orderController) {
     $userId = $_GET['userId'] ?? null;
