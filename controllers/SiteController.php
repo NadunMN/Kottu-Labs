@@ -117,7 +117,7 @@ class SiteController extends Controller
 
     public function homeMenu(Request $request,Response $response)
     {
-        $this->setLayout('main');
+        $this->setLayout('dashboard');
         return $this->render('homeMenu');
     }
 

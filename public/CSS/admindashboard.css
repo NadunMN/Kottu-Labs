@@ -382,3 +382,252 @@ button#cancel {
 
 /* form css end */
 
+/* staffform */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  background: white;
+  padding: 15px;
+  position: relative;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toggleFormBtn{
+  
+  background-color: rgb(0, 0, 0);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  /* transition: background 0.2s; */
+}
+
+
+.toggleFormBtn:hover {
+  background-color: rgb(185, 41, 41);
+}
+
+h1 {
+  text-align: left;
+  color:rgb(0, 0, 0);
+  margin-bottom: 15px;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.staff-form {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform:translateX(-150%); /* keep vertically centered & hidden to right */
+  width: 500px;
+  margin: 0 auto;
+  padding: 35px 20px;
+  background: rgb(243, 243, 243);
+  border-radius: 8px;
+  transition: transform 0.4s ease-in-out;
+  z-index: 1000;
+}
+
+/* When form should appear */
+.staff-form.show {
+  transform:translateX(0%);
+}
+
+/* .form-body {
+  
+  display: grid;
+  grid-template-columns: 500px 1fr;
+  align-items: center;
+  gap: 20px;
+} */
+
+.photo-section {
+  grid-column: 1;
+}
+
+.details-section {
+  grid-column: 2;
+}
+
+.form-section {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.form-section h2 {
+  color:rgb(0, 0, 0);
+  font-size: 1rem;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.form-col {
+  flex: 1;
+  min-width: 180px;
+}
+
+label {
+  display: block;
+  margin-bottom: 4px;
+  color: #555;
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: border 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+.radio-group {
+  display: flex;
+  gap: 15px;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.radio-item input {
+  width: auto;
+  margin-right: 5px;
+}
+
+.photo-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.photo-preview {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  overflow: hidden;
+  border: 1px dashed #ccc;
+}
+
+.photo-preview img {
+  max-width: 100%;
+  display: none;
+}
+
+.photo-preview.no-photo::before {
+  content: "No Photo";
+  color: #999;
+  font-size: 0.8rem;
+}
+
+.upload-btn {
+  background-color:rgb(0, 0, 0);
+  color: white;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  
+  transition: background 0.2s;
+  width: auto;
+  margin: 10px auto;
+  text-align: center;
+}
+
+.upload-btn:hover {
+  background-color:rgb(185, 41, 41);
+}
+
+.submit-btn {
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  padding: 12px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: block;
+  margin: 15px 0 0 auto;
+  transition: background 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: #27ae60;
+}
+
+textarea {
+  height: 60px;
+  resize: vertical;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .form-body {
+      grid-template-columns: 1fr;
+  }
+  
+  .photo-section, .details-section {
+      grid-column: 1;
+  }
+  
+  .photo-upload {
+      flex-direction: row;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+  }
+  
+  .form-col {
+      flex: 100%;
+  }
+  
+  .submit-btn {
+      width: 100%;
+      margin: 15px auto 0;
+  }
+}
+/* staffform */
+
