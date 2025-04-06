@@ -28,6 +28,12 @@
         <div class="summary-section-right">
             <div class="summary-section">
                 <h2 class="summary-header">Summary Order</h2>
+
+                <div class="summary-row">
+                    <span>Current total</span>
+                    <span id="allOrderTotal">Rs.0.00</span>
+                </div>
+
                 <div class="summary-row">
                     <span>Subtotal</span>
                     <span id="subtotal">Rs.0.00</span>

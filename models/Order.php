@@ -12,11 +12,11 @@ class Order extends OrderModel
     public string $order_id = '';
     public string $order_date = '';
     public string $order_time = '';
-    public string $payment_id = '';
     public int $order_status = 0;
     public string $branch_id = '';
     public string $user_id = '';
     public string $reservation_no = '';
+    public int $order_price;
 
     public static function tableName(): string
     {
@@ -40,7 +40,7 @@ class Order extends OrderModel
 
     public function attributes(): array
     {
-        return ['order_id', 'order_date', 'order_time', 'payment_id', 'order_status', 'branch_id', 'reservation_no', 'user_id'];
+        return ['order_id', 'order_date', 'order_time', 'order_status', 'branch_id', 'reservation_no', 'user_id', 'order_price'];
     }
 
     public function rules(): array
@@ -49,11 +49,11 @@ class Order extends OrderModel
             'order_id' => [self::RULE_REQUIRED],
             'order_date' => [self::RULE_REQUIRED],
             'order_type' => [self::RULE_REQUIRED],
-            'payment_id' => [self::RULE_REQUIRED],
             'order_status' => [self::RULE_REQUIRED],
             'branch_id' => [self::RULE_REQUIRED],
             'user_id' => [self::RULE_REQUIRED],
             'reservation_no' => [self::RULE_REQUIRED],
+            'order_price' => [self::RULE_REQUIRED],
         ];
     }
 
@@ -129,11 +129,11 @@ class Order extends OrderModel
             'order_id' => $this->order_id,
             'order_date' => $this->order_date,
             'order_type' => $this->order_time,
-            'payment_id' => $this->payment_id,
             'order_status' => $this->order_status,
             'branch_id' => $this->branch_id,
             'user_id' => $this->user_id,     
             'reservation_no' => $this->reservation_no,
+            'order_price' => $this->order_price,
         ];
     }
 

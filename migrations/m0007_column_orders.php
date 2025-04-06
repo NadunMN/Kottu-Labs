@@ -2,7 +2,7 @@
 
 use app\core\Application;
 
-class m0006_column_orders
+class m0007_column_orders
 {
     public function up()
     {
@@ -23,6 +23,15 @@ class m0006_column_orders
             $db->pdo->exec($SQL);
         }
 
+        $checkColumnSQL = "SHOW COLUMNS FROM orders LIKE 'order_price';";
+        $result = $db->pdo->query($checkColumnSQL)->fetch();
+        if (!$result) {
+            $SQL = "ALTER TABLE orders ADD COLUMN order_price INT NOT NULL;";
+            $db->pdo->exec($SQL);
+        }
+
+
+
     }
 
     public function down()
@@ -34,6 +43,9 @@ class m0006_column_orders
         $db->pdo->exec($SQL);
 
         $SQL = "ALTER TABLE order_meals DROP COLUMN quantity;";
+        $db->pdo->exec($SQL);
+
+        $SQL = "ALTER TABLE orders DROP COLUMN order_price;";
         $db->pdo->exec($SQL);
 
        

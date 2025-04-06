@@ -5,11 +5,13 @@ let bookedItems = []; // Allow reassignment
 let userId;
 let reservationId;
 let branchId;
+let totalPrice = 0;
 
 // DOM Elements
 const cartItemsContainer = document.getElementById('cartItemsContainer');
 const bookedItemsContainer = document.getElementById('bookedItemsContainer');
 const subtotalElement = document.getElementById('subtotal');
+const allOrderTotal = document.getElementById('allOrderTotal');
 const menuContainer = document.getElementById('menuContainer');
 const bookbutton = document.getElementById('bookingBtn');
 
@@ -56,6 +58,11 @@ fetch('/user/data')
 
         // Transform backend data to frontend structure
         bookedData.forEach(backendItem => {
+
+            const itemPrice = parseFloat(backendItem.meal_price);
+            const itemQuantity = backendItem.quantity;
+            const itemTotal = itemPrice * itemQuantity;
+
             bookedItems.push({
                 id: backendItem.meal_id,
                 name: backendItem.meal_name,
@@ -65,9 +72,12 @@ fetch('/user/data')
                 image: backendItem.meal_photo,
                 status: backendItem.status // Default status
             });
+
+            totalPrice += itemTotal;
         });
 
         console.log('Booked items:', bookedItems);
+        console.log("Total Price:", totalPrice);
         // Initial render
 renderBookedItems();
         
@@ -225,12 +235,16 @@ async function handleBooking() {
     const orderData = {
         order_date: new Date().toISOString().split('T')[0],
         order_status: 0,
-        payment_id: '1',
         branch_id: branchId,
         reservation_no: reservationId,
         user_id: userId,
-        order_time: new Date().toTimeString().split(' ')[0]
+        order_time: new Date().toTimeString().split(' ')[0],
+        order_price: cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)
     };
+
+    console.log('Order data:', orderData); // Debugging log
+
+
 
     try {
         // First, place the order and get order ID
@@ -348,6 +362,7 @@ function removeItem(id) {
 // Calculate subtotal
 function updateSubtotal() {
     const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    allOrderTotal.textContent = `Rs.${totalPrice.toFixed(2)}`;
     subtotalElement.textContent = `Rs.${subtotal.toFixed(2)}`;
     document.getElementById('bookingBtn').textContent = `Booking (${cartItems.length})`;
 
