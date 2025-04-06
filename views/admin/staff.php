@@ -22,21 +22,21 @@
                         <h2>Personal Information</h2>
 
                         <div class="form-group">
-                            <label for="address">Photo</label>
-                            <input type="file" id="photo" accept="image/*">
+                            <label for="photo">Photo</label>
+                            <input type="file" name="photo" id="photo" accept="image/*">
                         </div>
 
                         <div class="form-row">
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="firstName">First Name *</label>
-                                    <input type="text" id="firstName" required>
+                                    <input type="text" name="fname" id="firstName" required>
                                 </div>
                             </div>
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="lastName">Last Name *</label>
-                                    <input type="text" id="lastName" required>
+                                    <input type="text" name="lname" id="lastName" required>
                                 </div>
                             </div>
                         </div>
@@ -45,13 +45,13 @@
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="dob">Date of Birth</label>
-                                    <input type="date" id="dob">
+                                    <input type="date" name='date_of_birth' id="dob">
                                 </div>
                             </div>
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="nationality">Nationality</label>
-                                    <select id="nationality">
+                                    <select id="nationality" name="nationality">
                                         <option value="">Select Nationality</option>
                                         <option value="sl">Sri Lankan</option>
                                         <option value="other">Other</option>
@@ -82,7 +82,7 @@
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="position">Position *</label>
-                                    <select id="position" required>
+                                    <select id="position" name="type" required>
                                         <option value="">Select Position</option>
                                         <option value="adim">Admin</option>
                                         <option value="manager">Manager</option>
@@ -94,7 +94,7 @@
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="branch">Branch *</label>
-                                    <select id="branch" required>
+                                    <select id="branch" name="branch_id" required>
                                         <option value="">Select Branch</option>
                                         <option value="1">Wattala</option>
                                         <option value="2">Kelaniya</option>
@@ -111,20 +111,20 @@
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="email">Email Address *</label>
-                                    <input type="email" id="email" required>
+                                    <input type="email" name="email" id="email" required>
                                 </div>
                             </div>
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="mobile">Mobile Number</label>
-                                    <input type="tel" id="mobile">
+                                    <input type="tel" name="mobile" id="mobile">
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="address">Address</label>
-                            <textarea id="address" rows="2"></textarea>
+                            <textarea id="address" name="address" rows="2"></textarea>
                         </div>
                     </div>
                 </div>
