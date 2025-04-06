@@ -8,144 +8,92 @@
 </head>
 
 <body>
-    <div class="container1">
-        <!-- <div class="title"> -->
-            <h1>Our Staff</h1>
-        <!-- </div> -->
-    </div>
+    
+    <!-- new section -->
+    <section class="ezy__team-section">
+  <div class="container-1">
+    <h2 class="ezy__team-section-heading">Our Staff Members</h2>
+    <p class="ezy__team-section-subheading">
+      Meet our talented team of professionals dedicated to delivering exceptional service and innovative solutions for your business needs.
+    </p>
 
-    <div class="container-of-wrapper">
-    <!-- Branch 1 -->
-    <div class="wrapper">
-        <h2>Team Wattala</h2>
-        <hr>
-        <div class="members">
-            
-            <div class="team-mem">
-                <div class="image">
-                <img src="/Photo/Thirani_pics/Manager.jpg">
-                </div>
-                <h4>Abdul Raheem</h4>
-                <p>Head Chef</p>
-            </div>
+    
+    
 
-            <div class="team-mem">
-                <div class="image">
-                <img src="/Photo/Thirani_pics/Manager.jpg">
-                </div>
-                <h4>Hansaja Kithmal</h4>
-                <p>Steward</p>
-            </div>
-
-            <div class="team-mem">
-                <div class="image">
-                <img src="/Photo/Thirani_pics/Manager.jpg">
-                </div>
-                <h4>Naveen Harindra</h4>
-                <p>Steward</p>
-            </div>
-
-            <div class="team-mem">
-                <div class="image">
-                <img src="/Photo/Thirani_pics/Manager.jpg">
-                </div>
-                <h4>Chamikara Malinda</h4>
-                <p>Steward</p>
-            </div>
-
-            
-
+    <div class="ezy__team-grid">
+      <!-- Team Member 1 -->
+      <div class="ezy__team-card">
+        <img 
+          src="https://cdn.easyfrontend.com/pictures/team/team_square_1.jpeg" 
+          alt="Akshay Kumar" 
+          class="ezy__team-card-image"
+        >
+        <div class="ezy__team-card-content">
+          <h3 class="ezy__team-member-name">Ranuga Lekamwasam</h3>
+          <p class="ezy__team-member-position">Owner of Kottu Labs</p>
         </div>
-    </div>
+      </div>
 
-    <!-- Branch 2 -->
-    <div class="wrapper">
-        <h2>Team Wattala</h2>
-        <hr>
-        <div class="members">
-            
-            <div class="team-mem">
-                <div class="image">
-                <img src="/Photo/Thirani_pics/Manager.jpg">
-                </div>
-                <h4>Lisitha Dissanayae</h4>
-                <p>Head Chef</p>
-            </div>
-
-            <div class="team-mem">
-                <div class="image">
-                <img src="/Photo/Thirani_pics/Manager.jpg">
-                </div>
-                <h4>John Perera</h4>
-                <p>Steward</p>
-            </div>
-
-            <div class="team-mem">
-                <div class="image">
-                <img src="/Photo/Thirani_pics/Manager.jpg">
-                </div>
-                <h4>Kalindu</h4>
-                <p>Steward</p>
-            </div>
-
-            <div class="team-mem">
-                <div class="image">
-                <img src="/Photo/Thirani_pics/Manager.jpg">
-                </div>
-                <h4>Heshan</h4>
-                <p>Steward</p>
-            </div>
-
-            
-
+      <!-- Team Member 2 -->
+      <div class="ezy__team-card">
+        <img 
+          src="https://cdn.easyfrontend.com/pictures/team/team_square_2.jpeg" 
+          alt="Raima Ray" 
+          class="ezy__team-card-image"
+        >
+        <div class="ezy__team-card-content">
+          <h3 class="ezy__team-member-name">Mahesh Kumara</h3>
+          <p class="ezy__team-member-position">Manager-Watta</p>
         </div>
-    </div>
+      </div>
 
-    <!-- Branch 3 -->
-    <div class="wrapper">
-        <h2>Team Wattala</h2>
-        <hr>
-        <div class="members">
-            
-            <div class="team-mem">
-                <div class="image">
-                <img src="/Photo/Thirani_pics/Manager.jpg">
-                </div>
-                <h4>Dinesh Fernando</h4>
-                <p>Head Chef</p>
-            </div>
-
-            <div class="team-mem">
-                <div class="image">
-                <img src="/Photo/Thirani_pics/Manager.jpg">
-                </div>
-                <h4>Wilson</h4>
-                <p>Steward</p>
-            </div>
-
-            <div class="team-mem">
-                <div class="image">
-                <img src="/Photo/Thirani_pics/Manager.jpg">
-                </div>
-                <h4>Hashen Silva</h4>
-                <p>Steward</p>
-            </div>
-
-            <div class="team-mem">
-                <div class="image">
-                <img src="/Photo/Thirani_pics/Manager.jpg">
-                </div>
-                <h4>Yunal</h4>
-                <p>Steward</p>
-            </div>
-
-            
-
+      <!-- Team Member 3 -->
+      <div class="ezy__team-card">
+        <img 
+          src="https://cdn.easyfrontend.com/pictures/team/team_square_4.jpeg" 
+          alt="Sarah Johnson" 
+          class="ezy__team-card-image"
+        >
+        <div class="ezy__team-card-content">
+          <h3 class="ezy__team-member-name">Thirani Athukorala</h3>
+          <p class="ezy__team-member-position">Manager-Kelaniya</p>
         </div>
-    </div>
-   
+      </div>
 
+      <!-- Team Member 4 -->
+      <div class="ezy__team-card">
+        <img 
+          src="https://cdn.easyfrontend.com/pictures/team/team_square_3.jpeg" 
+          alt="Arjun Kapur" 
+          class="ezy__team-card-image"
+        >
+        <div class="ezy__team-card-content">
+          <h3 class="ezy__team-member-name">Nadun Mdusanka</h3>
+          <p class="ezy__team-member-position">Manager-Kotahena</p>
+        </div>
+      </div>
+
+
+      <!-- Team Member 4 -->
+      <div class="ezy__team-card">
+        <img 
+          src="https://cdn.easyfrontend.com/pictures/team/team_square_3.jpeg" 
+          alt="Arjun Kapur" 
+          class="ezy__team-card-image"
+        >
+        <div class="ezy__team-card-content">
+          <h3 class="ezy__team-member-name">Nadun Mdusanka</h3>
+          <p class="ezy__team-member-position">Manager-Kotahena</p>
+        </div>
+      </div>
+
+      
     </div>
+
+    
+  </div>
+</section>
+    <!-- new section -->
 
 </body>
 </html>
