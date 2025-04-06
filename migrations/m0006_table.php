@@ -2,7 +2,7 @@
 
 use app\core\Application;
 
-class m0007_table
+class m0006_table
 {
     public function up()
     {
