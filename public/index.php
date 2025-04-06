@@ -209,7 +209,7 @@ $app->router->get('/getconfirmReservation', function() use ($reservationControll
     $reservationController->findReservation($userId);
 });
 
-<<<<<<< Updated upstream
+
 //cart
 $app->router->post('/cart/add', [$orderController, 'addToCart']);
 
@@ -230,10 +230,15 @@ $app->router->get('/getReservationDataOrder', function() use ($orderController) 
     $userId = $_GET['userId'] ?? null;
     $orderController->getReservationData($userId);
 });
-=======
+
+$app->router->get('/getBookedDataOrder', function() use ($orderController) {
+    $userId = $_GET['userId'] ?? null;
+    $orderController->getBookedData($userId);
+});
+
 //get payment data
 $app->router->get('/payment/data', [$paymentController, 'getPaymentData']); // Fix route definition
->>>>>>> Stashed changes
+
 
 // Run the application
 $app->run();

@@ -164,6 +164,8 @@ class OrderController extends Controller
             $orderMeal->order_id = $meal['order_id']; // Assuming you have the order ID from the request
             $orderMeal->meal_id = $meal['id'];
             $orderMeal->quantity = $meal['quantity'];
+            $orderMeal->user_id = $meal['user_id']; // Assuming you have the user ID from the session
+            $orderMeal->status = $meal['status']; // Set the status to 'pending' or any other default value
         
             if (!$orderMeal->save()) {
                 echo json_encode(['error' => 'Failed to save order meal for meal ID ' . $meal['id']]);
@@ -178,4 +180,26 @@ class OrderController extends Controller
         echo json_encode(['error' => 'No user is logged in']);
     }
 }
+
+    // Function to get order meals data
+    public function getBookedData($user_id)
+    {
+        if (Application::$app->user) {
+            $orderMeals = OrderMeals::findAllBookedMeal(['user_id' => $user_id]);
+            $orderMealData = [];
+
+            foreach ($orderMeals as $orderMeal) {
+                $orderMealData[] = $orderMeal;
+            }
+
+            echo json_encode($orderMealData);
+        } else {
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+
+
+
+
+
 }

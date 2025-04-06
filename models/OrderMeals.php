@@ -11,6 +11,8 @@ class OrderMeals extends DbModel
     public int $order_id;
     public int $meal_id;
     public int $quantity;
+    public int $user_id;
+    public string $status = '';
     
 
     public static function tableName(): string
@@ -35,7 +37,7 @@ class OrderMeals extends DbModel
 
     public function attributes(): array
     {
-        return ['order_id', 'meal_id', 'quantity'];
+        return ['order_id', 'meal_id', 'quantity', 'user_id', 'status'];
     }
 
     public function rules(): array
@@ -67,7 +69,7 @@ class OrderMeals extends DbModel
 }
 
 
-public static function findAllcartMeal($where)
+public static function findAllBookedMeal($where)
 {
         $tableName = static::tableName();
         $attributes = array_keys($where);
@@ -93,6 +95,8 @@ public static function findAllcartMeal($where)
             'order_id' => $this->order_id,
             'meal_id' => $this->meal_id,
             'quantity' => $this->quantity,
+            'user_id' => $this->user_id,
+            'status' => $this->status,
         ];
     }
 
