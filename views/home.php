@@ -187,10 +187,82 @@
     </div>
 
 
+
     
+    <!-- new section -->
+    <section class="ezy__team-section">
+  <div class="container">
+    <h2 class="ezy__team-section-heading">Our Team Members</h2>
+    <p class="ezy__team-section-subheading">
+      Meet our talented team of professionals dedicated to delivering exceptional service and innovative solutions for your business needs.
+    </p>
+
+    <div class="ezy__team-grid">
+      <!-- Team Member 1 -->
+      <div class="ezy__team-card">
+        <img 
+          src="https://cdn.easyfrontend.com/pictures/team/team_square_1.jpeg" 
+          alt="Akshay Kumar" 
+          class="ezy__team-card-image"
+        >
+        <div class="ezy__team-card-content">
+          <h3 class="ezy__team-member-name">Ranuga Lekamwasam</h3>
+          <p class="ezy__team-member-position">Owner of Kottu Labs</p>
+        </div>
+      </div>
+
+      <!-- Team Member 2 -->
+      <div class="ezy__team-card">
+        <img 
+          src="https://cdn.easyfrontend.com/pictures/team/team_square_2.jpeg" 
+          alt="Raima Ray" 
+          class="ezy__team-card-image"
+        >
+        <div class="ezy__team-card-content">
+          <h3 class="ezy__team-member-name">Mahesh Kumara</h3>
+          <p class="ezy__team-member-position">Manager-Watta</p>
+        </div>
+      </div>
+
+      <!-- Team Member 3 -->
+      <div class="ezy__team-card">
+        <img 
+          src="https://cdn.easyfrontend.com/pictures/team/team_square_4.jpeg" 
+          alt="Sarah Johnson" 
+          class="ezy__team-card-image"
+        >
+        <div class="ezy__team-card-content">
+          <h3 class="ezy__team-member-name">Thirani Athukorala</h3>
+          <p class="ezy__team-member-position">Manager-Kelaniya</p>
+        </div>
+      </div>
+
+      <!-- Team Member 4 -->
+      <div class="ezy__team-card">
+        <img 
+          src="https://cdn.easyfrontend.com/pictures/team/team_square_3.jpeg" 
+          alt="Arjun Kapur" 
+          class="ezy__team-card-image"
+        >
+        <div class="ezy__team-card-content">
+          <h3 class="ezy__team-member-name">Nadun Mdusanka</h3>
+          <p class="ezy__team-member-position">Manager-Kotahena</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ezy__team-button-container">
+      <button class="ezy__team-button">Show More</button>
+    </div>
+  </div>
+</section>
+    <!-- new section -->
+
 
     
 
+    
+<!-- 
 
     <div class="description-section">
         <div class="description-section-part">
@@ -215,15 +287,55 @@
             </div>
             
         </div>
-    </div>
+    </div> -->
 
 
 
+    <!-- service -->
+    <section class="ezy__service2_NrYFSVFQ">
+	<div class="container">
+		<div class="row justify-content-center mb-md-5">
+			<div class="col-lg-6 text-center">
+				<h2 class="ezy__service2_NrYFSVFQ-heading mb-4">Services We Provide</h2>
+				<p class="ezy__service2_NrYFSVFQ-sub-heading mb-0">Kottu Lab blends tradition with innovation, offering a unique twist on Sri Lankan cuisine. 
+                     our goal is to provide you with delicious food and a memorable experience.</p>
+			</div>
+		</div>
+		<div class="row text-center ezy__service2_NrYFSVFQ-card">
+			<div class="col-md-4 mt-5 mt-md-0">
+				<div class="card ezy__service2_NrYFSVFQ-item">
+					<div class="card-body px-lg-4 py-lg-5">
+						<div class="ezy__service2_NrYFSVFQ-icon mb-4"><i class="fa-solid fa-utensils"></i></div>
+						<h4 class="ezy__service2_NrYFSVFQ-title fs-4 mb-3">Online Booking</h4>
+						<p class="ezy__service2_NrYFSVFQ-content mb-0">Convenient online booking for 
+                            hassle-free reservation at Kottu Lab</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 mt-5 mt-md-0">
+				<div class="card ezy__service2_NrYFSVFQ-item">
+					<div class="card-body px-lg-4 py-lg-5">
+						<div class="ezy__service2_NrYFSVFQ-icon mb-4"><i class="fa-solid fa-burger"></i></div>
+						<h4 class="ezy__service2_NrYFSVFQ-title fs-4 mb-3">Online Ordering</h4>
+						<p class="ezy__service2_NrYFSVFQ-content mb-0">Order your favorite dishes online for quick and easy takeaway or delivery.</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 mt-5 mt-md-0">
+				<div class="card ezy__service2_NrYFSVFQ-item">
+					<div class="card-body px-lg-4 py-lg-5">
+						<div class="ezy__service2_NrYFSVFQ-icon mb-4"><i class="fa-solid fa-credit-card"></i></div>
+						<h4 class="ezy__service2_NrYFSVFQ-title fs-4 mb-3">Online Pay</h4>
+						<p class="ezy__service2_NrYFSVFQ-content mb-0">Seamless and secure online payment option for your convenience.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+    <!-- service -->
 
 
-
-
-    
 
     
 <!-- <script src="/JavaScript/home.js"></script> -->

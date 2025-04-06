@@ -304,3 +304,217 @@ body{
     width: 120px;
     height: 120px;
 }
+
+
+/* new section */
+.ezy__team-section {
+  --section-padding: 60px 0;
+  --card-bg: #fff;
+  --card-border-radius: 8px;
+  --card-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  --primary-button-color: #6c8c7d;
+  --primary-button-hover: #5a7568;
+  --heading-color: #2a2a2a;
+  --subheading-color: #666;
+  --text-color: #333;
+  
+  padding: var(--section-padding);
+  background-color: #f9f9f9;
+}
+
+.ezy__team-section-heading {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--heading-color);
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.ezy__team-section-subheading {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--subheading-color);
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 50px;
+}
+
+.ezy__team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.ezy__team-card {
+  background: var(--card-bg);
+  border-radius: var(--card-border-radius);
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  width: 100%;
+  max-width: 280px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ezy__team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+}
+
+.ezy__team-card-image {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+}
+
+.ezy__team-card-content {
+  padding: 20px;
+}
+
+.ezy__team-member-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--heading-color);
+  margin: 0 0 5px;
+}
+
+.ezy__team-member-position {
+  font-size: 14px;
+  color: var(--subheading-color);
+  margin: 0;
+}
+
+.ezy__team-button {
+  display: inline-block;
+  background-color: black;
+  color: white;
+  padding: 12px 35px;
+  border-radius: 10px;
+  font-size: 1.25rem;
+  font-weight: 400;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+.ezy__team-button:hover {
+  background-color: #EE3E3F;
+}
+
+.ezy__team-button-container {
+  text-align: center;
+}
+/* new section */
+
+
+
+/* sevice */
+.ezy__service2_NrYFSVFQ {
+	--bs-body-color: #2B323C;
+	--bs-body-bg: #ffffff;
+	--ezy-theme-color: #0d6efd;
+	--ezy-theme-color-rgb: 13, 110, 253;
+	--ezy-item-bg: #ffffff;
+	--ezy-item-shadow: 0px 20px 40px rgba(0, 0, 0, 0.05);
+
+	background: var(--bs-body-bg);
+	overflow: hidden;
+	padding: 60px 20px;
+	text-align: center;
+}
+
+@media (min-width: 768px) {
+	.ezy__service2_NrYFSVFQ {
+		padding: 100px 0;
+	}
+}
+
+.ezy__service2_NrYFSVFQ-heading {
+	font-weight: 700;
+	font-size: 36px;
+	line-height: 1.2;
+	color: var(--bs-body-color);
+}
+
+@media (min-width: 768px) {
+	.ezy__service2_NrYFSVFQ-heading {
+		font-size: 45px;
+	}
+}
+
+.ezy__service2_NrYFSVFQ-sub-heading {
+	font-size: 18px;
+	line-height: 28px;
+	color: var(--bs-body-color);
+	opacity: 0.7;
+	margin-top: 15px;
+	margin-bottom: 40px;
+	max-width: 900px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.ezy__service2_NrYFSVFQ-card {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 30px;
+	justify-content: center;
+}
+
+.ezy__service2_NrYFSVFQ-item {
+	background-color: var(--ezy-item-bg);
+	box-shadow: var(--ezy-item-shadow);
+	border-radius: 20px;
+	padding: 40px 25px;
+	max-width: 380px;
+	flex: 1 1 300px;
+	transition: transform 0.3s ease;
+}
+
+.ezy__service2_NrYFSVFQ-item:hover {
+	transform: translateY(-10px);
+}
+
+.ezy__service2_NrYFSVFQ-icon {
+	width: 94px;
+	height: 94px;
+	border-radius: 50%;
+	font-size: 32px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 20px;
+}
+
+.ezy__service2_NrYFSVFQ-card [class*="col-"]:nth-of-type(1n) .ezy__service2_NrYFSVFQ-icon {
+	background-color: rgba(252, 110, 92, .1);
+	color: #fc6e5c;
+}
+
+.ezy__service2_NrYFSVFQ-card [class*="col-"]:nth-of-type(2n) .ezy__service2_NrYFSVFQ-icon {
+	background-color: rgba(4, 121, 193, .1);
+	color: #0479c1;
+}
+
+.ezy__service2_NrYFSVFQ-card [class*="col-"]:nth-of-type(3n) .ezy__service2_NrYFSVFQ-icon {
+	background-color: rgba(255, 214, 0, .1);
+	color: #ffd600;
+}
+
+.ezy__service2_NrYFSVFQ-title {
+	font-weight: 600;
+	font-size: 20px;
+	color: var(--bs-body-color);
+	margin-bottom: 15px;
+}
+
+.ezy__service2_NrYFSVFQ-content {
+	color: var(--bs-body-color);
+	font-size: 15px;
+	line-height: 24px;
+	opacity: 0.8;
+}
+
+/* sevice */

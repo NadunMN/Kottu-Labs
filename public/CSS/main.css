@@ -54,7 +54,7 @@ main {
 
 .back-white-circle{
     position: absolute;
-    top:15%;
+    top:25%;
     border-radius: 50%;
     width: 400px;
     height: 400px;
@@ -935,3 +935,6 @@ font-size: 100px;
             font-size: 13px;
     }
 }
+
+
+
