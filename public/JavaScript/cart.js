@@ -44,6 +44,39 @@ fetch('/user/data')
         console.error('Error fetching reservation:', error);
     });
 
+
+    //fetch bookedItem data
+    fetch(`/getBookedDataOrder?userId=${userId}`)
+    .then(response => response.json())
+    .then(bookedData => {
+        if (bookedData.error) {
+            console.error(bookedData.error);
+            return;
+        }
+
+        // Transform backend data to frontend structure
+        bookedData.forEach(backendItem => {
+            bookedItems.push({
+                id: backendItem.meal_id,
+                name: backendItem.meal_name,
+                price: parseFloat(backendItem.meal_price),
+                quantity: backendItem.quantity,
+                description: backendItem.meal_description,
+                image: backendItem.meal_photo,
+                status: backendItem.status // Default status
+            });
+        });
+
+        console.log('Booked items:', bookedItems);
+        // Initial render
+renderBookedItems();
+        
+
+    })
+    .catch(error => {
+        console.error('Error fetching reservation:', error);
+    });
+
     
     // Fetch cart items after getting user ID
     fetch(`/getMealscart?userId=${userId}`)
@@ -127,6 +160,8 @@ function renderCartItems() {
 
     addCartEventListeners(); // Ensure event listeners are re-attached
 }
+
+console.log(bookedItems);
 
 // Event listeners for cart interactions
 function addCartEventListeners() {
@@ -214,7 +249,9 @@ async function handleBooking() {
         const bookedItems = cartItems.map(item => ({
             order_id: orderId,
             id: item.id,
-            quantity: item.quantity
+            quantity: item.quantity,
+            user_id: userId,
+            status:'preparing',
         }));
 
         // Then, place the order meals
@@ -334,13 +371,16 @@ document.getElementById('clearCartBtn').addEventListener('click', () => {
     }
 });
 
-// Initial render
-renderBookedItems();
+
 
 // Render booked items (keep your original function)
 function renderBookedItems() {
     if (bookedItems.length === 0) {
-        bookedItemsContainer.innerHTML = `<p>No booked items available.</p>`;
+        bookedItemsContainer.innerHTML = ` <div class="empty-cart">
+                <i class="fa-solid fa-cart-flatbed-suitcase"></i>
+                <p>No booked item found</p>
+                <button class="btn btn-dark" id="startShoppingBtn">Start Shopping</button>
+            </div>`;
         return;
     }
 
@@ -349,10 +389,17 @@ function renderBookedItems() {
         const bookedItemElement = document.createElement('div');
         bookedItemElement.className = 'booked-item';
         bookedItemElement.innerHTML = `
-            <div class="booked-item-details">
-                <h3>${item.name}</h3>
-                <p>${item.description}</p>
-                <p>Quantity: ${item.quantity}</p>
+            <div class="booked-item-details notification">
+                <div class="item-info">
+                    <h3>${item.name}</h3>
+                    <p class="item-quantity">Quantity: ${item.quantity}</p>
+                </div>
+            ${item.status == 'preparing' ? `<div class="meal-status status-pending">
+                    ${item.status}
+                </div>` : `<div class="meal-status status-ready">
+                    ${item.status}
+                </div>`}
+                
             </div>
         `;
         bookedItemsContainer.appendChild(bookedItemElement);
