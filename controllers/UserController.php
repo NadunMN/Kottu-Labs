@@ -207,6 +207,43 @@ class UserController extends Controller
    }
 
 
+// public function addReservation()
+//    {
+
+//         error_log('Add Reservation method called'); // Debugging statement
+//        $reservation = new Reservation();
+//        $reservation->loadData(Application::$app->request->getBody());
+//        $result = $reservation->selectCustomers();
+//          error_log('Result from selectCustomers: ' . json_encode($result)); // Debugging statement
+
+//        // Handle query failure or empty result
+//     if (!$result) {
+//         echo json_encode(['success' => false, 'message' => 'Failed to fetch seat data']);
+//         return;
+//     }
+
+//     $seatData = $result[0] ?? null;
+//     if (!$seatData) {
+//         echo json_encode(['success' => false, 'message' => 'No seat data found']);
+//         return;
+//     }
+
+//        // Calculate available seats
+//     $availableSeats = $seatData['total_seats'] - $seatData['reserved_seats'];
+
+//        if ($reservation->number_of_guests <= $availableSeats) {
+//            if ($reservation->save()) {
+//                echo json_encode(['success' => true]);
+//            } else {
+//                error_log('Reservation validation or save failed: ' . json_encode($reservation->errors));
+//                echo json_encode(['success' => false, 'errors' => $reservation->errors]);
+//            }
+//        } else {
+//            echo json_encode(['success' => false, 'message' => 'Not enough available seats']);
+//        }
+//    }
+
+
 
   
 }

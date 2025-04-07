@@ -265,6 +265,43 @@ class Reservation extends ReservationModel
             return false;
         }
     }
+
+    public static function selectCustomers($where = [])
+    {
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+    
+        // Generate the WHERE clause dynamically if conditions exist
+        $sqlWhere = $attributes ? " WHERE " . implode(" AND ", array_map(fn($attr) => "$tableName.$attr = :$attr", $attributes)) : "";
+    
+        // Final SQL with GROUP BY for aggregation
+        $sql = "
+            SELECT 
+                branches.branch_name AS branchName,
+                $tableName.reservation_time,
+                SUM($tableName.number_of_guests) AS total_seats,
+                branches.seats AS total_seats
+            FROM $tableName
+            JOIN branches ON $tableName.branch_id = branches.branch_id
+            $sqlWhere
+            GROUP BY branches.branch_id, $tableName.reservation_time
+        ";
+    
+        $statement = self::prepare($sql);
+    
+        // Bind values to placeholders for WHERE clause
+        foreach ($where as $key => $value) {
+            $statement->bindValue(":$key", $value);
+        }
+    
+        try {
+            $statement->execute();
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
     
 
     

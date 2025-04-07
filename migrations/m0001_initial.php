@@ -58,6 +58,16 @@ class m0001_initial
         ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);
 
+        // payments table
+        $SQL = "CREATE TABLE IF NOT EXISTS payments (
+            payment_id INT AUTO_INCREMENT PRIMARY KEY,
+            payment_date DATE NOT NULL,
+            payment_type VARCHAR(255) NOT NULL,
+            payment_amount DECIMAL(10,2) NOT NULL,
+            payment_status TINYINT NOT NULL DEFAULT 0
+        ) ENGINE=INNODB;";
+        $db->pdo->exec($SQL);
+
         // orders table
         $SQL = "CREATE TABLE IF NOT EXISTS orders (
             order_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -66,6 +76,8 @@ class m0001_initial
             branch_id INT NOT NULL,
             reservation_no INT DEFAULT NULL,
             user_id INT NOT NULL,
+            payment_id INT NOT NULL,
+            FOREIGN KEY (payment_id) REFERENCES payments(payment_id) ON DELETE CASCADE,
             FOREIGN KEY (branch_id) REFERENCES branches(branch_id) ON DELETE CASCADE,
             FOREIGN KEY (reservation_no) REFERENCES reservations(reservation_no) ON DELETE SET NULL,
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
@@ -75,19 +87,7 @@ class m0001_initial
         ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);
 
-        // payments table
-        $SQL = "CREATE TABLE IF NOT EXISTS payments (
-            payment_id INT AUTO_INCREMENT PRIMARY KEY,
-            payment_date DATE NOT NULL,
-            payment_type VARCHAR(255) NOT NULL,
-            payment_amount DECIMAL(10,2) NOT NULL,
-            payment_status TINYINT NOT NULL DEFAULT 0,
-            order_id INT NOT NULL,
-            user_id INT NOT NULL,
-            FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
-            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-        ) ENGINE=INNODB;";
-        $db->pdo->exec($SQL);
+        
 
 
         // offers table
