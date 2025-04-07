@@ -193,6 +193,19 @@ class UserController extends Controller
         }
    }
 
+   public function addStaff(){
+        $user = new User();
+        $user->loadData(Application::$app->request->getBody());
+
+        if ($user->validate() && $user->save()) {
+            echo json_encode(['success' => true]);
+        } else {
+            error_log('Staff validation or save failed: ' . json_encode($user->errors));
+            echo json_encode(['success' => false, 'errors' => $user->errors]);
+        }
+
+   }
+
 
 
   
