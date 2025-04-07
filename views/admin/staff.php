@@ -30,13 +30,13 @@
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="firstName">First Name *</label>
-                                    <input type="text" name="fname" id="firstName" required>
+                                    <input type="text" name="firstname" id="firstName" required>
                                 </div>
                             </div>
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="lastName">Last Name *</label>
-                                    <input type="text" name="lname" id="lastName" required>
+                                    <input type="text" name="lastname" id="lastName" required>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="position">Position *</label>
-                                    <select id="position" name="type" required>
+                                    <select id="position" name="position" required>
                                         <option value="">Select Position</option>
                                         <option value="adim">Admin</option>
                                         <option value="manager">Manager</option>
@@ -94,7 +94,7 @@
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="branch">Branch *</label>
-                                    <select id="branch" name="branch_id" required>
+                                    <select id="branch_id" name="branch_id" required>
                                         <option value="">Select Branch</option>
                                         <option value="1">Wattala</option>
                                         <option value="2">Kelaniya</option>
@@ -117,7 +117,7 @@
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="mobile">Mobile Number</label>
-                                    <input type="tel" name="mobile" id="mobile">
+                                    <input type="tel" name="mobile_number" id="mobile">
                                 </div>
                             </div>
                         </div>

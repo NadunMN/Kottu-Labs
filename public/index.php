@@ -236,6 +236,10 @@ $app->router->get('/getBookedDataOrder', function() use ($orderController) {
     $orderController->getBookedData($userId);
 });
 
+//staff
+$app->router->post('/staff/add', [$userController, 'addStaff']);
+
+
 //get payment data
 $app->router->get('/payment/data', [$paymentController, 'getPaymentData']); // Fix route definition
 

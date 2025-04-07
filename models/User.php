@@ -24,7 +24,8 @@ class User extends UserModel
     public string $address = '';
     public string $nationality = '';
     public string $created_at = '';
-    public ?int $branch_id = 1;
+    public ?int $branch_id;
+    public ?string $photo = '';
 
     public static User $use;
     public static function tableName(): string
@@ -69,7 +70,7 @@ class User extends UserModel
     public function attributes(): array
     {
         return ['id','firstname', 'lastname', 'email', 'branch_id', 'status', 'position',
-         'mobile_number', 'gender', 'address', 'nationality',  'date_of_birth'];
+         'mobile_number', 'gender', 'address', 'nationality',  'date_of_birth','photo'];
     }
 
     public function labels(): array
@@ -106,6 +107,7 @@ class User extends UserModel
             'nationality' => $this->nationality,
             'created_at' => $this->created_at,
             'branch_id' => $this->branch_id,
+            'photo' => $this->photo,
         ];
     }
 

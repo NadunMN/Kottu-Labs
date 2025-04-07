@@ -15,7 +15,7 @@ function addNewItem(event) {
 
   if (fileInput.files[0]) {
     formData.append(
-      "user_photo",
+      "photo",
       "/Photo/Staff/" + fileInput.files[0].name
     );
   }
