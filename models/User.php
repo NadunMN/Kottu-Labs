@@ -24,7 +24,7 @@ class User extends UserModel
     public string $address = '';
     public string $nationality = '';
     public string $created_at = '';
-    public ?int $branch_id;
+    public ?int $branch_id = 1;
     public ?string $photo = '';
 
     public static User $use;
