@@ -14,6 +14,25 @@ use app\models\OrderMeals;
 
 class OrderController extends Controller
 {
+    //get order data
+    public function getOrderData()
+    {
+        if (Application::$app->user) {
+            try {
+                $orders = Order::findAll([]);
+                echo json_encode($orders);
+            } catch (\Exception $e) {
+                // Log the error and return a proper JSON response
+                error_log("Error fetching order data: " . $e->getMessage());
+                http_response_code(500); // Set HTTP status code to 500
+                echo json_encode(['error' => 'Failed to fetch order data', 'details' => $e->getMessage()]);
+            }
+        } else {
+            http_response_code(401); // Set HTTP status code to 401 (Unauthorized)
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+    
     // Method to get cart data
     public function getCartData($user_id)
     {
