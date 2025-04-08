@@ -60,64 +60,51 @@ function resetForm() {
 
 
 
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", () => {
 
   fetch("/staff/data")
-  .then((response) => response.json())
+  .then((response) => {
+    if (!response.ok) {  // Check for HTTP errors
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
   .then((data) => {
+    const staffContent = document.getElementById("table-content");
+    staffContent.innerHTML = ""; // Clear content initially
+
     if (data.error) {
       console.error("Error:", data.error);
-    } else {
-      // Get the meal content container
-      const staffContent = document.getElementById("table-content");
-
-      if (data == null || data.length === 0) {
-        staffContent.innerHTML = "No meals available"; // Show a message if there are no meals
-      } else {
-        staffContent.innerHTML = ""; // Clear previous content if data is available
-      }
-
-      staffContent.innerHTML = ` `;
-
-      // Dynamically generate meal elements
-      data.forEach((staff) => {
-        // console.log(meal.branch_ids);
-        // Create a new table row
-        const row = document.createElement("tr");
-
-        // Populate row HTML
-        row.innerHTML = `
-                                        <td class="meal-id" >${staff.meal_id}</td>
-                                        <td>${staff.meal_name}</td>
-                                        <td meal-description= '${staff.staff_description}'>${staff.staff_description} </td>
-                                        <td>Rs.${staff.staff_price}</td>
-                                        <td>${
-                                          staff.branch_ids == "1" ? "Wattala" : staff.branch_ids == "2" ? "Kelaniya" : staff.branch_ids== "3" ? "Kotahena"
-                                          : staff.branch_ids == '1,2' ? "Wattala, Kelaniya" : staff.branch_ids == '1,3' ? "Wattala, Kotahena" : staff.branch_ids == '2,3' ? "Kelaniya, Kotahena" : "All Branches"
-                                          }</td>
-                                        
-                                        <td>
-                                            
-
-                                            <div class="action-buttons">
-                                                <button class="edit-btn" staff-id='${staff.staff_id}'>Edit</button>
-                                                <button class="delete-btn" staff-id ='${staff.staff_id}'>Delete</button>
-                                            </div>
-                                        </td>
-                                    `;
-
-        // Append the row directly to the table body
-        document.getElementById("table-content").appendChild(row);
-      });
-    
+      staffContent.innerHTML = "Error loading staff data";
+      return;
     }
 
-       });
+    if (!data || data.length === 0) {
+      staffContent.innerHTML = "No Staff available";
+      return;
+    }
+
+    data.forEach((staff) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${staff.id}</td>
+        <td>${staff.firstname+ " "+ staff.lastname }</td>
+        <td>${staff.position}</td>
+        <td>${staff.branch_name}</td>
+        <td>
+          <div class="action-buttons">
+            <button class="edit-btn" data-staff-id="${staff.staff_id}">Edit</button>
+            <button class="delete-btn" data-staff-id="${staff.staff_id}">Delete</button>
+          </div>
+        </td>
+      `;
+      staffContent.appendChild(row);
+    });
+  })
+  .catch((error) => {
+    console.error("Fetch error:", error);
+    document.getElementById("table-content").innerHTML = "Error loading staff data";
+  });
 
 
 });

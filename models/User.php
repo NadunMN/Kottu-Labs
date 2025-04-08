@@ -220,6 +220,17 @@ class User extends UserModel
             return false;
         }
     }
+
+
+    public function getStaffData(){
+        $tableName = static::tableName();
+        $sql = "SELECT $tableName.*, b.branch_name FROM $tableName
+        JOIN branches b ON $tableName.branch_id = b.branch_id
+        WHERE position != 'customer'";
+        $statement = self::prepare($sql);
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
     
     
 
