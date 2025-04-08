@@ -218,6 +218,33 @@ class UserController extends Controller
 
    }
 
+   public function deleteStaff(){
+        try {
+            $userId = Application::$app->request->getBody()['id'] ?? null;
+            if (!$userId) {
+                throw new \Exception('User ID not provided');
+            }
+
+            // Debugging statement
+            error_log("User ID received: " . $userId);
+
+            $user = User::findOne(['id' => $userId]);
+            if (!$user) {
+                throw new \Exception('User not found');
+            }
+
+            if (!$user->delete()) {
+                throw new \Exception('Failed to delete user');
+            }
+
+            echo json_encode(['success' => true]);
+        } catch (\Exception $e) {
+            // Log the exception or handle it as needed
+            error_log($e->getMessage());
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        }
+   }
+
 
 // public function addReservation()
 //    {
