@@ -1,51 +1,52 @@
 const toggleFormBtn = document.getElementById("toggleFormBtn");
-const formContainer = document.getElementById("staffForm"); // This should be your <form> element
+const formContainer = document.getElementById("staffForm");
 
+// Toggle form visibility
 toggleFormBtn.addEventListener("click", () => {
   formContainer.classList.toggle("show");
 });
 
+// Form submission handler
 formContainer.addEventListener("submit", addNewItem);
 
-function addNewItem(event) {
+async function addNewItem(event) {
   event.preventDefault();
-
+  
+  const formData = new FormData(formContainer);
   const fileInput = document.getElementById("photo");
-  const formData = new FormData(formContainer); // Use the form directly
 
-  if (fileInput.files[0]) {
-    formData.append(
-      "photo",
-      "/Photo/Staff/" + fileInput.files[0].name
-    );
-  }
+  try {
+    // Handle file upload first if a file is selected
+    if (fileInput.files[0]) {
+      const uploadData = new FormData();
+      uploadData.append("photo", fileInput.files[0]);
+      
+      const uploadResponse = await fetch("/staff/upload", {
+        method: "POST",
+        body: uploadData
+      });
+      
+      const { path } = await uploadResponse.json();
+      formData.set("photo", path); // Update form data with server path
+    }
 
-  const data = Object.fromEntries(formData.entries());
-
-  const requestBody = JSON.stringify(data);
-  console.log("Request Body:", data);
-
-  fetch("/staff/add", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: requestBody,
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log("Success:", data);
-      formContainer.classList.remove("show");
-      resetForm();
-    })
-    .catch((error) => {
-      console.error("Error:", error);
+    // Submit staff data
+    const response = await fetch("/staff/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(Object.fromEntries(formData))
     });
+
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    
+    console.log("Success:", await response.json());
+    formContainer.classList.remove("show");
+    resetForm();
+    loadStaffData();
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Error processing request. Please check console for details.");
+  }
 }
 
 function resetForm() {
@@ -53,58 +54,82 @@ function resetForm() {
   document.getElementById("photo").value = null;
 }
 
-
-
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-
+// Staff data management
+function loadStaffData() {
   fetch("/staff/data")
-  .then((response) => {
-    if (!response.ok) {  // Check for HTTP errors
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then((data) => {
-    const staffContent = document.getElementById("table-content");
-    staffContent.innerHTML = ""; // Clear content initially
-
-    if (data.error) {
-      console.error("Error:", data.error);
-      staffContent.innerHTML = "Error loading staff data";
-      return;
-    }
-
-    if (!data || data.length === 0) {
-      staffContent.innerHTML = "No Staff available";
-      return;
-    }
-
-    data.forEach((staff) => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${staff.id}</td>
-        <td>${staff.firstname+ " "+ staff.lastname }</td>
-        <td>${staff.position}</td>
-        <td>${staff.branch_name}</td>
-        <td>
-          <div class="action-buttons">
-            <button class="edit-btn" data-staff-id="${staff.staff_id}">Edit</button>
-            <button class="delete-btn" data-staff-id="${staff.staff_id}">Delete</button>
-          </div>
-        </td>
-      `;
-      staffContent.appendChild(row);
+    .then(response => {
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      return response.json();
+    })
+    .then(updateStaffTable)
+    .catch(error => {
+      console.error("Fetch error:", error);
+      document.getElementById("table-content").innerHTML = "Error loading staff data";
     });
-  })
-  .catch((error) => {
-    console.error("Fetch error:", error);
-    document.getElementById("table-content").innerHTML = "Error loading staff data";
+}
+
+function updateStaffTable(data) {
+  const staffContent = document.getElementById("table-content");
+  staffContent.innerHTML = "";
+
+  if (data.error) {
+    console.error("Error:", data.error);
+    staffContent.innerHTML = "Error loading staff data";
+    return;
+  }
+
+  if (!data?.length) {
+    staffContent.innerHTML = "No Staff available";
+    return;
+  }
+
+  data.forEach(staff => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${staff.id}</td>
+      <td>${staff.firstname} ${staff.lastname}</td>
+      <td>${staff.position}</td>
+      <td>${staff.branch_name}</td>
+      <td>
+        <div class="action-buttons">
+          <button class="edit-btn" data-staff-id="${staff.id}">Edit</button>
+          <button class="delete-btn" data-staff-id="${staff.id}">Delete</button>
+        </div>
+      </td>
+    `;
+    staffContent.appendChild(row);
   });
+}
 
-
+// Event delegation for dynamic buttons
+document.getElementById("table-content").addEventListener("click", async (event) => {
+  const staffId = event.target.dataset.staffId;
+  
+  if (event.target.classList.contains("delete-btn")) {
+    if (confirm("Are you sure you want to delete this staff member?")) {
+      try {
+        const response = await fetch("/staff/delete", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: staffId })
+        });
+        
+        const data = await response.json();
+        if (!data.success) throw new Error(data.message);
+        
+        loadStaffData();
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Delete failed: " + error.message);
+      }
+    }
+  }
+  
+  if (event.target.classList.contains("edit-btn")) {
+    // Add edit functionality here
+    console.log("Edit staff member:", staffId);
+  }
 });
+
+// Initialize
+document.addEventListener("DOMContentLoaded", loadStaffData);
