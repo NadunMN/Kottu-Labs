@@ -14,7 +14,7 @@ use app\models\Payment;
 
 class PaymentController extends Controller
 {
-    // Method to get order data
+    // Method to get payment data
     public function getPaymentData()
     {
         if (Application::$app->user) {

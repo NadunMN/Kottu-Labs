@@ -69,11 +69,11 @@ async function fetchReservations(selectedDate = null, selectedTime = null) {
           <thead>
             <tr>
               <th>Reservation No</th>
-              <th>Date</th>
               <th>Time</th>
               <th>No. Guests</th>
               <th>Type</th>
               <th>Status</th>
+              <th>Table No</th>
             </tr>
           </thead>
           <tbody id="table-content"></tbody>
@@ -103,15 +103,15 @@ async function fetchReservations(selectedDate = null, selectedTime = null) {
       const row = document.createElement("tr");
       row.innerHTML = `
         <td class="reservation-id">${reservation.reservation_no}</td>
-        <td>${reservation.reservation_date}</td>
         <td>${reservation.reservation_time}</td>
         <td>${reservation.number_of_guests}</td>
         <td>${reservation.type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
         <td class="status">
             <span class="status-${reservation.confirmation_status}">
-                ${reservation.confirmation_status === 1 ? "Confirmed" : 'pending'}
+                ${reservation.confirmation_status === 1 ? 'Confirmed' : 'pending'}
             </span>
         </td>
+        <td>${reservation.table_number === 0? 'Null' : reservation.table_number}</td>
       `;
       tableContent.appendChild(row);
     });
