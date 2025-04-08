@@ -15,7 +15,6 @@ class Payment extends PaymentModel
     public int $payment_status = 0;
     public string $payment_amount = '';
     public string $order_id = '';
-    public string $user_id = '';
 
     public static function tableName(): string
     {
@@ -39,7 +38,9 @@ class Payment extends PaymentModel
 
     public function attributes(): array
     {
-        return ['payment_id', 'payment_date', 'payment_type', 'payment_status', 'payment_amount', 'order_id', 'user_id'];
+
+        return ['payment_id', 'payment_date', 'payment_type', 'payment_status', 'payment_amount', 'order_id'];
+
     }
 
     public function rules(): array
@@ -128,8 +129,9 @@ class Payment extends PaymentModel
             'payment_type' => $this->payment_type,
             'payment_amount' => $this->payment_id,
             'payment_status' => $this->payment_status,
-            'order_id' => $this->order_id,
-            'user_id' => $this->user_id,     
+
+            'order_id' => $this->order_id,     
+
         ];
     }
 
