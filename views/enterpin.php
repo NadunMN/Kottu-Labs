@@ -34,7 +34,8 @@
     <div id="reservationModal" style="display:none;">
         <div class="pin-topic">
             <h1>Reservation Details</h1>
-            <span id="clock"></span>
+            <h3 id="date"></h3>
+            <h3 id="clock"></h3>
         </div>
         <div class="pin-container">
             <div class="confirmation-box">
