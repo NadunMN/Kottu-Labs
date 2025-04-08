@@ -17,9 +17,9 @@
                 $menuItems = [
                     ['id' => 'update-menu', 'icon' => '/Photo/icon/menu.png', 'text' => 'Update Menu'],
                     ['id' => 'view-reservations', 'icon' => '/Photo/icon/reservations.png', 'text' => 'View Reservations'],
-                    ['id' => 'update-offers', 'icon' => '/Photo/icon/offers.png', 'text' => 'Update Offers'],
-                    ['id' => 'feedbacks', 'icon' => '/Photo/icon/feedback.png', 'text' => 'Feedbacks'],
-                    ['id' => 'order-history', 'icon' => '/Photo/icon/orderhistory.png', 'text' => 'Order History'],
+                    ['id' => 'update-offers', 'icon' => '/Photo/icon/special-offer.png', 'text' => 'Update Offers'],
+                    ['id' => 'feedbacks', 'icon' => '/Photo/icon/ratings.png', 'text' => 'Feedbacks'],
+                    ['id' => 'order-history', 'icon' => '/Photo/icon/shopping-list.png', 'text' => 'Order History'],
                     
                 ];
                 foreach ($menuItems as $item) {
