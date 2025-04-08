@@ -11,13 +11,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateTime() {
         const now = new Date();
+        const date = now.toISOString().split('T')[0];
         const hours = now.getHours().toString().padStart(2, '0');
         const minutes = now.getMinutes().toString().padStart(2, '0');
         const seconds = now.getSeconds().toString().padStart(2, '0');
       
         const timeString = `${hours}:${minutes}:${seconds}`;
+        const dateString = `${date}`;
       
         document.getElementById('clock').textContent = timeString;
+        document.getElementById('date').textContent = dateString;
       }
       
       // Update time every second
@@ -112,23 +115,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const status = result.reservation[0].confirmation_status;
 
+                // Fetch user branch ID before rendering
+                let user_branch_id = null;
+                try {
+                    const userResponse = await fetch('/user/data');
+                    if (!userResponse.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    const userData = await userResponse.json();
+                    if (userData.error) {
+                        console.error(userData.error);
+                    } else {
+                        user_branch_id = userData.branch_id;
+                    }
+                } catch (error) {
+                console.error('Error fetching user data:', error);
+                }
+                
                 if (status === 1) {
                     document.querySelector('.confirmed-text').style.display = 'block';
                     document.querySelector('.confirm-button').style.display = 'none';
                     document.getElementById('tableNumber').style.display = 'none';
-                } else {
-                    document.querySelector('.confirmed-text').style.display = 'none';
-                    document.querySelector('.confirm-button').style.display = 'block';
-                    document.getElementById('tableNumber').style.display = 'block';
                 }
 
                 const branch_id = result.reservation[0].branch_id;
+                const reservationBranchInput = document.getElementById('branch');
                 const branchName = branch_id === 1 ? 'Wattala' : branch_id === 2 ? 'Kelaniya' : 'Kotahena';
                 document.getElementById('branch').textContent = branchName;
 
+                // Set the text content of the labels and apply strike-through effect
                 const reservationType = result.reservation[0].type;
 
-                // Set the text content of the labels and apply strike-through effect
                 if (reservationType === 'dinein') {
                     document.getElementById('dineInLabel').innerHTML = 'Dine In';
                     document.getElementById('takeAwayLabel').innerHTML = '<s>Take Away</s>';
@@ -137,18 +154,24 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.getElementById('takeAwayLabel').innerHTML = 'Take Away';
                 }
 
+                // Check if user_branch_id matches branch_id
+                if (user_branch_id !== branch_id) {
+                    document.querySelector('.confirm-button').style.display = 'none';
+                    document.getElementById('tableNumber').style.display = 'none';
+                    reservationBranchInput.style.color = 'red'; 
+                }
+
                 // check with the current date
                 const currentDate = new Date();
                 const formattedCurrentDate = currentDate.toISOString().split('T')[0];
 
                 const reservationDate = result.reservation[0].reservation_date;
                 const reservationDateInput = document.getElementById('reservationDate');
-                if (reservationDate === formattedCurrentDate) {
-                    reservationDateInput.style.color = '';
-                } else {
+                if (reservationDate != formattedCurrentDate) {
                     reservationDateInput.style.color = 'red';
+                    document.querySelector('.confirm-button').style.display = 'none';
                 }
-
+                
                 // Reset the form and show the confirm button
                 reservationForm.reset();
                 reservationForm.style.display = 'block';
@@ -166,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function() {
             messageDiv.textContent = 'Failed to verify PIN.';
         }
     });
-
+    
     // Single submit event listener
     reservationForm.addEventListener('submit', function(event) {
         event.preventDefault();

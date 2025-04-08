@@ -38,9 +38,7 @@ class Payment extends PaymentModel
 
     public function attributes(): array
     {
-
         return ['payment_id', 'payment_date', 'payment_type', 'payment_status', 'payment_amount', 'order_id'];
-
     }
 
     public function rules(): array
@@ -52,7 +50,6 @@ class Payment extends PaymentModel
             'payment_amount' => [self::RULE_REQUIRED],
             'payment_status' => [self::RULE_REQUIRED],
             'order_id' => [self::RULE_REQUIRED],
-            'user_id' => [self::RULE_REQUIRED],
         ];
     }
 
@@ -100,10 +97,12 @@ class Payment extends PaymentModel
             SELECT 
                 $tableName.*, 
                 CONCAT(users.firstname, ' ', users.lastname) AS userName,
+                s.branch_id AS branch_id
                 
             FROM $tableName
-            JOIN users ON $tableName.user_id = users.id
-            JOIN branches ON $tableName.branch_id = branches.branch_id
+            JOIN orders s ON $tableName.order_id = s.order_id
+            JOIN users ON s.user_id = users.id
+            JOIN branches ON s.branch_id = branches.branch_id
             $sql
         ");
 
@@ -129,9 +128,7 @@ class Payment extends PaymentModel
             'payment_type' => $this->payment_type,
             'payment_amount' => $this->payment_id,
             'payment_status' => $this->payment_status,
-
-            'order_id' => $this->order_id,     
-
+            'order_id' => $this->order_id,    
         ];
     }
 
