@@ -236,6 +236,11 @@ $app->router->get('/getBookedDataOrder', function() use ($orderController) {
     $orderController->getBookedData($userId);
 });
 
+$app->router->get('/getOrderState', function() use ($orderController) {
+    $reservationId = $_GET['reservationNo'] ?? null;
+    $orderController->getOrderState($reservationId);
+});
+
 //staff
 $app->router->post('/staff/add', [$userController, 'addStaff']);
 

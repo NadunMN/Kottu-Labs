@@ -199,6 +199,26 @@ class OrderController extends Controller
     }
 
 
+    public function getOrderState($reservation_no)
+    {
+        if (Application::$app->user) {
+            header('Content-Type: application/json'); // Set JSON header
+            $order = Order::findOneOriginal(['reservation_no' => $reservation_no]);
+            if ($order) {
+                echo json_encode(['exists' => 1]);
+            } else {
+                echo json_encode(['exists' => 0]);
+            }
+            exit(); // Stop script execution after sending JSON
+        } else {
+            header('Content-Type: application/json');
+            echo json_encode(['error' => 'No user is logged in']);
+            exit();
+        }
+    }
+
+
+
 
 
 

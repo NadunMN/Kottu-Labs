@@ -11,15 +11,13 @@
         <!-- Sidebar -->
          
         <div class="sidebar">
-            <h2>Dashboard</h2>
+            <!-- <h2>Dashboard</h2> -->
             <ul>
                 <?php
                 $menuItems = [
-                    ['id' => 'view-users', 'icon' => '/Photo/icon/users.png', 'text' => 'View Users'],
                     ['id' => 'update-menu', 'icon' => '/Photo/icon/menu.png', 'text' => 'Update Menu'],
                     ['id' => 'view-reservations', 'icon' => '/Photo/icon/reservations.png', 'text' => 'View Reservations'],
                     ['id' => 'update-offers', 'icon' => '/Photo/icon/offers.png', 'text' => 'Update Offers'],
-                    ['id' => 'staff', 'icon' => '/Photo/icon/staff.png', 'text' => 'Staff'],
                     ['id' => 'feedbacks', 'icon' => '/Photo/icon/feedback.png', 'text' => 'Feedbacks'],
                     ['id' => 'order-history', 'icon' => '/Photo/icon/orderhistory.png', 'text' => 'Order History'],
                     
