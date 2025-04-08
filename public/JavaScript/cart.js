@@ -6,6 +6,7 @@ let userId;
 let reservationId;
 let branchId;
 let totalPrice = 0;
+let orderState; // Default value
 
 // DOM Elements
 const cartItemsContainer = document.getElementById('cartItemsContainer');
@@ -41,6 +42,20 @@ fetch('/user/data')
         console.log('Reservation ID:', reservationId);
         
         
+    })
+    .catch(error => {
+        console.error('Error fetching reservation:', error);
+    });
+
+    //fetch order state data
+    // Check if the order is already placed
+    fetch(`/getOrderState?reservationNo=${reservationId}`)
+    .then(response => {
+        return response.json(); // Add "return" to pass the parsed JSON to the next .then
+    })
+    .then(data => {
+        console.log(reservationId); 
+        console.log('Order State:', data.exists);
     })
     .catch(error => {
         console.error('Error fetching reservation:', error);
@@ -247,6 +262,8 @@ async function handleBooking() {
 
 
     try {
+
+        
         // First, place the order and get order ID
         const response = await fetch('/placeOrder', {
             method: 'POST',

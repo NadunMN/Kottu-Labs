@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Default selection to "view-users"
   // Default selection to "view-users"
-  const defaultOption = document.getElementById("view-users");
+  const defaultOption = document.getElementById("update-menu");
   defaultOption.classList.add("selected");
 
   // Render default content
@@ -90,74 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const optionId = option.id;
 
       switch (optionId) {
-        case "view-users":
-          mainContent.innerHTML = `
-                        <div class="view-users-section">
-                            <h2>View Users</h2>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
-                                        <th>Contact No.</th>
-                                        <th> </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Nadun Madushanka</td>
-                                        <td>nadun@gmail.com</td>
-                                        <td>Customer</td>
-                                        <td>+94728472932</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button>Edit</button>
-                                                <button>Delete</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Thirani Imanya</td>
-                                        <td>thirani@gmail.com</td>
-                                        <td>Customer</td>
-                                        <td>+94776283966</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button>Edit</button>
-                                                <button>Delete</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Ranuga Geenal</td>
-                                        <td>ranuga@gmail.com</td>
-                                        <td>Manager</td>
-                                        <td>+94777721655</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button>Edit</button>
-                                                <button>Delete</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mahesh Lanka</td>
-                                        <td>lanka@gmail.com</td>
-                                        <td>Chef</td>
-                                        <td>+94762937632</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button>Edit</button>
-                                                <button>Delete</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>`;
-          break;
-
         case "update-menu":
           fetch("/menuitem/data")
             .then((response) => response.json())
@@ -715,14 +647,6 @@ document.addEventListener("DOMContentLoaded", () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>`;
-          break;
-
-        case "staff":
-          mainContent.innerHTML = `
-                        <div class="staff-section">
-                            <h2>Staff</h2>
-                            <p>Manage staff details and roles here.</p>
                         </div>`;
           break;
 
