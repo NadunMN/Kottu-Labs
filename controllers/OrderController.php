@@ -11,6 +11,7 @@ use app\models\Reservation;
 use app\models\Order;
 use app\models\Cart;
 use app\models\OrderMeals;
+use app\models\Payment;
 
 class OrderController extends Controller
 {
@@ -116,24 +117,33 @@ class OrderController extends Controller
             echo json_encode(['error' => 'No user is logged in']);
         }
     }
-
-    //place order data in order table
     public function placeOrder()
     {
         if (Application::$app->user) {
             $order = new Order();
             $order->loadData(Application::$app->request->getBody());
-
-           
+    
             if ($order->save()) {
                 $orderId = $order->order_id;
-                // $ordermeals = new OrderMeals();
-                // Call another function and pass the orderId
-                // $this->processOrderMeals($orderId);
-                // error_log(print_r($orderId, true)); // Log the order ID for debugging
-
-                // echo json_encode(['order_id' => 'Order placed successfully']);
-                echo json_encode(['order_id' => $orderId]);
+    
+                $payment = new Payment();
+                $payment->payment_date = $order->order_date;
+                $payment->payment_type = 'none'; // Ensure this is a valid type per your DB
+                $payment->payment_amount = $order->order_price;
+                $payment->payment_status = 0; // Matches the int type (0 for pending)
+                $payment->order_id = $orderId;
+    
+              
+    
+                // Generate a unique payment_id if not auto-increment
+                // Example using uniqid (adjust based on your needs)
+                $payment->payment_id = uniqid('pay_', true);
+    
+                if ($payment->save()) {
+                    echo json_encode(['order_id' => $orderId]);
+                } else {
+                    echo json_encode(['error' => 'Failed to save payment']);
+                }
             } else {
                 echo json_encode(['error' => 'Failed to place order']);
             }
