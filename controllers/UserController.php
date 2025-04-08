@@ -25,6 +25,18 @@ class UserController extends Controller
         }
     }
 
+
+    public function getStaff(){
+        $user = new User();
+        $staffData = $user->getStaffData();
+
+        if ($staffData) {
+            echo json_encode($staffData);
+        } else {
+            echo json_encode(['error' => 'No staff data found']);
+        }
+    }
+
     public function deleteUser(Request $request, Response $response)
     {
         try {
