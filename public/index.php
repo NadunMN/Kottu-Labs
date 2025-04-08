@@ -243,6 +243,7 @@ $app->router->get('/getOrderState', function() use ($orderController) {
 
 //staff
 $app->router->post('/staff/add', [$userController, 'addStaff']);
+$app->router->get('/staff/data', [$userController, 'getStaff']);
 
 
 //get payment data

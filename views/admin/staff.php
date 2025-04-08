@@ -137,12 +137,11 @@
     <table class="menu-table" id="menu-table">
                                                 <thead>
                                                     <tr>
-                                                        <th>Meal ID</th>
+                                                        <th>Staff ID</th>
                                                         <th>Name</th>
-                                                        <th>Type</th>
-                                                        <th>Price</th>
+                                                        <th>Position</th>
                                                         <th>Branch</th>
-                                                        <th>Status</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="table-content"></tbody>
