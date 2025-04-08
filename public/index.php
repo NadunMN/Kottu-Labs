@@ -199,7 +199,7 @@ $app->router->post('/feedback/delete', [$feedbacksController, 'deleteReviews']);
 $app->router->get('/offer/getpublished', [$offerController, 'getAllPublishedOffers']);
 
 // order data
-// $app->router->get('/order/data', [$orderController, 'getOrderData']);
+$app->router->get('/order/data', [$orderController, 'getOrderData']);
 
 
 
@@ -247,7 +247,7 @@ $app->router->get('/staff/data', [$userController, 'getStaff']);
 
 
 //get payment data
-$app->router->get('/payment/data', [$paymentController, 'getPaymentData']); // Fix route definition
+$app->router->get('/payment/data', [$paymentController, 'getPaymentData']);
 
 
 // Run the application
