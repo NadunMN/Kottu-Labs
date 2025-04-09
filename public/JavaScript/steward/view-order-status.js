@@ -6,10 +6,12 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
             throw new Error("Network response was not ok");
         }
 
+
         const text = await response.text();
         let data;
         try {
             data = JSON.parse(text);
+            console.log("Fetched data:", data);
         } catch (e) {
             console.error("Response is not valid JSON:", text);
             document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";

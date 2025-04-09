@@ -103,9 +103,11 @@ function updateStaffTable(data) {
 
 // Event delegation for dynamic buttons
 document.getElementById("table-content").addEventListener("click", async (event) => {
+  
   const staffId = event.target.dataset.staffId;
   
   if (event.target.classList.contains("delete-btn")) {
+    
     if (confirm("Are you sure you want to delete this staff member?")) {
       try {
         const response = await fetch("/staff/delete", {
