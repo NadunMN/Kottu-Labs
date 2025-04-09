@@ -95,5 +95,7 @@
 </section>
     <!-- new section -->
 
+    <script src="/JavaScript/staff.js"></script>
+
 </body>
 </html>
