@@ -28,7 +28,7 @@ class m0002_add_mutiplecolumns_users
         $checkColumnSQL = "SHOW COLUMNS FROM users LIKE 'gender';";
         $result = $db->pdo->query($checkColumnSQL)->fetch();
         if (!$result) {
-            $SQL = "ALTER TABLE users ADD COLUMN gender VARCHAR(10) NOT NULL;";
+            $SQL = "ALTER TABLE users ADD COLUMN gender VARCHAR(10) DEFAULT 'none';";
             $db->pdo->exec($SQL);
         }
 
@@ -36,7 +36,7 @@ class m0002_add_mutiplecolumns_users
         $checkColumnSQL = "SHOW COLUMNS FROM users LIKE 'address';";
         $result = $db->pdo->query($checkColumnSQL)->fetch();
         if (!$result) {
-            $SQL = "ALTER TABLE users ADD COLUMN address TEXT NOT NULL;";
+            $SQL = "ALTER TABLE users ADD COLUMN address TEXT DEFAULT 'none';";
             $db->pdo->exec($SQL);
         }
 
@@ -44,7 +44,7 @@ class m0002_add_mutiplecolumns_users
         $checkColumnSQL = "SHOW COLUMNS FROM users LIKE 'nationality';";
         $result = $db->pdo->query($checkColumnSQL)->fetch();
         if (!$result) {
-            $SQL = "ALTER TABLE users ADD COLUMN nationality VARCHAR(255) NOT NULL;";
+            $SQL = "ALTER TABLE users ADD COLUMN nationality VARCHAR(255) DEFAULT 'none';";
             $db->pdo->exec($SQL);
         }
 
