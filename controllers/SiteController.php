@@ -123,7 +123,7 @@ class SiteController extends Controller
 
     public function selectBranch(Request $request,Response $response)
     {
-        $this->setLayout('main');
+        $this->setLayout('dashboard');
         return $this->render('selectBranch');
     }
 
