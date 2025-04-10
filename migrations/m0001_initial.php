@@ -69,10 +69,7 @@ class m0001_initial
             user_id INT NOT NULL,
             FOREIGN KEY (branch_id) REFERENCES branches(branch_id) ON DELETE CASCADE,
             FOREIGN KEY (reservation_no) REFERENCES reservations(reservation_no) ON DELETE SET NULL,
-            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-            INDEX (branch_id),
-            INDEX (reservation_no),
-            INDEX (user_id)
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
         ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);
 
