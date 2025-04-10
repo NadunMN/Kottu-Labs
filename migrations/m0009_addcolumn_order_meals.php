@@ -13,7 +13,7 @@ class m0009_addcolumn_order_meals
         $result = $db->pdo->query($checkColumnSQL)->fetch();
         if (!$result) {
             $SQL = "ALTER TABLE order_meals ADD COLUMN user_id INT NOT NULL,
-            ADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id) ;";
+            ADD CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;";
             $db->pdo->exec($SQL);
         }
 
