@@ -11,11 +11,11 @@ class m0003_adddata{
         $checkColumnSQL = "SELECT * FROM `branches`;";
         $result = $db->pdo->query($checkColumnSQL)->fetch();
         if (!$result) {
-            $SQL = "INSERT INTO branches (branch_id, branch_name)
+            $SQL = "INSERT INTO branches (branch_id, branch_name,seats)
                     VALUES
-                    (1, 'Wattala'),
-                    (2, 'Kelaniya'),
-                    (3, 'Kotahena');";
+                    (1, 'Wattala',50),
+                    (2, 'Kelaniya',50),
+                    (3, 'Kotahena',50);";
             $db->pdo->exec($SQL);
         }
 

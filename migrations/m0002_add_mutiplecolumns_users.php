@@ -36,7 +36,7 @@ class m0002_add_mutiplecolumns_users
         $checkColumnSQL = "SHOW COLUMNS FROM users LIKE 'address';";
         $result = $db->pdo->query($checkColumnSQL)->fetch();
         if (!$result) {
-            $SQL = "ALTER TABLE users ADD COLUMN address TEXT DEFAULT 'none';";
+            $SQL = "ALTER TABLE users ADD COLUMN address TEXT ;";
             $db->pdo->exec($SQL);
         }
 

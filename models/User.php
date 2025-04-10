@@ -21,7 +21,7 @@ class User extends UserModel
     public ?string $date_of_birth = '';
     public string $mobile_number = '';
     public string $gender = '';
-    public string $address = '';
+    public ?string $address = '';
     public string $nationality = '';
     public string $created_at = '';
     public ?int $branch_id = 1;
