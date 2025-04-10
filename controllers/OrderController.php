@@ -246,7 +246,46 @@ class OrderController extends Controller
         }
     }
 
+    public function updateOrderStatus()
+    {
+        $body = json_decode(file_get_contents('php://input'), true);
 
+        if (!isset($body['order_id']) || !isset($body['order_status'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Invalid request data']);
+            return;
+        }
+
+        $orderId = $body['order_id'];
+        $newStatus = $body['order_status'];
+
+        // Validate order status
+        if (!in_array($newStatus, [0, 1, 2])) { 
+            http_response_code(400);
+            echo json_encode(['error' => 'Invalid order status']);
+            return;
+        }
+
+        // Find the order by ID
+        $order = Order::findOneOriginal(['order_id' => $orderId]);
+
+        if (!$order) {
+            http_response_code(404);
+            echo json_encode(['error' => 'Order not found']);
+            return;
+        }
+        
+        // Update the order status
+        $order->order_status = $newStatus;
+
+        if ($order->update()) {
+            http_response_code(200);
+            echo json_encode(['message' => 'Order status updated successfully']);
+        } else {
+            http_response_code(500);
+            echo json_encode(['error' => 'Failed to update order status']);
+        }
+    }
 
 
 

@@ -6,12 +6,10 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
             throw new Error("Network response was not ok");
         }
 
-
         const text = await response.text();
         let data;
         try {
             data = JSON.parse(text);
-            console.log("Fetched data:", data);
         } catch (e) {
             console.error("Response is not valid JSON:", text);
             document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
@@ -72,8 +70,9 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                     <thead>
                         <tr>
                             <th>Order Id</th>
-                            <th>Time</th>
-                            <th>Reservation No</th>
+                            <th>Meal Name</th>
+                            <th>Quantity</th>
+                            <th>Table No</th>
                             <th>Type</th>
                             <th>Status</th>
                         </tr>
@@ -89,7 +88,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
             return;
         }
 
-         // Sort reservations: pending first, then confirmed, sorted by time
+        // Sort reservations: pending first, then confirmed, sorted by time
         todayOrders.sort((a, b) => {
             // Prioritize pending reservations over confirmed ones
             if (a.order_status !== 1 && b.order_status === 1) return -1;
@@ -99,21 +98,54 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
             return a.order_time.localeCompare(b.order_time);
         });
 
+        // Clear existing rows before appending new ones
+        tableContent.innerHTML = "";
         // Populate table with today's order data
         todayOrders.forEach((order) => {
             const row = document.createElement("tr");
+            row.classList.add("order-item"); // Add class for filtering
+            row.setAttribute("data-table-number", order.table_number); // Use data attribute for filtering
             row.innerHTML = `
                 <td class="order-id">${order.order_id}</td>
-                <td>${order.order_time}</td>
-                <td>${order.reservation_no}</td>
-                <td>${order.order_type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
+                <td>${order.mealName}</td>
+                <td>${order.quantity}</td>
+                <td>${order.type === 'dinein' ? order.table_number : 'Null'}</td>
+                <td>${order.type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
                 <td class="status">
                     <span class="status-${order.order_status}">
-                        ${order.order_status === 1 ? "Ready" : "Processing"}
+                        ${order.order_status === 1 ? "Ready" : order.order_status === 2 ? "Completed" :  "Processing"}
                     </span>
+                    ${order.order_status === 1 ? `<button class="confirm-btn" data-order-id="${order.order_id}">Confirm</button>` : ""}
                 </td>
             `;
             tableContent.appendChild(row);
+        });
+
+        // Add event listener for confirm buttons
+        document.querySelectorAll(".confirm-btn").forEach(button => {
+            button.addEventListener("click", async (event) => {
+                const orderId = event.target.getAttribute("data-order-id");
+                try {
+                    const response = await fetch(`/order/confirm`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({order_id: orderId, order_status: 2 }) // Update status to 'Completed'
+                    });
+
+                    if (response.ok) {
+                        alert("Order status updated to Completed!");
+                        fetchOrders(); // Refresh the orders
+                    } else {
+                        console.error("Failed to update order status");
+                        alert("Error updating order status. Please try again.");
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("Error updating order status. Please try again.");
+                }
+            });
         });
 
     } catch (error) {
@@ -121,6 +153,31 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
         document.getElementById("main-content").innerHTML = "<p>Error loading reservations.</p>";
     }
 }
+
+function filterOrders() {
+    const input = document.getElementById("tableFilter").value.trim();
+    const orders = document.querySelectorAll(".order-item");
+    
+    orders.forEach(order => {
+        const tableNo = order.getAttribute("data-table-number"); // Use data attribute
+        if (tableNo && tableNo.includes(input)) {
+            order.style.display = "";
+        } else {
+            order.style.display = "none";
+        }
+    });
+}
+
+function resetFilter() {
+    document.getElementById("tableFilter").value = "";
+    const orders = document.querySelectorAll(".order-item");
+    orders.forEach(order => {
+        order.style.display = "";
+    });
+}
+
+
+
 
 // Refresh orders every minute
 setInterval(() => {

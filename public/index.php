@@ -200,6 +200,7 @@ $app->router->get('/offer/getpublished', [$offerController, 'getAllPublishedOffe
 
 // order data
 $app->router->get('/order/data', [$orderController, 'getOrderData']);
+$app->router->post('/order/confirm', [$orderController, 'updateOrderStatus']);
 
 
 
