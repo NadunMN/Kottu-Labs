@@ -114,10 +114,17 @@ class Order extends OrderModel
             SELECT 
                 $tableName.*, 
                 CONCAT(users.firstname, ' ', users.lastname) AS userName, 
-                branches.branch_name AS branchName
+                branches.branch_name AS branchName,
+                reservations.table_number,
+                reservations.type, 
+                meals.meal_description AS mealName,
+                om.quantity
             FROM $tableName
             JOIN users ON $tableName.user_id = users.id
+            JOIN reservations ON $tableName.reservation_no = reservations.reservation_no
             JOIN branches ON $tableName.branch_id = branches.branch_id
+            JOIN order_meals om ON $tableName.order_id = om.order_id
+            JOIN meals ON om.meal_id = meals.meal_id
             $sql
         ");
 
