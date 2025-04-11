@@ -263,3 +263,4 @@ $app->router->get('/dashboard/getTopCustomer', [$dashboardController, 'getTopCus
 
 // Run the application
 $app->run();
+

@@ -329,7 +329,4 @@ class Reservation extends ReservationModel
 }
 
 
-    
-    
-
 }
