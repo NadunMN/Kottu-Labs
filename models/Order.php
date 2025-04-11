@@ -1,12 +1,9 @@
-
 <?php
 
 namespace app\models;
 
-use app\core\db\DbModel;
 use app\core\Model\OrderModel;
 use app\core\Application;
-use app\core\Model\ReservationModel;
 
 class Order extends OrderModel
 {
