@@ -14,6 +14,7 @@ abstract class UserModel extends DbModel
     abstract public function save();
     abstract public function delete();
     abstract public function update();
+    
 
 
 }

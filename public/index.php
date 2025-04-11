@@ -13,6 +13,7 @@ use app\controllers\FeedbacksController;
 use app\controllers\sendOtp;
 use app\controllers\PaymentController; // Add missing import
 use app\models\User;
+use app\controllers\DashboardController;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -43,6 +44,7 @@ $reservationController = new ReservationController();
 $orderController = new OrderController();
 $feedbacksController = new FeedbacksController();
 $paymentController = new PaymentController(); // Add PaymentController instance
+$dashboardController = new DashboardController();
 
 
 // Define routes
@@ -250,6 +252,14 @@ $app->router->post('/staff/delete', [$userController, 'deleteStaff']);
 //get payment data
 $app->router->get('/payment/data', [$paymentController, 'getPaymentData']);
 
+
+
+//dashboard
+$app->router->get('/dashboard/getProfit', [$dashboardController, 'getProfit']);
+$app->router->get('/dashboard/getRegistration', [$dashboardController, 'getRegistration']);
+$app->router->get('/dashboard/orderCount', [$dashboardController, 'orderCount']);
+$app->router->get('/dashboard/getRegistrationsCount', [$dashboardController, 'getRegistrationsCount']);
+$app->router->get('/dashboard/getTopCustomer', [$dashboardController, 'getTopCustomenrs']);
 
 // Run the application
 $app->run();

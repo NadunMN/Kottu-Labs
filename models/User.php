@@ -231,6 +231,81 @@ class User extends UserModel
         $statement->execute();
         return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
     }
+
+    public function getRegistration($where)
+    {
+
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+
+        // Generate the WHERE clause dynamically if conditions exist
+        $sql = $attributes ? " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes)) : "";
+
+        $statement = self::prepare("
+             SELECT 
+                    YEAR(created_at) AS year,
+                    MONTH(created_at) AS month,
+                    COUNT(*) AS user_count
+                FROM 
+                    $tableName
+                GROUP BY 
+                    YEAR(created_at), MONTH(created_at)
+                ORDER BY 
+                    YEAR(created_at), MONTH(created_at);
+
+            $sql
+        ");
+
+        foreach ($where as $key => $value) {
+            $statement->bindValue(":$key", $value);
+        }
+
+        try {
+            $statement->execute();
+            
+            // Fetch as an associative array to avoid dynamic property issues
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+
+
+    }
+    
+    public function getRegistrationCount($where)
+    {
+
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+
+        // Generate the WHERE clause dynamically if conditions exist
+        $sql = $attributes ? " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes)) : "";
+
+        $statement = self::prepare("
+             SELECT 
+                    COUNT(*) AS user_count
+                FROM 
+                    $tableName
+            $sql
+        ");
+
+        foreach ($where as $key => $value) {
+            $statement->bindValue(":$key", $value);
+        }
+
+        try {
+            $statement->execute();
+            
+            // Fetch as an associative array to avoid dynamic property issues
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+
+
+    }
     
     
 

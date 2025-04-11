@@ -9,11 +9,18 @@
     
     <style>
         :root {
-            --primary-color: #3498db;
-            --secondary-color: #2ecc71;
-            --text-dark: #333;
-            --text-light: #666;
-            --background-light: #f5f5f5;
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #7209b7;
+            --success-color: #4cc9f0;
+            --danger-color: #f72585;
+            --text-dark: #2b2d42;
+            --text-medium: #555b6e;
+            --text-light: #8d99ae;
+            --background-light: #f8f9fa;
+            --card-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            --hover-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+            --border-radius: 12px;
         }
 
         * {
@@ -23,223 +30,299 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
             /* background-color: var(--background-light); */
             color: var(--text-dark);
+            line-height: 1.6;
         }
 
         .container {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            /* gap: 20px; */
+            flex-wrap: wrap;
             width: 100%;
-            margin: 5px auto;
+            /* margin: 20px auto; */
+            gap: 24px;
+            /* padding: 0 16px; */
         }
 
-        .left-column{
-          width: 70%;
+        .left-column {
+            flex: 1 1 65%;
+            min-width: 600px;
         }
 
-        .right-column{
-          width: 30%;
+        .right-column {
+            flex: 1 1 30%;
+            min-width: 300px;
         }
 
         .section {
             background: white;
-            border-radius: 10px;
-            /* box-shadow: 0 0px 6px rgba(0,0,0,0.1); */
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
             padding: 25px;
-            transition: transform 0.3s ease;
-            
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
         }
 
-        .card-part-main{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* margin-top: -50px; */
-            width: 100%;
-            height: auto;
-              gap:20px;
+        .section:hover {
+            box-shadow: var(--hover-shadow);
         }
-
-        .card-part{
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: left;
-            width: 50%;
-            height: 350px;
-            gap:20px;
-            box-shadow: 0 0px 20px rgba(0,0,0,0.1);
-            border-radius: 10px;
-
-
-        }
-
-        .upper-card{
-            /* margin-top: -50px; */
-            width: 100%;
-            height: 280px;
-            /* background-color: var(--primary-color); */
-            padding: 10px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-        }
-
-      
-
-        .card-part-2{
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin: 20px 0;
-            width: 50%;
-            height: 350px;
-            padding-bottom: 20px;
-            /* background-color: black; */
-            border-radius: 10px;
-            box-shadow: 0 0px 20px rgba(0,0,0,0.1);
-
-            /* background-color: var(--primary-color); */
-
-            gap:20px;
-
-        }
-
-        /* .section:hover {
-            transform: translateY(-5px);
-        } */
 
         .dashboard-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 15px;
         }
 
         .dashboard-title {
-            color:black;
-            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-size: 26px;
+            font-weight: 600;
         }
 
         .quick-stats {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 60px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
         }
 
         .stat-card {
-            cursor: pointer;
-            background-color: white;
-            
-            /* background-image: url('/Photo/13682.jpg'); */
-            /* background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat; */
-            border-radius: 8px;
-            padding: 20px;
-            width: 95%;
-            text-align: left;
-            box-shadow: 0 0px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            background: linear-gradient(145deg, #ffffff, #f5f5f5);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
-            justify-content: space-evenly;
+            justify-content: space-between;
             align-items: center;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .stat-card:nth-child(2) {
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .stat-card:nth-child(3) {
+            border-left: 4px solid var(--accent-color);
         }
 
         .stat-card h3 {
-            color: var(--text-light);
+            color: var(--text-medium);
             margin-bottom: 10px;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .stat-card:hover {
-            transform: scale(1.02);
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
         }
 
         .stat-card .value {
-            font-size: 20px;
+            font-size: 24px;
             font-weight: bold;
             color: var(--primary-color);
+        }
+
+        .stat-card:nth-child(2) .value {
+            color: var(--secondary-color);
+        }
+
+        .stat-card:nth-child(3) .value {
+            color: var(--accent-color);
+        }
+
+        .stat-card .icon-container {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+
+        .stat-card:nth-child(2) .icon-container {
+            background-color: rgba(58, 12, 163, 0.1);
+        }
+
+        .stat-card:nth-child(3) .icon-container {
+            background-color: rgba(114, 9, 183, 0.1);
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            display: flex;
+            height: 450px;
+            flex-direction: column;
+            padding: 0;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .chart-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .chart-header {
+            padding: 20px 20px 10px 20px;
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .chart-description {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        .chart-body {
+            flex: 1;
+            padding: 0 15px 15px 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         th, td {
-            border-bottom: 1px solid #eee;
-            padding: 12px;
+            padding: 15px;
             text-align: left;
         }
 
         th {
-            background-color: var(--background-light);
-            color: var(--text-light);
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 14px;
         }
 
-        .chart-container {
-            height: 300px;
-            margin-top: 20px;
+        td {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: #f8f9fa;
         }
 
         .highlight {
-            color: var(--secondary-color);
+            color: var(--success-color);
             font-weight: bold;
         }
 
         .negative {
-            color: #e74c3c;
+            color: var(--danger-color);
         }
 
         .activity-section {
-            margin-top: 20px;
             margin-bottom: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            
         }
 
         .activity-item {
             display: flex;
-            /* flex-direction: column; */
             justify-content: space-between;
             align-items: center;
-            gap: 10px;
-            background-color: var(--background-light);
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            height: 100px;
+            padding: 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
         }
 
-
-        /* chart */
-        .chart-container {
-            width: 100%;
-            /* height: 300px; */
-        
-          /* position: relative; */
+        .activity-item:hover {
+            transform: translateY(-3px);
         }
 
-        .chart-container-bar {
-          width: 100%;
-          height: 300px;
-          /* position: relative; */
+        .activity-content h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: var(--text-dark);
         }
-     
-        /* chart */
 
+        .activity-content .value {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
 
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        @media (max-width: 1200px) {
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .left-column, .right-column {
+                width: 100%;
+                min-width: auto;
+            }
+            
+            .quick-stats {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -249,143 +332,100 @@
             <div class="section">
                 <div class="dashboard-header">
                     <h1 class="dashboard-title">Admin Dashboard</h1>
-                    <!-- <span class="highlight">September 2023</span> -->
+                    <span id="current-date"></span>
                 </div>
 
                 <div class="quick-stats">
                     <div class="stat-card">
-                      <div>
-                        <h3>Wattala</h3>
-                        <div class="value" style="font-size: 1.5rem;">Rs.75,000</div>
-                      </div>
-                      <div>
-                        <img src="/Photo/icon/statistics.png" alt="Wattala" style="width: 60px; height: 60px;">
-                      </div>
+                        <div>
+                            <h3>Wattala</h3>
+                            <div class="value" id="value-wattala">Rs.00,000</div>
+                        </div>
+                        <div class="icon-container">
+                            <img src="/Photo/icon/statistics.png" alt="Wattala" style="width: 30px; height: 30px;">
+                        </div>
                     </div>
 
                     <div class="stat-card">
-                      <div>
-                        <h3>Kelaniya</h3>
-                        <div class="value" style="font-size: 1.5rem;">Rs.80,000</div>
-                      </div>
-                      <div>
-                        <img src="/Photo/icon/statistics.png" alt="Kelaniya" style="width: 60px; height: 60px;">
-                      </div>
+                        <div>
+                            <h3>Kelaniya</h3>
+                            <div class="value" id="value-kelaniya">Rs.00,000</div>
+                        </div>
+                        <div class="icon-container">
+                            <img src="/Photo/icon/statistics.png" alt="Kelaniya" style="width: 30px; height: 30px;">
+                        </div>
                     </div>
 
                     <div class="stat-card">
-                      <div>
-                        <h3>Kotahena</h3>
-                        <div class="value" style="font-size: 1.5rem;">Rs.80,000</div>
-                      </div>
-                      <div>
-                        <img src="/Photo/icon/statistics.png" alt="Kotahena" style="width: 60px; height: 60px;">
-                      </div>
+                        <div>
+                            <h3>Kotahena</h3>
+                            <div class="value" id="value-kotahena">Rs.00,000</div>
+                        </div>
+                        <div class="icon-container">
+                            <img src="/Photo/icon/statistics.png" alt="Kotahena" style="width: 30px; height: 30px;">
+                        </div>
                     </div>
                 </div>
 
-                
-                
-                <div class="card-part-main">
-                
-                <div class="card-part-2">
-                
-                <div style="padding-top: 10px; padding-left:20px; padding-right :20px; width:100%; text-align:left" >
-                <h2>Reservation Statistics</h2>
-                <p style="margin-top:10px; font-size:0.9rem; opacity:0.5;">Visual representation of reservation trends, 
-                    showing booking patterns over time for better management.</p>
-                </div>
-
-                <div>
-                <div class="chart-container" style=" width: 430px; height: 200px;">
-                  <canvas id="pieChart" style="width: 100%;"></canvas>
-                </div>
-                </div>
-
-                </div>
-
-                <div class="card-part">
-                    <h2 style="margin-top: 20px; margin-left:20px">Order Wattala</h2>
-                    <p style="margin:0 20px; font-size:0.9rem; opacity:0.5">Track and analyze order trends with the Order Statistics Chart, 
-                        providing real-time insights into sales performance.</p>
-
-                    <div class="upper-card">
-                    <div class="chart-container-bar"  style="height: 200px">
-                      <canvas id="lineChart"></canvas>
+                <div class="card-container">
+                    <div class="chart-card ">
+                        <div class="chart-header">
+                            <h2 class="chart-title">Registration Statistics</h2>
+                            <p class="chart-description">Monthly registration numbers across all branches showing growth patterns.</p>
+                        </div>
+                        <div class="chart-body">
+                            <div class="chart-container">
+                                <canvas id="registrationBarChart"></canvas>
+                            </div>
+                        </div>
                     </div>
-                    </div>
+
+                    
                 </div>
 
-                
-              </div>
-
-
-
-              
-              <div class="card-part-main">
-                <div class="card-part">
-                    <h2 style="margin-top: 20px; margin-left:20px">Order Kaleniya</h2>
-                    <p style="margin:0 20px; font-size:0.9rem; opacity:0.5">Track and analyze order trends with the Order Statistics Chart, 
-                        providing real-time insights into sales performance.</p>
-
-                    <div class="upper-card">
-                    <div class="chart-container-bar"  style="height: 200px">
-                      <canvas id="lineChart-2"></canvas>
+                <div class="card-container">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h2 class="chart-title">Orders</h2>
+                            <p class="chart-description">Track and analyze order trends with the Order Statistics Chart, providing real-time insights into sales performance.</p>
+                        </div>
+                        <div class="chart-body">
+                            <div class="chart-container">
+                                <canvas id="lineChart"></canvas>
+                            </div>
+                        </div>
                     </div>
-                    </div>
+
+                   
+
                 </div>
-
-                <div class="card-part">
-                    <h2 style="margin-top: 20px; margin-left:20px">Order Kotahena</h2>
-                    <p style="margin:0 20px; font-size:0.9rem; opacity:0.5">Track and analyze order trends with the Order Statistics Chart, 
-                        providing real-time insights into sales performance.</p>
-
-                    <div class="upper-card">
-                    <div class="chart-container-bar"  style="height: 200px">
-                      <canvas id="lineChart-3"></canvas>
-                    </div>
-                    </div>
-                </div>
-                
-                
-              </div>
-
-
-
-            
-                
-
             </div>
         </div>
 
         <!-- Right Column -->
         <div class="right-column">
-            <div class="section" style="box-shadow: 0 0px 20px rgba(0,0,0,0.1); margin-right: 10px;">
-                <h2>Financial Summary</h2>
+            <div class="section">
+                <h2 class="section-title">Financial Summary</h2>
                 
                 <div class="activity-section">
                     <div class="activity-item">
-                        <div class="money-first">
-                        <h3 style="margin-bottom: 5px;">Registrations</h3>
-                        <div class="value highlight" style="font-size: 1.2rem;">85</div>
+                        <div class="activity-content">
+                            <h3>Registrations</h3>
+                            <div class="value highlight" id="registrations">85</div>
                         </div>
-
                         <div>
-                        <img src="/Photo/icon/partners.png" alt="Income" style="width: 50px; height: 50px;">
+                            <img src="/Photo/icon/partners.png" alt="Registrations" style="width: 50px; height: 50px;">
                         </div>
-                        <!-- <small>+12% from last month</small> -->
                     </div>
-                    
                 </div>
 
-                
-                <h2>Top Categories</h2>
+                <h2 class="section-title">Top Customers</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Category</th>
-                            <th>Revenue</th>
-                            <th>Growth</th>
+                            <th>Name</th>
+                            <th>Branch name</th>
+                            <th>Count</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -394,325 +434,18 @@
                             <td>$89,500</td>
                             <td class="highlight">+15%</td>
                         </tr>
-
                         <tr>
                             <td>Consulting</td>
                             <td>$67,300</td>
                             <td class="highlight">+10%</td>
                         </tr>
-
-                        
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <script>
-
-  
-
-         // Get the canvas context
-  const ctx = document.getElementById('pieChart').getContext('2d');
-
-// Data
-const data = {
-  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"], // X-axis labels
-  datasets: [
-    {
-      label: "Wattala",
-      data: [65, 59, 80, 81, 56, 55, 40], // Y-axis data
-      borderColor: "#1E90FF", // Blue
-      backgroundColor: "rgb(30, 143, 255)",
-      fill: true,
-      borderRadius: 5,
-      tension: 0.4, // Smooth curve
-    },
-    {
-      label: "Kelaniya",
-      data: [28, 48, 40, 19, 86, 27, 90],
-      borderColor: "#2ECC71", // Green
-      backgroundColor: "rgb(46, 204, 112)",
-      fill: true,
-      borderRadius: 5,
-      tension: 0.4,
-    },
-    {
-      label: "Kotahena",
-      data: [18, 32, 70, 45, 76, 65, 55],
-      borderColor: "#E74C3C", // Red
-      backgroundColor: "rgb(231, 77, 60)",
-      fill: true,
-      borderRadius: 5,
-      tension: 0.4,
-    }
-  ]
-};
-
-// Options
-const options = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      display: false,
-      position: "top",
-    },
-    title: {
-      display: false,
-      text: "Registration Trends Over Time",
-      font: { size: 18 }
-    }
-  },
-  scales: {
-    x: {
-      grid: { display: false },
-      title: {
-        display: false,
-        text: "Months",
-        font: { size: 14 }
-      }
-    },
-    y: {
-    grid: { display: false },
-      beginAtZero: false,
-      title: {
-        display: false,
-        text: "Registrations",
-        font: { size: 14 }
-      },
-      ticks: {
-                color: "#666",
-                stepSize: 20,
-                callback: function(value) {
-                    return value === 100 ? '100' : value;
-                }
-            }
-
-    }
-  }
-};
-
-// Create Chart
-new Chart(ctx, {
-  type: 'bar',
-  data: data,
-  options: options
-});
-
-
-
-
-
-//line chart
- // --------------- Yearly Line Chart ---------------
- const lineCtx = document.getElementById('lineChart').getContext('2d');
-
-// Abbreviated day labels
-const weekDays = ["M", "T", "W", "T", "F", "S", "S"];
-
-const lineData = {
-    labels: weekDays,
-    datasets: [{
-        label: "Orders",
-        data: [60, 50, 60, 50, 30, 40, 10],
-        backgroundColor: "rgb(182, 33, 33)",
-        borderWidth: 0,
-        borderRadius: 5,
-        tension: 0.4,
-        fill: true,
-        pointRadius: 0
-    }]
-};
-
-const lineOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-        legend: {
-            display: false
-        },
-        title: {
-            display: false,
-            text: "Order Statistics",
-            padding: 20,
-            font: {
-                size: 18,
-                weight: '600'
-            }
-        }
-    },
-    scales: {
-        x: {
-            grid: {
-                display: false
-            },
-            ticks: {
-                color: "#666"
-            }
-        },
-        y: {
-            beginAtZero: true,
-            grid: {
-                display: false
-            },
-            ticks: {
-                color: "#666",
-                stepSize: 20,
-                callback: function(value) {
-                    return value === 100 ? '100' : value;
-                }
-            }
-        }
-    }
-};
-
-new Chart(lineCtx, {
-    type: 'bar',
-    data: lineData,
-    options: lineOptions
-});
-
-
-//line-2 chart
-    // --------------- Yearly Line Chart ---------------
-     // --------------- Yearly Line Chart ---------------
- const lineCtx2 = document.getElementById('lineChart-2').getContext('2d');
-
-// Abbreviated day labels
-const weekDays_2 = ["M", "T", "W", "T", "F", "S", "S"];
-
-const lineData2 = {
-    labels: weekDays_2,
-    datasets: [{
-        label: "Orders",
-        data: [60, 50, 60, 50, 30, 40, 10],
-        backgroundColor: "#2ecc71",
-        borderWidth: 0,
-        borderRadius: 5,
-        tension: 0.4,
-        fill: true,
-        pointRadius: 0
-    }]
-};
-
-const lineOptions2 = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-        legend: {
-            display: false
-        },
-        title: {
-            display: false,
-            text: "Order Statistics",
-            padding: 20,
-            font: {
-                size: 18,
-                weight: '600'
-            }
-        }
-    },
-    scales: {
-        x: {
-            grid: {
-                display: false
-            },
-            ticks: {
-                color: "#666"
-            }
-        },
-        y: {
-            beginAtZero: true,
-            grid: {
-                display: false
-            },
-            ticks: {
-                color: "#666",
-                stepSize: 20,
-                callback: function(value) {
-                    return value === 100 ? '100' : value;
-                }
-            }
-        }
-    }
-};
-
-new Chart(lineCtx2, {
-    type: 'bar',
-    data: lineData2,
-    options: lineOptions2
-});
-
-
-//line-3 chart
- // --------------- Yearly Line Chart ---------------
- const lineCtx3 = document.getElementById('lineChart-3').getContext('2d');
-
-// Abbreviated day labels
-const weekDays_3 = ["M", "T", "W", "T", "F", "S", "S"];
-
-const lineData3 = {
-    labels: weekDays_3,
-    datasets: [{
-        label: "Orders",
-        data: [60, 50, 60, 50, 30, 40, 10],
-        backgroundColor: "#3498db",
-        borderWidth: 0,
-        borderRadius: 5,
-        tension: 0.4,
-        fill: true,
-        pointRadius: 0
-    }]
-};
-
-const lineOptions3 = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-        legend: {
-            display: false
-        },
-        title: {
-            display: false,
-            text: "Order Statistics",
-            padding: 20,
-            font: {
-                size: 18,
-                weight: '600'
-            }
-        }
-    },
-    scales: {
-        x: {
-            grid: {
-                display: false
-            },
-            ticks: {
-                color: "#666"
-            }
-        },
-        y: {
-            beginAtZero: true,
-            grid: {
-                display: false
-            },
-            ticks: {
-                color: "#666",
-                stepSize: 20,
-                callback: function(value) {
-                    return value === 100 ? '100' : value;
-                }
-            }
-        }
-    }
-};
-
-new Chart(lineCtx3, {
-    type: 'bar',
-    data: lineData3,
-    options: lineOptions3
-});
-    </script>
+    <script src="/JavaScript/chart.js"></script>
+    <script src="/JavaScript/admin/dashboard.js"></script>
 </body>
 </html>
