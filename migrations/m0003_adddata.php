@@ -23,13 +23,13 @@ class m0003_adddata{
         $checkColumnSQL = "SELECT * FROM `users`;";
         $result = $db->pdo->query($checkColumnSQL)->fetch();
         if (!$result) {
-            $SQL = "INSERT INTO users (email, firstname, lastname, status, position,mobile_number, branch_id)
+            $SQL = "INSERT INTO users (email, firstname, lastname, status, position,mobile_number, branch_id,photo)
                     VALUES
-                    ('admin@gmail.com', 'Nadun', 'Madusanka', 1, 'admin','+94764659122', 1),
-                    ('customer@gmail.com', 'Ranuga', 'Lekawasam', 0, 'customer','+94764659123', 2),
-                    ('steward@gmail.com', 'Mahesh', 'Kumara', 0, 'steward','+94764659124', 3),
-                    ('manager@gmail.com', 'Thirani', 'Athukorala', 0, 'manager','+94764659125', 1),
-                    ('chef@gmail.com', 'Eraji', 'Thenuwara', 0, 'chef','+94764659125', 1);";
+                    ('admin@gmail.com', 'Nadun', 'Madusanka', 1, 'admin','+94764659122', 1,'/Photo/Staff/admin1.jpg'),
+                    ('customer@gmail.com', 'Ranuga', 'Lekawasam', 0, 'customer','+94764659123', 2, 'none'),
+                    ('steward@gmail.com', 'Mahesh', 'Kumara', 0, 'steward','+94764659124', 3, '/Photo/Staff/steward.jpg'),
+                    ('manager@gmail.com', 'Thirani', 'Athukorala', 0, 'manager','+94764659125', 1, '/Photo/Staff/manager3.jpg'),
+                    ('chef@gmail.com', 'Eraji', 'Thenuwara', 0, 'chef','+94764659125', 1, '/Photo/Staff/chef1.jpg');";
             $db->pdo->exec($SQL);
         }
 

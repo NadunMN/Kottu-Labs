@@ -304,7 +304,29 @@ class Reservation extends ReservationModel
         }
     }
 
-    
-    
+
+    public function topCustemor()
+{
+    $tableName = static::tableName();
+    $sql = "
+        SELECT 
+            users.firstname AS customerName,
+            users.lastname AS customerLastName,
+            branches.branch_name AS branchName,
+            COUNT($tableName.reservation_no) AS total_reservations
+        FROM $tableName
+        JOIN branches ON $tableName.branch_id = branches.branch_id
+        JOIN users ON $tableName.user_id = users.id
+        WHERE $tableName.confirmation_status != 0
+        GROUP BY users.firstname, users.lastname, branches.branch_name
+        ORDER BY total_reservations DESC
+        LIMIT 7
+    ";
+
+    $statement = self::prepare($sql);
+    $statement->execute();
+    return $statement->fetchAll(\PDO::FETCH_ASSOC);
+}
+
 
 }

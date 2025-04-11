@@ -1,3 +1,4 @@
+
 <?php
 
 namespace app\models;
@@ -114,17 +115,10 @@ class Order extends OrderModel
             SELECT 
                 $tableName.*, 
                 CONCAT(users.firstname, ' ', users.lastname) AS userName, 
-                branches.branch_name AS branchName,
-                reservations.table_number,
-                reservations.type, 
-                meals.meal_description AS mealName,
-                om.quantity
+                branches.branch_name AS branchName
             FROM $tableName
             JOIN users ON $tableName.user_id = users.id
-            JOIN reservations ON $tableName.reservation_no = reservations.reservation_no
             JOIN branches ON $tableName.branch_id = branches.branch_id
-            JOIN order_meals om ON $tableName.order_id = om.order_id
-            JOIN meals ON om.meal_id = meals.meal_id
             $sql
         ");
 
@@ -142,6 +136,86 @@ class Order extends OrderModel
             return false;
         }
     }
+
+
+    public static function findAllProfit($where)
+    {
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+
+        // Generate the WHERE clause dynamically if conditions exist
+        $sql = $attributes ? " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes)) : "";
+
+        $statement = self::prepare("
+            SELECT 
+            branches.branch_name AS branchName,
+            SUM($tableName.order_price) AS total_price
+            FROM $tableName
+            JOIN branches ON $tableName.branch_id = branches.branch_id
+            GROUP BY branches.branch_name
+            $sql
+        ");
+
+        foreach ($where as $key => $value) {
+            $statement->bindValue(":$key", $value);
+        }
+
+        try {
+            $statement->execute();
+            
+            // Fetch as an associative array to avoid dynamic property issues
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+
+    public static function orderCount($where)
+    {
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+
+        // Generate the WHERE clause dynamically if conditions exist
+        $sql = $attributes ? " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes)) : "";
+
+        $statement = self::prepare("
+            SELECT 
+                branches.branch_name AS branchName,
+                MONTH($tableName.order_date) AS orderMonth,
+                COUNT($tableName.order_price) AS order_count,
+                Year($tableName.order_date) AS orderYear
+            FROM $tableName
+            JOIN branches ON $tableName.branch_id = branches.branch_id
+            WHERE YEAR($tableName.order_date) = YEAR(CURDATE())
+            GROUP BY branches.branch_name, MONTH($tableName.order_date)
+            ORDER BY branches.branch_name, orderMonth;
+
+
+            $sql
+        ");
+
+        foreach ($where as $key => $value) {
+            $statement->bindValue(":$key", $value);
+        }
+
+        try {
+            $statement->execute();
+            
+            // Fetch as an associative array to avoid dynamic property issues
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+
+
+
+
+
 
     public function toArray(): array
     {
@@ -227,4 +301,5 @@ class Order extends OrderModel
             return false;
         }
     }
+
 }
