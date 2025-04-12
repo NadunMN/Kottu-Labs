@@ -24,23 +24,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
       switch (optionId) {
         case "update-menu":
-          fetch("/menuitem/data")
+          fetch("/managermenuitem/data")
             .then((response) => response.json())
             .then((data) => {
+              const mealContent = document.getElementById("main-content");
+
               if (data.error) {
                 console.error("Error:", data.error);
+                mealContent.innerHTML = "Error loading meals";
+              } else if (data == null || data.length === 0) {
+                mealContent.innerHTML = "No meals available";
+                return; 
               } else {
-                // Get the meal content container
-                const mealContent = document.getElementById("main-content");
-
-                if (data == null || data.length === 0) {
-                  mealContent.innerHTML = "No meals available"; // Show a message if there are no meals
-                } else {
-                  mealContent.innerHTML = ""; // Clear previous content if data is available
-                }
 
                 mealContent.innerHTML = `
-
                                     <div class="view-branch-menu-section">
                                             <div class="topic-bar">
                                                 <div>
@@ -543,15 +540,8 @@ document.addEventListener("DOMContentLoaded", () => {
          break;
 
         case "update-offers":
-          mainContent.innerHTML = `
-
-          
-                        
-
-
-
-          `
-          break;
+          mainContent.innerHTML = ``;
+          fetch("/offer/data")
 
         case "feedbacks":
           mainContent.innerHTML = `

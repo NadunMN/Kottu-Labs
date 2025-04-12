@@ -78,6 +78,22 @@ class ManagerController extends Controller
         }
     }
 
+    public function getmenuItemsManager()
+    {
+        if (Application::$app->user) {
+            // Use manager's branch_id from logged-in user (fallback to 1)
+            $branchId = Application::$app->user->branch_id ?? 1;
+
+            // Pass the correct int instead of an array
+            $meals = Meal::findAllForManager($branchId);
+
+            echo json_encode($meals);
+        } else {
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+
+
     //review deletion
     public function deletemenuItems(){
         try {

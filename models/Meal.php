@@ -78,6 +78,28 @@ class Meal extends DbModel
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS, static::class);
     }
+    
+    public static function findAllForManager($branchId)
+    {
+        $tableName = static::tableName();
+
+        $sql = "SELECT 
+                    $tableName.*,
+                    GROUP_CONCAT(b.branch_id) as branch_ids
+                FROM $tableName
+                JOIN branch_meals b ON $tableName.meal_id = b.meal_id
+                WHERE b.branch_id = :branch_id
+                GROUP BY $tableName.meal_id";
+
+        $statement = self::prepare($sql);
+        $statement->bindValue(':branch_id', $branchId, PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_CLASS, static::class);
+    }
+
+    
+
 
     public static function findAllWithoutGroup($where, $searchTerm)
     {
