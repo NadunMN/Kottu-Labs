@@ -133,6 +133,7 @@ $app->router->post('/review/update', [$userController, 'updateReviewData']);
 //define route for menuItems
 $app->router->post('/menuitem/add', [$managerController, 'addmenuItems']);
 $app->router->get('/menuitem/data', [$managerController, 'getmenuItems']);
+$app->router->get('/managermenuitem/data', [$managerController, 'getmenuItemsManager']);
 $app->router->post('/mealitem/delete', [$managerController, 'deletemenuItems']);
 $app->router->post('/menuitem/update', [$managerController, 'updatemenuItems']);
 
