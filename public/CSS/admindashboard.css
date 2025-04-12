@@ -433,8 +433,8 @@ h1 {
   position: absolute;
   top: 0;
   left: 0;
-  transform:translateX(-150%); /* keep vertically centered & hidden to right */
-  width: 500px;
+  transform:translateX(-250%); /* keep vertically centered & hidden to right */
+  width: 650px;
   margin: 0 auto;
   padding: 35px 20px;
   background: rgb(243, 243, 243);

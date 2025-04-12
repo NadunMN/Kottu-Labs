@@ -18,7 +18,7 @@ fetch("/menuitem/data")
                                     <div class="view-branch-menu-section">
                                             <div class="topic-bar">
                                                 <div>
-                                                    <h2 style="margin:0;">Meals</h2>
+                                                    <h1 style="margin:0;">Meals</h1>
                                                     <h5 style="margin:0;">${data.length} meals available</h5>
                                                 </div>
 
@@ -91,20 +91,13 @@ fetch("/menuitem/data")
         
         <div class="form-group">
             <label for="meal_photo">Item Image</label>
-            <div class="image-upload-container">
-                <div class="image-preview" id="imagePreview">
-                    <img src="placeholder.jpg" alt="Preview" id="preview-image">
-                    <div class="upload-placeholder">
-                        <i class="upload-icon">📸</i>
-                        <span>Click or drag image here</span>
-                    </div>
-                </div>
+            
                 <input type="file" 
                        id="meal_photo" 
                        name="item_photo" 
                        accept="image/*"
                        class="image-input">
-            </div>
+            
             <span class="image-help-text">Recommended: 500x500px, Max size: 2MB</span>
         </div>
 
@@ -128,11 +121,12 @@ fetch("/menuitem/data")
                                                 <thead>
                                                     <tr>
                                                         <th>Meal ID</th>
-                                                        <th>Name</th>
+                                                        <th>Meal Photo</th>
+                                                        <th>Meal Name</th>
                                                         <th>Type</th>
                                                         <th>Price</th>
                                                         <th>Branch</th>
-                                                        <th>Status</th>
+                                                        <th>Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="table-content"></tbody>
@@ -141,33 +135,8 @@ fetch("/menuitem/data")
 
                                 `;
 
-      const imageInput = document.getElementById("meal_photo");
-      const imagePreview = document.getElementById("imagePreview");
-      const previewImage = document.getElementById("preview-image");
-      const newPlaceHolder = document.querySelectorAll(".upload-placeholder");
-
-      imageInput.addEventListener("change", function (event) {
-        const file = event.target.files[0]; // Get the selected file
-        if (file) {
-          newPlaceHolder.forEach((placeholder) =>
-            placeholder.classList.add("hidden-img")
-          ); // Hide the placeholder
-          const reader = new FileReader(); // Create a FileReader to read the file
-
-          reader.onload = function (e) {
-            let imageURL = e.target.result;
-            previewImage.src = imageURL; // Set the src of the img to the file content
-            imagePreview.classList.add("has-image"); // Add a class to indicate the image is loaded
-
-            // window.uploadedImage = imageURL;
-          };
-
-          reader.readAsDataURL(file); // Read the file as a data URL
-        }
-      });
 
       let mealId;
-
 
       const mealDescriptions = {
         1: "All",
@@ -183,9 +152,8 @@ fetch("/menuitem/data")
         11: "Parata",
         12: "Devilled Portions",
         13: "Mocktails",
-        14: "Beverages"
-    };
-
+        14: "Beverages",
+      };
 
       // Dynamically generate meal elements
       data.forEach((meal) => {
@@ -195,21 +163,55 @@ fetch("/menuitem/data")
 
         // Populate row HTML
         row.innerHTML = `
-                                        <td class="meal-id" >${meal.meal_id}</td>
+                                        <td class="meal-id" >${
+                                          meal.meal_id
+                                        }</td>
+
+                                        <td >
+                                          <div class="staff-photo-container" style="width:65px; height:65px; border-radius:50%; overflow:hidden; position:relative;">
+                                          <img src="${meal.meal_photo}" alt="Staff Photo" style="width:100%; height:100%; object-fit:cover;" class="staff-photo">
+                                          </div>
+                                        </td>
+
                                         <td>${meal.meal_name}</td>
-                                        <td meal-description= '${meal.meal_description}'>${mealDescriptions[meal.meal_description]}</td>
+
+                                        
+
+                                        <td meal-description= '${meal.meal_description}'>
+                                        
+                                        <div class="staff-created" data-position="${meal.meal_description}">
+                                          ${mealDescriptions[meal.meal_description]}
+                                        </div>
+                                        
+                                        </td>
+                                        
                                         <td>Rs.${meal.meal_price}</td>
                                         <td>${
-                                          meal.branch_ids == "1" ? "Wattala" : meal.branch_ids == "2" ? "Kelaniya" : meal.branch_ids== "3" ? "Kotahena"
-                                          : meal.branch_ids == '1,2' ? "Wattala, Kelaniya" : meal.branch_ids == '1,3' ? "Wattala, Kotahena" : meal.branch_ids == '2,3' ? "Kelaniya, Kotahena" : "All Branches"
-                                          }</td>
+                                          meal.branch_ids == "1"
+                                            ? "Wattala"
+                                            : meal.branch_ids == "2"
+                                            ? "Kelaniya"
+                                            : meal.branch_ids == "3"
+                                            ? "Kotahena"
+                                            : meal.branch_ids == "1,2"
+                                            ? "Wattala, Kelaniya"
+                                            : meal.branch_ids == "1,3"
+                                            ? "Wattala, Kotahena"
+                                            : meal.branch_ids == "2,3"
+                                            ? "Kelaniya, Kotahena"
+                                            : "All Branches"
+                                        }</td>
                                         
                                         <td>
                                             
 
-                                            <div class="action-buttons">
-                                                <button class="edit-btn" meal-id='${meal.meal_id}'>Edit</button>
-                                                <button class="delete-btn" meal-id ='${meal.meal_id}'>Delete</button>
+                                            <div class="action-buttons action-btn">
+                                                <button class="edit-btn" meal-id='${
+                                                  meal.meal_id
+                                                }'>Edit</button>
+                                                <button class="delete-btn" meal-id ='${
+                                                  meal.meal_id
+                                                }'>Delete</button>
                                             </div>
                                         </td>
                                     `;
@@ -227,6 +229,7 @@ fetch("/menuitem/data")
       // Open the Popup
       openFormBtn.addEventListener("click", () => {
         addItemForm.classList.remove("hidden");
+        addItemForm.classList.add("show");
         resetForm();
         addForm.removeEventListener("submit", updateItem);
         addForm.addEventListener("submit", addNewItem);
@@ -234,26 +237,13 @@ fetch("/menuitem/data")
 
       // Close the Popup
       closeFormBtn.addEventListener("click", (event) => {
+        addItemForm.classList.remove("show");
         addItemForm.classList.add("hidden");
         event.preventDefault();
         resetForm();
       });
 
-      // Add event listeners to the status buttons to toggle availability
-      const statusButtons = document.querySelectorAll(".status-btn");
-      statusButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          if (button.classList.contains("available")) {
-            button.classList.remove("available");
-            button.classList.add("unavailable");
-            button.textContent = "Unavailable";
-          } else {
-            button.classList.remove("unavailable");
-            button.classList.add("available");
-            button.textContent = "Available";
-          }
-        });
-      });
+ 
 
       // Edit Button Event Listener
       document.querySelectorAll(".edit-btn").forEach((button) => {
@@ -262,14 +252,16 @@ fetch("/menuitem/data")
           console.log(mealId);
           const row = button.closest("tr");
           const mealName = row.querySelector("td:nth-child(2)").innerText;
-          const mealDescription =
-            row.querySelector("td:nth-child(3)").getAttribute("meal-description");
+          const mealDescription = row
+            .querySelector("td:nth-child(3)")
+            .getAttribute("meal-description");
           const mealPrice = row
             .querySelector("td:nth-child(4)")
             .innerText.replace("Rs.", "");
 
           // Open the form and fill it with the existing data
           addItemForm.classList.remove("hidden");
+          addItemForm.classList.add("show");
           document.getElementById("item-name").value = mealName;
           document.getElementById("item-price").value = mealPrice;
           document.getElementById("meal_description").value = mealDescription;

@@ -1,0 +1,178 @@
+/* form */
+/* Add Item Form Slide-in Styles */
+
+/* Form base styles */
+.add-item-form {
+    position: fixed;
+    top: 25px;
+    left: 0;
+    width: 650px;
+    max-width: 90vw;
+    height: auto;
+    background-color: white;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    overflow-y: auto;
+    z-index: 1000;
+    transition: transform 0.4s ease-out;
+    transform: translateX(-100%); /* Hidden by default */
+    border-radius: 10px;
+  }
+  
+  /* Visible state */
+  .add-item-form.show {
+    transform: translateX(2%); /* Slide in from left */
+  }
+  
+  /* Hidden state */
+  .add-item-form.hidden {
+    transform: translateX(-200%); /* Adjust to same as default */
+  }
+  
+  /* Form elements styling */
+  #add-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  #add-form h3 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+  }
+  
+  .form-group-main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #555;
+    font-size: 0.9rem;
+  }
+  
+  .form-group input[type="text"],
+  .form-group input[type="number"],
+.form-group input[type="file"],
+  .form-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  }
+  
+  /* Checkbox container styling */
+  .check-box-container {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .branch-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .branch-group input[type="checkbox"] {
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  .branch-group label {
+    margin-bottom: 0;
+    cursor: pointer;
+  }
+  
+  /* Image upload styling - Fixed positioning */
+  
+  
+ 
+  
+  .image-help-text {
+    display: block;
+    color: #888;
+    font-size: 0.8rem;
+    font-style: italic;
+    margin-top: 5px;
+  }
+  
+  /* Button group styling */
+  .button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+  }
+  
+  .cancel-item-btn {
+    background-color: #f1f1f1;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+  
+  .cancel-item-btn:hover {
+    background-color: #e1e1e1;
+  }
+  
+  .save-item-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+  
+  .save-item-btn:hover {
+    background-color: #2980b9;
+  }
+  
+  /* Form overlay */
+  .form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s;
+  }
+  
+  .form-overlay.show {
+    opacity: 1;
+    visibility: visible;
+  }
