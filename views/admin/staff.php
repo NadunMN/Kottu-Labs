@@ -254,6 +254,16 @@ body {
   opacity: 0.9;
 }
 
+.topic-bar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
     </style>
 
 
@@ -261,7 +271,7 @@ body {
 </head>
 <body>
     <div class="container">
-        <div class="header">
+        <div class="topic-bar">
         <h1>Update Staff Member</h1>
         <button id="toggleFormBtn" class="toggleFormBtn">Add Member</button>
         </div>
