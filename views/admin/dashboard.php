@@ -434,11 +434,7 @@
                             <td>$89,500</td>
                             <td class="highlight">+15%</td>
                         </tr>
-                        <tr>
-                            <td>Consulting</td>
-                            <td>$67,300</td>
-                            <td class="highlight">+10%</td>
-                        </tr>
+                       
                     </tbody>
                 </table>
             </div>

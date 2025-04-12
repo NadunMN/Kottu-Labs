@@ -16,19 +16,16 @@ async function addNewItem(event) {
   const fileInput = document.getElementById("photo");
 
   try {
-    // Handle file upload first if a file is selected
+    
+
     if (fileInput.files[0]) {
-      const uploadData = new FormData();
-      uploadData.append("photo", fileInput.files[0]);
-      
-      const uploadResponse = await fetch("/staff/upload", {
-        method: "POST",
-        body: uploadData
-      });
-      
-      const { path } = await uploadResponse.json();
-      formData.set("photo", path); // Update form data with server path
+      formData.append(
+        "photo",
+        "/Photo/Staff/" + fileInput.files[0].name
+      );
     }
+
+    console.log("Form Data:", Object.fromEntries(formData));
 
     // Submit staff data
     const response = await fetch("/staff/add", {
@@ -87,9 +84,26 @@ function updateStaffTable(data) {
     const row = document.createElement("tr");
     row.innerHTML = `
       <td>${staff.id}</td>
+      <td >
+        <div class="staff-photo-container" style="width:65px; height:65px; border-radius:50%; overflow:hidden; position:relative;">
+        <img src="${staff.photo}" alt="Staff Photo" style="width:100%; height:100%; object-fit:cover;" class="staff-photo">
+        </div>
+      </td>
+      
       <td>${staff.firstname} ${staff.lastname}</td>
-      <td>${staff.position}</td>
+      <td>${staff.email}</td>
+      <td>${staff.mobile_number}</td>
+      <td>
+        <div class="staff-created" data-position="${staff.position.toLowerCase()}">
+          ${staff.position}
+        </div>
+      </td>
       <td>${staff.branch_name}</td>
+      <td>
+        <div class="staff-created" data-position="${staff.position.toLowerCase()}">
+          ${staff.created_at}
+        </div>
+      </td>
       <td>
         <div class="action-buttons">
           <button class="edit-btn" data-staff-id="${staff.id}">Edit</button>
