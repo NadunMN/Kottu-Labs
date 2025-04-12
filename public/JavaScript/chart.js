@@ -23,8 +23,8 @@ fetch("/dashboard/getRegistration")
         datasets: [{
           label: `Registrations (${currentYear})`,
           data: monthlyUserCounts,
-          backgroundColor: 'rgba(255, 99, 132, 0.8)',
-          borderColor: 'rgba(255, 99, 132, 1)',
+          backgroundColor: '#EE3E3F',
+          borderColor: '#EE3E3F',
           borderWidth: 0,
           borderRadius: 6,
           barPercentage: 0.7,
@@ -104,31 +104,34 @@ fetch("/dashboard/orderCount")
           {
             label: 'Wattala',
             data: result["Wattala"],
-            backgroundColor: 'rgba(255, 99, 132, 0.3)',
-            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: '#EE3E3F',
+            borderColor: '#EE3E3F',
             fill: true,
             tension: 0.4,
             pointRadius: 0,
+            borderRadius: 6,
             pointHoverRadius: 5
           },
           {
             label: 'Kelaniya',
             data: result["Kelaniya"],
-            backgroundColor: 'rgba(54, 162, 235, 0.3)',
-            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: 'rgb(0, 0, 0)',
+            borderColor: 'rgb(0, 0, 0)',
             fill: true,
             tension: 0.4,
             pointRadius: 0,
+            borderRadius: 6,
             pointHoverRadius: 5
           },
           {
             label: 'Kotahena',
             data: result["Kotahena"],
-            backgroundColor: 'rgba(75, 192, 192, 0.3)',
-            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: '#F4C430',
+            borderColor: '#F4C430',
             fill: true,
             tension: 0.4,
             pointRadius: 0,
+            borderRadius: 6,
             pointHoverRadius: 5
           }
         ]

@@ -78,7 +78,7 @@
         }
 
         .dashboard-title {
-            color: var(--primary-color);
+            color: black;
             font-size: 26px;
             font-weight: 600;
         }
@@ -99,19 +99,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-left: 4px solid var(--primary-color);
+            border-left: 4px solid #EE3E3F;
         }
 
         .stat-card:nth-child(2) {
-            border-left: 4px solid var(--secondary-color);
+            border-left: 4px solid black;
         }
 
         .stat-card:nth-child(3) {
-            border-left: 4px solid var(--accent-color);
+            border-left: 4px solid #F4C430;
         }
 
         .stat-card h3 {
-            color: var(--text-medium);
+            color: var(--text-dark);
             margin-bottom: 10px;
             font-size: 16px;
             text-transform: uppercase;
@@ -126,15 +126,15 @@
         .stat-card .value {
             font-size: 24px;
             font-weight: bold;
-            color: var(--primary-color);
+            color: #EE3E3F;
         }
 
         .stat-card:nth-child(2) .value {
-            color: var(--secondary-color);
+            color: black;
         }
 
         .stat-card:nth-child(3) .value {
-            color: var(--accent-color);
+            color: #F4C430;
         }
 
         .stat-card .icon-container {
@@ -224,8 +224,8 @@
         }
 
         th {
-            background-color: rgba(67, 97, 238, 0.1);
-            color: var(--primary-color);
+            background-color:rgba(238, 62, 62, 0.08);
+            color:#EE3E3F;
             font-weight: 600;
             text-transform: uppercase;
             font-size: 14px;
@@ -281,7 +281,7 @@
         .activity-content .value {
             font-size: 22px;
             font-weight: bold;
-            color: var(--primary-color);
+            color: #EE3E3F;
         }
 
         .section-title {
@@ -300,7 +300,7 @@
             bottom: 0;
             width: 50px;
             height: 3px;
-            background-color: var(--primary-color);
+            background-color: #ee3e3f;
         }
 
         @media (max-width: 1200px) {
@@ -339,7 +339,7 @@
                     <div class="stat-card">
                         <div>
                             <h3>Wattala</h3>
-                            <div class="value" id="value-wattala">Rs.00,000</div>
+                            <div class="value" id="value-wattala">Rs.00</div>
                         </div>
                         <div class="icon-container">
                             <img src="/Photo/icon/statistics.png" alt="Wattala" style="width: 30px; height: 30px;">
@@ -349,7 +349,7 @@
                     <div class="stat-card">
                         <div>
                             <h3>Kelaniya</h3>
-                            <div class="value" id="value-kelaniya">Rs.00,000</div>
+                            <div class="value" id="value-kelaniya">Rs.00</div>
                         </div>
                         <div class="icon-container">
                             <img src="/Photo/icon/statistics.png" alt="Kelaniya" style="width: 30px; height: 30px;">
@@ -359,7 +359,7 @@
                     <div class="stat-card">
                         <div>
                             <h3>Kotahena</h3>
-                            <div class="value" id="value-kotahena">Rs.00,000</div>
+                            <div class="value" id="value-kotahena">Rs.00</div>
                         </div>
                         <div class="icon-container">
                             <img src="/Photo/icon/statistics.png" alt="Kotahena" style="width: 30px; height: 30px;">
@@ -428,7 +428,7 @@
                             <th>Count</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="customerTableBody">
                         <tr>
                             <td>Technology</td>
                             <td>$89,500</td>

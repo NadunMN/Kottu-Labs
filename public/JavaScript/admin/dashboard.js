@@ -35,4 +35,28 @@ fetch("/dashboard/getRegistrationsCount")
   });
 
 
+  fetch("/dashboard/getTopCustomer") 
+  .then((response) => response.json())
+  .then((data) => {
+    const tbody = document.getElementById("customerTableBody");
+    tbody.innerHTML = ""; // clear existing rows if any
+
+    data.forEach((customer) => {
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${customer.customerName + " "+ customer.customerLastName}</td>
+        <td>${customer.branchName}</td>
+        <td>${customer.total_reservations}</td>
+      `;
+
+      tbody.appendChild(row);
+    });
+  })
+  .catch((error) => {
+    console.error("Error fetching data:", error);
+  });
+
+
+
 
