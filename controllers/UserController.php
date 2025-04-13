@@ -193,17 +193,17 @@ class UserController extends Controller
     }
 
 
-   public function addReservation(){
-        $reservation = new Reservation();
-        $reservation->loadData(Application::$app->request->getBody());
+//    public function addReservation(){
+//         $reservation = new Reservation();
+//         $reservation->loadData(Application::$app->request->getBody());
 
-        if ($reservation->save()) {
-            echo json_encode(['success' => true]);
-        } else {
-            error_log('Reservation validation or save failed: ' . json_encode($reservation->errors));
-            echo json_encode(['success' => false, 'errors' => $reservation->errors]);
-        }
-   }
+//         if ($reservation->save()) {
+//             echo json_encode(['success' => true]);
+//         } else {
+//             error_log('Reservation validation or save failed: ' . json_encode($reservation->errors));
+//             echo json_encode(['success' => false, 'errors' => $reservation->errors]);
+//         }
+//    }
 
    public function addStaff(){
         $user = new User();
@@ -246,41 +246,58 @@ class UserController extends Controller
    }
 
 
-// public function addReservation()
-//    {
+   public function addReservation()
+   {
+    //    error_log('Add Reservation method called');
+       $reservation = new Reservation();
+       $reservation->loadData(Application::$app->request->getBody());
+        error_log(print_r($reservation, true));
+        // exit;
 
-//         error_log('Add Reservation method called'); // Debugging statement
-//        $reservation = new Reservation();
-//        $reservation->loadData(Application::$app->request->getBody());
-//        $result = $reservation->selectCustomers();
-//          error_log('Result from selectCustomers: ' . json_encode($result)); // Debugging statement
+       // Validate required fields
+       if (empty($reservation->branch_id) || empty($reservation->reservation_time)) {
+           echo json_encode(['success' => false, 'message' => 'Branch and reservation time are required']);
+           return;
+       }
+   
+       // Fetch seat availability for the specific branch and time
+       $result = $reservation->getSeatAvailability([
+        'branch_id' => $reservation->branch_id,
+        'reservation_time' => $reservation->reservation_time // Ensure this is passed!
+    ]);
 
-//        // Handle query failure or empty result
-//     if (!$result) {
-//         echo json_encode(['success' => false, 'message' => 'Failed to fetch seat data']);
-//         return;
-//     }
+    error_log(print_r($result, true));
+    // exit;
 
-//     $seatData = $result[0] ?? null;
-//     if (!$seatData) {
-//         echo json_encode(['success' => false, 'message' => 'No seat data found']);
-//         return;
-//     }
+   
+       if ($result === false) {
+           echo json_encode(['success' => false, 'message' => 'Failed to fetch seat data']);
+           return;
+       }
+   
+       $seatData = $result[0] ?? null;
+       if (!$seatData) {
+           echo json_encode(['success' => false, 'message' => 'Branch not found']);
+           return;
+       }
+   
+       $availableSeats = $seatData['seats'] - $seatData['reserved_seats'];
 
-//        // Calculate available seats
-//     $availableSeats = $seatData['total_seats'] - $seatData['reserved_seats'];
-
-//        if ($reservation->number_of_guests <= $availableSeats) {
-//            if ($reservation->save()) {
-//                echo json_encode(['success' => true]);
-//            } else {
-//                error_log('Reservation validation or save failed: ' . json_encode($reservation->errors));
-//                echo json_encode(['success' => false, 'errors' => $reservation->errors]);
-//            }
-//        } else {
-//            echo json_encode(['success' => false, 'message' => 'Not enough available seats']);
-//        }
-//    }
+       error_log(print_r($availableSeats, true));
+    //    exit;
+   
+       if ($reservation->number_of_guests <= $availableSeats) {
+           if ($reservation->save()) {
+               echo json_encode(['success' => true]);
+           } else {
+               error_log('Reservation save failed: ' . json_encode($reservation->errors));
+               // Sanitize errors before sending to frontend
+               echo json_encode(['success' => false, 'errors' => $reservation->errors]);
+           }
+       } else {
+           echo json_encode(['success' => false, 'message' => 'Not enough available seats']);
+       }
+   }
 
 
 

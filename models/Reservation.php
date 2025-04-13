@@ -190,22 +190,30 @@ class Reservation extends ReservationModel
     }
 
     public function save()
-    {
-        $tableName = static::tableName();
-        $attributes = $this->attributes();
-        $params = array_map(fn($attr) => ":$attr", $attributes);
+{
+    $tableName = static::tableName();
+    $attributes = $this->attributes();
+    $params = array_map(fn($attr) => ":$attr", $attributes);
 
-        $sql = "INSERT INTO $tableName (" . implode(', ', $attributes) . ") 
-                VALUES (" . implode(', ', $params) . ")";
+    $sql = "INSERT INTO $tableName (" . implode(', ', $attributes) . ") 
+            VALUES (" . implode(', ', $params) . ")";
 
-        $statement = self::prepare($sql);
+    $statement = self::prepare($sql);
 
-        foreach ($attributes as $attribute) {
-            $statement->bindValue(":$attribute", $this->{$attribute});
-        }
-
-        return $statement->execute();
+    foreach ($attributes as $attribute) {
+        $statement->bindValue(":$attribute", $this->{$attribute});
     }
+
+    try {
+        return $statement->execute();
+    } catch (\PDOException $e) {
+        error_log('Database save error: ' . $e->getMessage());
+        $this->addError('database', 'Failed to save reservation. Please try again.');
+        return false;
+    }
+}
+
+
     public function addTable()
     {
         $tableName = static::tableName();
@@ -268,41 +276,42 @@ class Reservation extends ReservationModel
 
     
     
-    public static function selectCustomers($where)
-    {
-        $tableName = static::tableName();
-        $attributes = array_keys($where);
+    public static function getSeatAvailability($where)
+{
+    $tableName = static::tableName();
 
-        // Generate the WHERE clause dynamically if conditions exist
-        $sqlWhere = $attributes ? " WHERE " . implode(" AND ", array_map(fn($attr) => "$tableName.$attr = :$attr", $attributes)) : "";
-
-        // Final SQL with GROUP BY for aggregation
-        $sql = "
-            SELECT 
-                branches.branch_name AS branchName,
-                $tableName.reservation_time,
-                SUM($tableName.number_of_guests) AS total_guests
-            FROM $tableName
-            JOIN branches ON $tableName.branch_id = branches.branch_id
-            $sqlWhere
-            GROUP BY branches.branch_name, $tableName.reservation_time
-            ORDER BY branches.branch_name, $tableName.reservation_time
-        ";
-
-        $statement = self::prepare($sql);
-
-        foreach ($where as $key => $value) {
-            $statement->bindValue(":$key", $value);
-        }
-
-        try {
-            $statement->execute();
-            return $statement->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            echo "Error: " . $e->getMessage();
-            return false;
-        }
+    // Validate required parameters
+    if (!isset($where['branch_id']) || !isset($where['reservation_time'])) {
+        error_log('Missing branch_id or reservation_time in query');
+        return false;
     }
+
+    // Fetch total_seats from branches and sum reservations for the given time
+    $sql = "
+        SELECT 
+            branches.seats,
+            COALESCE(SUM($tableName.number_of_guests), 0) AS reserved_seats
+        FROM branches
+        LEFT JOIN $tableName 
+            ON branches.branch_id = $tableName.branch_id
+            AND $tableName.reservation_time = :reservation_time
+        WHERE branches.branch_id = :branch_id
+        GROUP BY branches.branch_id
+    ";
+
+    $statement = self::prepare($sql);
+    $statement->bindValue(":branch_id", $where['branch_id']);
+    $statement->bindValue(":reservation_time", $where['reservation_time']);
+
+    try {
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    } catch (\PDOException $e) {
+        error_log('Database error in getSeatAvailability: ' . $e->getMessage()); // Log internally
+        return false; // Do not expose errors to the client
+    }
+}
+
 
 
     public function topCustemor()
