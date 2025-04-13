@@ -130,6 +130,9 @@ $app->router->get('/review/data', [$userController, 'getReviewData']);
 $app->router->post('/review/delete', [$userController, 'deleteReviewData']);
 $app->router->post('/review/update', [$userController, 'updateReviewData']);
 
+//define route for manager's branch
+$app->router->get('/manager/branch', [$managerController, 'getManagerBranch']);
+
 //define route for menuItems
 $app->router->post('/menuitem/add', [$managerController, 'addmenuItems']);
 $app->router->get('/menuitem/data', [$managerController, 'getmenuItems']);

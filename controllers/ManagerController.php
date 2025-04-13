@@ -77,6 +77,19 @@ class ManagerController extends Controller
             echo json_encode(['error' => 'No user is logged in']);
         }
     }
+    
+    public function getManagerBranch()
+    {
+        $manager = Application::$app->user;
+
+        if ($manager) {
+            $branchName = $manager->branchName();  
+            echo json_encode(['branchName' => $branchName]);  
+        } else {
+            echo json_encode(['error' => 'Manager not logged in']);
+        }
+    }
+
 
     public function getmenuItemsManager()
     {
@@ -92,6 +105,7 @@ class ManagerController extends Controller
             echo json_encode(['error' => 'No user is logged in']);
         }
     }
+
 
 
     //review deletion
@@ -296,6 +310,4 @@ class ManagerController extends Controller
         }
     }
     
-
-
 }

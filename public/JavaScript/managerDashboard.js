@@ -8,6 +8,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const defaultOption = document.getElementById("update-menu");
   defaultOption.classList.add("selected");
 
+  let branchName='';
+  fetch('/manager/branch')  // URL of the PHP controller
+    .then(response => response.json())  // Parse JSON response
+    .then(data => {
+        if (data.branchName) {
+            branchName = data.branchName;  // Extract branch name from the response
+            console.log("Manager's Branch: " + data.branchName);
+
+            // Display branch name in the HTML element with id "branchDisplay"
+            document.getElementById('branchDisplay').innerHTML = `Branch Name: ${branchName}`;
+        } else {
+            console.log('Error: ' + data.error);
+        }
+    })
+    .catch(error => console.log('Error:', error));
+
   // Render default content
   mainContent.innerHTML = ``;
 
@@ -41,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     <div class="view-branch-menu-section">
                                             <div class="topic-bar">
                                                 <div>
-                                                    <h2 style="margin:0;">Meals</h2>
+                                                    <h2 style="margin:0;">${branchName}</h2>
                                                     <h5 style="margin:0;">${data.length} meals available</h5>
                                                 </div>
 
