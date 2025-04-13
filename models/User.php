@@ -136,6 +136,16 @@ class User extends UserModel
         return $statement->execute();
     }
 
+    public function branchName()
+    {
+        $tableName = static::tableName();
+        $sql = "SELECT branch_name FROM branches WHERE branch_id = :branch_id";
+        $statement = self::prepare($sql);
+        $statement->bindValue(':branch_id', $this->branch_id);
+        $statement->execute();
+        return $statement->fetchColumn();
+    }
+
     public static function findOne($where)
     {
         $tableName = static::tableName();
