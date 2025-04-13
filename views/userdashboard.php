@@ -8,27 +8,168 @@
     <link rel="stylesheet" href="/CSS/customerProfile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <style>
+        /* Table Styles */
+.menu-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  margin-top: 2rem;
+}
+
+.menu-table thead {
+  background-color: #f1f5f9;
+}
+
+.menu-table th {
+  padding: 1.2rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #334155;
+  border-bottom: 2px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.menu-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  color: #475569;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.menu-table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.menu-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.menu-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Staff photo container styling */
+.staff-photo-container {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+}
+
+.staff-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Action Buttons styles */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-btn button {
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.edit-btn {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #2563eb;
+}
+
+.delete-btn {
+  background-color: #ef4444;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #dc2626;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .menu-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 768px) {
+  .action-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .action-btn button {
+    width: 100%;
+  }
+}
+
+
+/* Base styling for all staff-created divs */
+.staff-created {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Position-specific colors */
+/* Manager - Green theme */
+.staff-created[data-position='1'] {
+  background-color: #e6f7ed;
+  color: #0a6c40;
+  border-left: 3px solid #0f9d58;
+}
+
+/* Chef - Orange theme */
+.staff-created[data-position='0'] {
+  background-color: #fff0e6;
+  color: #b35900;
+  border-left: 3px solid #ff9800;
+}
+
+/* Steward - Purple theme */
+.staff-created[data-position="steward"] {
+  background-color: #f0e6ff;
+  color: #6200b3;
+  border-left: 3px solid #9c27b0;
+}
+
+/* Hover effects */
+.staff-created:hover {
+  opacity: 0.9;
+}
+
+    </style>
+
 </head>
 
 <body>
 
-<script>
-
-// Fetch user data from the backend
-fetch('/user/data')
-       .then(response => response.json())
-       .then(data => {
-           if (data.error) {
-               console.error(data.error);
-           } else {
-               // Display user data in the frontend
-               document.getElementById('user-name').textContent = `${data.firstname} ${data.lastname}`;
-               document.getElementById('user-email').textContent = `${data.email}`;
-           }
-       })
-       .catch(error => console.error('Error fetching user data:', error));
-
-</script>
 
     <!-- profile name -->
     <div class="profile-container">
@@ -61,13 +202,13 @@ fetch('/user/data')
                 <h2>Reservation History</h2>
 
                 <div class="order-list-button">
-                    <button>Add Reservation</button>
+                    <button onclick="window.location.href='#topic-head'" >Add Reservation</button>
                 </div>
                 
             </div>
 
 
-            <div class="table-container">
+            <div class="table-container" id="table-container">
 
 
                 <!-- Table Header -->
@@ -270,8 +411,7 @@ fetch('/user/data')
     </div>
     </div>
 
-    <script src="/JavaScript/addReview.js"></script>
-
+    
     <div id="popup" class="popup">
         <div class="popup-content">
             <p id="popup-message"></p>
@@ -281,8 +421,11 @@ fetch('/user/data')
             </div>
         </div>
     </div>
+    
+    <script src="/JavaScript/addReview.js"></script>
+    <script src="/JavaScript/useDashboard.js"></script>
 
-
+    
 </body>
 
 </html>

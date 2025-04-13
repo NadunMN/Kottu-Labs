@@ -172,8 +172,22 @@ class Reservation extends ReservationModel
         $statement->execute();
         return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
 }
-    
-    
+
+    public static function findAllreservation($where)
+{
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+        $sql = "SELECT $tableName.* FROM $tableName";
+        if (!empty($attributes)) {
+            $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes)) . " AND confirmation_status IN (0, 1)";
+        }
+        $statement = self::prepare($sql);
+        foreach ($where as $key => $item) {
+            $statement->bindValue(":$key", $item);
+        }
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
+}
 
     public function toArray(): array
     {

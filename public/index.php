@@ -73,6 +73,7 @@ if (Application::$app->user && Application::$app->user->position == 'admin') {
 }else if(Application::$app->user && Application::$app->user->position == 'customer') {
     $app->router->get('/profile', [$siteController, 'userDashboard']);
     $app->router->get('/myaccount', [$siteController, 'userProfile']);
+    
 }else if(Application::$app->user && Application::$app->user->position == 'chef') {
 
     $app->router->get('/profile', [$siteController, 'chefDashboard']);
@@ -261,6 +262,14 @@ $app->router->get('/dashboard/getRegistration', [$dashboardController, 'getRegis
 $app->router->get('/dashboard/orderCount', [$dashboardController, 'orderCount']);
 $app->router->get('/dashboard/getRegistrationsCount', [$dashboardController, 'getRegistrationsCount']);
 $app->router->get('/dashboard/getTopCustomer', [$dashboardController, 'getTopCustomenrs']);
+
+
+
+// reervation get
+$app->router->get('/getReservationData', function() use ($orderController) {
+    $userId = $_GET['userId'] ?? null;
+    $orderController->getReservation($userId);
+});
 
 // Run the application
 $app->run();

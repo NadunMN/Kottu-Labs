@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const lengthMenu = document.querySelector(".how-many");
     const searchInput = document.getElementById("search");
     const searchButton = document.querySelector(".search-button-menu");
+    let flag = 0;
 
     let userId = null;
 
@@ -28,14 +29,39 @@ document.addEventListener("DOMContentLoaded", function () {
     // Fetch user data from the backend
     fetch('/user/data')
         .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                console.error(data.error);
-            } else {
-                userId = data.id;
-            }
-        })
-        .catch(error => console.error('Error fetching user data:', error));
+    .then(data => {
+        if (data.error) {
+            console.error(data.error);
+        } else {
+            userId = data.id;
+
+            // Fetch reservation data after userId is set
+            fetch(`/getReservationDataOrder?userId=${userId}`)
+            .then(response => response.json())
+            .then(reservationData => {
+                if (reservationData.error) {
+                    console.error(reservationData.error);
+                    return;
+                }
+                
+                if (reservationData.length > 0) {
+                    flag = 1;
+                } else {
+                    flag = 0;
+                    console.log(flag);
+                }
+                
+            })
+            .catch(error => {
+                console.error('Error fetching reservation:', error);
+            });
+        }
+    })
+    .catch(error => console.error('Error fetching user data:', error));
+
+
+
+
 
     function loadMeals(branchId, selectionId, searchTerm = "") {
         menuContainer.innerHTML = "<div class=\"loder-wrapper\"><div class=\"loader\"></div></div>";
@@ -102,11 +128,21 @@ document.addEventListener("DOMContentLoaded", function () {
                             <div class="card-content">
                                 <h2 class="card-title">${meal.meal_name}</h2>
                                 <div class="card-price">Rs. ${meal.meal_price}</div>
-                                <button class="view-button add-to-cart" 
+
+                                ${flag == 1 ? `
+                                    <button class="view-button add-to-cart" 
                                     data-meal-id="${meal.meal_id}">
-                                    <img src="/Photo/icon/shopping-cart.png" alt="">
+                                    <img src="/Photo/icon/shopping-cart.png" alt=""/>
                                     ADD TO CART
-                                </button>
+                                    </button>
+                                ` : `
+                                    <button class="view-button add-to-cart" 
+                                    data-meal-id="${meal.meal_id}" disabled style="background-color: #6c757d; cursor: not-allowed;">
+                                    <img src="/Photo/icon/shopping-cart.png" alt=""/>
+                                    ADD TO CART
+                                    </button>
+                                `}
+                  
                             </div>
                         </div>
                     `).join('');

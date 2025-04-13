@@ -68,6 +68,23 @@ class OrderController extends Controller
         }
     }
 
+    // Method to get cart data
+    public function getReservation($user_id)
+    {
+        if (Application::$app->user) {
+            $reservations = Reservation::findAllreservation(['user_id' => $user_id]);
+            $reservationData = [];
+
+            foreach ($reservations as $reservation) {
+                $reservationData[] = $reservation;
+            }
+
+            echo json_encode($reservationData);
+        } else {
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+
 
     //store order data in order table
     public function addToCart()
