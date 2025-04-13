@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/CSS/managerDashboard.css">
+    <!-- <link rel="stylesheet" href="/CSS/managerDashboard.css"> -->
     <link rel="stylesheet" href="/CSS/admindashboard.css">
+    <link rel="stylesheet" href="/CSS/admin/updateOffer.css">
 
     <style>
         #offer-image {
@@ -58,6 +59,36 @@
             /* Disable resize if desired */
             resize: vertical;
         }
+
+        .add-item-btn {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+.add-item-btn:hover {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.4);
+}
+
+.add-item-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(59, 130, 246, 0.3);
+}
+
+
+
+
+
+
+
     </style>
 </head>
 
@@ -68,10 +99,9 @@
     <div class="view-branch-menu-section" id="main-content">
 
         <div class="update-offers-section">
-            <h2>Update Offers</h2>
 
             <!-- Add New Offer -->
-            <div class="add-new-offer">
+            <div class="add-new-offer hidden">
                 <h3>Add New Offer</h3>
                 <form class="personal-information-form-wrapper" id="update-form" action="">
                     <div class="personal-information-form-information">
@@ -158,7 +188,7 @@
                     <div class="personal-information-form-button">
                         <div>
                             <button id="save" type="submit">Add Offer</button>
-                            <button id="cancel" type="" disabled>Cancel</button>
+                            <button id="cancel" type="submit">Cancel</button>
 
                         </div>
                     </div>
@@ -168,7 +198,6 @@
 
             <!-- Existing Offers -->
             <div class="existing-offers">
-                <h3>Existing Offers</h3>
 
                 <div class="offers-container" id="offers-container">                    
                     

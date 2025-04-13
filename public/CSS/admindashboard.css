@@ -206,6 +206,30 @@
 
 /* form css */
 /* General Form Styling */
+.add-new-offer{
+  position: absolute;
+  width: 650px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.4s ease-out;
+  border-radius: 10px;
+  z-index: 1000;
+}
+
+ /* Hidden state */
+ .add-new-offer.hidden {
+  transform: translateX(-200%); /* Adjust to same as default */
+}
+
+  /* Visible state */
+  .add-new-offer.show {
+    transform: translateX(0%); /* Slide in from left */
+  }
+
+
+
 .personal-information-form-wrapper {
   margin: 0 auto;
   padding: 20px;

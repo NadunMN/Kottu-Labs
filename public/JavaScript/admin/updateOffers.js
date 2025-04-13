@@ -121,14 +121,19 @@ window.addEventListener("load", () => {
                                     <div class="view-branch-menu-section">
                                             <div class="topic-bar">
                                                 <div>
+                                                    <h1 style="margin:0;">Offers</h1>
                                                     <h5 style="margin:0;">${data.length} meals available</h5>
+                                                </div>
+
+                                                <div>
+                                                    <button class="add-item-btn">Add New Item</button>
                                                 </div>
 
                                                 
 
                                             </div>
 
-                                            <div id="add-item-form" class="add-item-form hidden">
+                                            <div id="add-item-form" class="add-item-form hidden" style="display: none;">
     <form id="add-form" action="">
         <h3>Add New Menu Item</h3>
         <div class="form-group-main">
@@ -214,6 +219,7 @@ window.addEventListener("load", () => {
                                                 <thead>
                                                     <tr>
                                                         <th>Offer ID</th>
+                                                        <th>Photo</th>
                                                         <th>Name</th>
                                                         <th>Description</th>
                                                         <th>Price</th>
@@ -262,8 +268,13 @@ window.addEventListener("load", () => {
                                   // Populate row HTML
                                     row.innerHTML = `
                                         <td class="offer-id">${offer.offer_id}</td>
+                                        <td >
+                                          <div class="staff-photo-container" style="width:65px; height:65px; border-radius:50%; overflow:hidden; position:relative;">
+                                          <img src="${offer.offer_photo}" alt="Staff Photo" style="width:100%; height:100%; object-fit:cover;" class="staff-photo">
+                                          </div>
+                                        </td>
                                         <td>${offer.offer_name}</td>
-                                        <td class="description-offer" style= "text-align: left;">${offer.offer_description}</td>
+                                        <td class="description-offer" style= "text-align: left; width:40%;">${offer.offer_description}</td>
                                         <td>Rs.${offer.offer_price}</td>
                                         <td>${
                                             offer.branch_ids == "1" ? "Wattala" 
@@ -291,6 +302,7 @@ window.addEventListener("load", () => {
                                 });
 
                             }
+
 
                             // Add event listeners to delete buttons
       const deleteButtons = document.querySelectorAll(".delete-btn");
@@ -372,6 +384,32 @@ publishButtons.forEach((button) => {
     }
   });
 });
+
+
+
+      // form hide and show 
+      const buttons = document.querySelectorAll(".add-item-btn");
+      const addItemForm = document.querySelector(".add-new-offer");
+      const closeBtn = document.getElementById("cancel");
+      const addForm = document.getElementById("update-form");
+
+      // Open the Popup
+      buttons.forEach((button) => {
+          button.addEventListener("click", () => {
+              addItemForm.classList.remove("hidden");
+              addItemForm.classList.add("show");
+              // resetForm();
+          });
+      });
+
+      // Open the Popup
+      closeBtn.forEach((button) => {
+          button.addEventListener("click", (event) => {
+              addItemForm.classList.remove("show");
+              addItemForm.classList.add("hidden");
+            
+          });
+      });
 
 
 
