@@ -85,6 +85,21 @@ class Payment extends PaymentModel
         }
     }
 
+    public static function findOneOriginal($where)
+    {
+        $tableName = static::tableName();
+        $attribute = array_keys($where);
+        $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attribute));
+        $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
+    
+        foreach ($where as $key => $item) {
+            $statement->bindValue(":$key", $item);
+        }
+
+        $statement->execute();
+        return $statement->fetchObject(static::class);
+    }
+
     public static function findAll($where)
     {
         $tableName = static::tableName();
@@ -95,15 +110,17 @@ class Payment extends PaymentModel
 
         $statement = self::prepare("
             SELECT 
-                $tableName.*, 
-                CONCAT(users.firstname, ' ', users.lastname) AS userName,
-                s.branch_id AS branch_id
+                $tableName.*,
+                SUM($tableName.payment_amount) AS total_payment, 
+                s.branch_id AS branch_id,
+                s.reservation_no
                 
             FROM $tableName
             JOIN orders s ON $tableName.order_id = s.order_id
             JOIN users ON s.user_id = users.id
             JOIN branches ON s.branch_id = branches.branch_id
             $sql
+            GROUP BY s.reservation_no
         ");
 
         foreach ($where as $key => $value) {
@@ -126,7 +143,7 @@ class Payment extends PaymentModel
             'payment_id' => $this->payment_id,
             'payment_date' => $this->payment_date,
             'payment_type' => $this->payment_type,
-            'payment_amount' => $this->payment_id,
+            'payment_amount' => $this->payment_amount,
             'payment_status' => $this->payment_status,
             'order_id' => $this->order_id,    
         ];
@@ -161,31 +178,46 @@ class Payment extends PaymentModel
     }
 
     public function update()
-    {
-        $tableName = static::tableName();
-        $attributes = $this->attributes();
-        $params = array_map(fn($attr) => "$attr = :$attr", $attributes);
-        
-        // Assuming primaryKey() returns a string key name
-        $primaryKey = static::primaryKey();
-        $sql = "UPDATE $tableName SET " . implode(', ', $params) . " WHERE $primaryKey = :$primaryKey";
-        
-        // Ensure prepare method is available and connects to PDO
-        $statement = self::prepare($sql);  // Ensure prepare is implemented correctly
-        
-        // Bind attribute values
-        foreach ($attributes as $attribute) {
-            $statement->bindValue(":$attribute", $this->{$attribute});
-        }
-        $statement->bindValue(":$primaryKey", $this->{$primaryKey});
-    
-        // Execute statement and return result
-        try {
-            return $statement->execute();
-        } catch (\Exception $e) {
-            // Error handling here
-            echo "Update failed: " . $e->getMessage();
-            return false;
-        }
+{
+    $tableName = static::tableName();
+    $primaryKey = static::primaryKey();
+
+    // Step 1: Retrieve the reservation_no for the current payment_id
+    $reservationNoQuery = "
+        SELECT s.reservation_no 
+        FROM $tableName
+        JOIN orders s ON $tableName.order_id = s.order_id
+        WHERE $primaryKey = :$primaryKey
+    ";
+    $reservationStatement = self::prepare($reservationNoQuery);
+    $reservationStatement->bindValue(":$primaryKey", $this->{$primaryKey});
+    $reservationStatement->execute();
+    $reservationNo = $reservationStatement->fetchColumn();
+
+    if (!$reservationNo) {
+        throw new \Exception("Reservation number not found for payment_id: " . $this->{$primaryKey});
     }
+
+    // Step 2: Update payment_status for all payments linked to the reservation_no
+    $updateQuery = "
+        UPDATE $tableName
+        SET payment_status = :payment_status
+        WHERE order_id IN (
+            SELECT order_id 
+            FROM orders 
+            WHERE reservation_no = :reservation_no
+        )
+    ";
+    $updateStatement = self::prepare($updateQuery);
+    $updateStatement->bindValue(":payment_status", $this->payment_status);
+    $updateStatement->bindValue(":reservation_no", $reservationNo);
+
+    try {
+        return $updateStatement->execute();
+    } catch (\Exception $e) {
+        // Log the error
+        error_log("Update failed: " . $e->getMessage());
+        return false;
+    }
+}
 }

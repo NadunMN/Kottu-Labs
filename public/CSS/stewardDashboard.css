@@ -307,8 +307,12 @@ body {
     border-radius: 4px;
     font-weight: 500;
 }
-.status-1 {
+.status-2 {
     color: green;
+}
+
+.status-1 {
+    color: rgb(76, 217, 76);
 }
 
 .status-0 {
