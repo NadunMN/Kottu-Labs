@@ -195,6 +195,8 @@ $app->router->get('/reservation/otp', function() use ($reservationController) {
 });
 
 //reservation Number
+
+$app->router->get('/reservation/stewardData', [$reservationController, 'getReservation']);
 $app->router->post('/reservationNumber', [$authController, 'reservationNumberGenerator']);
 $app->router->post('/reservation/addtable', [$reservationController, 'addtableReservation']);
 

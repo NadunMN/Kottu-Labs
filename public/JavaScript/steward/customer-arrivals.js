@@ -1,6 +1,6 @@
 async function fetchReservations(selectedDate = null, selectedTime = null) {
   try {
-    const response = await fetch("/reservation/data");
+    const response = await fetch("/reservation/stewardData");
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
@@ -42,7 +42,7 @@ async function fetchReservations(selectedDate = null, selectedTime = null) {
     // Filter reservations for the selected date and branch
     const filteredData = data.filter(reservation => {
       const reservationDate = new Date(reservation.reservation_date).toISOString().slice(0, 10);
-      return reservationDate === currentDate && reservation.branch_id === branch_id;
+      return reservationDate === currentDate;
     });
 
     // Count pending reservations

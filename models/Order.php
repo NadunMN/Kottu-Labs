@@ -134,6 +134,33 @@ class Order extends OrderModel
         }
     }
 
+    public static function findOrdersByBranch($branch_id){
+        $tableName = static::tableName();
+        $statement = self::prepare("
+            SELECT 
+                $tableName.*,
+                om.quantity,
+                meals.meal_description AS mealName,
+                r.table_number,
+                r.type
+            FROM $tableName
+            JOIN order_meals om ON $tableName.order_id = om.order_id
+            JOIN meals ON om.meal_id = meals.meal_id
+            JOIN reservations r ON $tableName.reservation_no = r.reservation_no
+            JOIN branches ON $tableName.branch_id = branches.branch_id
+            WHERE branches.branch_id = :branch_id
+        ");
+
+        $statement->bindValue(":branch_id", $branch_id);
+
+        try {
+            $statement->execute();
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }        
+    }
 
     public static function findAllProfit($where)
     {
@@ -298,5 +325,7 @@ class Order extends OrderModel
             return false;
         }
     }
+
+    
 
 }
