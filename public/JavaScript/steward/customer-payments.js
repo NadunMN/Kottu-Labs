@@ -9,7 +9,8 @@ async function fetchPayments(selectedDate = null, selectedTime = null) {
       let data;
       try {
           data = JSON.parse(text);
-      } catch (e) {
+      } 
+      catch (e) {
           console.error("Response is not valid JSON:", text);
           document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
           return;
@@ -93,17 +94,25 @@ async function fetchPayments(selectedDate = null, selectedTime = null) {
         console.error("Table content element not found.");
         return;
       }
-  
-      // Sort payments: pending first, then confirmed, sorted by time
+      
       filteredData.sort((a, b) => {
-        if (a.payment_status !== 1 && b.payment_status === 1) return -1;
-        if (a.payment_status === 1 && b.payment_status !== 1) return 1;
-        
-        //time eka add karala sort karanna ona
-        // If both have the same status, sort by time
-        // return a.payment_time.localeCompare(b.payment_time);
+        // Move all payments with status = 2 to the bottom
+        if (a.payment_status === 2 && b.payment_status !== 2) return 1;
+        if (b.payment_status === 2 && a.payment_status !== 2) return -1;
 
-      });
+        // If status is 1, it should be below status 0 but above status 2
+        if (a.payment_status === 1 && b.payment_status === 0) return 1;
+        if (b.payment_status === 1 && a.payment_status === 0) return -1;
+    
+        // If status is 0, prioritize by type: cash > card > none
+        if (a.payment_status === 0 && b.payment_status === 0) {
+            const typePriority = { cash: 1, card: 2, none: 3 };
+            return typePriority[a.payment_type] - typePriority[b.payment_type];
+        }
+    
+        // Default case: maintain original order
+        return 0;
+    });
   
       // Populate the table with filtered payment data
       filteredData.forEach((payment) => {
@@ -113,16 +122,52 @@ async function fetchPayments(selectedDate = null, selectedTime = null) {
           <td class="payment-id">${payment.payment_id}</td>
           <td>${payment.payment_date}</td>
           <td>${payment.payment_type === 'cash' ? 'Cash' : 'Card'}</td>
-          <td>${payment.payment_amount}</td>
+          <td>${payment.total_payment}</td>
           <td class="status">
               <span class="status-${payment.payment_status}">
-                  ${payment.payment_status === 1 ? "Done" : 'Pending'}
+                  ${payment.payment_status === 2 ? "Done" : payment.payment_status === 0 ? 'Pending' : 'Collecting'}
               </span>
+              ${
+                  payment.payment_type === 'cash' && payment.payment_status === 0
+                  ? `<button class="confirm-btn" payment-status-id="${payment.payment_id}" next-status="1">Confirm</button>`
+                  : payment.payment_type === 'cash' && payment.payment_status === 1
+                  ? `<button class="confirm-btn" payment-status-id="${payment.payment_id}" next-status="2">Confirm</button>`
+                  : ""
+                }
           </td>
         `;
         tableContent.appendChild(row);
       });
-  
+    
+      // Add event listeners to confirm buttons
+      document.querySelectorAll(".confirm-btn").forEach(button => {
+        button.addEventListener("click", async (event) => {
+            const paymentId = event.target.getAttribute("payment-status-id");
+            const nextStatus = parseInt(event.target.getAttribute("next-status"), 10);
+    
+            try {
+                const response = await fetch(`/payment/confirm`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        payment_id: paymentId,
+                        payment_status: nextStatus
+                    })
+                });
+    
+                if (response.ok) {
+                    fetchPayments(); // Refresh the payments list
+                } else {
+                    console.error("Failed to update status");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        });
+    });
+
       // Remove existing event listeners to avoid duplication
       const dateFilter = document.getElementById("date-filter");
       const currentDateButton = document.getElementById("current-date-button");

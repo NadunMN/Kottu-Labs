@@ -15,7 +15,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
             document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
             return;
         }
-
+        
         if (!Array.isArray(data)) {
             console.error("Data is not an array");
             document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
@@ -90,9 +90,10 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
 
         // Sort reservations: pending first, then confirmed, sorted by time
         todayOrders.sort((a, b) => {
-            // Prioritize pending reservations over confirmed ones
-            if (a.order_status !== 1 && b.order_status === 1) return -1;
-            if (a.order_status === 1 && b.order_status !== 1) return 1;
+            // Prioritize pending reservations over ready ones
+            if (a.order_status !== b.order_status) {
+                return a.order_status === 1 ? -1 : b.order_status === 1 ? 1 : a.order_status - b.order_status;
+            }
     
             // If both have the same status, sort by time
             return a.order_time.localeCompare(b.order_time);
@@ -133,6 +134,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                         },
                         body: JSON.stringify({order_id: orderId, order_status: 2 }) // Update status to 'Completed'
                     });
+                    console.log("Response:", response);
 
                     if (response.ok) {
                         alert("Order status updated to Completed!");

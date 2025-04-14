@@ -207,6 +207,7 @@ $app->router->get('/offer/getpublished', [$offerController, 'getAllPublishedOffe
 
 // order data
 $app->router->get('/order/data', [$orderController, 'getOrderData']);
+$app->router->post('/order/confirm', [$orderController, 'updateOrderStatus']);
 
 
 
@@ -256,6 +257,7 @@ $app->router->post('/staff/delete', [$userController, 'deleteStaff']);
 
 //get payment data
 $app->router->get('/payment/data', [$paymentController, 'getPaymentData']);
+$app->router->post('/payment/confirm', [$paymentController, 'updatePaymentStatus']);
 
 
 
@@ -276,4 +278,3 @@ $app->router->get('/getReservationData', function() use ($orderController) {
 
 // Run the application
 $app->run();
-
