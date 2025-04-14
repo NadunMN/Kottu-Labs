@@ -47,8 +47,8 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
 
         const branchName = branch_id === 1 ? 'Wattala' : branch_id === 2 ? 'Kelaniya' : 'Kotahena';
         const currentDate = selectedDate || new Date().toISOString().split('T')[0];
-        const todayOrders = data.filter(order => order.order_date === currentDate && order.branch_id === branch_id);
-        const readyOrders = todayOrders.filter(order => order.order_status !== 0).length;
+        const todayOrders = data.filter(order => order.order_date === currentDate);
+        const readyOrders = todayOrders.filter(order => order.order_status == 1).length;
 
         // Render order content
         orderContent.innerHTML = `
@@ -114,7 +114,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                 <td>${order.type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
                 <td class="status">
                     <span class="status-${order.order_status}">
-                        ${order.order_status === 1 ? "Ready" : order.order_status === 2 ? "Completed" :  "Processing"}
+                        ${order.order_status == 1 ? "Ready" : order.order_status == 2 ? "Completed" :  "Processing"}
                     </span>
                     ${order.order_status === 1 ? `<button class="confirm-btn" data-order-id="${order.order_id}">Confirm</button>` : ""}
                 </td>

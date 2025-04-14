@@ -12,6 +12,30 @@ use app\models\Reservation;
 
 class ReservationController extends Controller
 {
+    public function getReservation()
+    {
+        if (Application::$app->user) {
+            try {
+                $branch_id = Application::$app->user->branch_id;
+
+                if (!$branch_id) {
+                throw new \Exception("Branch ID is missing for the logged-in user.");
+            }
+
+                $reservations = Reservation::findAllByBranch($branch_id);
+                echo json_encode($reservations);
+            } catch (\Exception $e) {
+                // Log the error and return a proper JSON response
+                error_log("Error fetching reservation data: " . $e->getMessage());
+                http_response_code(500); // Set HTTP status code to 500
+                echo json_encode(['error' => 'Failed to fetch reservation data', 'details' => $e->getMessage()]);
+            }
+        } else {
+            http_response_code(401); // Set HTTP status code to 401 (Unauthorized)
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+
    //get reservation number
    public function getReservationNumber($pin)
    {

@@ -157,6 +157,28 @@ class Reservation extends ReservationModel
         }
     }
 
+    public static function findAllByBranch($branch_id)
+    {
+        $tableName = static::tableName();
+        $statement = self::prepare("
+            SELECT 
+                $tableName.*
+            FROM $tableName
+            JOIN branches ON $tableName.branch_id = branches.branch_id
+            WHERE branches.branch_id = :branch_id
+        ");
+
+        $statement->bindValue(":branch_id", $branch_id);
+
+        try {
+            $statement->execute();
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
     public static function findAllreservationOrder($where)
 {
         $tableName = static::tableName();
