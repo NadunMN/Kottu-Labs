@@ -230,7 +230,7 @@ const style = document.createElement('style');
 style.textContent = `
  .toast-container {
   position: fixed;
-  top: 20px;
+  top: 75px;
   right: 20px;
   z-index: 9999;
   display: flex;

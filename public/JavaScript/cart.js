@@ -374,8 +374,18 @@ function updateQuantity(id, change) {
 }
 
 // Remove item with server sync
-function removeItem(id) {
-    if (!confirm('Are you sure you want to remove this item?')) return;
+async function removeItem(id) {
+
+    const result = await showConfirmation(
+        "Delete Item",
+        "Are you sure you want to delete this item? This action cannot be undone."
+        );
+
+
+    if (!result) {
+        showToast('Item not removed', { type: 'warning' });
+        return;
+    }
 
     fetch('/removeFromCart', {
         method: 'POST',
@@ -392,6 +402,7 @@ function removeItem(id) {
         if (index !== -1) {
             cartItems.splice(index, 1);
             renderCartItems();
+            showToast('Item removed successfully!', { type: 'success' });
             updateSubtotal();
         }
     })
@@ -540,7 +551,7 @@ const style = document.createElement('style');
 style.textContent = `
  .toast-container {
   position: fixed;
-  top: 20px;
+  top: 75px;
   right: 20px;
   z-index: 9999;
   display: flex;
