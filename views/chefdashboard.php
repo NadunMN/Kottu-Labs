@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="/CSS/managerDashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         /* Ensure the iframe fits the container */
 iframe {
@@ -44,8 +46,8 @@ iframe {
             <ul>
                 <?php
                     $menuItems = [
-                        ['id' => 'viewOrder', 'icon' => '/Photo/icon/dashboard.png', 'text' => 'View Order'],
-                        ['id' => 'updatemenu', 'icon' => '/Photo/icon/burger-bar.png', 'text' => 'Update Menu'],
+                        ['id' => 'viewOrder', 'icon' => '/Photo/icon/orderview.png', 'text' => 'View Order'],
+                        ['id' => 'updatemenu', 'icon' => '/Photo/icon/menu.png', 'text' => 'Update Menu'],
                     ];
                     foreach ($menuItems as $item) {
                         echo "<li id='{$item['id']}' class='menu-item'>

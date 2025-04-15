@@ -1,99 +1,215 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // Sample data array
-    const orderStatusData = [
-        { orderId: "097", name: "Thirani Imanya", order: "Prawns Dolphin Kottu", tableNo: "04", status: "Ready" },
-        { orderId: "101", name: "Nadun Madushabka", order: "Sea Food Kottu", tableNo: "02", status: "Ready" },
-        { orderId: "097", name: "Amal Perera", order: "Chicken Cheese Kottu", tableNo: "04", status: "Processing" },
-        { orderId: "102", name: "Abdul Raheem", order: "Mutton String Hopper Kottu", tableNo: "03", status: "Processing" },
-        { orderId: "102", name: "Kevin Silva", order: "Redbull", tableNo: "03", status: "Processing" }
-    ];
-  
-    const mainContent = document.getElementById("main-content");
-  
-    // Render order status content
-    function renderOrderStatus() {
-        mainContent.innerHTML = `
-            <div class="view-users-section">
-                <h2>Order Status</h2>
-                <div class="filter-section">
-                    <input type="text" id="tableFilter" placeholder="Filter by Table No...">
-                    <button onclick="filterOrders()">Filter</button>
-                    <button onclick="resetFilter()">Reset</button>
-                </div>
-                <table>
+async function fetchOrders(selectedDate = null, selectedTime = null) {
+    try {
+        // Fetch order data
+        const response = await fetch("/order/data");
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+
+        const text = await response.text();
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (e) {
+            console.error("Response is not valid JSON:", text);
+            document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
+            return;
+        }
+        
+        if (!Array.isArray(data)) {
+            console.error("Data is not an array");
+            document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
+            return;
+        }
+
+        const orderContent = document.getElementById("main-content");
+        if (!data || data.length === 0) {
+            orderContent.innerHTML = `<div class="no-offers-container" 
+                                style="text-align: center; 
+                                        display: flex; 
+                                        flex-direction: column; 
+                                        align-items: center; 
+                                        justify-content: center; 
+                                        width: 100%;
+                                        height: 85vh;
+                                        border-radius: 10px; 
+                                        ">
+                                <i class="fa-solid fa-utensils" 
+                                style="font-size: 3rem; 
+                                        color: #6c757d; 
+                                        margin-bottom: 1rem;"></i>
+                                <h3 style="font-size: 1.5rem; 
+                                        color: #343a40; 
+                                        margin-bottom: 0.5rem; 
+                                        font-weight: 600;">
+                                    No Orders Found!
+                                </h3>
+                                <p style="color: #6c757d; 
+                                        font-size: 1rem; 
+                                        max-width: 400px; 
+                                        line-height: 1.5;">
+                                    We'll notify you when new orders arrive!
+                                </p>
+                            </div>`;
+            return;
+        }
+
+        // Fetch user branch ID before rendering
+        let branch_id = null;
+        try {
+            const userResponse = await fetch('/user/data');
+            if (!userResponse.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const userData = await userResponse.json();
+            if (userData.error) {
+                console.error(userData.error);
+            } else {
+                branch_id = userData.branch_id;
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+
+        const branchName = branch_id === 1 ? 'Wattala' : branch_id === 2 ? 'Kelaniya' : 'Kotahena';
+        const currentDate = selectedDate || new Date().toISOString().split('T')[0];
+        const todayOrders = data.filter(order => order.order_date === currentDate);
+        const readyOrders = todayOrders.filter(order => order.order_status == 1).length;
+
+        // Render order content
+        orderContent.innerHTML = `
+            <div class="main-section">
+                <div class="topic-bar">
+                    <div class="topic-bar-text">
+                        <h2>Order Status - ${branchName} </h2>
+                        <span>${currentDate}</span>
+                        <h4>Available orders - ${todayOrders.length} &emsp; Ready orders - ${readyOrders}</h4>
+                    </div>
+                    <div class="filter-section">
+                        <input type="text" id="tableFilter" placeholder="Filter by Table No...">
+                        <button onclick="filterOrders()">Filter</button>
+                        <button onclick="resetFilter()">Reset</button>
+                    </div>
+                </div> 
+                
+                <table class="menu-table" id="menu-table">
                     <thead>
                         <tr>
-                            <th>Order ID</th>
-                            <th>Name</th>
-                            <th>Order</th>
-                            <th>Table No.</th>
+                            <th>Order Id</th>
+                            <th>Meal Name</th>
+                            <th>Quantity</th>
+                            <th>Table No</th>
+                            <th>Type</th>
                             <th>Status</th>
-                            <th></th>
                         </tr>
                     </thead>
-                    <tbody id="order-status-body">
-                    </tbody>
+                    <tbody id="table-content"></tbody>
                 </table>
-            </div>`;
-  
-        populateOrderTable();
-    }
-  
-    // Populate order status table
-    function populateOrderTable() {
-        const orderStatusBody = document.getElementById("order-status-body");
-        orderStatusBody.innerHTML = ''; // Clear existing content
-  
-        orderStatusData.forEach(order => {
+            </div>
+        `;
+
+        const tableContent = document.getElementById("table-content");
+        if (!tableContent) {
+            console.error("Table content element not found.");
+            return;
+        }
+
+        // Sort reservations: pending first, then confirmed, sorted by time
+        todayOrders.sort((a, b) => {
+            // Prioritize pending reservations over ready ones
+            if (a.order_status !== b.order_status) {
+                return a.order_status === 1 ? -1 : b.order_status === 1 ? 1 : a.order_status - b.order_status;
+            }
+    
+            // If both have the same status, sort by time
+            return a.order_time.localeCompare(b.order_time);
+        });
+
+        // Clear existing rows before appending new ones
+        tableContent.innerHTML = "";
+        // Populate table with today's order data
+        todayOrders.forEach((order) => {
             const row = document.createElement("tr");
-            const statusColor = order.status === "Ready" ? "green" : "red";
+            row.classList.add("order-item"); // Add class for filtering
+            row.setAttribute("data-table-number", order.table_number); // Use data attribute for filtering
             row.innerHTML = `
-                <td>${order.orderId}</td>
-                <td>${order.name}</td>
-                <td>${order.order}</td>
-                <td>${order.tableNo}</td>
-                <td style="color: ${statusColor};">${order.status}</td>
-                <td>
-                    ${order.status === "Ready" ? '<button class="done-btn">Done</button>' : ''}
+                <td class="order-id">${order.order_id}</td>
+                <td>${order.mealName}</td>
+                <td>${order.quantity}</td>
+                <td>${order.type === 'dinein' ? order.table_number : 'Null'}</td>
+                <td>${order.type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
+                <td class="status">
+                    <span class="status-${order.order_status}">
+                        ${order.order_status == 1 ? "Ready" : order.order_status == 2 ? "Completed" :  "Processing"}
+                    </span>
+                    ${order.order_status === 1 ? `<button class="confirm-btn" data-order-id="${order.order_id}">Confirm</button>` : ""}
                 </td>
             `;
-            orderStatusBody.appendChild(row);
+            tableContent.appendChild(row);
         });
+
+        // Add event listener for confirm buttons
+        document.querySelectorAll(".confirm-btn").forEach(button => {
+            button.addEventListener("click", async (event) => {
+                const orderId = event.target.getAttribute("data-order-id");
+                try {
+                    const response = await fetch(`/order/confirm`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({order_id: orderId, order_status: 2 }) // Update status to 'Completed'
+                    });
+                    console.log("Response:", response);
+
+                    if (response.ok) {
+                        alert("Order status updated to Completed!");
+                        fetchOrders(); // Refresh the orders
+                    } else {
+                        console.error("Failed to update order status");
+                        alert("Error updating order status. Please try again.");
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("Error updating order status. Please try again.");
+                }
+            });
+        });
+
+    } catch (error) {
+        console.error("Fetch error:", error);
+        document.getElementById("main-content").innerHTML = "<p>Error loading reservations.</p>";
     }
-  
-    // Filter orders by table number
-    window.filterOrders = function() {
-        const filterValue = document.getElementById("tableFilter").value;
-        const filteredOrders = orderStatusData.filter(order => 
-            order.tableNo.includes(filterValue)
-        );
-        
-        const orderStatusBody = document.getElementById("order-status-body");
-        orderStatusBody.innerHTML = '';
-        
-        filteredOrders.forEach(order => {
-            const row = document.createElement("tr");
-            const statusColor = order.status === "Ready" ? "green" : "red";
-            row.innerHTML = `
-                <td>${order.orderId}</td>
-                <td>${order.name}</td>
-                <td>${order.order}</td>
-                <td>${order.tableNo}</td>
-                <td style="color: ${statusColor};">${order.status}</td>
-                <td>
-                    ${order.status === "Ready" ? '<button class="done-btn">Done</button>' : ''}
-                </td>
-            `;
-            orderStatusBody.appendChild(row);
-        });
-    };
-  
-    // Reset filter
-    window.resetFilter = function() {
-        document.getElementById("tableFilter").value = '';
-        populateOrderTable();
-    };
-  
-    // Initial render
-    renderOrderStatus();
-  });
+}
+
+function filterOrders() {
+    const input = document.getElementById("tableFilter").value.trim();
+    const orders = document.querySelectorAll(".order-item");
+    
+    orders.forEach(order => {
+        const tableNo = order.getAttribute("data-table-number"); // Use data attribute
+        if (tableNo && tableNo.includes(input)) {
+            order.style.display = "";
+        } else {
+            order.style.display = "none";
+        }
+    });
+}
+
+function resetFilter() {
+    document.getElementById("tableFilter").value = "";
+    const orders = document.querySelectorAll(".order-item");
+    orders.forEach(order => {
+        order.style.display = "";
+    });
+}
+
+
+
+
+// Refresh orders every minute
+setInterval(() => {
+    fetchOrders();
+}, 60000);
+
+fetchOrders();
