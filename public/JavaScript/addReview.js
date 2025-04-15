@@ -167,7 +167,7 @@ function fetchReviews() {
                       justify-content: center; 
                       padding: 2rem; 
                       width: 100%;
-                      height: 100px;
+                      height: 250px;
                       border-radius: 10px; 
                       margin: 20px;">
 
