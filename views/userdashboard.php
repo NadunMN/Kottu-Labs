@@ -132,7 +132,7 @@
   justify-content: flex-start;
   border-radius: 5px;
   padding: 5px 10px;
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 500;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
@@ -153,7 +153,7 @@
 }
 
 /* Steward - Purple theme */
-.staff-created[data-position="steward"] {
+.staff-created[data-position="2"] {
   background-color: #f0e6ff;
   color: #6200b3;
   border-left: 3px solid #9c27b0;
@@ -162,6 +162,137 @@
 /* Hover effects */
 .staff-created:hover {
   opacity: 0.9;
+}
+
+
+
+
+/* Confirmation Dialog - Updated Styling */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centers the element */
+    z-index: 1000; /* Ensures it appears above other elements */
+    width: 100%; /* Optional: Adjust width if needed */
+    height: 100%; /* Optional: Adjust height if needed */
+    backdrop-filter: blur(5px); /* Adds a blur effect to the background */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    animation: popup-fade-in 0.3s ease-in-out; /* Animation for fade-in effect */
+    overflow: hidden; /* Prevents scrolling when popup is open */
+    
+}
+
+
+/* Popup content box */
+.popup-content {
+  background-color: white;
+  padding: 2.5rem 2rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  animation: popup-fade-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+}
+
+/* Icon container */
+.popup-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: rgba(255, 59, 78, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 1.5rem;
+}
+
+/* Icon styling */
+.popup-icon svg {
+  width: 28px;
+  height: 28px;
+  color: #FF3B4E;
+}
+
+/* Popup message text */
+#popup-message {
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  color: #333;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* Description text */
+.popup-description {
+  margin-bottom: 2rem;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* Buttons container */
+.popup-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* Button styling */
+.popup-buttons button {
+  padding: 0.85rem 1.75rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+}
+
+/* Delete button */
+#popup-delete {
+  background-color: #FF3B4E;
+  color: white;
+}
+
+#popup-delete:hover {
+  background-color: #e6354a;
+  box-shadow: 0 4px 12px rgba(255, 59, 78, 0.25);
+}
+
+/* Cancel button */
+#popup-cancel {
+  background-color: #f2f2f2;
+  color: #444;
+}
+
+#popup-cancel:hover {
+  background-color: #e8e8e8;
+}
+
+/* Accessibility focus styles */
+.popup-buttons button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 153, 252, 0.5);
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 480px) {
+  .popup-content {
+    padding: 2rem 1.5rem 1.5rem;
+  }
+  
+  .popup-buttons {
+    flex-direction: column;
+  }
+  
+  .popup-buttons button {
+    width: 100%;
+  }
 }
 
     </style>
@@ -175,7 +306,9 @@
     <div class="profile-container">
         <div class="profile-header">
             <div class="account-info">
-                <div class="profile-avatar">NM</div>
+                <div class="profile-avatar">
+                    <img src="/Photo/OE612P0.jpg" alt="User Avatar" class="avatar">
+                </div>
                 <div class="profile-details">
                     <h1 id= "user-name" class="profile-name">John Doe</h1>
                     <p id="user-email" class="profile-email">john.doe@example.com</p>
@@ -183,10 +316,7 @@
                 </div>
             </div>
             <button class="edit-profile-btn">
-                <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                </svg>
+                
                 Edit Profile
             </button>
         </div>
@@ -412,13 +542,21 @@
     </div>
 
     
-    <div id="popup" class="popup">
-        <div class="popup-content">
-            <p id="popup-message"></p>
-            <div class="popup-buttons">
-                <button id="popup-confirm">Yes</button>
-                <button id="popup-cancel">No</button>
-            </div>
+    <div id="popup" class="popup-overlay">
+    <div class="popup-content">
+        <div class="popup-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+            </svg>
+        </div>
+        <p id="popup-message">Are you sure?</p>
+        <div class="popup-buttons">
+            <button id="popup-cancel">Cancel</button>
+            <button id="popup-confirm" id="popup-delete">Delete</button>
+        </div>
         </div>
     </div>
     

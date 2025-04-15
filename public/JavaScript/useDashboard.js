@@ -32,7 +32,7 @@ fetch('/user/data')
                                         justify-content: center; 
                                         padding: 2rem; 
                                         width: 100%;
-                                        height: 100px;
+                                        height: 250px;
                                         border-radius: 10px; 
                                         margin: 20px;">
 
@@ -97,7 +97,15 @@ fetch('/user/data')
               
                       // Populate row HTML
                       row.innerHTML = `
-                                                      <td class="meal-id" >${reservation.confirmation_number}</td>
+                                                    <td class="meal-id" >
+                                                    <div class="staff-created" data-position="2">
+                                                            ${reservation.confirmation_number}
+                                                    </div>
+                                                    </td>
+
+                                                    
+
+
                                                       <td>${reservation.reservation_name}</td>
                                                       <td>${reservation.reservation_date}</td>
                                                       <td>${reservation.reservation_time}</td>
