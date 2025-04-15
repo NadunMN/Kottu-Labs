@@ -51,7 +51,7 @@ async function fetchPayments(selectedDate = null, selectedTime = null) {
       // Filter payments for the selected date and branch
       const filteredData = data.filter(payment => {
         const paymentDate = new Date(payment.payment_date).toISOString().slice(0, 10);
-        return paymentDate === currentDate && payment.branch_id === branch_id;
+        return paymentDate === currentDate;
       });
   
       // Count pending payments
