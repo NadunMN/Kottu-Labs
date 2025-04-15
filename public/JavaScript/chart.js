@@ -23,8 +23,8 @@ fetch("/dashboard/getRegistration")
         datasets: [{
           label: `Registrations (${currentYear})`,
           data: monthlyUserCounts,
-          backgroundColor: '#EE3E3F',
-          borderColor: '#EE3E3F',
+          backgroundColor: '#4287f5',
+          borderColor: '#4287f5',
           borderWidth: 0,
           borderRadius: 6,
           barPercentage: 0.7,
@@ -104,8 +104,8 @@ fetch("/dashboard/orderCount")
           {
             label: 'Wattala',
             data: result["Wattala"],
-            backgroundColor: '#EE3E3F',
-            borderColor: '#EE3E3F',
+            backgroundColor: '#4287f5',
+            borderColor: '#4287f5',
             fill: true,
             tension: 0.4,
             pointRadius: 0,
@@ -115,8 +115,8 @@ fetch("/dashboard/orderCount")
           {
             label: 'Kelaniya',
             data: result["Kelaniya"],
-            backgroundColor: 'rgb(0, 0, 0)',
-            borderColor: 'rgb(0, 0, 0)',
+            backgroundColor: '#28a745',
+            borderColor: '#28a745',
             fill: true,
             tension: 0.4,
             pointRadius: 0,
@@ -126,8 +126,8 @@ fetch("/dashboard/orderCount")
           {
             label: 'Kotahena',
             data: result["Kotahena"],
-            backgroundColor: '#F4C430',
-            borderColor: '#F4C430',
+            backgroundColor: '#6c757d',
+            borderColor: '#6c757d',
             fill: true,
             tension: 0.4,
             pointRadius: 0,
@@ -151,18 +151,39 @@ fetch("/dashboard/orderCount")
           tooltip: {
             mode: 'index',
             intersect: false,
-            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-            titleColor: '#333',
-            bodyColor: '#666',
-            borderColor: '#ddd',
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            titleColor: '#111',
+            titleFont: {
+              size: 14,
+              weight: 'bold',
+              family: 'Arial'
+            },
+            bodyColor: '#333',
+            bodyFont: {
+              size: 13,
+              family: 'Arial'
+            },
+            borderColor: '#ccc',
             borderWidth: 1,
-            padding: 10,
+            padding: 12,
+            cornerRadius: 8,
+            displayColors: false, // hides the small color box
+            boxPadding: 6,
+            caretPadding: 8,
+            caretSize: 6,
+            shadowOffsetX: 1,
+            shadowOffsetY: 2,
+            shadowBlur: 4,
+            shadowColor: 'rgba(0, 0, 0, 0.15)',
             callbacks: {
               label: function (context) {
-                return `${context.dataset.label}: ${context.raw}`;
+                // Format number with commas and optional units
+                const value = context.raw.toLocaleString();
+                return `${context.dataset.label}: ${value}`;
               }
             }
           }
+          
         },
         scales: {
           x: {

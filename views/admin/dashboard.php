@@ -9,9 +9,9 @@
     
     <style>
         :root {
-            --primary-color: #4361ee;
-            --secondary-color: #3a0ca3;
-            --accent-color: #7209b7;
+            --primary-color: #4287f5;
+            --secondary-color: #28a745;
+            --accent-color: #6c757d;
             --success-color: #4cc9f0;
             --danger-color: #f72585;
             --text-dark: #2b2d42;
@@ -99,15 +99,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-left: 4px solid #EE3E3F;
+            border-left: 4px solid #4287f5;
         }
 
         .stat-card:nth-child(2) {
-            border-left: 4px solid black;
+            border-left: 4px solid #28a745;
         }
 
         .stat-card:nth-child(3) {
-            border-left: 4px solid #F4C430;
+            border-left: 4px solid #6c757d;
         }
 
         .stat-card h3 {
@@ -126,15 +126,15 @@
         .stat-card .value {
             font-size: 24px;
             font-weight: bold;
-            color: #EE3E3F;
+            color: #4287f5;
         }
 
         .stat-card:nth-child(2) .value {
-            color: black;
+            color: #28a745;
         }
 
         .stat-card:nth-child(3) .value {
-            color: #F4C430;
+            color: #6c757d;
         }
 
         .stat-card .icon-container {
@@ -144,15 +144,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: rgba(67, 97, 238, 0.1);
+            background-color: rgba(66, 135, 245, 0.1);
         }
 
         .stat-card:nth-child(2) .icon-container {
-            background-color: rgba(58, 12, 163, 0.1);
+            background-color: rgba(40, 167, 69, 0.1);
         }
 
         .stat-card:nth-child(3) .icon-container {
-            background-color: rgba(114, 9, 183, 0.1);
+            background-color: rgba(108, 117, 125, 0.1);
         }
 
         .card-container {
@@ -224,8 +224,8 @@
         }
 
         th {
-            background-color:rgba(238, 62, 62, 0.08);
-            color:#EE3E3F;
+            background-color: rgba(66, 135, 245, 0.08);
+            color: #4287f5;
             font-weight: 600;
             text-transform: uppercase;
             font-size: 14px;
@@ -281,7 +281,7 @@
         .activity-content .value {
             font-size: 22px;
             font-weight: bold;
-            color: #EE3E3F;
+            color: #4287f5;
         }
 
         .section-title {
@@ -300,7 +300,7 @@
             bottom: 0;
             width: 50px;
             height: 3px;
-            background-color: #ee3e3f;
+            background-color: #4287f5;
         }
 
         @media (max-width: 1200px) {
