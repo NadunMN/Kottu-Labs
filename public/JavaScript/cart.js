@@ -426,6 +426,7 @@ document.getElementById('clearCartBtn').addEventListener('click', async () => {
             cartItems.length = 0;
             renderCartItems();
             updateSubtotal();
+            showToast('Cart cleared successfully!', { type: 'success' });
         })
         .catch(error => console.error('Clear error:', error));
     }
