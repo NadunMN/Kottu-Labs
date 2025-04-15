@@ -20,7 +20,13 @@ class PaymentController extends Controller
         if (Application::$app->user) {
             try 
             {
-                $payments = Payment::findAll([]);
+                $branch_id = Application::$app->user->branch_id;
+
+                if (!$branch_id) {
+                    throw new \Exception("Branch ID is missing for the logged-in user.");
+                }
+                
+                $payments = Payment::findPaymentsByBranch($branch_id);
                 echo json_encode($payments);
             }
             catch (\Exception $e) 

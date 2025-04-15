@@ -137,6 +137,32 @@ class Payment extends PaymentModel
         }
     }
 
+    public static function findPaymentsByBranch($branch_id){
+        $tableName = static::tableName();
+        $statement = self::prepare("
+            SELECT 
+                $tableName.*,
+                SUM($tableName.payment_amount) AS total_payment,
+                r.table_number
+            FROM $tableName
+            JOIN orders o ON $tableName.order_id = o.order_id
+            JOIN reservations r ON o.reservation_no = r.reservation_no
+            JOIN branches ON o.branch_id = branches.branch_id
+            WHERE branches.branch_id = :branch_id
+            GROUP BY o.reservation_no
+        ");
+
+        $statement->bindValue(":branch_id", $branch_id);
+
+        try {
+            $statement->execute();
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }        
+    }
+
     public function toArray(): array
     {
         return [
