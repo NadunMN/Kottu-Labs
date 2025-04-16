@@ -1,63 +1,68 @@
-/* Branch Selection Styles */
-.branch-container {
-    display: flex;
-    flex-direction: column; /* Stack branches vertically */
-    align-items: center; /* Center items horizontally */
-    gap: 20px; /* Add spacing between branches */
-    margin: 20px auto;
-    padding: 10px;
-}
-
-.select-branch-header{
-    text-align: center;
-    font-family: 'Roboto', sans-serif;
-}
-
-.branch {
-    cursor: pointer;
-    text-align: center;
-    width: 100%; /* Take full width */
-    max-width: 300px; /* Limit maximum size */
-    margin: 10px;
-}
-
-.branch-img {
-    width: 150px; /* Set a fixed width */
-    height: 150px; /* Set a fixed height */
-    border-radius: 50%; /* Maintain the circular shape */
-    border: 2px solid #ccc;
-    object-fit: cover; /* Crop the image to fill the container */
-    transition: transform 0.4s ease, border-color 0.4s ease;
-}
-
-.branch-img:hover {
-    transform: scale(1.15); /* Slight zoom effect */
-    border-color: #f90;
-}
-
-.branch p {
-    margin: 10px 0 0;
-    font-size: 20px; /* Larger text */
-    font-weight: bold;
-    color: #333; /* Default black */
-    transition: color 0.3s ease; /* Smooth transition for hover */
-}
-
-.branch:hover p {
-    color: #000; /* Darker black */
-    font-size: 22px; /* Slightly larger on hover */
-}
-
-/* Responsive Design */
-@media (max-width: 480px) {
-    .branch-img {
-        max-width: 150px; /* Adjust size for smaller screens */
-    }
-
-    .branch p {
-        font-size: 18px; /* Adjust text size */
-    }
-}
-
-
-
+yle>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        .side-nav {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            background-color: #f0f0f0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px 0 0 10px;
+            padding: 15px 10px;
+            z-index: 1000;
+            transition: width 0.3s ease-in-out;
+            width: 60px;
+            overflow: hidden;
+        }
+        
+        .side-nav:hover {
+            width: 160px;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 5px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            color: #333;
+            text-decoration: none;
+        }
+        
+        .nav-item:hover {
+            background-color: #e0e0e0;
+            border-radius: 8px;
+        }
+        
+        .nav-icon {
+            min-width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-text {
+            margin-left: 10px;
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .side-nav:hover .nav-text {
+            opacity: 1;
+        }
+        
+        .fa-shopping-cart, .fa-bars {
+            font-size: 24px;
+        }

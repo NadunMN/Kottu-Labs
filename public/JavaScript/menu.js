@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
         data.email = document.getElementById('email').value;
         data.reservation_time = document.getElementById('pickupTime').value;
         data.reservation_date = document.getElementById('pickupDate').value; 
-        data.confirmation_status = 1;  // Set confirmation status to 1
+        data.confirmation_status = 0;  // Set confirmation status to 1
 
         
         const branch = selectedBranchDisplay.textContent.trim().toLowerCase().split(" ")[0];
@@ -157,10 +157,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 data.branch_id = 1;
                 break;
             case 'kotahena':
-                data.branch_id = 2;
+                data.branch_id = 3;
                 break;
             case 'kelaniya':
-                data.branch_id = 3;
+                data.branch_id = 2;
                 break;
             }
         } else {
