@@ -966,9 +966,9 @@ font-size: 100px;
     position: absolute;
     width: 100vw;
     height: 500px;
-    background-color: #33333369;
+    background-color: #24242469;
     z-index: -1;
-    filter: blur(100px);
+    filter: blur(25px);
     
   }
 
