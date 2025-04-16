@@ -15,7 +15,7 @@ async function fetchPayments(selectedDate = null, selectedTime = null) {
           document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
           return;
       }
-
+      
       if (!Array.isArray(data)) {
         console.error("Data is not an array");
         document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
@@ -82,6 +82,7 @@ async function fetchPayments(selectedDate = null, selectedTime = null) {
                 <th>Type</th>
                 <th>Amount</th>
                 <th>Status</th>
+                <th>Table No</th>
               </tr>
             </thead>
             <tbody id="table-content"></tbody>
@@ -135,6 +136,7 @@ async function fetchPayments(selectedDate = null, selectedTime = null) {
                   : ""
                 }
           </td>
+          <td>${payment.table_number}</td>
         `;
         tableContent.appendChild(row);
       });
