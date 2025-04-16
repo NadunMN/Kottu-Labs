@@ -968,7 +968,7 @@ font-size: 100px;
     height: 500px;
     background-color: #33333369;
     z-index: -1;
-    filter: blur(50px);
+    filter: blur(100px);
     
   }
 
