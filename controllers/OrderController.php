@@ -160,6 +160,7 @@ class OrderController extends Controller
             echo json_encode(['error' => 'No user is logged in']);
         }
     }
+
     public function placeOrder()
     {
         if (Application::$app->user) {
@@ -349,6 +350,77 @@ class OrderController extends Controller
             echo json_encode(['error' => 'No user is logged in']);
         }
     }
+
+
+    // Method to get cart data
+    public function gettakeawayCartData($user_id)
+    {
+        if (Application::$app->user) {
+            $carts = takeawayCart::findAllcartMeal(['user_id' => $user_id]);
+            $cartData = [];
+
+            foreach ($carts as $cart) {
+                $cartData[] = $cart;
+            }
+
+            echo json_encode($cartData);
+        } else {
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+
+        //delete order data in order table
+        public function deletetakeawayCart()
+        {
+            if (Application::$app->user) {
+                $cart = new takeawayCart();
+                $cart->loadData(Application::$app->request->getBody());
+    
+                if ($cart->delete()) {
+                    echo json_encode(['success' => 'Meal deleted successfully']);
+                } else {
+                    echo json_encode(['error' => 'Failed to delete Meal']);
+                }
+            } else {
+                echo json_encode(['error' => 'No user is logged in']);
+            }
+        }
+
+        //clear cart data
+    public function cleartakeawayCart()
+    {
+        if (Application::$app->user) {
+            $cart = new takeawayCart();
+            $cart->loadData(Application::$app->request->getBody());
+
+            if ($cart->clear()) {
+                echo json_encode(['success' => 'Cart cleared successfully']);
+            } else {
+                echo json_encode(['error' => 'Failed to clear cart']);
+            }
+        } else {
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+
+        // Function to get order meals data
+        public function gettakeawayBookedData($user_id)
+        {
+            if (Application::$app->user) {
+                $orderMeals = OrderMeals::findAllBookedMealTakeaway(['user_id' => $user_id]);
+                $orderMealData = [];
+    
+                foreach ($orderMeals as $orderMeal) {
+                    $orderMealData[] = $orderMeal;
+                }
+    
+                echo json_encode($orderMealData);
+            } else {
+                echo json_encode(['error' => 'No user is logged in']);
+            }
+        }
+
+        
 
 
 

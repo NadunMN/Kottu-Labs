@@ -74,7 +74,7 @@ public static function findAllBookedMeal($where)
         $tableName = static::tableName();
         $attributes = array_keys($where);
         $sql = "SELECT $tableName.*, m.* FROM $tableName                 
-                JOIN meals m ON $tableName.meal_id = m.meal_id                 
+                JOIN meals m ON $tableName.meal_id = m.meal_id               
                 ";
         if (!empty($attributes)) {
             $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
@@ -86,6 +86,35 @@ public static function findAllBookedMeal($where)
         $statement->execute();
         return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
 }
+
+public static function findAllBookedMealTakeaway($where)
+{
+    $tableName = static::tableName(); // typically 'order_meals'
+    // $attributes = array_keys($where);
+
+    $sql = "SELECT $tableName.*, m.* , r.*
+            FROM $tableName 
+            JOIN meals m ON $tableName.meal_id = m.meal_id 
+            JOIN orders o ON $tableName.order_id = o.order_id
+            JOIN reservations r ON o.reservation_no = r.reservation_no
+            WHERE r.type = 'takeaway' AND $tableName.user_id = :user_id;";
+
+    // if (!empty($attributes)) {
+    //     $sql .= " AND " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+    // }
+
+    $statement = self::prepare($sql);
+    foreach ($where as $key => $item) {
+        $statement->bindValue(":$key", $item);
+    }
+
+    $statement->execute();
+    return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
+}
+
+
+
+
 
 
 

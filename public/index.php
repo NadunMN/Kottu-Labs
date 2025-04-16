@@ -292,6 +292,24 @@ $app->router->get('/getReservationDataTakeawayOrder', function() use ($orderCont
 
 $app->router->post('/takeawaycart/add', [$orderController, 'addToTakeawayCart']);
 
+$app->router->get('/gettakeawayCartData', function() use ($orderController) {
+    $userId = $_GET['userId'] ?? null;
+    $orderController->gettakeawayCartData($userId);
+});
+
+$app->router->post('/removeFromtakeawayCart', [$orderController, 'deletetakeawayCart']);
+$app->router->post('/cleartakeawayCart', [$orderController, 'cleartakeawayCart']);
+
+
+$app->router->get('/gettakeawayBookedData', function() use ($orderController) {
+    $userId = $_GET['userId'] ?? null;
+    $orderController->gettakeawayBookedData($userId);
+});
+
+
+
+
+
 
 // Run the application
 $app->run();

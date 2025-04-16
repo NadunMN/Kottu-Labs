@@ -51,6 +51,6 @@
         </div>
     </div>
 
-    <script src="/JavaScript/cart.js"></script>
+    <script src="/JavaScript/takeawayCart.js"></script>
 </body>
 </html>
