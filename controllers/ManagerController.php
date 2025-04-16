@@ -139,77 +139,77 @@ class ManagerController extends Controller
     }
 
     public function updatemenuItems()
-{
-    $meal = new Meal();
-    try {
-        $mealId = Application::$app->request->getBody()['meal_id'] ?? null;
-        if (!$mealId) {
-            throw new \Exception('Meal ID not provided');
-        }
-
-        $meal = Meal::findOne(['meal_id' => $mealId]);
-        if (!$meal) {
-            throw new \Exception('Meal not found');
-        }
-
-        $mealData = Application::$app->request->getBody();
-        $meal->loadData($mealData);
-
-        if (!$meal->update()) {
-            throw new \Exception('Failed to update meal');
-        }
-
-        $branches = [];
-        foreach (Application::$app->request->getBody() as $key => $value) {
-            // Assuming branch keys are named like branch2, branch3, etc.
-            if (strpos($key, 'branch') === 0) {
-                $branches[] = $value;
+    {
+        $meal = new Meal();
+        try {
+            $mealId = Application::$app->request->getBody()['meal_id'] ?? null;
+            if (!$mealId) {
+                throw new \Exception('Meal ID not provided');
             }
-        }
 
-        
-        $allBranchIds = [1,2,3];
-
-        
-        $branchIdsNotInBranches = [];
-        foreach ($allBranchIds as $branchId) {
-            if (!in_array($branchId, $branches)) {
-                $branchIdsNotInBranches[] = $branchId;
+            $meal = Meal::findOne(['meal_id' => $mealId]);
+            if (!$meal) {
+                throw new \Exception('Meal not found');
             }
-        }
 
-        
+            $mealData = Application::$app->request->getBody();
+            $meal->loadData($mealData);
 
+            if (!$meal->update()) {
+                throw new \Exception('Failed to update meal');
+            }
 
-        if (count($branches) > 0) {
-            foreach ($branches as $branchId) {
-                $branchMeal = new BranchMeal();
-                $branchMeal->meal_id = $mealId;
-                $branchMeal->branch_id = $branchId;
-
-                if (!$branchMeal->update()) {
-                    throw new \Exception('Failed to add meal to branches_meal for branch ' . $branchId . ': ' . json_encode($branchMeal->errors));
+            $branches = [];
+            foreach (Application::$app->request->getBody() as $key => $value) {
+                // Assuming branch keys are named like branch2, branch3, etc.
+                if (strpos($key, 'branch') === 0) {
+                    $branches[] = $value;
                 }
             }
 
-            foreach ($branchIdsNotInBranches as $notbranchId) {
-                $branchMeal = BranchMeal::findOne(['meal_id' => $mealId, 'branch_id' => $notbranchId]);
-                if ($branchMeal && !$branchMeal->delete()) {
-                    throw new \Exception('Failed to delete meal from branches_meal for branch ' . $notbranchId . ': ' . json_encode($branchMeal->errors));
+            
+            $allBranchIds = [1,2,3];
+
+            
+            $branchIdsNotInBranches = [];
+            foreach ($allBranchIds as $branchId) {
+                if (!in_array($branchId, $branches)) {
+                    $branchIdsNotInBranches[] = $branchId;
                 }
             }
 
-            echo json_encode(['success' => true]);
-        } else {
-            throw new \Exception('No branch IDs provided');
-        }
+            
 
-    } catch (\Exception $e) {
-        
-        error_log($e->getMessage());
-        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+
+            if (count($branches) > 0) {
+                foreach ($branches as $branchId) {
+                    $branchMeal = new BranchMeal();
+                    $branchMeal->meal_id = $mealId;
+                    $branchMeal->branch_id = $branchId;
+
+                    if (!$branchMeal->update()) {
+                        throw new \Exception('Failed to add meal to branches_meal for branch ' . $branchId . ': ' . json_encode($branchMeal->errors));
+                    }
+                }
+
+                foreach ($branchIdsNotInBranches as $notbranchId) {
+                    $branchMeal = BranchMeal::findOne(['meal_id' => $mealId, 'branch_id' => $notbranchId]);
+                    if ($branchMeal && !$branchMeal->delete()) {
+                        throw new \Exception('Failed to delete meal from branches_meal for branch ' . $notbranchId . ': ' . json_encode($branchMeal->errors));
+                    }
+                }
+
+                echo json_encode(['success' => true]);
+            } else {
+                throw new \Exception('No branch IDs provided');
+            }
+
+        } catch (\Exception $e) {
+            
+            error_log($e->getMessage());
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        }
     }
-}
 
 
     //get menu data
