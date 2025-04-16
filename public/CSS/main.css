@@ -115,12 +115,13 @@ main {
 
 .first-background-overlay .Header-text {
     background-color: transparent;
-    color: white;
+    color: rgb(255, 255, 255);
     font-family: "Fjalla One", serif;
     font-size: 100px;
     text-align: center;
     font-weight: 500;
     line-height: 1.2;
+    filter: drop-shadow(0 4px 8px rgb(0, 0, 0));
 
     
 }
@@ -133,6 +134,10 @@ main {
     background: linear-gradient(to right, #ffffff, #EE3E3F); /* Adjust colors */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.384));
+
+    /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); */
+    /* text-decoration: underline; */
 }
 
 
@@ -146,12 +151,13 @@ font-size: 100px;
 }
 
 .first-background-overlay .Sub-text {
-    color: white;
+    color: rgb(255, 255, 255);
     text-align: center;
     font-size: 20px;
     /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     margin-top: -10px;
+    filter: drop-shadow(0 4px 8px rgb(0, 0, 0));
 
 }
 
@@ -198,17 +204,18 @@ font-size: 100px;
 
 
 .button-container .button1{
-    background-color: #ffffff;
-    color: rgb(0, 0, 0);
+    background-color: #000000;
+    color: rgb(255, 255, 255);
     border: none;
 }
 
 .button-container-second button{
     
     margin-top: 15px;
-    background-color: transparent;
-    border: 1px solid white;
-    color: white;
+    background-color:rgb(0, 0, 0);
+    /* border: 1px solid rgb(255, 255, 255); */
+    color: rgb(255, 255, 255);
+    filter: drop-shadow(0 4px 8px rgb(0, 0, 0));
 }
 
 .button-container-second button:hover{
@@ -935,6 +942,38 @@ font-size: 100px;
             font-size: 13px;
     }
 }
+
+
+.kottuplate {
+    position: absolute;
+    top: 50%; /* Position at 50% from the top */
+    left: 50%; /* Position at 50% from the left */
+    transform: translate(-50%, -50%); /* Offset by half width/height to center */
+    width: 1100px;
+    height: 1100px;
+    z-index: -1;
+  }
+  
+  .kottuplate img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* This preserves aspect ratio */
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.156));
+  }
+
+
+  .square{
+    position: absolute;
+    width: 100vw;
+    height: 500px;
+    background-color: #33333369;
+    z-index: -1;
+    filter: blur(50px);
+    
+  }
+
+
+
 
 
 

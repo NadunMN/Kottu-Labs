@@ -14,6 +14,10 @@
     <div class="home-top-main" id="home-top-main">
         <div class="first-background-img">
             <div class="first-background-overlay">
+              <div class="kottuplate">
+                <img src="/Photo/kottu_main.png" alt="Kottu Plate" class="kottuplate-img">
+              </div>
+              <div class="square"></div>
                 <div class="back-white-circle"></div>
                 <!-- <div class="pic-1">
                     <img src="/Photo/download (1).jpeg" alt="">
