@@ -336,14 +336,14 @@
 <body>
 
 <div class="side-nav">
-        <a href="#" class="nav-item">
+        <a href="/takeaway/menu" class="nav-item">
                     <div class="nav-icon">
                         <i class="fas fa-bars"></i>
                     </div>
                     <span class="nav-text">Menu</span>
         </a>
-        
-        <a href="#" class="nav-item">
+
+        <a href="/takeaway/cart" class="nav-item">
             <div class="nav-icon">
                 <i class="fas fa-shopping-cart"></i>
             </div>

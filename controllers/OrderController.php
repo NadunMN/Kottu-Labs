@@ -12,6 +12,7 @@ use app\models\Order;
 use app\models\Cart;
 use app\models\OrderMeals;
 use app\models\Payment;
+use app\models\takeawayCart;
 
 class OrderController extends Controller
 {
@@ -307,6 +308,45 @@ class OrderController extends Controller
         } else {
             http_response_code(500);
             echo json_encode(['error' => 'Failed to update order status']);
+        }
+    }
+
+
+
+
+    //take away
+
+        // Method to get cart data
+        public function getReservationTakewayData($user_id)
+        {
+            if (Application::$app->user) {
+                $reservations = Reservation::findAllreservationTakeawayOrder(['user_id' => $user_id]);
+                $reservationData = [];
+    
+                foreach ($reservations as $reservation) {
+                    $reservationData[] = $reservation;
+                }
+    
+                echo json_encode($reservationData);
+            } else {
+                echo json_encode(['error' => 'No user is logged in']);
+            }
+        }
+
+        //store order data in order table
+    public function addToTakeawayCart()
+    {
+        if (Application::$app->user) {
+            $cart = new takeawayCart();
+            $cart->loadData(Application::$app->request->getBody());
+
+            if ($cart->save()) {
+                echo json_encode(['success' => 'Meal Added successfully']);
+            } else {
+                echo json_encode(['error' => 'Failed to add Meal']);
+            }
+        } else {
+            echo json_encode(['error' => 'No user is logged in']);
         }
     }
 

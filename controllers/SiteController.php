@@ -239,5 +239,17 @@ class SiteController extends Controller
         return $this->render('confirmReservation');
     }
 
+    public function takeawayMenu(Request $request,Response $response)
+    {
+        $this->setLayout('dashboard');
+        return $this->render('takeawayMenu');
+    }
+
+    public function takeawayCart(Request $request,Response $response)
+    {
+        $this->setLayout('dashboard');
+        return $this->render('takeawayCart');
+    }
+
 }
 ?>

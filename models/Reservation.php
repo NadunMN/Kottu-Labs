@@ -185,7 +185,23 @@ class Reservation extends ReservationModel
         $attributes = array_keys($where);
         $sql = "SELECT $tableName.* FROM $tableName";
         if (!empty($attributes)) {
-            $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes)) . " AND confirmation_status = 1";
+            $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes)) . " AND confirmation_status = 1 AND type = 'dinein'";
+        }
+        $statement = self::prepare($sql);
+        foreach ($where as $key => $item) {
+            $statement->bindValue(":$key", $item);
+        }
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
+}
+
+    public static function findAllreservationTakeawayOrder($where)
+{
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+        $sql = "SELECT $tableName.* FROM $tableName";
+        if (!empty($attributes)) {
+            $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes)) . " AND confirmation_status = 0 AND type = 'takeaway'";
         }
         $statement = self::prepare($sql);
         foreach ($where as $key => $item) {
