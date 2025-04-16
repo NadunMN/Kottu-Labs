@@ -443,7 +443,7 @@ body {
             height: 60px;
         }
 
-        .branch-group {
+    .branch-group {     
             display: flex;
             align-items: center;
         }

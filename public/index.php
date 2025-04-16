@@ -139,6 +139,7 @@ $app->router->get('/menuitem/data', [$managerController, 'getmenuItems']);
 $app->router->get('/managermenuitem/data', [$managerController, 'getmenuItemsManager']);
 $app->router->post('/mealitem/delete', [$managerController, 'deletemenuItems']);
 $app->router->post('/menuitem/update', [$managerController, 'updatemenuItems']);
+$app->router->post('/menuitem/status', [$managerController, 'updatestatus']);
 
 
 //define route for offers

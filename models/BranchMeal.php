@@ -2,7 +2,10 @@
 
 namespace app\models;
 
+use app\core\db\DbModel;
 use app\core\Model\BranchMealModel;
+use app\core\Application;
+use PDO;
 
 class BranchMeal extends BranchMealModel
 {
@@ -12,10 +15,8 @@ class BranchMeal extends BranchMealModel
 
     public string $meal_id = '';
     public string $branch_id = '';
-    public int $meal_status = self::STATUS_ACTIVE;
+    public int $meal_status = self::STATUS_INACTIVE;
 
-    
-    
 
     public static function tableName(): string
     {
@@ -24,7 +25,7 @@ class BranchMeal extends BranchMealModel
 
     public static function primaryKey(): string
     {
-        return 'meal_id';
+        return ['meal_id', 'branch_id'];
     }
 
     public function load($data)
@@ -45,25 +46,30 @@ class BranchMeal extends BranchMealModel
     public function rules(): array
     {
         return [
-            'meal_name' => [self::RULE_REQUIRED],
-            'meal_price' => [self::RULE_REQUIRED],
+            'meal_id' => [self::RULE_REQUIRED],
+            'branch_id' => [self::RULE_REQUIRED],
         ];
     }
 
 
 
-public static function findAll($where=[])
-{
-    $tableName = static::tableName();
-    $attributes = array_keys($where);
-    $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
-    $statement = self::prepare("SELECT * FROM $tableName");
-    foreach ($where as $key => $item) {
-        $statement->bindValue(":$key", $item);
+    public static function findAll($where=[])
+    {
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+        $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+        $sql = "SELECT * FROM $tableName";
+        if (!empty($where)) {
+            $conditions = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", array_keys($where)));
+            $sql .= " WHERE $conditions";
+        }
+        $statement = self::prepare($sql);
+        foreach ($where as $key => $item) {
+            $statement->bindValue(":$key", $item);
+        }
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
     }
-    $statement->execute();
-    return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
-}
 
 
 
@@ -99,7 +105,6 @@ public static function findAll($where=[])
     public function delete()
     {
         $tableName = static::tableName();
-        $primaryKey = static::primaryKey();
        
         $deleteSql = "DELETE FROM $tableName WHERE $primaryKey = :meal_id AND branch_id = :branch_id";
         $deleteStatement = self::prepare($deleteSql);
@@ -144,6 +149,19 @@ public static function findAll($where=[])
         return $statement->fetchAll(\PDO::FETCH_OBJ);
     }
     
+    public function updateAvailability($mealId, $branchId, $status)
+    {
+        $sql = "UPDATE branch_meals 
+                SET meal_status = :status 
+                WHERE meal_id = :mealId AND branch_id = :branchId";
+        $statement = self::prepare($sql);
+        return $statement->execute([
+            ':status' => $status,
+            ':mealId' => $mealId,
+            ':branchId' => $branchId
+        ]);
+    }
+
 
     
     
