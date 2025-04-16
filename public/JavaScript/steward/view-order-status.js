@@ -58,8 +58,14 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
             return a.order_time.localeCompare(b.order_time);
         });
 
-        const readyOrders = todayOrders.filter(order => order.order_status == 1).length;
-
+        const readyOrders = new Set(
+            todayOrders.filter(order => order.order_status == 1).map(order => order.order_id)
+        ).size;;
+        const uniqueAvailableOrders = new Set(
+            todayOrders.filter(order => order.order_status !== 2).map(order => order.order_id)
+        );
+        const availableOrders = uniqueAvailableOrders.size;
+        
         // Group meals
         const ordersGroupedByOrderId = {};
         const groupedOrdersArray = [];
@@ -86,7 +92,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                     <div class="topic-bar-text">
                         <h2>Order Status - ${branchName} </h2>
                         <span>${currentDate}</span>
-                        <h4>Available orders - ${todayOrders.length} &emsp; Ready orders - ${readyOrders}</h4>
+                        <h4>Available orders - ${availableOrders} &emsp; Ready orders - ${readyOrders}</h4>
                     </div>
                     <div class="filter-section">
                         <input type="text" id="tableFilter" placeholder="Filter by Table No...">
