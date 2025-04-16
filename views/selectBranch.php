@@ -396,15 +396,15 @@
                     <div id="selectedBranchAddress" style="font-size: 0.9rem; color: #666; margin-top: 5px;">123 Main Street, City Center</div>
                 </div>
                 
-                <form id="reservationForm">
+                <form id="reservationForm" action="/reservationNumber" method="POST">
                     <div class="form-group">
                         <label for="fullName">Full Name</label>
-                        <input type="text" id="fullName" class="form-control" required>
+                        <input type="text" id="fullName" name="reservation_name" class="form-control" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="email">Email Address</label>
-                        <input type="email" id="email" class="form-control" required>
+                        <input type="email" id="email" name="email" class="form-control" required>
                     </div>
                     
                     <div class="form-row">
@@ -419,10 +419,10 @@
                         </div>
                     </div>
                     
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="notes">Special Instructions (Optional)</label>
                         <textarea id="notes" class="form-control" rows="3"></textarea>
-                    </div>
+                    </div> -->
                     
                     <div style="text-align: center; margin-top: 30px;">
                         <button type="submit" class="submit-btn">Place Takeaway Order</button>
