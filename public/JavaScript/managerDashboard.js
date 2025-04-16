@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                                         <th>Name</th>
                                                         <th>Type</th>
                                                         <th>Price</th>
-                                                        <th>Branch</th>
+                                                        <th>Availability</th>
                                                         <th>Status</th>
                                                     </tr>
                                                 </thead>
@@ -197,12 +197,11 @@ document.addEventListener("DOMContentLoaded", () => {
                                         <td>
 
                                         <button class="status-btn ${
-                                          meal.available
-                                            ? "available"
-                                            : "unavailable"
+                                          meal.meal_status == 1
+                                          ? "available" : "unavailable"
                                         }">
                                                 ${
-                                                  meal.available
+                                                  meal.meal_status == 1
                                                     ? "Available"
                                                     : "Unavailable"
                                                 }
@@ -252,15 +251,35 @@ document.addEventListener("DOMContentLoaded", () => {
                 const statusButtons = document.querySelectorAll(".status-btn");
                 statusButtons.forEach((button) => {
                   button.addEventListener("click", () => {
-                    if (button.classList.contains("available")) {
-                      button.classList.remove("available");
-                      button.classList.add("unavailable");
-                      button.textContent = "Unavailable";
-                    } else {
-                      button.classList.remove("unavailable");
-                      button.classList.add("available");
-                      button.textContent = "Available";
-                    }
+                    const row = button.closest("tr");
+                    const mealId = row.querySelector(".meal-id").textContent.trim();
+                    const isAvailable = button.classList.contains("available");
+                    const newStatus = isAvailable ? 0 : 1;
+                
+                    fetch("/menuitem/status", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({
+                        meal_id: mealId,
+                        status: newStatus,
+                      }),
+                    })
+                      .then((res) => res.json())
+                      .then((data) => {
+                        if (data.success) {
+                          button.classList.toggle("available");
+                          button.classList.toggle("unavailable");
+                          button.textContent = newStatus ? "Available" : "Unavailable";
+                        } else {
+                          alert("Failed to update status.");
+                        }
+                      })
+                      .catch((err) => {
+                        console.error("Error:", err);
+                        alert("Something went wrong.");
+                      });
                   });
                 });
 

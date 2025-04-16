@@ -18,9 +18,7 @@ class Meal extends DbModel
     public string $meal_price = '';
     public string $meal_description = '';
     public string $meal_photo = '';
-    public int $meal_status = self::STATUS_INACTIVE;
 
-    
     
 
     public static function tableName(): string
@@ -85,11 +83,11 @@ class Meal extends DbModel
 
         $sql = "SELECT 
                     $tableName.*,
-                    GROUP_CONCAT(b.branch_id) as branch_ids
+                    b.branch_id,
+                    b.meal_status
                 FROM $tableName
                 JOIN branch_meals b ON $tableName.meal_id = b.meal_id
-                WHERE b.branch_id = :branch_id
-                GROUP BY $tableName.meal_id";
+                WHERE b.branch_id = :branch_id";
 
         $statement = self::prepare($sql);
         $statement->bindValue(':branch_id', $branchId, PDO::PARAM_INT);
@@ -97,6 +95,7 @@ class Meal extends DbModel
 
         return $statement->fetchAll(PDO::FETCH_CLASS, static::class);
     }
+
 
     
 
@@ -161,7 +160,7 @@ class Meal extends DbModel
     }
 
     return false;
-}
+    }
 
     
 
