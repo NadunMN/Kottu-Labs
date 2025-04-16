@@ -2,6 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
 * {
     font-family: 'Roboto', sans-serif;
@@ -324,7 +326,8 @@ font-size: 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 1260px;
+    width: 100%;
+    max-width: 1260px;
     height: auto;
     gap: 5px;
     padding: 20px 0;
@@ -358,18 +361,46 @@ font-size: 100px;
     text-align: right;
 }
 
-.description-head-topic-second p{
-    font-size: 60px;
+.description-head-topic-second p ,.dooo{
+    font-size: 5.2rem;
     text-align: left;
-    font-weight: bold;
+    font-family: "Lobster", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .description-content{
     text-align: right;
 }
-.description-content-second{
+
+
+.description-content {
+    max-width: 800px;
+    /* margin: 2rem auto; */
+    /* padding: 2rem; */
+    font-family: 'Georgia', serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+
+.description-content-second {
+    /* background-color: #f9f7f2;
+    border-left: 4px solid #d4b062; */
+    border-radius: 4px;
+    /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
+}
+
+.description-content-second p {
+    margin: 0;
+    font-size: 1.1rem;
+    font-style: italic;
     text-align: left;
 }
+
+
+
+
 
 .description-card-section{
     display: flex;
@@ -425,6 +456,20 @@ font-size: 100px;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.156));
     cursor: pointer;
 }
+
+.description-card-section-second .text-of-image:hover{
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.description-card-section-second .text-of-image2:hover{
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    transform: scale(1.05);
+    cursor: pointer;
+
+}
+
 
 .description-card-section-second img{
     

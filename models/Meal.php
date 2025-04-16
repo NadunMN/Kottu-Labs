@@ -128,7 +128,7 @@ class Meal extends DbModel
                 'meal_price' => $this->meal_price,
                 'meal_description' => $this->meal_description,
                 'meal_photo' => $this->meal_photo,
-                'meal_status' => $this->meal_status,     
+                 
         ];
     }
 

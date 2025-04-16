@@ -6,6 +6,7 @@
     <title>NavBar</title>
     <link rel="stylesheet" href="/CSS/NavBar.css">
     <link rel="stylesheet" href="/CSS/userdashboard.css">
+    <!-- <link rel="stylesheet" href="/CSS/menuhome.css"> -->
 </head>
 <body>
 
@@ -94,7 +95,7 @@
         <div class="description-section-part description-section-part-second">
         <div class="description-text-section description-text-section-second">
                 <div class="description-head-topic description-head-topic-second">
-                    <p>Lock in your <br/><span>dining spot Now!</span></p>
+                    <p>Lock in your <br/><span class="dooo">dining spot Now!</span></p>
                 </div>
                 <div class="description-content description-content-second">
                     <p>Discover a dining experience that blends tradition and innovation. Our dishes are crafted with passion, 
@@ -191,109 +192,7 @@
     </div>
 
 
-
     
-    <!-- new section -->
-    <section class="ezy__team-section">
-  <div class="container">
-    <h2 class="ezy__team-section-heading">Our Team Members</h2>
-    <p class="ezy__team-section-subheading">
-      Meet our talented team of professionals dedicated to delivering exceptional service and innovative solutions for your business needs.
-    </p>
-
-    <div class="ezy__team-grid">
-      <!-- Team Member 1 -->
-      <div class="ezy__team-card">
-        <img 
-          src="https://cdn.easyfrontend.com/pictures/team/team_square_1.jpeg" 
-          alt="Akshay Kumar" 
-          class="ezy__team-card-image"
-        >
-        <div class="ezy__team-card-content">
-          <h3 class="ezy__team-member-name">Ranuga Lekamwasam</h3>
-          <p class="ezy__team-member-position">Owner of Kottu Labs</p>
-        </div>
-      </div>
-
-      <!-- Team Member 2 -->
-      <div class="ezy__team-card">
-        <img 
-          src="https://cdn.easyfrontend.com/pictures/team/team_square_2.jpeg" 
-          alt="Raima Ray" 
-          class="ezy__team-card-image"
-        >
-        <div class="ezy__team-card-content">
-          <h3 class="ezy__team-member-name">Mahesh Kumara</h3>
-          <p class="ezy__team-member-position">Manager-Watta</p>
-        </div>
-      </div>
-
-      <!-- Team Member 3 -->
-      <div class="ezy__team-card">
-        <img 
-          src="https://cdn.easyfrontend.com/pictures/team/team_square_4.jpeg" 
-          alt="Sarah Johnson" 
-          class="ezy__team-card-image"
-        >
-        <div class="ezy__team-card-content">
-          <h3 class="ezy__team-member-name">Thirani Athukorala</h3>
-          <p class="ezy__team-member-position">Manager-Kelaniya</p>
-        </div>
-      </div>
-
-      <!-- Team Member 4 -->
-      <div class="ezy__team-card">
-        <img 
-          src="https://cdn.easyfrontend.com/pictures/team/team_square_3.jpeg" 
-          alt="Arjun Kapur" 
-          class="ezy__team-card-image"
-        >
-        <div class="ezy__team-card-content">
-          <h3 class="ezy__team-member-name">Nadun Mdusanka</h3>
-          <p class="ezy__team-member-position">Manager-Kotahena</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="ezy__team-button-container">
-      <button class="ezy__team-button">Show More</button>
-    </div>
-  </div>
-</section>
-    <!-- new section -->
-
-
-    
-
-    
-<!-- 
-
-    <div class="description-section">
-        <div class="description-section-part">
-
-        <div class="description-card-section">
-                <div class="card1"><img src="/Photo/online-booking.png" alt="Online Booking"/></div>
-                <div class="card1"><img src="/Photo/online-ordering.png" alt="Online Ordering"/></div>
-                <div class="card1"><img src="/Photo/online-pay.png" alt="Online Pay"/></div>
-                <div class="card1"><img src="/Photo/real-time-bill-update.png" alt="Real-time Bill Update"/></div>
-            </div>
-            <div class="description-text-section">
-                <div class="description-head-topic">
-                    <p>Our Culinary journey<br/><span>And Services</span></p>
-                </div>
-                <div class="description-content">
-                    <p>Kottu Lab blends tradition with innovation, offering a unique twist on Sri Lankan cuisine. 
-                    From our signature Kottu to diverse menu options, we serve authentic flavors crafted with passion. 
-                    Whether dining in, ordering takeaway, 
-                    or catering an event, our goal is to provide you with delicious food and a memorable experience.</p>
-                </div>
-                
-            </div>
-            
-        </div>
-    </div> -->
-
-
 
     <!-- service -->
     <section class="ezy__service2_NrYFSVFQ">
@@ -338,6 +237,125 @@
 	</div>
 </section>
     <!-- service -->
+
+
+
+    
+    <!-- new section -->
+    <section class="ezy__team-section">
+  <div class="container">
+
+<div class="wrapper-action">
+  <div class="action-btn-staff">
+  <div class="action-topic-staff">
+    <h2 class="ezy__team-section-heading">Our Team Members</h2>
+    <p class="ezy__team-section-subheading">
+      Meet our talented team of professionals dedicated to delivering exceptional service and innovative solutions for your business needs.
+    </p>
+  </div>
+
+  <div class="ezy__team-button-container">
+      <button class="ezy__team-button">Show More</button>
+    </div>
+
+    </div>
+
+    </div>
+
+    <div class="ezy__team-grid">
+      
+    
+      <div class="ezy__team-card">
+        <img 
+          src="https://cdn.easyfrontend.com/pictures/team/team_square_1.jpeg" 
+          alt="Akshay Kumar" 
+          class="ezy__team-card-image"
+        >
+        <div class="ezy__team-card-content">
+          <h3 class="ezy__team-member-name">Ranuga Lekamwasam</h3>
+          <p class="ezy__team-member-position">Owner of Kottu Labs</p>
+        </div>
+      </div>
+
+     
+
+      <div class="ezy__team-card">
+        <img 
+          src="https://cdn.easyfrontend.com/pictures/team/team_square_2.jpeg" 
+          alt="Raima Ray" 
+          class="ezy__team-card-image"
+        >
+        <div class="ezy__team-card-content">
+          <h3 class="ezy__team-member-name">Mahesh Kumara</h3>
+          <p class="ezy__team-member-position">Manager-Watta</p>
+        </div>
+      </div>
+
+  
+      
+      <div class="ezy__team-card">
+        <img 
+          src="https://cdn.easyfrontend.com/pictures/team/team_square_4.jpeg" 
+          alt="Sarah Johnson" 
+          class="ezy__team-card-image"
+        >
+        <div class="ezy__team-card-content">
+          <h3 class="ezy__team-member-name">Thirani Athukorala</h3>
+          <p class="ezy__team-member-position">Manager-Kelaniya</p>
+        </div>
+      </div>
+
+
+      
+      <div class="ezy__team-card">
+        <img 
+          src="https://cdn.easyfrontend.com/pictures/team/team_square_3.jpeg" 
+          alt="Arjun Kapur" 
+          class="ezy__team-card-image"
+        >
+        <div class="ezy__team-card-content">
+          <h3 class="ezy__team-member-name">Nadun Mdusanka</h3>
+          <p class="ezy__team-member-position">Manager-Kotahena</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+    <!-- new section -->
+
+
+    
+
+    
+<!-- 
+
+    <div class="description-section">
+        <div class="description-section-part">
+
+        <div class="description-card-section">
+                <div class="card1"><img src="/Photo/online-booking.png" alt="Online Booking"/></div>
+                <div class="card1"><img src="/Photo/online-ordering.png" alt="Online Ordering"/></div>
+                <div class="card1"><img src="/Photo/online-pay.png" alt="Online Pay"/></div>
+                <div class="card1"><img src="/Photo/real-time-bill-update.png" alt="Real-time Bill Update"/></div>
+            </div>
+            <div class="description-text-section">
+                <div class="description-head-topic">
+                    <p>Our Culinary journey<br/><span>And Services</span></p>
+                </div>
+                <div class="description-content">
+                    <p>Kottu Lab blends tradition with innovation, offering a unique twist on Sri Lankan cuisine. 
+                    From our signature Kottu to diverse menu options, we serve authentic flavors crafted with passion. 
+                    Whether dining in, ordering takeaway, 
+                    or catering an event, our goal is to provide you with delicious food and a memorable experience.</p>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div> -->
+
+
 
 
     
