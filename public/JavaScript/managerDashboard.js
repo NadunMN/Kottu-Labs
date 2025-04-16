@@ -87,7 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
                                                     <div class="form-group">
                                                         <label for="meal_description">Description</label>
                                                         <select id="meal_description" name="meal_description" required>
-                                                            <option  value="1">All</option>
                                                         <option  value="2">Classic Kottu</option>
                                                         <option  value="3">Dolphin Kottu</option>
                                                         <option  value="4">Cheese Kottu</option>
@@ -104,21 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                                         </select>
                                                     </div>
 
-                                                    <div class="check-box-container">
-                                                      <div class="branch-group">
-                                                          <input type="checkbox" id="wattala" name="branch1" value="1">
-                                                          <label for="wattala">Wattala</label>
-                                                      </div>
-
-                                                      <div class="branch-group">
-                                                          <input type="checkbox" id="kelaniya" name="branch2" value="2">
-                                                          <label for="kelaniya">Kelaniya</label>
-                                                      </div>
-
-                                                      <div class="branch-group">
-                                                          <input type="checkbox" id="kotahena" name="branch3" value="3">
-                                                          <label for="kotahena">Kotahena</label>
-                                                      </div>
+                                                    
                                                 </div>
 
 
