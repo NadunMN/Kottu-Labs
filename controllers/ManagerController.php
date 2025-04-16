@@ -309,5 +309,60 @@ class ManagerController extends Controller
             echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
     }
+
+    public function updatestatus()
+    {
+        try {
+            $requestData = Application::$app->request->getBody();
+            $meal_id = $requestData['meal_id'] ?? null;
+            $status = $requestData['status'] ?? null;
+
+            if (!$meal_id || !is_numeric($status)) {
+                throw new \Exception("Invalid input data: meal_id=$meal_id, status=$status");
+            }
+
+            // Get branch_id from the logged-in user
+            $user = Application::$app->user;
+            $branch_id = $user->branch_id ?? null;
+
+            if (!$branch_id) {
+                throw new \Exception("Branch ID not found for current user.");
+            }
+
+            // Debug log
+            error_log("Updating meal status: meal_id=$meal_id, branch_id=$branch_id, status=$status");
+
+            // Find the branch meal record or create it if it doesn't exist
+            $branchMeal = \app\models\BranchMeal::findOne([
+                'meal_id' => $meal_id,
+                'branch_id' => $branch_id
+            ]);
+
+            if (!$branchMeal) {
+                // If record doesn't exist, create a new one
+                $branchMeal = new \app\models\BranchMeal();
+                $branchMeal->meal_id = $meal_id;
+                $branchMeal->branch_id = $branch_id;
+                $branchMeal->meal_status = $status;
+                
+                if (!$branchMeal->add()) {
+                    throw new \Exception("Failed to create branch meal record.");
+                }
+            } else {
+                // Use the direct updateAvailability method since it's available
+                if (!$branchMeal->updateAvailability($meal_id, $branch_id, $status)) {
+                    throw new \Exception("Failed to update meal availability.");
+                }
+            }
+
+            echo json_encode(['success' => true]);
+        } catch (\Exception $e) {
+            error_log("Error in updatestatus: " . $e->getMessage());
+            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+
     
 }
