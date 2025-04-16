@@ -15,7 +15,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
             document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
             return;
         }
-        
+
         if (!Array.isArray(data)) {
             console.error("Data is not an array");
             document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
@@ -48,7 +48,36 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
         const branchName = branch_id === 1 ? 'Wattala' : branch_id === 2 ? 'Kelaniya' : 'Kotahena';
         const currentDate = selectedDate || new Date().toISOString().split('T')[0];
         const todayOrders = data.filter(order => order.order_date === currentDate);
+
+        // Sort reservations
+        todayOrders.sort((a, b) => {
+            const priority = { 1: 0, 0: 1, 2: 2 }; // Define priority mapping
+            if (priority[a.order_status] !== priority[b.order_status]) {
+                return priority[a.order_status] - priority[b.order_status];
+            }
+            return a.order_time.localeCompare(b.order_time);
+        });
+
         const readyOrders = todayOrders.filter(order => order.order_status == 1).length;
+
+        // Group meals
+        const ordersGroupedByOrderId = {};
+        const groupedOrdersArray = [];
+
+        todayOrders.forEach(order => {
+            if (!ordersGroupedByOrderId[order.order_id]) {
+                ordersGroupedByOrderId[order.order_id] = {
+                    ...order,
+                    meals: []
+                };
+                groupedOrdersArray.push(ordersGroupedByOrderId[order.order_id]); // Maintain sorted order
+            }
+            
+            ordersGroupedByOrderId[order.order_id].meals.push({
+                mealName: order.mealName,
+                quantity: order.quantity
+            });
+        });
 
         // Render order content
         orderContent.innerHTML = `
@@ -71,7 +100,6 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                         <tr>
                             <th>Order Id</th>
                             <th>Meal Name</th>
-                            <th>Quantity</th>
                             <th>Table No</th>
                             <th>Type</th>
                             <th>Status</th>
@@ -88,28 +116,24 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
             return;
         }
 
-        // Sort reservations: pending first, then confirmed, sorted by time
-        todayOrders.sort((a, b) => {
-            // Prioritize pending reservations over ready ones
-            if (a.order_status !== b.order_status) {
-                return a.order_status === 1 ? -1 : b.order_status === 1 ? 1 : a.order_status - b.order_status;
-            }
-    
-            // If both have the same status, sort by time
-            return a.order_time.localeCompare(b.order_time);
-        });
-
         // Clear existing rows before appending new ones
         tableContent.innerHTML = "";
-        // Populate table with today's order data
-        todayOrders.forEach((order) => {
+
+        // Render rows directly from the grouped orders
+        groupedOrdersArray.forEach(order => {
             const row = document.createElement("tr");
-            row.classList.add("order-item"); // Add class for filtering
-            row.setAttribute("data-table-number", order.table_number); // Use data attribute for filtering
+            row.classList.add("order-item")
+            row.setAttribute("data-table-number", order.table_number);
+
+            const mealsDropdown = order.meals.map((meal) => `<li>${meal.mealName} - ${meal.quantity}</li>`).join("");
             row.innerHTML = `
-                <td class="order-id">${order.order_id}</td>
-                <td>${order.mealName}</td>
-                <td>${order.quantity}</td>
+                <td class="order-id">${order.order_id}</td> 
+                <td>
+                    <details>
+                        <summary>View Meals</summary>
+                        <ul>${mealsDropdown}</ul>
+                    </details>
+                </td>
                 <td>${order.type === 'dinein' ? order.table_number : 'Null'}</td>
                 <td>${order.type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
                 <td class="status">
@@ -132,13 +156,12 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify({order_id: orderId, order_status: 2 }) // Update status to 'Completed'
+                        body: JSON.stringify({ order_id: orderId, order_status: 2 }) // Update status to 'Completed'
                     });
-                    console.log("Response:", response);
 
                     if (response.ok) {
                         alert("Order status updated to Completed!");
-                        fetchOrders(); // Refresh the orders
+                        fetchOrders();
                     } else {
                         console.error("Failed to update order status");
                         alert("Error updating order status. Please try again.");
@@ -161,7 +184,7 @@ function filterOrders() {
     const orders = document.querySelectorAll(".order-item");
     
     orders.forEach(order => {
-        const tableNo = order.getAttribute("data-table-number"); // Use data attribute
+        const tableNo = order.getAttribute("data-table-number");
         if (tableNo && tableNo.includes(input)) {
             order.style.display = "";
         } else {
@@ -178,12 +201,9 @@ function resetFilter() {
     });
 }
 
-
-
-
-// Refresh orders every minute
+// Refresh orders
 setInterval(() => {
     fetchOrders();
-}, 60000);
+}, 30000);
 
 fetchOrders();
