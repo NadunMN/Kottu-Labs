@@ -278,7 +278,7 @@ body {
 /* Form Container Styles */
 /* Popup Form */
 .add-item-form {
-    position: relative;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -288,21 +288,40 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
     z-index: 1000;
+    padding: 20px;
+    overflow: auto; /* 💡 Important: scroll entire modal content */
 }
 
-#add-form{
-    position: absolute;
-    top: 0;
-    left: 25%;
-    width: 50%;
+form#add-form {
+    padding-bottom: 40px; /* Make room for buttons */
+}
+
+
+.add-item-form form {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh; /* 💡 So content fits and scrolls if needed */
+    overflow-y: auto; /* Enables scrolling inside the form */
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+#add-form {
+    position: relative; /* instead of absolute */
+    width: 100%;
     max-width: 600px;
     background-color: white;
     padding: 30px;
     border-radius: 10px;
-    margin: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    padding-bottom: 80px;
 }
+
 
 #add-form h3{
     font-size: 1.2rem;
@@ -345,6 +364,7 @@ body {
 /* Container Styles */
 /* Form Container */
 .add-item-form {
+    overflow-y: auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -361,10 +381,15 @@ body {
     gap: 2rem;
 }
 
-.button-group{
+.button-group {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.button-group .form-group {
+    margin: 0;
 }
 
 .add-item-form.hidden {
@@ -574,20 +599,28 @@ body {
 .image-upload-container {
     position: relative;
     width: 100%;
-    margin-bottom: 0.5rem;
+    height: auto;
+    max-height: 250px; /* 💡 Limit height here */
+    overflow: hidden;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9fafb;
+    margin-bottom: 10px;
 }
 
 .image-preview {
     width: 100%;
-    height: 200px;
-    border-radius: 8px;
+    height: 150px;
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f8fafc;
-    border: 2px dashed #e2e8f0;
 }
 
 .hidden-img{
@@ -605,7 +638,7 @@ body {
 .image-preview img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: none;
 }
 
@@ -617,8 +650,16 @@ body {
 }
 
 .upload-placeholder {
-    text-align: center;
-    color: #64748b;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.8);
 }
 
 .upload-icon {
@@ -661,34 +702,39 @@ body {
     margin-top: 0.25rem;
 }
 
-.cancel-item-btn{
+.cancel-item-btn {
     width: 100%;
     height: auto;
     font-size: 0.8rem;
-    padding: 5px 10px;
+    padding: 6px 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
-}
-
-.save-item-btn {
-    background-color: #28a745;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    font-size: 0.8rem;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.save-item-btn:hover {
-    background-color: #218838;
+    background-color: white;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .cancel-item-btn:hover {
     background-color: #882121;
     color: white;
 }
+
+.save-item-btn {
+    width: 100%;
+    background-color: #28a745;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.save-item-btn:hover {
+    background-color: #218838;
+}
+
 
 
 
