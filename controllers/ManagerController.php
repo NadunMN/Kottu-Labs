@@ -202,6 +202,7 @@ class ManagerController extends Controller
     public function updatemenuItems()
     {
         $meal = new Meal();
+
         try {
             $mealId = Application::$app->request->getBody()['meal_id'] ?? null;
             if (!$mealId) {
@@ -220,50 +221,8 @@ class ManagerController extends Controller
                 throw new \Exception('Failed to update meal');
             }
 
-            $branches = [];
-            foreach (Application::$app->request->getBody() as $key => $value) {
-                // Assuming branch keys are named like branch2, branch3, etc.
-                if (strpos($key, 'branch') === 0) {
-                    $branches[] = $value;
-                }
-            }
-
-            
-            $allBranchIds = [1,2,3];
-
-            
-            $branchIdsNotInBranches = [];
-            foreach ($allBranchIds as $branchId) {
-                if (!in_array($branchId, $branches)) {
-                    $branchIdsNotInBranches[] = $branchId;
-                }
-            }
-
-            
-
-
-            if (count($branches) > 0) {
-                foreach ($branches as $branchId) {
-                    $branchMeal = new BranchMeal();
-                    $branchMeal->meal_id = $mealId;
-                    $branchMeal->branch_id = $branchId;
-
-                    if (!$branchMeal->update()) {
-                        throw new \Exception('Failed to add meal to branches_meal for branch ' . $branchId . ': ' . json_encode($branchMeal->errors));
-                    }
-                }
-
-                foreach ($branchIdsNotInBranches as $notbranchId) {
-                    $branchMeal = BranchMeal::findOne(['meal_id' => $mealId, 'branch_id' => $notbranchId]);
-                    if ($branchMeal && !$branchMeal->delete()) {
-                        throw new \Exception('Failed to delete meal from branches_meal for branch ' . $notbranchId . ': ' . json_encode($branchMeal->errors));
-                    }
-                }
-
-                echo json_encode(['success' => true]);
-            } else {
-                throw new \Exception('No branch IDs provided');
-            }
+            // ✅ Success response
+            echo json_encode(['success' => true]);
 
         } catch (\Exception $e) {
             
@@ -271,6 +230,7 @@ class ManagerController extends Controller
             echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
     }
+
 
 
     //get menu data
