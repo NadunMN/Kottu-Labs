@@ -198,42 +198,42 @@ class OrderController extends Controller
 
     // New function to process order meals
     public function processOrderMeals()
-{
-    if (Application::$app->user) {
-        // Retrieve purchased meals from the request body
-        $purchasedMeals = Application::$app->request->getBody();
-        // error_log(print_r($orderId, true)); // Log the purchased meals for debugging
-        // exit;
+    {
+        if (Application::$app->user) {
+            // Retrieve purchased meals from the request body
+            $purchasedMeals = Application::$app->request->getBody();
+            // error_log(print_r($orderId, true)); // Log the purchased meals for debugging
+            // exit;
 
-        foreach ($purchasedMeals as $meal) {
-            // Dump meal ID
-            // error_log("Meal ID: " . $meal['id']);
-        
-            if (!isset($meal['id'], $meal['quantity'])) {
-                echo json_encode(['error' => 'Invalid meal data']);
-                return;
+            foreach ($purchasedMeals as $meal) {
+                // Dump meal ID
+                // error_log("Meal ID: " . $meal['id']);
+            
+                if (!isset($meal['id'], $meal['quantity'])) {
+                    echo json_encode(['error' => 'Invalid meal data']);
+                    return;
+                }
+            
+                $orderMeal = new OrderMeals();
+                $orderMeal->order_id = $meal['order_id']; // Assuming you have the order ID from the request
+                $orderMeal->meal_id = $meal['id'];
+                $orderMeal->quantity = $meal['quantity'];
+                $orderMeal->user_id = $meal['user_id']; // Assuming you have the user ID from the session
+                $orderMeal->status = $meal['status']; // Set the status to 'pending' or any other default value
+            
+                if (!$orderMeal->save()) {
+                    echo json_encode(['error' => 'Failed to save order meal for meal ID ' . $meal['id']]);
+                    return;
+                }
             }
-        
-            $orderMeal = new OrderMeals();
-            $orderMeal->order_id = $meal['order_id']; // Assuming you have the order ID from the request
-            $orderMeal->meal_id = $meal['id'];
-            $orderMeal->quantity = $meal['quantity'];
-            $orderMeal->user_id = $meal['user_id']; // Assuming you have the user ID from the session
-            $orderMeal->status = $meal['status']; // Set the status to 'pending' or any other default value
-        
-            if (!$orderMeal->save()) {
-                echo json_encode(['error' => 'Failed to save order meal for meal ID ' . $meal['id']]);
-                return;
-            }
+            
+            
+
+            echo json_encode(['success' => 'Order meals processed successfully']);
+        } else {
+            echo json_encode(['error' => 'No user is logged in']);
         }
-        
-        
-
-        echo json_encode(['success' => 'Order meals processed successfully']);
-    } else {
-        echo json_encode(['error' => 'No user is logged in']);
     }
-}
 
     // Function to get order meals data
     public function getBookedData($user_id)
@@ -275,7 +275,7 @@ class OrderController extends Controller
     {
         $body = json_decode(file_get_contents('php://input'), true);
 
-        if (!isset($body['order_id']) || !isset($body['order_status'])) {
+        if (!isset($body['order_id']) || !isset($body['order_status']) || !isset($body['steward_id'])) {
             http_response_code(400);
             echo json_encode(['error' => 'Invalid request data']);
             return;
@@ -283,6 +283,7 @@ class OrderController extends Controller
 
         $orderId = $body['order_id'];
         $newStatus = $body['order_status'];
+        $stewardId = $body['steward_id'];
 
         // Validate order status
         if (!in_array($newStatus, [0, 1, 2])) { 
@@ -299,9 +300,10 @@ class OrderController extends Controller
             echo json_encode(['error' => 'Order not found']);
             return;
         }
-        
-        // Update the order status
+
+        // Update the order status and steward ID
         $order->order_status = $newStatus;
+        $order->steward_id = $stewardId;
 
         if ($order->update()) {
             http_response_code(200);

@@ -15,6 +15,7 @@ class Order extends OrderModel
     public string $user_id = '';
     public string $reservation_no = '';
     public int $order_price;
+    public int $steward_id = 0;
 
     public static function tableName(): string
     {
@@ -38,7 +39,7 @@ class Order extends OrderModel
 
     public function attributes(): array
     {
-        return ['order_id', 'order_date', 'order_time', 'order_status', 'branch_id', 'reservation_no', 'user_id', 'order_price'];
+        return ['order_id', 'order_date', 'order_time', 'order_status', 'branch_id', 'reservation_no', 'user_id', 'order_price', 'steward_id'];
     }
 
     public function rules(): array
@@ -46,12 +47,13 @@ class Order extends OrderModel
         return [
             'order_id' => [self::RULE_REQUIRED],
             'order_date' => [self::RULE_REQUIRED],
-            'order_type' => [self::RULE_REQUIRED],
+            'order_time' => [self::RULE_REQUIRED],
             'order_status' => [self::RULE_REQUIRED],
             'branch_id' => [self::RULE_REQUIRED],
             'user_id' => [self::RULE_REQUIRED],
             'reservation_no' => [self::RULE_REQUIRED],
             'order_price' => [self::RULE_REQUIRED],
+            'steward_id' => [self::RULE_REQUIRED],
         ];
     }
 
@@ -252,6 +254,7 @@ class Order extends OrderModel
             'user_id' => $this->user_id,     
             'reservation_no' => $this->reservation_no,
             'order_price' => $this->order_price,
+            'steward_id' => $this->steward_id,
         ];
     }
 
@@ -302,30 +305,27 @@ class Order extends OrderModel
         $tableName = static::tableName();
         $attributes = $this->attributes();
         $params = array_map(fn($attr) => "$attr = :$attr", $attributes);
-        
-        // Assuming primaryKey() returns a string key name
+
         $primaryKey = static::primaryKey();
         $sql = "UPDATE $tableName SET " . implode(', ', $params) . " WHERE $primaryKey = :$primaryKey";
-        
-        // Ensure prepare method is available and connects to PDO
-        $statement = self::prepare($sql);  // Ensure prepare is implemented correctly
-        
-        // Bind attribute values
+
+        $statement = self::prepare($sql);
+
         foreach ($attributes as $attribute) {
             $statement->bindValue(":$attribute", $this->{$attribute});
         }
         $statement->bindValue(":$primaryKey", $this->{$primaryKey});
-    
-        // Execute statement and return result
-        try {
-            return $statement->execute();
-        } catch (\Exception $e) {
-            // Error handling here
-            echo "Update failed: " . $e->getMessage();
-            return false;
-        }
-    }
 
-    
+        try {
+            if ($statement->execute()) {
+                error_log("Order updated successfully: " . json_encode($this));
+                return true;
+            }
+        } catch (\PDOException $e) {
+            error_log("Update failed: " . $e->getMessage());
+        }
+
+        return false;
+    }
 
 }
