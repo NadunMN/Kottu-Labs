@@ -10,52 +10,113 @@ use app\models\BranchMeal;
 
 class ManagerController extends Controller
 {
-    public function addmenuItems(){
+    public function addmenuItems() {
         $meal = new Meal();
-        $meal->load(Application::$app->request->getBody());
         
+        // Debug to see what's coming in
+        error_log("FILES: " . print_r($_FILES, true));
+        error_log("POST: " . print_r($_POST, true));
+        
+        // Handle file upload
+        $uploadedFile = $_FILES['meal_photo'] ?? null;
+        $filePath = '';
+        
+        if ($uploadedFile && $uploadedFile['error'] === UPLOAD_ERR_OK) {
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            if (!in_array($uploadedFile['type'], $allowedTypes)) {
+                echo json_encode(['success' => false, 'message' => 'Unsupported file type']);
+                return;
+            }
+        
+            if ($uploadedFile['size'] > 2 * 1024 * 1024) {
+                echo json_encode(['success' => false, 'message' => 'File is too large']);
+                return;
+            }
+        
+            // Define target directory for images
+            $targetDir = "public/uploads/menu/";
+        
+            // Create directory if it doesn't exist
+            if (!file_exists($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+        
+            // Generate unique filename
+            $fileName = uniqid() . "_" . basename($uploadedFile["name"]);
+            $targetFilePath = $targetDir . $fileName;
+        
+            // Move uploaded file to target directory
+            if (move_uploaded_file($uploadedFile["tmp_name"], $targetFilePath)) {
+                $filePath = "/" . $targetFilePath; // Add leading slash for URL formatting
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to upload image']);
+                return;
+            }
+        }
+        
+        // Load form data
+        $meal->load($_POST);
+        
+        // Translate meal_description ID to text
+        if (isset($_POST['meal_description'])) {
+            $descriptionMap = [
+                '1' => 'All',
+                '2' => 'Classic Kottu',
+                '3' => 'Dolphin Kottu',
+                '4' => 'Cheese Kottu',
+                '5' => 'String Hopper Kottu',
+                '6' => 'KL Special Fried Rice',
+                '7' => 'Pasta',
+                '8' => 'Appetizers',
+                '9' => 'KL Inventions',
+                '10' => 'Wraps & Rotti Sandwiches',
+                '11' => 'Parata',
+                '12' => 'Devilled Portions',
+                '13' => 'Mocktails',
+                '14' => 'Beverages'
+            ];
+            
+            $id = $_POST['meal_description'];
+            if (isset($descriptionMap[$id])) {
+                $meal->meal_description = $descriptionMap[$id];
+            }
+        }
+        
+        // Set the image path if an image was uploaded
+        if ($filePath) {
+            $meal->meal_photo = $filePath;
+        }
+    
         try {
+            // Add the meal
             if ($meal->add()) {
-
                 $mealId = $meal->meal_id;
+    
+                // Get the branch_id of the logged-in manager
+                $manager = Application::$app->user;
+                $branchId = $manager->branch_id;
+    
+                // Create branch-meal relationship
                 $branchMeal = new BranchMeal();
                 $branchMeal->meal_id = $mealId;
-
-                $branches = [];
-                foreach (Application::$app->request->getBody() as $key => $value) {
-                    // Assuming branch keys are named like branch2, branch3, etc.
-                    if (strpos($key, 'branch') === 0) {
-                        $branches[] = $value;
-                    }
+                $branchMeal->branch_id = $branchId;
+                $branchMeal->meal_status = 1; // default to active
+    
+                if ($branchMeal->add()) {
+                    echo json_encode(['success' => true, 'meal_id' => $mealId]);
+                } else {
+                    throw new \Exception('Failed to add to branch_meal: ' . json_encode($branchMeal->errors));
                 }
-
-                
-            if (count($branches) > 0) {
-                foreach ($branches as $branchId) {
-                    $branchMeal = new BranchMeal();
-                    $branchMeal->meal_id = $mealId;
-                    $branchMeal->branch_id = $branchId;
-
-                    if (!$branchMeal->add()) {
-                        throw new \Exception('Failed to add meal to branches_meal for branch ' . $branchId . ': ' . json_encode($branchMeal->errors));
-                    }
-                }
-
-                
-                echo json_encode(['success' => true]);
-            } else {
-                throw new \Exception('No branch IDs provided');
-            }
-
-            
+    
             } else {
                 throw new \Exception('Meal validation or save failed: ' . json_encode($meal->errors));
             }
         } catch (\Exception $e) {
             error_log($e->getMessage());
-            echo json_encode(['success' => false, 'errors' => $meal->errors, 'message' => $e->getMessage()]);
+            echo json_encode(['success' => false, 'errors' => $meal->errors ?? [], 'message' => $e->getMessage()]);
         }
     }
+    
 
     //get menu data
     public function getmenuItems()
