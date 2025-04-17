@@ -188,8 +188,15 @@ fetch("/menuitem/data")
                                             
 
                                             <div class="action-buttons">
-                                                <button class="edit-btn" meal-id='${meal.meal_id}'>Edit</button>
-                                                <button class="delete-btn" meal-id ='${meal.meal_id}'>Delete</button>
+                                              <button class="status-btn ${meal.meal_status == 1
+                                          ? "available" : "unavailable"
+                                        }">
+                                                ${
+                                                  meal.meal_status == 1
+                                                    ? "Available"
+                                                    : "Unavailable"
+                                                }
+                                            </button>
                                             </div>
                                         </td>
                                     `;
@@ -197,6 +204,42 @@ fetch("/menuitem/data")
         // Append the row directly to the table body
         document.getElementById("table-content").appendChild(row);
       });
+
+      const statusButtons = document.querySelectorAll(".status-btn");
+                statusButtons.forEach((button) => {
+                  button.addEventListener("click", () => {
+                    const row = button.closest("tr");
+                    const mealId = row.querySelector(".meal-id").textContent.trim();
+                    const isAvailable = button.classList.contains("available");
+                    const newStatus = isAvailable ? 0 : 1;
+                
+                    fetch("/menuitem/status", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({
+                        meal_id: mealId,
+                        status: newStatus,
+                      }),
+                    })
+                      .then((res) => res.json())
+                      .then((data) => {
+                        if (data.success) {
+                          button.classList.toggle("available");
+                          button.classList.toggle("unavailable");
+                          button.textContent = newStatus ? "Available" : "Unavailable";
+                        } else {
+                          alert("Failed to update status.");
+                        }
+                      })
+                      .catch((err) => {
+                        console.error("Error:", err);
+                        alert("Something went wrong.");
+                      });
+                  });
+                });
+
 
       // Get Elements
       const openFormBtn = document.querySelector(".add-item-btn");
@@ -220,45 +263,45 @@ fetch("/menuitem/data")
       });
 
       // Add event listeners to the status buttons to toggle availability
-      const statusButtons = document.querySelectorAll(".status-btn");
-      statusButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          if (button.classList.contains("available")) {
-            button.classList.remove("available");
-            button.classList.add("unavailable");
-            button.textContent = "Unavailable";
-          } else {
-            button.classList.remove("unavailable");
-            button.classList.add("available");
-            button.textContent = "Available";
-          }
-        });
-      });
+      // const statusButtons = document.querySelectorAll(".status-btn");
+      // statusButtons.forEach((button) => {
+      //   button.addEventListener("click", () => {
+      //     if (button.classList.contains("available")) {
+      //       button.classList.remove("available");
+      //       button.classList.add("unavailable");
+      //       button.textContent = "Unavailable";
+      //     } else {
+      //       button.classList.remove("unavailable");
+      //       button.classList.add("available");
+      //       button.textContent = "Available";
+      //     }
+      //   });
+      // });
 
       // Edit Button Event Listener
-      document.querySelectorAll(".edit-btn").forEach((button) => {
-        button.addEventListener("click", function () {
-          mealId = button.getAttribute("meal-id");
-          console.log(mealId);
-          const row = button.closest("tr");
-          const mealName = row.querySelector("td:nth-child(2)").innerText;
-          const mealDescription =
-            row.querySelector("td:nth-child(3)").innerText;
-          const mealPrice = row
-            .querySelector("td:nth-child(4)")
-            .innerText.replace("Rs.", "");
+      // document.querySelectorAll(".edit-btn").forEach((button) => {
+      //   button.addEventListener("click", function () {
+      //     mealId = button.getAttribute("meal-id");
+      //     console.log(mealId);
+      //     const row = button.closest("tr");
+      //     const mealName = row.querySelector("td:nth-child(2)").innerText;
+      //     const mealDescription =
+      //       row.querySelector("td:nth-child(3)").innerText;
+      //     const mealPrice = row
+      //       .querySelector("td:nth-child(4)")
+      //       .innerText.replace("Rs.", "");
 
-          // Open the form and fill it with the existing data
-          addItemForm.classList.remove("hidden");
-          document.getElementById("item-name").value = mealName;
-          document.getElementById("item-price").value = mealPrice;
-          document.getElementById("meal_description").value = mealDescription;
+      //     // Open the form and fill it with the existing data
+      //     addItemForm.classList.remove("hidden");
+      //     document.getElementById("item-name").value = mealName;
+      //     document.getElementById("item-price").value = mealPrice;
+      //     document.getElementById("meal_description").value = mealDescription;
 
-          // Change form action to update
-          addForm.removeEventListener("submit", addNewItem);
-          addForm.addEventListener("submit", updateItem);
-        });
-      });
+      //     // Change form action to update
+      //     addForm.removeEventListener("submit", addNewItem);
+      //     addForm.addEventListener("submit", updateItem);
+      //   });
+      // });
 
       function addNewItem(event) {
         event.preventDefault();
@@ -301,46 +344,46 @@ fetch("/menuitem/data")
       }
 
       // Function to update an existing item
-      function updateItem(event) {
-        event.preventDefault();
-        const formData = new FormData(addForm);
-        const fileInput = document.getElementById("meal_photo");
+      // function updateItem(event) {
+      //   event.preventDefault();
+      //   const formData = new FormData(addForm);
+      //   const fileInput = document.getElementById("meal_photo");
 
-        if (fileInput.files[0]) {
-          formData.append(
-            "meal_photo",
-            "/Photo/Menu/" + fileInput.files[0].name
-          );
-        }
+      //   if (fileInput.files[0]) {
+      //     formData.append(
+      //       "meal_photo",
+      //       "/Photo/Menu/" + fileInput.files[0].name
+      //     );
+      //   }
 
-        let data = Object.fromEntries(formData.entries());
-        data.meal_id = mealId;
-        const requestBody = JSON.stringify(data);
-        console.log("Request Body:", requestBody);
-        fetch("/menuitem/update", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: requestBody,
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log("Success:", data);
-            addItemForm.classList.add("hidden");
-            resetForm();
-            addForm.removeEventListener("submit", updateItem);
-            addForm.addEventListener("submit", addNewItem);
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
-      }
+      //   let data = Object.fromEntries(formData.entries());
+      //   data.meal_id = mealId;
+      //   const requestBody = JSON.stringify(data);
+      //   console.log("Request Body:", requestBody);
+      //   fetch("/menuitem/update", {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: requestBody,
+      //   })
+      //     .then((response) => {
+      //       if (!response.ok) {
+      //         throw new Error(`HTTP error! status: ${response.status}`);
+      //       }
+      //       return response.json();
+      //     })
+      //     .then((data) => {
+      //       console.log("Success:", data);
+      //       addItemForm.classList.add("hidden");
+      //       resetForm();
+      //       addForm.removeEventListener("submit", updateItem);
+      //       addForm.addEventListener("submit", addNewItem);
+      //     })
+      //     .catch((error) => {
+      //       console.error("Error:", error);
+      //     });
+      // }
 
       // Function to reset the form
       function resetForm() {
