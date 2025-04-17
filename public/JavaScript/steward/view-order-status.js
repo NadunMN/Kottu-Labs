@@ -1,3 +1,5 @@
+let stewardId = null;
+
 async function fetchOrders(selectedDate = null, selectedTime = null) {
     try {
         // Fetch order data
@@ -40,6 +42,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                 console.error(userData.error);
             } else {
                 branch_id = userData.branch_id;
+                stewardId = userData.id;
             }
         } catch (error) {
             console.error('Error fetching user data:', error);
@@ -156,15 +159,21 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
         document.querySelectorAll(".confirm-btn").forEach(button => {
             button.addEventListener("click", async (event) => {
                 const orderId = event.target.getAttribute("data-order-id");
+                if (!stewardId) {
+                    alert("Steward ID is not available. Please try again.");
+                    return;
+                }
+                // Log the payload being sent to the server
+        console.log("Payload:", { order_id: orderId, order_status: 2, steward_id: stewardId });
                 try {
                     const response = await fetch(`/order/confirm`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify({ order_id: orderId, order_status: 2 }) // Update status to 'Completed'
+                        body: JSON.stringify({ order_id: orderId, order_status: 2, steward_id: stewardId }) // Update status to 'Completed'
                     });
-
+                    console.log(response);
                     if (response.ok) {
                         alert("Order status updated to Completed!");
                         fetchOrders();
