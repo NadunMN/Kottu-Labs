@@ -319,6 +319,26 @@ class OrderController extends Controller
         }
     }
 
+    // Function to get order ID
+    public function getOrderIdByReservation($reservationId) {
+        if (!$reservationId) {
+            echo json_encode(['error' => 'Reservation ID is required']);
+            http_response_code(400);
+            return;
+        }
+    
+        $order = Order::findOrderByReservationId($reservationId);
+    
+        if (!$order) {
+            echo json_encode(['error' => 'No order found for the given reservation ID']);
+            http_response_code(404);
+            return;
+        }
+    
+        echo json_encode(['order_id' => $order['order_id']]);
+        http_response_code(200);
+    }
+
 
 
 

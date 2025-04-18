@@ -330,4 +330,16 @@ class Order extends OrderModel
         return false;
     }
 
+    public static function findOrderByReservationId($reservationId) {
+        try {
+            $statement = Application::$app->db->prepare("SELECT order_id FROM orders WHERE reservation_no = :reservationId");
+            $statement->bindValue(':reservationId', $reservationId);
+            $statement->execute();
+            return $statement->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("Error fetching order by reservation ID: " . $e->getMessage());
+            return false;
+        }
+    }    
+
 }
