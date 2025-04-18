@@ -377,7 +377,7 @@ document.getElementById('payNowBtn').addEventListener('click', async () => {
     }
 
     // Navigate to the payments page if an order exists
-    window.location.href = `/payment?orderId=${orderId}`;
+    window.location.href = `/payment?reservationId=${reservationId}`;
 });
 
 // Update quantity with server sync

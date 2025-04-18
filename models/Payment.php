@@ -163,6 +163,32 @@ class Payment extends PaymentModel
         }        
     }
 
+    
+public static function findOrders($where)
+{
+    $attributes = array_keys($where);
+    $sql = $attributes ? " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes)) : "";
+
+    $statement = self::prepare("
+        SELECT orders.*, order_meals.meal_id, order_meals.quantity
+        FROM orders
+        LEFT JOIN order_meals ON orders.order_id = order_meals.order_id
+        $sql
+    ");
+
+    foreach ($where as $key => $value) {
+        $statement->bindValue(":$key", $value);
+    }
+
+    try {
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    } catch (\PDOException $e) {
+        error_log("SQL Error in findOrders: " . $e->getMessage());
+        throw $e;
+    }
+}
+
     public function toArray(): array
     {
         return [

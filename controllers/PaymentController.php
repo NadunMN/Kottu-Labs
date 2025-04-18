@@ -83,54 +83,80 @@ class PaymentController extends Controller
         }
     }
 
-    public function initiatePayment(){
+    public function getOrderDetails()
+    {
+        $reservationId = $_GET['reservationId'] ?? null;
+
+        if (!$reservationId) {
+            error_log("Reservation ID is missing");
+            http_response_code(400); // Bad Request
+            echo json_encode(['error' => 'Reservation ID is missing']);
+            return;
+        }
 
         try {
-            $requestBody = json_decode(file_get_contents("php://input"), true);
+            // Fetch all orders for the reservation
+            error_log("Fetching orders for reservation ID: $reservationId");
+            $orders = Payment::findOrders(['reservation_no' => $reservationId]);
 
-            if (!isset($requestBody['order_id'], $requestBody['items'], $requestBody['amount'])) {
-                http_response_code(400); // Bad Request
-                echo json_encode(['error' => 'Invalid input data']);
+            if (!$orders) {
+                http_response_code(404); // Not Found
+                echo json_encode(['error' => 'No orders found for the reservation']);
                 return;
             }
 
-            $merchant_id = "1229387";
-            $merchant_secret = "MjY1MjE1MTEzNTUxOTQ0MzEwMTg5ODU5NzI4MTMzMTUxMTczMDM=";
-            $loggedInUser = Application::$app->user;
+            // Calculate total amount and prepare item details
+            $totalAmount = 0;
+            $items = [];
+            foreach ($orders as $order) {
+                $totalAmount += $order['order_price'] ?? 0; // Default to 0 if order_price is missing
+                $items[] = [
+                    'meal_id' => $order['meal_id'] ?? null,
+                    'quantity' => $order['quantity'] ?? 0,
+                ];
+            }
 
-            if (!$loggedInUser) {
-                http_response_code(500); // Internal Server Error
-                echo json_encode(['error' => 'User data is missing or invalid']);
+            // Get logged-in user details
+            $user = Application::$app->user;
+
+            if (!$user) {
+                http_response_code(401); // Unauthorized
+                echo json_encode(['error' => 'User not logged in']);
                 return;
             }
+            // Merchant credentials
+            $merchant_id = '1229387'; // Replace with your actual Merchant ID
+            $merchant_secret = 'MjY1MjE1MTEzNTUxOTQ0MzEwMTg5ODU5NzI4MTMzMTUxMTczMDM='; // Replace with your actual Merchant Secret
+
+            // Prepare data for PayHere
             $data = [
-                'merchant_id' => $merchant_id,
-                'return_url' => 'http://localhost/payment/success',
-                'cancel_url' => 'http://yourdomain.com/payment/cancel',
-                'notify_url' => 'http://yourdomain.com/payment/notify',
-                'order_id' => $requestBody['order_id'],
-                'items' => $requestBody['items'],
-                'amount' => $requestBody['amount'],
+                'merchant_id' => $merchant_id, // Replace with your Merchant ID
+                'return_url' => 'http://localhost:8080/payment/success',
+                'cancel_url' => 'http://localhost:8080/payment/cancel',
+                'notify_url' => 'http://localhost:8080/payment/notify',
+                'order_id' => $reservationId . '_order' . $order['order_id'],
+                'items' => $items,
+                'amount' => number_format($totalAmount, 2, '.', ''),
                 'currency' => 'LKR',
-                'first_name' => $loggedInUser->firstname, // Replace with dynamic user data
-                'last_name' => $loggedInUser->lastname,
-                'email' => $loggedInUser->email,
-                'phone' => $loggedInUser->mobile_number,
-                'address' => $loggedInUser->address,
+                'first_name' => $user->firstname,
+                'last_name' => $user->lastname,
+                'email' => $user->email,
+                'phone' => $user->mobile_number,
+                'address' => $user->address,
                 'city' => 'Colombo',
-                'country' => 'Sri Lanka'
+                'country' => 'Sri Lanka',
             ];
 
-            // Generate the signature
+            // Generate the hash
             $data['hash'] = strtoupper(md5(
                 $merchant_id . $data['order_id'] . $data['amount'] . $data['currency'] . strtoupper(md5($merchant_secret))
             ));
 
             echo json_encode($data);
-        } catch (Exception $e) {
-            error_log("Initiate Payment Error: " . $e->getMessage()); // Log the exception
+        } catch (\Exception $e) {
+            error_log("Error fetching order details: " . $e->getMessage());
             http_response_code(500); // Internal Server Error
-            echo json_encode(['error' => 'Failed to initiate payment', 'details' => $e->getMessage()]);
+            echo json_encode(['error' => 'Failed to fetch order details', 'details' => $e->getMessage()]);
         }
     }
 
@@ -171,4 +197,5 @@ class PaymentController extends Controller
     {
         echo "Payment was canceled. Redirect the user to a cancellation page.";
     }
+    
   }

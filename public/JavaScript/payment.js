@@ -1,67 +1,66 @@
-function showCardPayment(){
-    document.getElementById("cash-payment").classList.add("hidden");
-    var xhttp=new XMLHttpRequest();
-    xhttp.onreadystatechange=()=>{
-        if(xhttp.readyState == 4 && xhttp.status == 200){
-            // alert(xhttp.responseText);
-            var obj= JSON.parse(xhttp.responseText);
-            
-            // Payment completed. It can be a successful failure.
-            payhere.onCompleted = function onCompleted(orderId) {
-                console.log("Payment completed. OrderID:" + orderId);
-                // Note: validate the payment and show success or failure page to the customer
-            };
-
-            // Payment window closed
-            payhere.onDismissed = function onDismissed() {
-                // Note: Prompt user to pay again or show an error page
-                console.log("Payment dismissed");
-            };
-
-            // Error occurred
-            payhere.onError = function onError(error) {
-                // Note: show an error page
-                console.log("Error:"  + error);
-            };
-
-            // Put the payment variables here
-            var payment = {
-                "sandbox": true,
-                "merchant_id": "1229387", 
-                "return_url": "http://localhost:8080/payment",
-                "cancel_url": "http://localhost:8080/payment",
-                "notify_url": "http://sample.com/notify",
-                "order_id": obj["order_id"],
-                "items": "Door bell wireles",
-                "amount": obj["amount"],
-                "currency": obj["currency"],
-                "hash": obj["hash"], 
-                "first_name": "Saman",
-                "last_name": "Perera",
-                "email": "samanp@gmail.com",
-                "phone": "0771234567",
-                "address": "No.1, Galle Road",
-                "city": "Colombo",
-                "country": "Sri Lanka",
-                "delivery_address": "No. 46, Galle road, Kalutara South",
-                "delivery_city": "Kalutara",
-                "delivery_country": "Sri Lanka",
-                "custom_1": "",
-                "custom_2": ""
-            };
-            payhere.startPayment(payment);
-        }
-    }
-    xhttp.open("GET","pay.php",true);
-    xhttp.send();
+// Function to show the card payment section
+function showCardPayment() {
+  document.getElementById('cash-payment').classList.add('hidden');
+  initiatePayHerePayment();
 }
 
+// Function to show the cash payment section
 function showCashPayment() {
-    document.getElementById("cash-payment").classList.remove("hidden");
-    document.getElementById("card-payment").classList.add("hidden");
+  document.getElementById('cash-payment').classList.remove('hidden');
 }
 
-function continuePayment() {
-    alert("You chose to pay by cash. A waiter will assist you.");
-    window.location.href = "http://localhost:8080/payment";
+// Function to get query parameters from the URL
+function getQueryParam(param) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
+}
+
+// Get the reservationId from the URL
+const reservationId = getQueryParam('reservationId');
+console.log("Reservation ID:", reservationId);
+// Function to initiate PayHere payment
+function initiatePayHerePayment() {
+  if (!reservationId) {
+      alert("Reservation ID is missing!");
+      return;
+  }
+
+  // Fetch order details for the reservation
+  fetch(`/payment/getOrderDetails?reservationId=${reservationId}`)
+      .then(response => response.json())
+      .then(data => {
+          if (data.error) {
+              alert(data.error);
+              return;
+          }
+          console.log("Order details:", data);
+
+          // PayHere payment configuration
+          const payment = {
+              sandbox: true, // Set to false for production
+              merchant_id: data.merchant_id,
+              return_url: data.return_url,
+              cancel_url: data.cancel_url,
+              notify_url: data.notify_url,
+              order_id: data.order_id,
+              items: Array.isArray(data.items) ? data.items.map(item => `${item.meal_id} x${item.quantity}`).join(', ') : data.items,
+              amount: data.amount,
+              currency: data.currency,
+              first_name: data.first_name,
+              last_name: data.last_name,
+              email: data.email,
+              phone: data.phone,
+              address: data.address,
+              city: data.city,
+              country: data.country,
+              hash: data.hash,
+          };
+          console.log("Payment Object:", payment);
+          // Initialize PayHere payment
+          payhere.startPayment(payment);
+      })
+      .catch(error => {
+          console.error("Error initiating payment:", error);
+          alert("Failed to initiate payment. Please try again.");
+      });
 }
