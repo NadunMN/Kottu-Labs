@@ -270,6 +270,7 @@ $app->router->post('/payment/initiate', [$paymentController, 'initiatePayment'])
 $app->router->post('/payment/notify', [$paymentController, 'handleNotify']);
 $app->router->get('/payment/success', [$paymentController, 'handleReturn']);
 $app->router->get('/payment/cancel', [$paymentController, 'handleCancel']);
+$app->router->get('/payment/getOrderDetails', [$paymentController, 'getOrderDetails']);
 
 
 
