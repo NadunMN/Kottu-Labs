@@ -287,13 +287,21 @@ document.addEventListener("DOMContentLoaded", () => {
                     const mealPrice = row
                       .querySelector("td:nth-child(4)")
                       .innerText.replace("Rs.", "");
-          
+                      
                     // Open the form and fill it with the existing data
                     addItemForm.classList.remove("hidden");
                     addItemForm.classList.add("show");
                     document.getElementById("item-name").value = mealName;
                     document.getElementById("item-price").value = mealPrice;
-                    document.getElementById("meal_description").value = mealDescription;
+                    const descriptionDropdown = document.getElementById("meal_description");
+                    const options = descriptionDropdown.options;
+
+                    for (let i = 0; i < options.length; i++) {
+                      if (options[i].text === mealDescription) {
+                        descriptionDropdown.selectedIndex = i;
+                        break;
+                      }
+                    }
           
                     // Change form action to update
                     addForm.removeEventListener("submit", addNewItem);
@@ -337,8 +345,11 @@ document.addEventListener("DOMContentLoaded", () => {
                       "/Photo/Menu/" + fileInput.files[0].name
                     );
                   }
+                  const mealDescriptionSelect = document.getElementById("meal_description");
+                  const selectedText = mealDescriptionSelect.options[mealDescriptionSelect.selectedIndex].text;
+                  formData.set("meal_description", selectedText);
                   let data = Object.fromEntries(formData.entries());
-                  data.older_id = mealId;
+                  data.meal_id = mealId;
                   const requestBody = JSON.stringify(data);
                   console.log("Request Body:", requestBody);
                   fetch("/menuitem/update", {

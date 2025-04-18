@@ -336,6 +336,56 @@ async function handleBooking() {
     }
 }
 
+// Payment button event listener
+
+document.getElementById('payNowBtn').addEventListener('click', async () => {
+  // Check if there are items in the cart
+  if (cartItems.length === 0) {
+      showToast('Your cart is empty!', { type: 'info' });
+      return;
+  }
+
+  // Prepare payment data
+  const paymentData = {
+      order_id: `ORDER_${Date.now()}`, // Generate a unique order ID
+      items: cartItems.map(item => item.name).join(', '), // Combine item names
+      amount: cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2) // Calculate total amount
+  };
+  console.log('Payment data:', paymentData); // Debugging log
+  try {
+      // Send payment data to the backend
+      const response = await fetch('/payment/initiate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(paymentData)
+      });
+
+      if (!response.ok) {
+          showToast('Failed to initiate payment. Please try again.', { type: 'error' });
+          throw new Error('Payment initiation failed');
+      }
+
+      const payHereData = await response.json();
+
+      // Create a form dynamically and submit it to PayHere
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'https://sandbox.payhere.lk/pay/checkout'; // Use sandbox URL for testing
+
+      for (const key in payHereData) {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = key;
+          input.value = payHereData[key];
+          form.appendChild(input);
+      }
+
+      document.body.appendChild(form);
+      form.submit(); // Redirect to PayHere
+  } catch (error) {
+      console.error('Payment initiation error:', error);
+  }
+});
 
 // Update quantity with server sync
 function updateQuantity(id, change) {

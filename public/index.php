@@ -258,9 +258,13 @@ $app->router->get('/staff/data', [$userController, 'getStaff']);
 $app->router->post('/staff/delete', [$userController, 'deleteStaff']);
 
 
-//get payment data
+//payment
 $app->router->get('/payment/data', [$paymentController, 'getPaymentData']);
 $app->router->post('/payment/confirm', [$paymentController, 'updatePaymentStatus']);
+$app->router->post('/payment/initiate', [$paymentController, 'initiatePayment']);
+$app->router->post('/payment/notify', [$paymentController, 'handleNotify']);
+$app->router->get('/payment/success', [$paymentController, 'handleReturn']);
+$app->router->get('/payment/cancel', [$paymentController, 'handleCancel']);
 
 
 

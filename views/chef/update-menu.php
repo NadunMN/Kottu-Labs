@@ -13,7 +13,7 @@
     <div class="view-branch-menu-section" id="main-content">   
     </div>
 
-    <script src="/JavaScript/admin/updateMenu.js"></script>
+    <script src="/JavaScript/chef/updateMenu.js"></script>
 </body>
 
 </html>
