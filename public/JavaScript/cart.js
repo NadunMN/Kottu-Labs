@@ -338,55 +338,46 @@ async function handleBooking() {
     }
 }
 
-// Payment button event listener
+async function fetchOrderId(reservationId) {
+    try {
+        const response = await fetch(`/getOrderIdByReservation?reservationId=${reservationId}`);
+        
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Server error response:', errorText);
+            return null;
+        }
+
+        const data = await response.json();
+        if (data.error) {
+            console.error(data.error);
+            showToast('No order found for this reservation.', { type: 'warning' });
+            return null;
+        }
+
+        console.log('Order ID:', data.order_id);
+        return data.order_id;
+    } catch (error) {
+        console.error('Error fetching order ID:', error);
+        return null;
+    }
+}
 
 document.getElementById('payNowBtn').addEventListener('click', async () => {
-  // Check if there are items in the cart
-  if (cartItems.length === 0) {
-      showToast('Your cart is empty!', { type: 'info' });
-      return;
-  }
+    if (!reservationId) {
+        showToast('Reservation ID is not available. Please try again later.', { type: 'error' });
+        return;
+    }
 
-  // Prepare payment data
-  const paymentData = {
-      order_id: `ORDER_${Date.now()}`, // Generate a unique order ID
-      items: cartItems.map(item => item.name).join(', '), // Combine item names
-      amount: cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2) // Calculate total amount
-  };
-  console.log('Payment data:', paymentData); // Debugging log
-  try {
-      // Send payment data to the backend
-      const response = await fetch('/payment/initiate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(paymentData)
-      });
+    const orderId = await fetchOrderId(reservationId);
 
-      if (!response.ok) {
-          showToast('Failed to initiate payment. Please try again.', { type: 'error' });
-          throw new Error('Payment initiation failed');
-      }
+    if (!orderId) {
+        showToast('No order to pay', { type: 'warning' });
+        return;
+    }
 
-      const payHereData = await response.json();
-
-      // Create a form dynamically and submit it to PayHere
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = 'https://sandbox.payhere.lk/pay/checkout'; // Use sandbox URL for testing
-
-      for (const key in payHereData) {
-          const input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = key;
-          input.value = payHereData[key];
-          form.appendChild(input);
-      }
-
-      document.body.appendChild(form);
-      form.submit(); // Redirect to PayHere
-  } catch (error) {
-      console.error('Payment initiation error:', error);
-  }
+    // Navigate to the payments page if an order exists
+    window.location.href = `/payment?orderId=${orderId}`;
 });
 
 // Update quantity with server sync
