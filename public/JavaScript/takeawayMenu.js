@@ -112,40 +112,53 @@ document.addEventListener("DOMContentLoaded", function () {
                         lengthMenu.innerHTML = data.length + " Meals Available";
                     }
 
-                    const mealCards = data.map(meal => `
-                        <div class="card">
-                            <div class="image-div">
-                                <img src="${meal.meal_photo}" alt="Product Image" class="card-image" />
-                            </div>
-                            <div class="card-label-wrapper">
-                                <div class="card-label ${meal.meal_status ? '' : 'not-available'}">
-                                <p>${meal.meal_status ? 'Available' : 'Not Available'}</p>
-                                </div>
-                                <div class="card-label-2">
-                                <p>${mealDescriptions[meal.meal_description]}</p>
-                                </div>
-                            </div>
-                            <div class="card-content">
-                                <h2 class="card-title">${meal.meal_name}</h2>
-                                <div class="card-price">Rs. ${meal.meal_price}</div>
 
-                                ${flag == 1 ? `
-                                    <button class="view-button add-to-cart" 
-                                    data-meal-id="${meal.meal_id}">
-                                    <img src="/Photo/icon/shopping-cart.png" alt=""/>
-                                    ADD TO CART
-                                    </button>
-                                ` : `
-                                    <button class="view-button add-to-cart" 
-                                    data-meal-id="${meal.meal_id}" disabled style="background-color: #6c757d; cursor: not-allowed;">
-                                    <img src="/Photo/icon/shopping-cart.png" alt=""/>
-                                    ADD TO CART
-                                    </button>
-                                `}
-                  
-                            </div>
+                    const mealCards = data.map(meal => `
+                      <div class="card">
+                        <div class="image-div">
+                          <img src="${meal.meal_photo}" alt="Product Image" class="card-image" />
                         </div>
+                        <div class="card-label-wrapper">
+                          <div class="card-label ${meal.meal_status ? '' : 'not-available'}">
+                          <p>${meal.meal_status ? 'Available' : 'Not Available'}</p>
+                          </div>
+                          <div class="card-label-2">
+                          <p>${mealDescriptions[meal.meal_description]}</p>
+                          </div>
+                        </div>
+                        <div class="card-content">
+                          <h2 class="card-title">${meal.meal_name}</h2>
+                          <div class="card-price">Rs. ${meal.meal_price}</div>
+
+                          ${flag == 1 ? `
+                            <button class="view-button add-to-cart" 
+                            data-meal-id="${meal.meal_id}">
+                            <img src="/Photo/icon/shopping-cart.png" alt=""/>
+                            ADD TO CART
+                            </button>
+                          ` : `
+                            <button class="view-button make-reservation" 
+                            style="background-color: #6c757d; cursor: pointer;">
+                            <img src="/Photo/icon/shopping-cart.png" alt=""/>
+                            ADD TO CART
+                            </button>
+                          `}
+                    
+                        </div>
+                      </div>
                     `).join('');
+
+                    // Add event listener for reservation button
+                    menuContainer.addEventListener('click', function(event) {
+                      const button = event.target.closest('.make-reservation');
+                      if (button) {
+                        showToast('Don\'t have a reservation first!', { type: 'warning', duration: 1000 });
+                        showToast('Please make a reservation first!', { type: 'info', duration: 2000 });
+                        // Redirect to reservation page or handle reservation logic
+                        // window.location.href = '/reservation';
+                      }
+                    });
+
 
                     menuContainer.innerHTML = mealCards;
                 }, 1000);
