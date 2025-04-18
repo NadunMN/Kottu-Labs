@@ -13,6 +13,7 @@ use app\models\Cart;
 use app\models\OrderMeals;
 use app\models\Payment;
 use app\models\takeawayCart;
+use Error;
 
 class OrderController extends Controller
 {
@@ -166,6 +167,8 @@ class OrderController extends Controller
         if (Application::$app->user) {
             $order = new Order();
             $order->loadData(Application::$app->request->getBody());
+
+            
     
             if ($order->save()) {
                 $orderId = $order->order_id;
@@ -176,13 +179,15 @@ class OrderController extends Controller
                 $payment->payment_amount = $order->order_price;
                 $payment->payment_status = 0; // Matches the int type (0 for pending)
                 $payment->order_id = $orderId;
-    
-              
+
     
                 // Generate a unique payment_id if not auto-increment
                 // Example using uniqid (adjust based on your needs)
                 $payment->payment_id = uniqid('pay_', true);
-    
+
+
+
+              
                 if ($payment->save()) {
                     echo json_encode(['order_id' => $orderId]);
                 } else {

@@ -10,12 +10,14 @@ class m0008_cart_table
 
         // cart table
         $SQL = "CREATE TABLE cart (
+             cart_id INT AUTO_INCREMENT PRIMARY KEY,
             user_id INT NOT NULL,
-            meal_id INT NOT NULL,
+            meal_id INT,
+            offer_id INT,
             quantity INT NOT NULL DEFAULT 1,
-            PRIMARY KEY (user_id, meal_id),
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-            FOREIGN KEY (meal_id) REFERENCES meals(meal_id) ON DELETE CASCADE
+            FOREIGN KEY (meal_id) REFERENCES meals(meal_id) ON DELETE CASCADE,
+            FOREIGN KEY (offer_id) REFERENCES offers(offer_id) ON DELETE CASCADE
         ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);
     }

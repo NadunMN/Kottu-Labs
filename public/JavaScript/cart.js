@@ -275,7 +275,7 @@ async function handleBooking() {
         order_price: cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)
     };
 
-    // console.log('Order data:', orderData);
+    console.log('Order data:', orderData);
 
 
 
@@ -295,6 +295,8 @@ async function handleBooking() {
         }
         const result = await response.json();
         const orderId = result.order_id; // Expect backend to return { order_id: xx }
+
+        console.log(result);
 
         showToast('Order placed successfully!', { type: 'success' });
         console.log('Order placed with ID:', orderId);

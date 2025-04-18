@@ -12,7 +12,7 @@ class m0011_ordertable_colunm
         $checkColumnSQL = "SHOW COLUMNS FROM orders LIKE 'chef_id';";
         $result = $db->pdo->query($checkColumnSQL)->fetch();
         if (!$result) {
-            $SQL = "ALTER TABLE orders ADD COLUMN chef_id INT,
+            $SQL = "ALTER TABLE orders ADD COLUMN chef_id INT NULL,
             ADD CONSTRAINT chef_user FOREIGN KEY (chef_id) REFERENCES users(id) ON DELETE CASCADE;";
             $db->pdo->exec($SQL);
         }
@@ -21,7 +21,7 @@ class m0011_ordertable_colunm
         $checkColumnSQL = "SHOW COLUMNS FROM orders LIKE 'steward_id';";
         $result = $db->pdo->query($checkColumnSQL)->fetch();
         if (!$result) {
-            $SQL = "ALTER TABLE orders ADD COLUMN steward_id INT,
+            $SQL = "ALTER TABLE orders ADD COLUMN steward_id INT NULL,
             ADD CONSTRAINT steward_user FOREIGN KEY (steward_id) REFERENCES users(id) ON DELETE CASCADE;";
             $db->pdo->exec($SQL);
         }

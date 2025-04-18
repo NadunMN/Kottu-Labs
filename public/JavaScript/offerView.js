@@ -68,21 +68,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="product-info">
                         <h1 class="product-title">${offer[0].offer_name || "No Title"}</h1>
                         <div class="price">Rs.${offer[0].offer_price || "0.00"}</div>
-                        <div class="reviews">${"★".repeat(offer.rating || 0)}${"☆".repeat(5 - (offer.rating || 0))} (${offer.reviews || 0} Reviews)</div>
+                        <div class="reviews">★★★★★★</div>
                         <p class="description">${offer[0].offer_description || "No Description"}</p>
 
-                        <div class="quantity-selector">
-                            <span class="quantity-label">Quantity:</span>
-                            <div class="quantity-input">
-                                <button class="quantity-btn minus">-</button>
-                                <input type="number" class="quantity-number" value="1" min="1">
-                                <button class="quantity-btn plus">+</button>
-                            </div>
-                        </div>
+                        
 
                         <div class="action-buttons">
-                            <button class="btn btn-cart" ${offer.status && offer.status.toLowerCase() === "out of stock" ? 'disabled' : ''}>
-                                ${offer.status && offer.status.toLowerCase() === "out of stock" ? "OUT OF STOCK" : "ADD TO CART"}
+                            <button class="btn btn-cart dinein" ${offer.status && offer.status.toLowerCase() === "out of stock" ? 'disabled' : ''}>
+                                ${offer.status && offer.status.toLowerCase() === "out of stock" ? "OUT OF STOCK" : "ADD TO DINEIN"}
+                            </button>
+
+                            <button class="btn btn-cart takeaway" ${offer.status && offer.status.toLowerCase() === "out of stock" ? 'disabled' : ''}>
+                                ${offer.status && offer.status.toLowerCase() === "out of stock" ? "OUT OF STOCK" : "ADD TO TAKEAWAY"}
                             </button>
                         </div>
 
@@ -99,6 +96,46 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div id="care" class="tab-content">Care instructions and maintenance...</div>
                     </div>
                 `;
+
+                // Add event listener for the Dine-In button
+                const dineinBtn = document.querySelector('.dinein');
+                if (dineinBtn) {
+                    dineinBtn.addEventListener('click', () => {
+                        // Create the data to send to the server
+                        const dineinData = {
+                            offerId: offerId, // Use the offerId from the URL
+                            type: 'dinein',
+                        };
+
+                        // Send the data to the server
+                        fetch('/cart/add', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(dineinData),
+                        })
+                            .then((response) => {
+                                if (!response.ok) {
+                                    throw new Error('Failed to add to Dine-In cart');
+                                }
+                                return response.json();
+                            })
+                            .then((data) => {
+                                console.log('Added to Dine-In cart:', data);
+                                alert('Item added to Dine-In cart successfully!');
+                            })
+                            .catch((error) => {
+                                console.error('Error adding to Dine-In cart:', error);
+                                alert('Failed to add item to Dine-In cart.');
+                            });
+                    });
+                }
+
+
+
+
+
 
                 // Insert offer details into the page
                 offerMain.innerHTML = offerDetail;

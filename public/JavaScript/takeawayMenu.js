@@ -152,8 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     menuContainer.addEventListener('click', function(event) {
                       const button = event.target.closest('.make-reservation');
                       if (button) {
-                        showToast('Don\'t have a reservation first!', { type: 'warning', duration: 1000 });
-                        showToast('Please make a reservation first!', { type: 'info', duration: 2000 });
+                        showToast('Please make a reservation first!', { type: 'info'});
                         // Redirect to reservation page or handle reservation logic
                         // window.location.href = '/reservation';
                       }

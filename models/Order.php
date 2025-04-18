@@ -15,7 +15,8 @@ class Order extends OrderModel
     public string $user_id = '';
     public string $reservation_no = '';
     public int $order_price;
-    public int $steward_id = 0;
+    public ?int $chef_id=null;
+    public ?int $steward_id= null;
 
     public static function tableName(): string
     {
@@ -39,7 +40,7 @@ class Order extends OrderModel
 
     public function attributes(): array
     {
-        return ['order_id', 'order_date', 'order_time', 'order_status', 'branch_id', 'reservation_no', 'user_id', 'order_price', 'steward_id'];
+        return ['order_id', 'order_date', 'order_time', 'order_status', 'branch_id', 'reservation_no', 'user_id', 'order_price','chef_id', 'steward_id'];
     }
 
     public function rules(): array
@@ -255,6 +256,7 @@ class Order extends OrderModel
             'reservation_no' => $this->reservation_no,
             'order_price' => $this->order_price,
             'steward_id' => $this->steward_id,
+            'chef_id' => $this->chef_id
         ];
     }
 
