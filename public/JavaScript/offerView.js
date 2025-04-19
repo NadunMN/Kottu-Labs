@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 ${offer.status && offer.status.toLowerCase() === "out of stock" ? "OUT OF STOCK" : "ADD TO DINEIN"}
                             </button>
 
-                            <button class="btn btn-cart takeaway" ${offer.status && offer.status.toLowerCase() === "out of stock" ? 'disabled' : ''}>
+                            <button id="takaway" class="btn btn-cart takeaway" ${offer.status && offer.status.toLowerCase() === "out of stock" ? 'disabled' : ''}>
                                 ${offer.status && offer.status.toLowerCase() === "out of stock" ? "OUT OF STOCK" : "ADD TO TAKEAWAY"}
                             </button>
                         </div>
@@ -169,6 +169,42 @@ document.addEventListener("DOMContentLoaded", function () {
                                 'Content-Type': 'application/json',
                             },
                             body: JSON.stringify(dineinData),
+                        })
+                            .then((response) => {
+                                if (!response.ok) {
+                                    throw new Error('Failed to add to Dine-In cart');
+                                }
+                                return response.json();
+                            })
+                            .then((data) => {
+                                console.log('Added to Dine-In cart:', data);
+                                alert('Item added to Dine-In cart successfully!');
+                            })
+                            .catch((error) => {
+                                console.error('Error adding to Dine-In cart:', error);
+                                alert('Failed to add item to Dine-In cart.');
+                            });
+                    });
+                
+
+                // Add event listener for the Dine-In button
+                let takeawayBtn = document.getElementById('takaway');
+                    takeawayBtn.addEventListener('click', () => {
+                        // Create the data to send to the server
+                        const takeawayData = {
+                            user_id: userId, // Use the userId from the fetched data
+                            offer_id: offerId, // Use the offerId from the URL
+                            quantity: 1
+                        };
+                        console.log("Dine-In Data:", takeawayData); // Debugging: Check data being sent
+
+                        // Send the data to the server
+                        fetch('/takeawaycart/add', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(takeawayData),
                         })
                             .then((response) => {
                                 if (!response.ok) {
