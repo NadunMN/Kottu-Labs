@@ -74,17 +74,17 @@ fetch('/user/data')
         // Transform backend data to frontend structure
         bookedData.forEach(backendItem => {
 
-            const itemPrice = parseFloat(backendItem.meal_price);
+            const itemPrice = parseFloat(backendItem.meal_price) || parseFloat(backendItem.offer_price);
             const itemQuantity = backendItem.quantity;
             const itemTotal = itemPrice * itemQuantity;
 
             bookedItems.push({
-                id: backendItem.meal_id,
-                name: backendItem.meal_name,
-                price: parseFloat(backendItem.meal_price),
+                id: backendItem.meal_id || backendItem.offer_id,
+                name: backendItem.meal_name || backendItem.offer_name,
+                price: parseFloat(backendItem.meal_price) || parseFloat(backendItem.offer_price),
                 quantity: backendItem.quantity,
-                description: backendItem.meal_description,
-                image: backendItem.meal_photo,
+                description: backendItem.meal_description || backendItem.offer_description,
+                image: backendItem.meal_photo || backendItem.offer_photo,
                 status: backendItem.status // Default status
             });
 
@@ -115,13 +115,15 @@ renderBookedItems();
         // Transform backend data to frontend structure
         cartData.forEach(backendItem => {
             cartItems.push({
-                id: backendItem.meal_id,
-                name: backendItem.meal_name,
-                price: parseFloat(backendItem.meal_price),
+                cartId: backendItem.cart_id,
+                id: backendItem.meal_id || backendItem.offer_id,
+                name: backendItem.meal_name || backendItem.offer_name,
+                price: parseFloat(backendItem.meal_price) || parseFloat(backendItem.offer_price),
                 quantity: backendItem.quantity,
-                description: backendItem.meal_description,
-                image: backendItem.meal_photo,
-                status: 'Not Ordered' // Default status
+                description: backendItem.meal_description || backendItem.offer_description,
+                image: backendItem.meal_photo || backendItem.offer_photo,
+                status: 'Not Ordered', // Default status
+                type: backendItem.meal_id ? 'meal' : 'offer'
             });
         });
         
@@ -169,13 +171,13 @@ function renderCartItems() {
                     <div class="status status-${item.status.toLowerCase()}">${item.status}</div>
                 </div>
                 <div class="item-bottom">
-                    <button class="delete-btn" data-id="${item.id}">
+                    <button class="delete-btn" data-id-cart="${item.cartId}">
                         <i class="fas fa-trash-alt"></i> Delete
                     </button>
                     <div class="quantity-control">
-                        <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                        <button class="quantity-btn minus" cart-id="${item.cartId}" data-id="${item.id}">-</button>
                         <span class="quantity-value">${item.quantity}</span>
-                        <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                        <button class="quantity-btn plus" cart-id="${item.cartId}" data-id="${item.id}">+</button>
                     </div>
                 </div>
             </div>
@@ -206,8 +208,10 @@ function addCartEventListeners() {
 
 // Define helper functions for event listeners
 async function handleDelete(e) {
-    const id = parseInt(e.currentTarget.dataset.id);
-    const cartItemElement = e.currentTarget.closest('.cart-item');
+  const id = parseInt(e.currentTarget.getAttribute('data-id-cart'));
+  const cartItemElement = e.currentTarget.closest('.cart-item');
+
+  console.log('Deleting item with ID:', id); // Debugging log
 
     const result = await showConfirmation(
         "Delete Item", 
@@ -219,8 +223,7 @@ async function handleDelete(e) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
-                user_id: userId,
-                meal_id: id
+                cart_id: id
             })
         })
         .then(response => {
@@ -237,9 +240,11 @@ async function handleDelete(e) {
 }
 
 function handleQuantityChange(e) {
-    const id = parseInt(e.currentTarget.dataset.id);
-    const isPlus = e.currentTarget.classList.contains('plus');
-    updateQuantity(id, isPlus ? 1 : -1);
+  const id = parseInt(e.currentTarget.dataset.id);
+  const cartId = parseInt(e.currentTarget.getAttribute('cart-id'));
+  // console.log(cartId);
+  const isPlus = e.currentTarget.classList.contains('plus');
+  updateQuantity(id,cartId, isPlus ? 1 : -1);
 }
 
 async function handleBooking() {
@@ -305,6 +310,7 @@ async function handleBooking() {
             quantity: item.quantity,
             user_id: userId,
             status:'preparing',
+            type: item.type,
         }));
 
         // Then, place the order meals
@@ -338,7 +344,7 @@ async function handleBooking() {
 
 
 // Update quantity with server sync
-function updateQuantity(id, change) {
+function updateQuantity(id,cartId, change) {
     const item = cartItems.find(item => item.id === id);
     if (!item) return;
 
@@ -346,7 +352,7 @@ function updateQuantity(id, change) {
     if (newQuantity > 0) {
         item.quantity = newQuantity;
     } else {
-        removeItem(id);
+        removeItem(cartId);
         return;
     }
 
@@ -356,8 +362,7 @@ function updateQuantity(id, change) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-            user_id: userId,
-            meal_id: id,
+            cart_id: cartId,
             quantity: newQuantity
         })
     })
@@ -391,8 +396,7 @@ async function removeItem(id) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-            user_id: userId, // Fixed variable name
-            meal_id: id
+          cart_id: id
         })
     })
     .then(response => {
@@ -463,15 +467,19 @@ function renderBookedItems() {
         bookedItemElement.innerHTML = `
             <div class="booked-item-details notification">
                 <div class="item-info">
-                    <h3>${item.name}</h3>
-                    <p class="item-quantity">Quantity: ${item.quantity}</p>
+                    <img src="${item.image}" alt="${item.name}" class="item-image">
+                    <div class="item-text">
+                        <h3>${item.name}</h3>
+                        <p class="item-quantity">Quantity: ${item.quantity}</p>
+                    </div>
                 </div>
-            ${item.status == 'preparing' ? `<div class="meal-status status-pending">
-                    ${item.status}
-                </div>` : `<div class="meal-status status-ready">
-                    ${item.status}
-                </div>`}
-                
+                ${item.status == 'preparing' ? 
+                    `<div class="meal-status status-pending">
+                        ${item.status}
+                    </div>` : 
+                    `<div class="meal-status status-ready">
+                        ${item.status}
+                    </div>`}
             </div>
         `;
         bookedItemsContainer.appendChild(bookedItemElement);
