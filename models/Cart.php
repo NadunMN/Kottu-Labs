@@ -7,9 +7,10 @@ use app\core\Model\cartModel;
 
 class Cart extends cartModel
 {
-
+    public int $cart_id;
     public int $user_id;
-    public int $meal_id;
+    public ?int $meal_id = null; // Nullable to allow for optional meal_id
+    public ?int $offer_id = null; // Nullable to allow for optional offer_id
     public int $quantity;
     
 
@@ -20,7 +21,7 @@ class Cart extends cartModel
 
     public static function primaryKey(): string
     {
-        return 'user_id';
+        return 'cart_id';
     }
 
     public function load($data)
@@ -35,7 +36,7 @@ class Cart extends cartModel
 
     public function attributes(): array
     {
-        return ['user_id', 'meal_id', 'quantity'];
+        return ['user_id', 'meal_id', 'quantity', 'offer_id'];
     }
 
     public function rules(): array
@@ -71,9 +72,11 @@ public static function findAllcartMeal($where)
 {
         $tableName = static::tableName();
         $attributes = array_keys($where);
-        $sql = "SELECT $tableName.*, m.* FROM $tableName                 
-                JOIN meals m ON $tableName.meal_id = m.meal_id                 
-                ";
+        $sql = "SELECT $tableName.*, m.*, f.*
+        FROM $tableName
+        LEFT JOIN meals m ON $tableName.meal_id = m.meal_id
+        LEFT JOIN offers f ON $tableName.offer_id = f.offer_id";
+
         if (!empty($attributes)) {
             $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
         }
@@ -90,8 +93,10 @@ public static function findAllcartMeal($where)
     public function toArrayCart(): array
     {
         return [
+            'cart_id' => $this->cart_id,
             'user_id' => $this->user_id,
             'meal_id' => $this->meal_id,
+            'offer_id' => $this->offer_id,
             'quantity' => $this->quantity,
         ];
     }
@@ -119,20 +124,18 @@ public static function findAllcartMeal($where)
     {
         $tableName = static::tableName();
         $primaryKey = static::primaryKey();
-        $sql = "DELETE FROM $tableName WHERE $primaryKey = :$primaryKey AND meal_id = :meal_id";
+        $sql = "DELETE FROM $tableName WHERE $primaryKey = :$primaryKey";
         $statement = self::prepare($sql);
         $statement->bindValue(":$primaryKey", $this->{$primaryKey});
-        $statement->bindValue(":meal_id", $this->meal_id);
         return $statement->execute();
     }
 
     public function clear()
     {
         $tableName = static::tableName();
-        $primaryKey = static::primaryKey();
-        $sql = "DELETE FROM $tableName WHERE $primaryKey = :$primaryKey";
+        $sql = "DELETE FROM $tableName WHERE user_id = :user_id";
         $statement = self::prepare($sql);
-        $statement->bindValue(":$primaryKey", $this->{$primaryKey});
+        $statement->bindValue(":user_id", $this->user_id);
         return $statement->execute();
     }
 
@@ -145,15 +148,17 @@ public static function findAllcartMeal($where)
         // Assuming primaryKey() returns a string key name
         $primaryKey = static::primaryKey();
 
-        $sql = "UPDATE $tableName SET " . implode(', ', $params) . " WHERE $primaryKey = :$primaryKey AND meal_id = :meal_id";
+        error_log("Primary Key: " . $this->quantity); // Debugging line
+
+        $sql = "UPDATE $tableName SET quantity = $this->quantity WHERE $primaryKey = :$primaryKey";
         
         // Ensure prepare method is available and connects to PDO
         $statement = self::prepare($sql);  // Ensure `prepare` is implemented correctly
         
-        // Bind attribute values
-        foreach ($attributes as $attribute) {
-            $statement->bindValue(":$attribute", $this->{$attribute});
-        }
+        // // Bind attribute values
+        // foreach ($attributes as $attribute) {
+        //     $statement->bindValue(":$attribute", $this->{$attribute});
+        // }
         $statement->bindValue(":$primaryKey", $this->{$primaryKey});
     
         // Execute statement and return result

@@ -10,6 +10,7 @@ class takeawayCart extends DbModel
 
     public int $user_id;
     public int $meal_id;
+    public int $offer_id;
     public int $quantity;
     
 
@@ -35,7 +36,7 @@ class takeawayCart extends DbModel
 
     public function attributes(): array
     {
-        return ['user_id', 'meal_id', 'quantity'];
+        return ['user_id', 'meal_id', 'offer_id', 'quantity'];
     }
 
     public function rules(): array
@@ -92,6 +93,7 @@ public static function findAllcartMeal($where)
         return [
             'user_id' => $this->user_id,
             'meal_id' => $this->meal_id,
+            'offer_id' => $this->offer_id,
             'quantity' => $this->quantity,
         ];
     }

@@ -9,7 +9,8 @@ class OrderMeals extends DbModel
 {
 
     public int $order_id;
-    public int $meal_id;
+    public ?int $meal_id=null;
+    public ?int $offer_id=null;
     public int $quantity;
     public int $user_id;
     public string $status = '';
@@ -37,7 +38,7 @@ class OrderMeals extends DbModel
 
     public function attributes(): array
     {
-        return ['order_id', 'meal_id', 'quantity', 'user_id', 'status'];
+        return ['order_id', 'meal_id','offer_id', 'quantity', 'user_id', 'status'];
     }
 
     public function rules(): array
@@ -73,9 +74,11 @@ public static function findAllBookedMeal($where)
 {
         $tableName = static::tableName();
         $attributes = array_keys($where);
-        $sql = "SELECT $tableName.*, m.* FROM $tableName                 
-                JOIN meals m ON $tableName.meal_id = m.meal_id               
-                ";
+        $sql = "SELECT $tableName.*, m.*, f.*
+        FROM $tableName
+        LEFT JOIN meals m ON $tableName.meal_id = m.meal_id
+        LEFT JOIN offers f ON $tableName.offer_id = f.offer_id";
+
         if (!empty($attributes)) {
             $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
         }
@@ -123,6 +126,7 @@ public static function findAllBookedMealTakeaway($where)
         return [
             'order_id' => $this->order_id,
             'meal_id' => $this->meal_id,
+            'offer_id' => $this->offer_id,
             'quantity' => $this->quantity,
             'user_id' => $this->user_id,
             'status' => $this->status,

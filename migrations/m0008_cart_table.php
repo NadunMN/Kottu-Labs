@@ -10,7 +10,7 @@ class m0008_cart_table
 
         // cart table
         $SQL = "CREATE TABLE cart (
-             cart_id INT AUTO_INCREMENT PRIMARY KEY,
+            cart_id INT AUTO_INCREMENT PRIMARY KEY,
             user_id INT NOT NULL,
             meal_id INT,
             offer_id INT,

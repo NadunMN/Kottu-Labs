@@ -5,6 +5,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
     const offerId = urlParams.get('id');
     console.log("Offer ID:", offerId);
+    let userId= null;
+
+    fetch('/user/data')
+       .then(response => response.json())
+       .then(data => {
+              console.log("User Data:", data);
+              if (data && data.id) {
+                userId = data.id; // Set userId if available
+              } else {
+                console.error("User ID not found in response");
+              }
+       })
+         .catch(error => {
+                console.error("Error fetching user data:", error);
+         })
+
 
     // Function to attach event listeners to dynamically inserted elements
     function attachEventListeners() {
@@ -74,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         
 
                         <div class="action-buttons">
-                            <button class="btn btn-cart dinein" ${offer.status && offer.status.toLowerCase() === "out of stock" ? 'disabled' : ''}>
+                            <button id="dinein" class="btn btn-cart dinein" ${offer.status && offer.status.toLowerCase() === "out of stock" ? 'disabled' : ''}>
                                 ${offer.status && offer.status.toLowerCase() === "out of stock" ? "OUT OF STOCK" : "ADD TO DINEIN"}
                             </button>
 
@@ -95,49 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div id="shipping" class="tab-content">Shipping information and policies...</div>
                         <div id="care" class="tab-content">Care instructions and maintenance...</div>
                     </div>
-                `;
-
-                // Add event listener for the Dine-In button
-                const dineinBtn = document.querySelector('.dinein');
-                if (dineinBtn) {
-                    dineinBtn.addEventListener('click', () => {
-                        // Create the data to send to the server
-                        const dineinData = {
-                            offerId: offerId, // Use the offerId from the URL
-                            type: 'dinein',
-                        };
-
-                        // Send the data to the server
-                        fetch('/cart/add', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify(dineinData),
-                        })
-                            .then((response) => {
-                                if (!response.ok) {
-                                    throw new Error('Failed to add to Dine-In cart');
-                                }
-                                return response.json();
-                            })
-                            .then((data) => {
-                                console.log('Added to Dine-In cart:', data);
-                                alert('Item added to Dine-In cart successfully!');
-                            })
-                            .catch((error) => {
-                                console.error('Error adding to Dine-In cart:', error);
-                                alert('Failed to add item to Dine-In cart.');
-                            });
-                    });
-                }
-
-
-
-
-
-
-                // Insert offer details into the page
+                `;                // Insert offer details into the page
                 offerMain.innerHTML = offerDetail;
 
 
@@ -175,6 +149,50 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Attach event listeners after inserting elements
                 attachEventListeners();
+
+                
+                // Add event listener for the Dine-In button
+                let dineinBtn = document.getElementById('dinein');
+                    dineinBtn.addEventListener('click', () => {
+                        // Create the data to send to the server
+                        const dineinData = {
+                            user_id: userId, // Use the userId from the fetched data
+                            offer_id: offerId, // Use the offerId from the URL
+                            quantity: 1
+                        };
+                        console.log("Dine-In Data:", dineinData); // Debugging: Check data being sent
+
+                        // Send the data to the server
+                        fetch('/cart/add', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(dineinData),
+                        })
+                            .then((response) => {
+                                if (!response.ok) {
+                                    throw new Error('Failed to add to Dine-In cart');
+                                }
+                                return response.json();
+                            })
+                            .then((data) => {
+                                console.log('Added to Dine-In cart:', data);
+                                alert('Item added to Dine-In cart successfully!');
+                            })
+                            .catch((error) => {
+                                console.error('Error adding to Dine-In cart:', error);
+                                alert('Failed to add item to Dine-In cart.');
+                            });
+                    });
+                
+
+
+
+
+
+
+
             })
             .catch(error => {
                 console.error("Error fetching offer:", error);

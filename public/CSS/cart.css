@@ -380,71 +380,94 @@ body {
 }
 
 /* booked item css */
-.booked-item-details {
-    font-family: 'Arial', sans-serif;
-    width: 100%;
-    padding: 1rem;
+/* Container for all booked items */
+/* Container for all booked items */
+.booked-items-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Individual booked item */
+  .booked-item {
     border-radius: 8px;
-    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); */
-    background-color: #ffffff;
-    /* margin: 1rem auto; */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease;
+  }
+  
+  .booked-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Notification style for booked items */
+  .booked-item-details.notification {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.item-info {
+    padding: 16px;
+    background-color: #ffffff;
+    border-left: 4px solid #ee3e3f;
+  }
+  
+  /* Item image styling */
+  .item-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 6px;
+    object-fit: cover;
+    margin-right: 14px;
+  }
+  
+  /* Item information section with image */
+  .item-info {
+    display: flex;
+    align-items: center;
     flex: 1;
-    padding-right: 1rem;
-}
-
-.item-info h3 {
-    margin: 0 0 0.5rem 0;
-    color: #2c3e50;
-    font-size: 1.2rem;
-}
-
-.item-info p {
-    margin: 0.25rem 0;
-    color: #34495e;
-    line-height: 1.4;
-}
-
-.item-quantity {
-    font-weight: bold;
-    color: #2c3e50;
-    margin-top: 0.5rem;
-}
-
-.meal-status {
-    min-width: 100px;
-    padding: 0.5rem 0.75rem;
-    border-radius: 4px;
-    font-weight: bold;
+  }
+  
+  .item-text {
+    flex: 1;
+  }
+  
+  .item-text h3 {
+    margin: 0 0 6px 0;
+    font-size: 18px;
+    color: #333333;
+  }
+  
+  .item-quantity {
+    margin: 0;
+    color: #666666;
+    font-size: 14px;
+  }
+  
+  /* Status indicators */
+  .meal-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: capitalize;
+    min-width: 90px;
     text-align: center;
-}
-
-.status-pending {
-    background-color: #f39c12;
-    color: #ffffff;
-}
-
-.status-ready {
-    background-color: #2ecc71;
-    color: #ffffff;
-}
-
-.status-delayed {
-    background-color: #e74c3c;
-    color: #ffffff;
-}
-
-/* Message notification style */
-.notification {
-    /* border-left: 4px solid #e74c3c; */
-    background-color: #eeeeee;
-}
-/* booked item css */
+  }
+  
+  .status-pending {
+    background-color: #ffeaa7;
+    color: #d68910;
+  }
+  
+  .status-ready {
+    background-color: #c8f7c5;
+    color: #27ae60;
+  }
+  
+  /* booked item css */
 
 
 
