@@ -17,6 +17,13 @@ class m0009_addcolumn_order_meals
             $db->pdo->exec($SQL);
         }
 
+        $checkColumnSQL = "SHOW COLUMNS FROM order_meals LIKE 'quantity';";
+        $result = $db->pdo->query($checkColumnSQL)->fetch();
+        if (!$result) {
+            $SQL = "ALTER TABLE order_meals ADD COLUMN quantity INT NOT NULL;";
+            $db->pdo->exec($SQL);
+        }
+
         // Add meal_status column
         $checkColumnSQL = "SHOW COLUMNS FROM order_meals LIKE 'status';";
         $result = $db->pdo->query($checkColumnSQL)->fetch();
@@ -34,8 +41,12 @@ class m0009_addcolumn_order_meals
 
         // Drop confirmation_number column
         $SQL = "ALTER TABLE order_meals DROP COLUMN user_id;";
-        $db->pdo->exec($SQL)
-        ;
+        $db->pdo->exec($SQL);
+
+        $SQL = "ALTER TABLE order_meals DROP COLUMN quantity;";
+        $db->pdo->exec($SQL);
+
+        
         // Drop confirmation_number column
         $SQL = "ALTER TABLE order_meals DROP COLUMN status;";
         $db->pdo->exec($SQL);

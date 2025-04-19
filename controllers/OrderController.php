@@ -221,7 +221,11 @@ class OrderController extends Controller
             
                 $orderMeal = new OrderMeals();
                 $orderMeal->order_id = $meal['order_id']; // Assuming you have the order ID from the request
-                $orderMeal->meal_id = $meal['id'];
+                if($meal['type'] == 'meal'){
+                    $orderMeal->meal_id = $meal['id'];
+                }else{
+                    $orderMeal->offer_id = $meal['id'];
+                }
                 $orderMeal->quantity = $meal['quantity'];
                 $orderMeal->user_id = $meal['user_id']; // Assuming you have the user ID from the session
                 $orderMeal->status = $meal['status']; // Set the status to 'pending' or any other default value
