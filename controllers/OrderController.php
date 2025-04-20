@@ -451,6 +451,35 @@ class OrderController extends Controller
             }
         }
 
+    public function managerOrderHistory()
+    {
+        if (Application::$app->user) {
+            $branch_id = Application::$app->user->branch_id;
+            $orderHistory = Order::findOrdersByBranch($branch_id);
+
+            echo json_encode($orderHistory);
+
+        } else {
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+
+    public function managerOrderDetails($id)
+    {
+        if (Application::$app->user) {
+            $order_id = $id;
+            $orderItems = Order::findOrdersByBranch($order_id);
+            $response = [
+                'items'=> $orderItems
+            ];
+
+            echo json_encode($response);
+        } else {
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+
+
         
 
 

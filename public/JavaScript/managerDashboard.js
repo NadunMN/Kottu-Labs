@@ -680,7 +680,7 @@ document.addEventListener("DOMContentLoaded", () => {
           break;
 
         case "order-history":
-          fetch("/order/history")
+          fetch("/manager/order/history")
             .then((response) => response.json())
             .then((data) => {
               if (data.error) {
@@ -750,6 +750,7 @@ document.addEventListener("DOMContentLoaded", () => {
                       <td>${order.customer_name}</td>
                       <td>Rs.${order.total_amount}</td>
                       <td>${order.status}</td>
+                      <td><button class="view-btn" order-id="${order.order_id}">View Details</button></td>
                   `;
 
                   // Append the row directly to the table body
@@ -762,7 +763,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const orderId = button.getAttribute("order-id");
                     console.log(orderId);
                     // Fetch order details using the order ID
-                    fetch(`/order/details/${orderId}`)
+                    fetch(`/manager/order/details/${orderId}`)
                       .then((response) => response.json())
                       .then((orderDetails) => {
                         const detailsContent = document.getElementById("details-content");

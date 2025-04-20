@@ -165,6 +165,29 @@ class Order extends OrderModel
         }        
     }
 
+    public static function findOrderDetails($order_id) {
+        $tableName = static::tableName();
+        $statement = self::prepare("
+            SELECT 
+                meals.meal_name,
+                om.quantity,
+                meals.meal_price AS price
+            FROM order_meals om
+            JOIN meals ON om.meal_id = meals.meal_id
+            WHERE om.order_id = :order_id
+        ");
+    
+        $statement->bindValue(":order_id", $order_id);
+    
+        try {
+            $statement->execute();
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }        
+    }
+
     public static function findAllProfit($where)
     {
         $tableName = static::tableName();
