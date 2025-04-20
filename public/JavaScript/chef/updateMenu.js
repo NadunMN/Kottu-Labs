@@ -178,6 +178,7 @@ fetch("/managermenuitem/data")
                                         <td>${meal.meal_name}</td>
                                         <td>${meal.meal_description}</td>
                                         <td>Rs.${meal.meal_price}</td>                                            
+                                      
                                             <div class="action-buttons">
                                               <button class="status-btn ${meal.meal_status == 1
                                           ? "available" : "unavailable"
