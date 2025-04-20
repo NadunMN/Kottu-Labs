@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const defaultOption = document.getElementById("update-menu");
   defaultOption.classList.add("selected");
 
+  // Fetch the branch name from the serve
   let branchName='';
   fetch('/manager/branch')  // URL of the PHP controller
     .then(response => response.json())  // Parse JSON response
@@ -21,10 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log('Error: ' + data.error);
         }
     })
-    .catch(error => console.log('Error:', error));
+    .catch(error => console.log('Error:', error));  
 
-  // Render default content
-  mainContent.innerHTML = ``;
+
 
   // Event listener for each sidebar option
   sidebarOptions.forEach((option) => {
@@ -680,7 +680,7 @@ document.addEventListener("DOMContentLoaded", () => {
           break;
 
         case "order-history":
-          fetch("/manager/order/history")
+          fetch("/manager/order/history?branch_id=${branchId}")
             .then((response) => response.json())
             .then((data) => {
               if (data.error) {
@@ -762,6 +762,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   button.addEventListener("click", () => {
                     const orderId = button.getAttribute("order-id");
                     console.log(orderId);
+                    document.getElementById("order-details-container").style.display = "block";
                     // Fetch order details using the order ID
                     fetch(`/manager/order/details/${orderId}`)
                       .then((response) => response.json())
