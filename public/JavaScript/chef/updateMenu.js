@@ -1,4 +1,4 @@
-fetch("/menuitem/data")
+fetch("/managermenuitem/data")
   .then((response) => response.json())
   .then((data) => {
     if (data.error) {
@@ -131,7 +131,6 @@ fetch("/menuitem/data")
                                                         <th>Name</th>
                                                         <th>Type</th>
                                                         <th>Price</th>
-                                                        <th>Branch</th>
                                                         <th>Status</th>
                                                     </tr>
                                                 </thead>
@@ -178,15 +177,7 @@ fetch("/menuitem/data")
                                         <td class="meal-id" >${meal.meal_id}</td>
                                         <td>${meal.meal_name}</td>
                                         <td>${meal.meal_description}</td>
-                                        <td>Rs.${meal.meal_price}</td>
-                                        <td>${
-                                          meal.branch_ids == "1" ? "Wattala" : meal.branch_ids == "2" ? "Kelaniya" : meal.branch_ids== "3" ? "Kotahena"
-                                          : meal.branch_ids == '1,2' ? "Wattala, Kelaniya" : meal.branch_ids == '1,3' ? "Wattala, Kotahena" : meal.branch_ids == '2,3' ? "Kelaniya, Kotahena" : "All Branches"
-                                          }</td>
-                                        
-                                        <td>
-                                            
-
+                                        <td>Rs.${meal.meal_price}</td>                                            
                                             <div class="action-buttons">
                                               <button class="status-btn ${meal.meal_status == 1
                                           ? "available" : "unavailable"
