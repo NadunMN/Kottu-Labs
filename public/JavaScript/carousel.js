@@ -115,14 +115,23 @@ document.addEventListener("DOMContentLoaded", function () {
                             <div class="card-content">
                                 <h3 class="card-title">${offer.offer_name || 'Card Title'}</h3>
                                 <p class="card-text">${offer.offer_description || 'This is a brief description of the card content.'}</p>
-                                <button href="#" class="card-btn">Learn More</button>
+                            <button class="view-button card-btn" offer-id="${offer.offer_id}">VIEW DETAILS</button>
                             </div>
                         </div>
                     </div>
                 `).join('');
-
+                
                 // Update carousel content
                 carouselInner.innerHTML = offerCards;
+                carouselInner.addEventListener('click', function(e) {
+                    const button = e.target.closest('.view-button');
+                    if (button) {
+                        const offerId = button.getAttribute('offer-id');
+                        if (offerId) {
+                            window.location.href = `/offer/offerview?id=${encodeURIComponent(offerId)}`;
+                        }
+                    }
+                });
 
                 // Reinitialize cards and update carousel
                 cards = carouselInner.querySelectorAll('.card');

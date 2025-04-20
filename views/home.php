@@ -251,12 +251,13 @@
   <div class="action-topic-staff">
     <h2 class="ezy__team-section-heading">Our Team Members</h2>
     <p class="ezy__team-section-subheading">
-      Meet our talented team of professionals dedicated to delivering exceptional service and innovative solutions for your business needs.
+    At Kottu Lab, we’re more than just a group of developers and designers — we’re a passionate team driven by creativity, collaboration, ]
+    and a shared love for innovation. 
     </p>
   </div>
 
   <div class="ezy__team-button-container">
-      <button class="ezy__team-button">Show More</button>
+      <button class="ezy__team-button" onclick="window.location.href='/staff'">Show More</button>
     </div>
 
     </div>

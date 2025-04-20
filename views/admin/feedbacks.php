@@ -117,7 +117,7 @@ body {
 }
 
 /* Action Buttons styles */
-.menu-table .action-btn {
+.menu-table .action-buttons {
   padding: 0.5rem 0.9rem;
   border-radius: 6px;
   border: none;
@@ -129,6 +129,14 @@ body {
 }
 
 .menu-table .edit-btn {
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
   background-color: #3b82f6;
   color: white;
 }
@@ -138,6 +146,14 @@ body {
 }
 
 .menu-table .delete-btn {
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
   background-color: #ef4444;
   color: white;
 }

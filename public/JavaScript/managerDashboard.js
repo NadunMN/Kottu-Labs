@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const defaultOption = document.getElementById("update-menu");
   defaultOption.classList.add("selected");
 
+  // Fetch the branch name from the serve
   let branchName='';
   fetch('/manager/branch')  // URL of the PHP controller
     .then(response => response.json())  // Parse JSON response
@@ -21,10 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log('Error: ' + data.error);
         }
     })
-    .catch(error => console.log('Error:', error));
+    .catch(error => console.log('Error:', error));  
 
-  // Render default content
-  mainContent.innerHTML = ``;
+
 
   // Event listener for each sidebar option
   sidebarOptions.forEach((option) => {
@@ -576,10 +576,6 @@ document.addEventListener("DOMContentLoaded", () => {
           
          break;
 
-        case "update-offers":
-          mainContent.innerHTML = ``;
-          fetch("/offer/data")
-
         case "feedbacks":
           fetch("/feedback/get")
             .then((response) => response.json())
@@ -684,77 +680,122 @@ document.addEventListener("DOMContentLoaded", () => {
           break;
 
         case "order-history":
-          mainContent.innerHTML = `
-                        <div class="order-history-section">
-                            <h2>Order History</h2>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Order ID</th>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Customer Name</th>
-                                        <th>Total Amount</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>#1001</td>
-                                        <td>2024-11-20</td>
-                                        <td>18:30</td>
-                                        <td>John Doe</td>
-                                        <td>$45.00</td>
-                                        <td>Completed</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button>View</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#1002</td>
-                                        <td>2024-11-21</td>
-                                        <td>19:00</td>
-                                        <td>Jane Smith</td>
-                                        <td>$25.00</td>
-                                        <td>Pending</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button>View</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#1003</td>
-                                        <td>2024-11-22</td>
-                                        <td>20:15</td>
-                                        <td>Michael Brown</td>
-                                        <td>$60.00</td>
-                                        <td>Completed</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button>View</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>#1004</td>
-                                        <td>2024-11-23</td>
-                                        <td>17:45</td>
-                                        <td>Linda Lee</td>
-                                        <td>$30.00</td>
-                                        <td>Cancelled</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button>View</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>`;
+          fetch("/manager/order/history?branch_id=${branchId}")
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.error) {
+                console.error("Error:", data.error);
+              } else {
+                // Get the meal content container
+                const mealContent = document.getElementById("main-content");
+
+                if (data == null || data.length === 0) {
+                  mealContent.innerHTML = "No Orders available"; // Show a message if there are no meals
+                } else {
+                  mealContent.innerHTML = ""; // Clear previous content if data is available
+                }
+
+                mealContent.innerHTML = `
+                    <div class="view-branch-menu-section">
+                        <div class="topic-bar">
+                            <div>
+                                <h2 style="margin:0;">Order History</h2>
+                                <h5 style="margin:0;">${data.length} orders available</h5>
+                            </div>
+                        </div>
+                        <table class="menu-table" id="menu-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>                          
+                                    <th>Order Date</th>
+                                    <th>Order Time</th>
+                                    <th>Customer Name</th>
+                                    <th>Total Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-content"></tbody>
+                        </table>
+                    </div>
+
+
+                <div id="order-details-container" style="display: none; margin-top: 20px;">
+                    <h3>Order Details</h3>
+                    <h4 id="detail-order-id"></h4>
+                    <table class="menu-table" id="details-table">
+                        <thead>
+                            <tr>
+                                <th>Meal</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody id="details-content"></tbody>
+                    </table>
+                </div>
+
+                `;
+
+                let orderId;
+                // Dynamically generate order elements
+                data.forEach((order) => {
+                  // Create a new table row
+                  const row = document.createElement("tr");
+
+                  // Populate row HTML
+                  row.innerHTML = `
+                      <td class="order-id">${order.order_id}</td>
+                      <td>${order.order_date}</td>
+                      <td>${order.order_time}</td>
+                      <td>${order.customer_name}</td>
+                      <td>Rs.${order.total_amount}</td>
+                      <td>${order.status}</td>
+                      <td><button class="view-btn" order-id="${order.order_id}">View Details</button></td>
+                  `;
+
+                  // Append the row directly to the table body
+                  document.getElementById("table-content").appendChild(row);
+                });
+
+                const veiwButton = document.querySelectorAll(".view-btn");
+                veiwButton.forEach((button) => {
+                  button.addEventListener("click", () => {
+                    const orderId = button.getAttribute("order-id");
+                    console.log(orderId);
+                    document.getElementById("order-details-container").style.display = "block";
+                    // Fetch order details using the order ID
+                    fetch(`/manager/order/details/${orderId}`)
+                      .then((response) => response.json())
+                      .then((orderDetails) => {
+                        const detailsContent = document.getElementById("details-content");
+                        detailsContent.style.display = "block";
+
+                        document.getElementById("detail-order-id").innerText = `Order ID: ${orderId}`;
+                        detailsContent.innerHTML = ""; // Clear previous content
+
+                        orderDetails.items.forEach((item) => {
+                          const detailRow = document.createElement("tr");
+                          detailRow.innerHTML = `
+                            <td>${item.meal_name}</td>
+                            <td>${item.quantity}</td>
+                            <td>Rs.${item.price}</td>
+                          `;
+                          detailsContent.appendChild(detailRow);
+                        });
+                        detailsContent.scrollIntoView({ behavior: "smooth" });
+                      })
+                      .catch((error) => {
+                        console.error("Error fetching order details:", error);
+                      });
+                  });
+                });
+              }
+            })
+            .catch((error) => {
+              console.error("Error fetching order history:", error);
+            });
+
+            
           break;
 
         default:

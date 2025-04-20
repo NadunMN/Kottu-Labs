@@ -200,7 +200,6 @@ $app->router->get('/reservation/otp', function() use ($reservationController) {
 
 $app->router->get('/reservation/stewardData', [$reservationController, 'getReservation']);
 $app->router->post('/reservationNumber', [$authController, 'reservationNumberGenerator']);
-$app->router->post('/reservation/addtable', [$reservationController, 'addtableReservation']);
 
 //define route for feedbacks
 $app->router->get('/feedback/get', [$feedbacksController, 'getReviews']);
@@ -212,6 +211,8 @@ $app->router->get('/offer/getpublished', [$offerController, 'getAllPublishedOffe
 // order data
 $app->router->get('/order/data', [$orderController, 'getOrderData']);
 $app->router->post('/order/confirm', [$orderController, 'updateOrderStatus']);
+$app->router->get('/manager/order/history', [$orderController, 'managerOrderHistory']);
+$app->router->get('/manager/order/details/{id}', [$orderController, 'managerOrderDetails']);
 
 
 
@@ -317,6 +318,10 @@ $app->router->get('/gettakeawayBookedData', function() use ($orderController) {
     $userId = $_GET['userId'] ?? null;
     $orderController->gettakeawayBookedData($userId);
 });
+
+
+
+
 
 
 
