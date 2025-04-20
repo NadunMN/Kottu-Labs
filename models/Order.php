@@ -340,6 +340,14 @@ class Order extends OrderModel
             error_log("Error fetching order by reservation ID: " . $e->getMessage());
             return false;
         }
-    }    
+    }
+    
+    public static function updateStatus($orderId, $status)
+    {
+        $statement = self::prepare("UPDATE orders SET order_status = :status WHERE order_id = :id");
+        $statement->bindValue(':id', $orderId);
+        $statement->bindValue(':status', $status);
+        return $statement->execute();
+    }
 
 }

@@ -343,7 +343,22 @@ class OrderController extends Controller
         http_response_code(200);
     }
 
+    //Order Status (Accepted, Preparing, Cooked)
+    public function updateStatus($request)
+    {
+        $body = $request->getBody();
+        $orderId = $body['order_id'];
+        $newStatus = $body['status'];
 
+        // Update status in database
+        $success = Order::updateStatus($orderId, $newStatus);
+
+        if ($success) {
+            return json_encode(['success' => true]);
+        } else {
+            return json_encode(['error' => 'Update failed']);
+        }
+    }
 
 
     //take away
