@@ -106,6 +106,7 @@ $app->router->get('/cancelReserve',[$siteController, 'cancelReserve']);
 $app->router->get('/dinein',[$siteController, 'dinein']);
 $app->router->get('/staff',[$siteController, 'staff']);
 $app->router->get('/chefdashboard',[$siteController, 'chefdashboard']);
+$app->router->post('/order/update-status', [$orderController, 'updateStatus']);   //New route for updating order status
 
 
 //maheshs routes

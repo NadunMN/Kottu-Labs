@@ -1,23 +1,19 @@
 async function fetchOrders(selectedDate = null, selectedTime = null) {
     try {
-        // Fetch order data
         const response = await fetch("/order/data");
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
+        if (!response.ok) throw new Error("Network response was not ok");
 
         const text = await response.text();
         let data;
         try {
             data = JSON.parse(text);
         } catch (e) {
-            console.error("Response is not valid JSON:", text);
+            console.error("Invalid JSON:", text);
             document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
             return;
         }
-        
+
         if (!Array.isArray(data)) {
-            console.error("Data is not an array");
             document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
             return;
         }
@@ -25,36 +21,36 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
         const orderContent = document.getElementById("main-content");
         if (!data || data.length === 0) {
             orderContent.innerHTML = `<div class="no-offers-container" 
-                                style="text-align: center; 
-                                        display: flex; 
-                                        flex-direction: column; 
-                                        align-items: center; 
-                                        justify-content: center; 
-                                        width: 100%;
-                                        height: 85vh;
-                                        border-radius: 10px; 
-                                        ">
-                                <i class="fa-solid fa-utensils" 
-                                style="font-size: 3rem; 
-                                        color: #6c757d; 
-                                        margin-bottom: 1rem;"></i>
-                                <h3 style="font-size: 1.5rem; 
-                                        color: #343a40; 
-                                        margin-bottom: 0.5rem; 
-                                        font-weight: 600;">
-                                    No Orders Found!
-                                </h3>
-                                <p style="color: #6c757d; 
-                                        font-size: 1rem; 
-                                        max-width: 400px; 
-                                        line-height: 1.5;">
-                                    We'll notify you when new orders arrive!
-                                </p>
-                            </div>`;
+            style="text-align: center; 
+                    display: flex; 
+                    flex-direction: column; 
+                    align-items: center; 
+                    justify-content: center; 
+                    width: 100%;
+                    height: 85vh;
+                    border-radius: 10px; 
+                    ">
+            <i class="fa-solid fa-utensils" 
+            style="font-size: 3rem; 
+                    color: #6c757d; 
+                    margin-bottom: 1rem;"></i>
+            <h3 style="font-size: 1.5rem; 
+                    color: #343a40; 
+                    margin-bottom: 0.5rem; 
+                    font-weight: 600;">
+                No Orders Found!
+            </h3>
+            <p style="color: #6c757d; 
+                    font-size: 1rem; 
+                    max-width: 400px; 
+                    line-height: 1.5;">
+                We'll notify you when new orders arrive!
+            </p>
+        </div>`;
             return;
         }
 
-        // Fetch user branch ID before rendering
+        // Get user branch info (keep existing implementation)
         let branch_id = null;
         try {
             const userResponse = await fetch('/user/data');
@@ -71,145 +67,147 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
             console.error('Error fetching user data:', error);
         }
 
+
         const branchName = branch_id === 1 ? 'Wattala' : branch_id === 2 ? 'Kelaniya' : 'Kotahena';
         const currentDate = selectedDate || new Date().toISOString().split('T')[0];
-        const todayOrders = data.filter(order => order.order_date === currentDate);
-        const readyOrders = todayOrders.filter(order => order.order_status == 1).length;
+        
+        // Group orders by order_id
+        const groupedOrders = data.reduce((acc, order) => {
+            const key = order.order_id;
+            if (!acc[key]) {
+                acc[key] = {
+                    ...order,
+                    meals: []
+                };
+            }
+            acc[key].meals.push({ mealName: order.mealName, quantity: order.quantity });
+            return acc;
+        }, {});
 
-        // Render order content
+        const ordersArray = Object.values(groupedOrders);
+        const todayOrders = ordersArray.filter(order => order.order_date === currentDate);
+
+        // Status counts
+        const acceptedOrders = todayOrders.filter(o => o.order_status === 1).length;
+        const preparingOrders = todayOrders.filter(o => o.order_status === 2).length;
+        const cookedOrders = todayOrders.filter(o => o.order_status === 3).length;
+
         orderContent.innerHTML = `
             <div class="main-section">
                 <div class="topic-bar">
                     <div class="topic-bar-text">
-                        <h2>Order Status - ${branchName} </h2>
+                        <h2>Order Status - ${branchName}</h2>
                         <span>${currentDate}</span>
-                        <h4>Available orders - ${todayOrders.length} &emsp; Ready orders - ${readyOrders}</h4>
+                        <h4>Total: ${todayOrders.length} | Accepted: ${acceptedOrders} | Preparing: ${preparingOrders} | Cooked: ${cookedOrders}</h4>
                     </div>
                     <div class="filter-section">
                         <input type="text" id="tableFilter" placeholder="Filter by Table No...">
                         <button onclick="filterOrders()">Filter</button>
                         <button onclick="resetFilter()">Reset</button>
                     </div>
-                </div> 
-                
-                <table class="menu-table" id="menu-table">
-                    <thead>
-                        <tr>
-                            <th>Order Id</th>
-                            <th>Meal Name</th>
-                            <th>Quantity</th>
-                            <th>Table No</th>
-                            <th>Type</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-content"></tbody>
-                </table>
+                </div>
+                <div class="orders-container" id="orders-container"></div>
             </div>
         `;
 
-        const tableContent = document.getElementById("table-content");
-        if (!tableContent) {
-            console.error("Table content element not found.");
-            return;
-        }
+        const container = document.getElementById("orders-container");
+        todayOrders.sort((a, b) => a.order_time.localeCompare(b.order_time));
 
-        // Sort reservations: pending first, then confirmed, sorted by time
-        todayOrders.sort((a, b) => {
-            // Prioritize pending reservations over ready ones
-            if (a.order_status !== b.order_status) {
-                return a.order_status === 1 ? -1 : b.order_status === 1 ? 1 : a.order_status - b.order_status;
-            }
-    
-            // If both have the same status, sort by time
-            return a.order_time.localeCompare(b.order_time);
-        });
-
-        // Clear existing rows before appending new ones
-        tableContent.innerHTML = "";
-        // Populate table with today's order data
-        todayOrders.forEach((order) => {
-            const row = document.createElement("tr");
-            row.classList.add("order-item"); // Add class for filtering
-            row.setAttribute("data-table-number", order.table_number); // Use data attribute for filtering
-            row.innerHTML = `
-                <td class="order-id">${order.order_id}</td>
-                <td>${order.mealName}</td>
-                <td>${order.quantity}</td>
-                <td>${order.type === 'dinein' ? order.table_number : 'Null'}</td>
-                <td>${order.type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
-                <td class="status">
-                    <span class="status-${order.order_status}">
-                        ${order.order_status == 1 ? "Ready" : order.order_status == 2 ? "Completed" :  "Processing"}
-                    </span>
-                    ${order.order_status === 1 ? `<button class="confirm-btn" data-order-id="${order.order_id}">Confirm</button>` : ""}
-                </td>
+        todayOrders.forEach(order => {
+            const orderCard = document.createElement("div");
+            orderCard.className = "order-card";
+            orderCard.setAttribute("data-table-number", order.type === 'dinein' ? order.table_number : 'TA');
+            orderCard.innerHTML = `
+                <div class="order-header">
+                    <div>
+                        <h3>Order #${order.order_id}</h3>
+                        <p class="order-time">${order.order_time}</p>
+                    </div>
+                    <button class="toggle-meals">▼</button>
+                </div>
+                <div class="order-meta">
+                    <span class="order-type">${order.type === 'dinein' ? 'Dine In' : 'Take Away'}</span>
+                    <span class="table-number">${order.type === 'dinein' ? `Table ${order.table_number}` : ''}</span>
+                </div>
+                <div class="meals-list" style="display:none">
+                    ${order.meals.map(meal => `
+                        <div class="meal-item">
+                            <span>${meal.mealName}</span>
+                            <span class="meal-qty">x${meal.quantity}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="status-actions">
+                    <button class="status-btn ${order.order_status === 1 ? 'active' : ''}" data-status="1">
+                        Accepted
+                    </button>
+                    <button class="status-btn ${order.order_status === 2 ? 'active' : ''}" data-status="2">
+                        Preparing
+                    </button>
+                    <button class="status-btn ${order.order_status === 3 ? 'active' : ''}" data-status="3">
+                        Cooked
+                    </button>
+                </div>
             `;
-            tableContent.appendChild(row);
+            container.appendChild(orderCard);
         });
 
-        // Add event listener for confirm buttons
-        document.querySelectorAll(".confirm-btn").forEach(button => {
-            button.addEventListener("click", async (event) => {
-                const orderId = event.target.getAttribute("data-order-id");
+        // Add toggle functionality
+        document.querySelectorAll('.toggle-meals').forEach(button => {
+            button.addEventListener('click', () => {
+                const mealsList = button.closest('.order-card').querySelector('.meals-list');
+                mealsList.style.display = mealsList.style.display === 'none' ? 'block' : 'none';
+                button.textContent = mealsList.style.display === 'none' ? '▼' : '▲';
+            });
+        });
+
+        // Add status update functionality
+        document.querySelectorAll('.status-btn').forEach(button => {
+            button.addEventListener('click', async (e) => {
+                const orderId = e.target.closest('.order-card').querySelector('h3').textContent.split('#')[1];
+                const newStatus = parseInt(e.target.dataset.status);
+
                 try {
-                    const response = await fetch(`/order/confirm`, {
+                    const response = await fetch(`/order/update-status`, {
                         method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({order_id: orderId, order_status: 2 }) // Update status to 'Completed'
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ order_id: orderId, status: newStatus })
                     });
-                    console.log("Response:", response);
 
                     if (response.ok) {
-                        alert("Order status updated to Completed!");
-                        fetchOrders(); // Refresh the orders
+                        fetchOrders(); // Refresh orders
                     } else {
-                        console.error("Failed to update order status");
-                        alert("Error updating order status. Please try again.");
+                        alert("Error updating status");
                     }
                 } catch (error) {
                     console.error("Error:", error);
-                    alert("Error updating order status. Please try again.");
+                    alert("Update failed");
                 }
             });
         });
 
     } catch (error) {
         console.error("Fetch error:", error);
-        document.getElementById("main-content").innerHTML = "<p>Error loading reservations.</p>";
+        orderContent.innerHTML = "<p>Error loading orders</p>";
     }
 }
 
+// Update filter functions
 function filterOrders() {
-    const input = document.getElementById("tableFilter").value.trim();
-    const orders = document.querySelectorAll(".order-item");
-    
-    orders.forEach(order => {
-        const tableNo = order.getAttribute("data-table-number"); // Use data attribute
-        if (tableNo && tableNo.includes(input)) {
-            order.style.display = "";
-        } else {
-            order.style.display = "none";
-        }
+    const input = document.getElementById("tableFilter").value.trim().toLowerCase();
+    document.querySelectorAll('.order-card').forEach(card => {
+        const tableNumber = card.getAttribute('data-table-number').toLowerCase();
+        card.style.display = tableNumber.includes(input) ? 'block' : 'none';
     });
 }
 
 function resetFilter() {
-    document.getElementById("tableFilter").value = "";
-    const orders = document.querySelectorAll(".order-item");
-    orders.forEach(order => {
-        order.style.display = "";
+    document.getElementById("tableFilter").value = '';
+    document.querySelectorAll('.order-card').forEach(card => {
+        card.style.display = 'block';
     });
 }
 
-
-
-
-// Refresh orders every minute
-setInterval(() => {
-    fetchOrders();
-}, 60000);
-
+// Keep existing interval and initial call
+setInterval(fetchOrders, 60000);
 fetchOrders();

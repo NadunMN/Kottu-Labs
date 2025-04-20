@@ -345,3 +345,61 @@ body {
         width: 100%;
     }
   }
+
+  .orders-container {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.order-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.toggle-meals {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.meals-list {
+    margin: 1rem 0;
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+}
+
+.meal-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem 0;
+}
+
+.status-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.status-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #f0f0f0;
+}
+
+.status-btn.active {
+    background: #4CAF50;
+    color: white;
+}
