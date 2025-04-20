@@ -1,0 +1,6 @@
+#notification-cart:hover, #notification-takeawaycart:hover{
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    transform: scale(1.05);
+}

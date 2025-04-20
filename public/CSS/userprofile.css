@@ -1,3 +1,21 @@
+.userProfile-main {
+    margin:75px auto;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Adjust as needed */
+
+}
+.new-css{
+    width: 90%;
+    /* margin-top: 150px;
+    margin-bottom: 20px; */
+    margin: 40px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;}
 .personal-information{
     width: 90%;
     height: auto;
@@ -7,7 +25,9 @@
     justify-content: center;
     align-items: center;
     /* margin-top: 20px; */
-    border: 1px solid #d0d0d0;
+    /* border: 1px solid #d0d0d0; */
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     margin-bottom: 20px;
 }

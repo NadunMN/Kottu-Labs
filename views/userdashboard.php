@@ -315,7 +315,7 @@
                     <span class="profile-status">Active Member</span>
                 </div>
             </div>
-            <button class="edit-profile-btn">
+            <button id="view-profile" class="edit-profile-btn">
                 
                 Edit Profile
             </button>
@@ -332,7 +332,7 @@
                 <h2>Reservation History</h2>
 
                 <div class="order-list-button">
-                    <button onclick="window.location.href='#topic-head'" >Add Reservation</button>
+                    <button id="add-reservation" >Add Reservation</button>
                 </div>
                 
             </div>
@@ -562,6 +562,36 @@
     
     <script src="/JavaScript/addReview.js"></script>
     <script src="/JavaScript/useDashboard.js"></script>
+
+    <script >
+
+      let currentPath = window.location.pathname;
+    console.log('Current Path:', currentPath);
+    
+    // Select the button element
+    const button = document.getElementById("view-profile");
+
+    // Check the current path and update the button accordingly
+    if (currentPath === '/profile') {
+      button.textContent = "View Profile";
+      button.onclick = () => { window.location.href = '/myaccount'; };
+    } else if (currentPath === '/myaccount') {
+      button.textContent = "View Dashboard";
+      button.onclick = () => { window.location.href = '/profile'; };
+    }
+
+    const button2 = document.getElementById("add-reservation");
+    // Check the current path and update the button accordingly
+    if (currentPath === '/profile') {
+      // button2.textContent = "View Profile";
+      button2.onclick = () => { window.location.href = '/#topic-head'; };
+    }
+
+
+
+
+
+    </script>
 
     
 </body>
