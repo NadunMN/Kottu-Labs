@@ -5,8 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>myprofile</title>
   <link rel="stylesheet" href="/CSS/userprofile.css">
+  <link rel="stylesheet" href="/CSS/customerProfile.css">
+
 </head>
 <body>
+
+<div class="userProfile-main">
+
+ <!-- profile name -->
+ <div class="new-css">
+        <div class="profile-header">
+            <div class="account-info">
+                <div class="profile-avatar">
+                    <img src="/Photo/OE612P0.jpg" alt="User Avatar" class="avatar">
+                </div>
+                <div class="profile-details">
+                    <h1 id= "user-name" class="profile-name">John Doe</h1>
+                    <p id="user-email" class="profile-email">john.doe@example.com</p>
+                    <span class="profile-status">Active Member</span>
+                </div>
+            </div>
+            <button id="view-profile" class="edit-profile-btn">
+                
+                View Profile
+            </button>
+        </div>
+        
+        
+    </div>
 
 <div class="personal-information">
             <!-- order list -->
@@ -152,6 +178,13 @@
 
         </div>
 
+</div>
+
+        <script src="/JavaScript/profile.js"></script>
+        <script src="/JavaScript/useDashboard.js"></script>
+
+
+
 <script>
 
   fetch('/user/data')
@@ -170,8 +203,6 @@
           })
           .catch(error => console.error('Error fetching user data:', error));
 </script>
-
-<script src="/JavaScript/profile.js"></script>
 
 </body>
 </html>
