@@ -234,7 +234,28 @@ public static function findAllBookedMealTakeaway($where)
         }
     }
     
-
+    public static function getOrderDetails($order_id){
+        $tableName = static::tableName();
+        $statement = self::prepare("
+            SELECT 
+                $tableName.*,
+                m.meal_name,
+                m.meal_price
+            FROM $tableName
+            JOIN meals m ON $tableName.meal_id = m.meal_id
+            WHERE $tableName.order_id = :order_id
+            ");
+        
+        $statement->bindValue(":order_id", $order_id);
+    
+        try {
+            $statement->execute();
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
     
     
 

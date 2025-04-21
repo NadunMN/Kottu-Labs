@@ -789,7 +789,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             detailRow.innerHTML = `
                               <td>${item.meal_name}</td>
                               <td>${item.quantity}</td>
-                              <td>Rs.${item.price}</td>
+                              <td>Rs.${item.meal_price}</td>
                             `;
                             detailsContent.appendChild(detailRow);
                           });
