@@ -1,4 +1,4 @@
-let stewardId = null;
+let chefId = null;
 
 async function fetchOrders(selectedDate = null, selectedTime = null) {
     try {
@@ -42,7 +42,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                 console.error(userData.error);
             } else {
                 branch_id = userData.branch_id;
-                stewardId = userData.id;
+                chefId = userData.id;
             }
         } catch (error) {
             console.error('Error fetching user data:', error);
@@ -52,9 +52,10 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
         const currentDate = selectedDate || new Date().toISOString().split('T')[0];
         const todayOrders = data.filter(order => order.order_date === currentDate);
 
-        // Sort reservations
+        // Sort reservations - updated priority mapping for new status workflow
+        // 0: Not Accepted, 1: Preparing, 2: Ready, 3: Completed
         todayOrders.sort((a, b) => {
-            const priority = { 1: 0, 0: 1, 2: 2 }; // Define priority mapping
+            const priority = { 0: 0, 1: 1, 2: 2, 3: 3 }; // Updated priority mapping
             if (priority[a.order_status] !== priority[b.order_status]) {
                 return priority[a.order_status] - priority[b.order_status];
             }
@@ -62,10 +63,10 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
         });
 
         const readyOrders = new Set(
-            todayOrders.filter(order => order.order_status == 1).map(order => order.order_id)
-        ).size;;
+            todayOrders.filter(order => order.order_status == 2).map(order => order.order_id)
+        ).size;
         const uniqueAvailableOrders = new Set(
-            todayOrders.filter(order => order.order_status !== 2).map(order => order.order_id)
+            todayOrders.filter(order => order.order_status !== 3).map(order => order.order_id)
         );
         const availableOrders = uniqueAvailableOrders.size;
         
@@ -112,7 +113,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                             <th>Table No</th>
                             <th>Type</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="table-content"></tbody>
@@ -129,13 +130,40 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
         // Clear existing rows before appending new ones
         tableContent.innerHTML = "";
 
+        // Add CSS for status colors
+        const styleElement = document.createElement('style');
+        if (!document.getElementById('order-status-styles')) {
+            styleElement.id = 'order-status-styles';
+            styleElement.textContent = `
+                .status-0 { color: red; font-weight: bold; } /* Not Accepted */
+                .status-1 { color: #FFA500; font-weight: bold; } /* Preparing */
+                .status-2 { color: green; font-weight: bold; } /* Ready */
+                .status-3 { color: gray; } /* Completed */
+                .action-buttons { display: flex; gap: 8px; }
+                .action-buttons button { padding: 5px 10px; cursor: pointer; }
+                .action-buttons button:disabled { opacity: 0.5; cursor: not-allowed; }
+            `;
+            document.head.appendChild(styleElement);
+        }
+
         // Render rows directly from the grouped orders
         groupedOrdersArray.forEach(order => {
             const row = document.createElement("tr");
-            row.classList.add("order-item")
+            row.classList.add("order-item");
             row.setAttribute("data-table-number", order.table_number);
 
+            // Get the status text based on order_status
+            let statusText;
+            switch(order.order_status) {
+                case 0: statusText = "Not Accepted"; break;
+                case 1: statusText = "Preparing"; break;
+                case 2: statusText = "Ready"; break;
+                case 3: statusText = "Completed"; break;
+                default: statusText = "Unknown";
+            }
+
             const mealsDropdown = order.meals.map((meal) => `<li>${meal.mealName} - ${meal.quantity}</li>`).join("");
+            
             row.innerHTML = `
                 <td class="order-id">${order.order_id}</td> 
                 <td>
@@ -148,40 +176,64 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                 <td>${order.type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
                 <td class="status">
                     <span class="status-${order.order_status}">
-                        ${order.order_status == 1 ? "Ready" : order.order_status == 2 ? "Completed" :  "Processing"}
+                        ${statusText}
                     </span>
-                    ${order.order_status === 1 ? `<button class="confirm-btn" data-order-id="${order.order_id}">Confirm</button>` : ""}
                 </td>
-
-                <td class="status">
-                    <button class="action-btn" data-order-id="${order.order_id}">Accept</button>
-                    <button class="confirm-btn" data-order-id="${order.order_id}">Confirm</button>
+                <td class="action-buttons">
+                    ${order.order_status < 2 ? `
+                        <button class="accept-btn" 
+                                data-order-id="${order.order_id}" 
+                                ${order.order_status !== 0 ? 'disabled' : ''}>
+                            Accept
+                        </button>
+                        <button class="done-btn" 
+                                data-order-id="${order.order_id}"
+                                ${order.order_status !== 1 ? 'disabled' : ''}>
+                            Done
+                        </button>
+                    ` : `
+                        <button class="accept-btn" 
+                                data-order-id="${order.order_id}" 
+                                disabled>
+                            Accept
+                        </button>
+                        <button class="done-btn" 
+                                data-order-id="${order.order_id}"
+                                disabled>
+                            Done
+                        </button>
+                    `}
                 </td>
             `;
             tableContent.appendChild(row);
         });
 
-        // Add event listener for confirm buttons
-        document.querySelectorAll(".action-btn").forEach(button => {
+        // Add event listener for Accept buttons
+        document.querySelectorAll(".accept-btn").forEach(button => {
             button.addEventListener("click", async (event) => {
                 const orderId = event.target.getAttribute("data-order-id");
-                if (!stewardId) {
+                if (!chefId) {
                     alert("Chef ID is not available. Please try again.");
                     return;
                 }
-                // Log the payload being sent to the server
-        console.log("Payload:", { order_id: orderId, order_status: 1, chef_id: stewardId });
+                
+                console.log("Accept Payload:", { order_id: orderId, order_status: 1, chef_id: chefId });
+                
                 try {
                     const response = await fetch(`/order/confirm`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify({ order_id: orderId, order_status: 1, chef_id: stewardId }) // Update status to 'Completed'
+                        body: JSON.stringify({ 
+                            order_id: orderId, 
+                            order_status: 1, // Update status to 'Preparing'
+                            chef_id: chefId 
+                        })
                     });
-                    console.log(response);
+                    
                     if (response.ok) {
-                        alert("Order status updated to Completed!");
+                        alert("Order status updated to Preparing!");
                         fetchOrders();
                     } else {
                         console.error("Failed to update order status");
@@ -194,65 +246,60 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
             });
         });
 
-
-
-        // Add event listener for confirm buttons
-        document.querySelectorAll(".confirm-btn").forEach(button => {
+        // Add event listener for Done buttons
+        document.querySelectorAll(".done-btn").forEach(button => {
             button.addEventListener("click", async (event) => {
                 const orderId = event.target.getAttribute("data-order-id");
-                if (!stewardId) {
+                if (!chefId) {
                     alert("Chef ID is not available. Please try again.");
                     return;
                 }
-                // Log the payload being sent to the server
-        console.log("Payload:", { order_id: orderId, order_status: 2});
+                
+                console.log("Done Payload:", { order_id: orderId, order_status: 2 });
+                
                 try {
                     const response = await fetch(`/order/confirm`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify({ order_id: orderId, order_status: 2}) // Update status to 'Completed'
+                        body: JSON.stringify({ 
+                            order_id: orderId, 
+                            order_status: 2 // Update status to 'Ready'
+                        })
                     });
-                    console.log(response);
+                    
                     if (response.ok) {
-                        alert("Order status updated to Completed!");
-                        fetchOrders();
+                        // Also update the order meals
+                        const response2 = await fetch(`/order/confirm/orderMeals`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({ order_id: orderId })
+                        });
+                        
+                        if (response2.ok) {
+                            alert("Order status updated to Ready!");
+                            fetchOrders();
+                        } else {
+                            console.error("Failed to update order meals");
+                            alert("Error updating order meals. Please try again.");
+                        }
                     } else {
                         console.error("Failed to update order status");
                         alert("Error updating order status. Please try again.");
                     }
-
-
-                    const resoponse2 = await fetch(`/order/confirm/orderMeals`, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({ order_id: orderId}) // Update status to 'Completed'
-                    });
-                    console.log(resoponse2);
-                    if (resoponse2.ok) {
-                        alert("Order status updated to Completed!");
-                        fetchOrders();
-                    } else {
-                        console.error("Failed to update order status");
-                        alert("Error updating order status. Please try again.");
-                    }
-
-
                 } catch (error) {
                     console.error("Error:", error);
                     alert("Error updating order status. Please try again.");
                 }
             });
         });
-
-
 
     } catch (error) {
         console.error("Fetch error:", error);
-        document.getElementById("main-content").innerHTML = "<p>Error loading reservations.</p>";
+        document.getElementById("main-content").innerHTML = "<p>Error loading orders.</p>";
     }
 }
 
