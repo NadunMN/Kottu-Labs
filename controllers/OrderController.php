@@ -482,7 +482,7 @@ class OrderController extends Controller
     {
         if (Application::$app->user) {
             $branch_id = Application::$app->user->branch_id;
-            $orderHistory = Order::findOrdersByBranch($branch_id);
+            $orderHistory = Order::getOrderHistory($branch_id);
 
             echo json_encode($orderHistory);
 
@@ -495,7 +495,7 @@ class OrderController extends Controller
     {
         if (Application::$app->user) {
             $order_id = $id;
-            $orderItems = Order::findOrdersByBranch($order_id);
+            $orderItems = OrderMeals::getOrderDetails($order_id);
             $response = [
                 'items'=> $orderItems
             ];
