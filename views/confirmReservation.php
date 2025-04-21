@@ -9,8 +9,12 @@
 <body>
     <div id="pinEntrySection">
         <div class="pin-topic" >
-            <h1>Enter Confirmation PIN</h1>
-            <p>Please enter the PIN to continue</p>
+            <!-- <h1>Enter Your Reservation Number</h1> -->
+            <p style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #2c3e50; text-align: center; margin: 2rem auto; width:80%; max-width:1000px; line-height: 1.6; font-size: 1.1rem;  padding: 1.5rem; border-radius: 12px;  animation: fadeIn 0.8s ease-in-out;">
+  <span style="display: block; margin-bottom: 0.8rem; font-weight: 600; font-size: 1.3rem; color: #007bff; text-transform: uppercase; letter-spacing: 0.5px;">🔐 Verification Code Sent!</span>
+  We've dispatched a special verification key to your inbox! <span style="font-weight: 600; color: #343a40;">Please check your email</span> for the Reservation numbers that will unlock your next step.
+  <span style="display: block; margin-top: 1rem; padding: 0.6rem; background-color: rgba(0, 123, 255, 0.1); border-radius: 8px; font-style: italic;">Don't forget to keep this verification code handy — you'll need it to confirm your arrival!</span>
+</p>
         </div>
 
         <div class="pin-container" >

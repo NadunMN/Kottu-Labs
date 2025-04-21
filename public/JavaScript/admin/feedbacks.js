@@ -54,7 +54,6 @@ window.addEventListener("load", () => {
                         <td>${review.created_at}</td>
                         <td>
                             <div class="action-buttons">
-                                <button class="edit-btn" review-id='${review.review_id}'>Publish</button>
                                 <button class="delete-btn" review-id='${review.review_id}'>Delete</button>
                             </div>
                         </td>
