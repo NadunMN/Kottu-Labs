@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch(error => console.log('Error:', error));  
 
-
+    
 
   // Event listener for each sidebar option
   sidebarOptions.forEach((option) => {
@@ -459,7 +459,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="view-branch-menu-section">
                   <div class="topic-bar">
                     <div>
-                      <h2>Nawala</h2>
+                      <h2 style="margin:0;">${branchName}</h2>
                       <h5>${data.length} reservations available</h5>
                     </div>
                   </div>
@@ -679,124 +679,138 @@ document.addEventListener("DOMContentLoaded", () => {
 
           break;
 
-        case "order-history":
-          fetch("/manager/order/history?branch_id=${branchId}")
-            .then((response) => response.json())
-            .then((data) => {
-              if (data.error) {
-                console.error("Error:", data.error);
-              } else {
-                // Get the meal content container
-                const mealContent = document.getElementById("main-content");
-
-                if (data == null || data.length === 0) {
-                  mealContent.innerHTML = "No Orders available"; // Show a message if there are no meals
+          case "order-history":
+            fetch("/manager/order/history?branch_id=${branchId}")
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.error) {
+                  console.error("Error:", data.error);
                 } else {
-                  mealContent.innerHTML = ""; // Clear previous content if data is available
-                }
-
-                mealContent.innerHTML = `
-                    <div class="view-branch-menu-section">
-                        <div class="topic-bar">
-                            <div>
-                                <h2 style="margin:0;">Order History</h2>
-                                <h5 style="margin:0;">${data.length} orders available</h5>
-                            </div>
-                        </div>
-                        <table class="menu-table" id="menu-table">
-                            <thead>
-                                <tr>
-                                    <th>Order ID</th>                          
-                                    <th>Order Date</th>
-                                    <th>Order Time</th>
-                                    <th>Customer Name</th>
-                                    <th>Total Amount</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="table-content"></tbody>
-                        </table>
-                    </div>
-
-
-                <div id="order-details-container" style="display: none; margin-top: 20px;">
-                    <h3>Order Details</h3>
-                    <h4 id="detail-order-id"></h4>
-                    <table class="menu-table" id="details-table">
-                        <thead>
-                            <tr>
-                                <th>Meal</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody id="details-content"></tbody>
-                    </table>
-                </div>
-
-                `;
-
-                let orderId;
-                // Dynamically generate order elements
-                data.forEach((order) => {
-                  // Create a new table row
-                  const row = document.createElement("tr");
-
-                  // Populate row HTML
-                  row.innerHTML = `
-                      <td class="order-id">${order.order_id}</td>
-                      <td>${order.order_date}</td>
-                      <td>${order.order_time}</td>
-                      <td>${order.customer_name}</td>
-                      <td>Rs.${order.total_amount}</td>
-                      <td>${order.status}</td>
-                      <td><button class="view-btn" order-id="${order.order_id}">View Details</button></td>
+                  // Get the meal content container
+                  const mealContent = document.getElementById("main-content");
+          
+                  if (data == null || data.length === 0) {
+                    mealContent.innerHTML = "No Orders available"; // Show a message if there are no meals
+                  } else {
+                    mealContent.innerHTML = ""; // Clear previous content if data is available
+                  }
+          
+                  mealContent.innerHTML = `
+                      <div class="view-branch-menu-section">
+                          <div class="topic-bar">
+                              <div>
+                                  <h2 style="margin:0;">${branchName}</h2>
+                                  <h5 style="margin:0;">${data.length} orders available</h5>
+                              </div>
+                          </div>
+                          <table class="menu-table" id="menu-table">
+                              <thead>
+                                  <tr>
+                                      <th>Order ID</th>                          
+                                      <th>Order Date</th>
+                                      <th>Order Time</th>
+                                      <th>Customer Name</th>
+                                      <th>Total Amount</th>
+                                      <th>Status</th>
+                                      <th>Actions</th>
+                                  </tr>
+                              </thead>
+                              <tbody id="table-content"></tbody>
+                          </table>
+                      </div>
+          
+                      <div id="order-details-form" class="add-item-form hidden">
+                          <form id="details-form">
+                              <h3>Order Details</h3>
+                              <h4 id="detail-order-id"></h4>
+                              
+                              <div class="form-group-main">
+                                  <table class="menu-table" id="details-table">
+                                      <thead>
+                                          <tr>
+                                              <th>Meal</th>
+                                              <th>Quantity</th>
+                                              <th>Price</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody id="details-content"></tbody>
+                                  </table>
+                              </div>
+                              
+                              <div class="button-group">
+                                  <div class="form-group">
+                                      <button class="cancel-item-btn close-details-btn">Cancel</button>
+                                  </div>
+                              </div>
+                          </form>
+                      </div>
                   `;
-
-                  // Append the row directly to the table body
-                  document.getElementById("table-content").appendChild(row);
-                });
-
-                const veiwButton = document.querySelectorAll(".view-btn");
-                veiwButton.forEach((button) => {
-                  button.addEventListener("click", () => {
-                    const orderId = button.getAttribute("order-id");
-                    console.log(orderId);
-                    document.getElementById("order-details-container").style.display = "block";
-                    // Fetch order details using the order ID
-                    fetch(`/manager/order/details/${orderId}`)
-                      .then((response) => response.json())
-                      .then((orderDetails) => {
-                        const detailsContent = document.getElementById("details-content");
-                        detailsContent.style.display = "block";
-
-                        document.getElementById("detail-order-id").innerText = `Order ID: ${orderId}`;
-                        detailsContent.innerHTML = ""; // Clear previous content
-
-                        orderDetails.items.forEach((item) => {
-                          const detailRow = document.createElement("tr");
-                          detailRow.innerHTML = `
-                            <td>${item.meal_name}</td>
-                            <td>${item.quantity}</td>
-                            <td>Rs.${item.price}</td>
-                          `;
-                          detailsContent.appendChild(detailRow);
-                        });
-                        detailsContent.scrollIntoView({ behavior: "smooth" });
-                      })
-                      .catch((error) => {
-                        console.error("Error fetching order details:", error);
-                      });
+          
+                  let orderId;
+                  // Dynamically generate order elements
+                  data.forEach((order) => {
+                    // Create a new table row
+                    const row = document.createElement("tr");
+          
+                    // Populate row HTML
+                    row.innerHTML = `
+                        <td class="order-id">${order.order_id}</td>
+                        <td>${order.order_date}</td>
+                        <td>${order.order_time}</td>
+                        <td>${order.customer_name}</td>
+                        <td>Rs.${order.total_amount}</td>
+                        <td>${order.status}</td>
+                        <td><button class="view-btn" order-id="${order.order_id}">View Details</button></td>
+                    `;
+          
+                    // Append the row directly to the table body
+                    document.getElementById("table-content").appendChild(row);
                   });
-                });
-              }
-            })
-            .catch((error) => {
-              console.error("Error fetching order history:", error);
-            });
-
-            
-          break;
+          
+                  const viewButtons = document.querySelectorAll(".view-btn");
+                  viewButtons.forEach((button) => {
+                    button.addEventListener("click", () => {
+                      const orderId = button.getAttribute("order-id");
+                      const orderDetailsForm = document.getElementById("order-details-form");
+                      
+                      // Show the details form
+                      orderDetailsForm.classList.remove("hidden");
+                      
+                      // Fetch order details using the order ID
+                      fetch(`/manager/order/details/${orderId}`)
+                        .then((response) => response.json())
+                        .then((orderDetails) => {
+                          const detailsContent = document.getElementById("details-content");
+                          document.getElementById("detail-order-id").innerText = `Order ID: ${orderId}`;
+                          detailsContent.innerHTML = ""; // Clear previous content
+          
+                          orderDetails.items.forEach((item) => {
+                            const detailRow = document.createElement("tr");
+                            detailRow.innerHTML = `
+                              <td>${item.meal_name}</td>
+                              <td>${item.quantity}</td>
+                              <td>Rs.${item.price}</td>
+                            `;
+                            detailsContent.appendChild(detailRow);
+                          });
+                        })
+                        .catch((error) => {
+                          console.error("Error fetching order details:", error);
+                        });
+                    });
+                  });
+          
+                  // Add close button functionality
+                  document.querySelector(".close-details-btn").addEventListener("click", (event) => {
+                    event.preventDefault();
+                    document.getElementById("order-details-form").classList.add("hidden");
+                  });
+                }
+              })
+              .catch((error) => {
+                console.error("Error fetching order history:", error);
+              });
+            break;
 
         default:
           mainContent.innerHTML = `<h2>${optionId.replace(
