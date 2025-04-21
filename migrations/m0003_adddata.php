@@ -29,7 +29,7 @@ class m0003_adddata{
                     ('customer@gmail.com', 'Ranuga', 'Lekawasam', 0, 'customer','+94764659123', 2, 'none'),
                     ('steward@gmail.com', 'Mahesh', 'Kumara', 0, 'steward','+94764659124', 3, '/Photo/Staff/steward.jpg'),
                     ('manager@gmail.com', 'Thirani', 'Athukorala', 0, 'manager','+94764659125', 1, '/Photo/Staff/manager3.jpg'),
-                    ('chef@gmail.com', 'Eraji', 'Thenuwara', 0, 'chef','+94764659125', 1, '/Photo/Staff/chef1.jpg');";
+                    ('chef@gmail.com', 'Eraji', 'Thenuwara', 0, 'chef','+94764659126', 1, '/Photo/Staff/chef1.jpg');";
             $db->pdo->exec($SQL);
         }
 
@@ -39,22 +39,38 @@ class m0003_adddata{
         $result = $db->pdo->query($checkColumnSQL)->fetch();
         if (!$result) {
             $SQL = "INSERT INTO meals (meal_name, meal_price, meal_description, meal_photo) VALUES
-                    ('Meal 1', 1000.00, 'All', '/Photo/Menu/meal1.jpg'),
-                    ('Meal 2', 1200.00, 'Classic Kottu', '/Photo/Menu/meal2.jpg'),
-                    ('Meal 3', 1300.00, 'Dolphin Kottu', '/Photo/Menu/meal3.jpg'),
-                    ('Meal 4', 1400.00, 'Cheese Kottu', '/Photo/Menu/meal4.jpg'),
-                    ('Meal 5', 1250.00, 'String Hopper Kottu', '/Photo/Menu/meal5.jpg'),
-                    ('Meal 6', 1500.00, 'KL Special Fried Rice', '/Photo/Menu/meal6.jpg'),
-                    ('Meal 7', 1350.00, 'Pasta', '/Photo/Menu/meal7.jpg'),
-                    ('Meal 8', 800.00, 'Appetizers', '/Photo/Menu/meal8.jpg'),
-                    ('Meal 9', 1600.00, 'KL Inventions', '/Photo/Menu/meal9.jpg'),
-                    ('Meal 10', 1100.00, 'Wraps & Rotti Sandwiches', '/Photo/Menu/meal10.jpg'),
-                    ('Meal 11', 950.00, 'Parata', '/Photo/Menu/meal11.jpg'),
-                    ('Meal 12', 1450.00, 'Devilled Portions', '/Photo/Menu/meal12.jpg'),
-                    ('Meal 13', 700.00, 'Mocktails', '/Photo/Menu/meal13.jpg'),
-                    ('Meal 14', 650.00, 'Beverages', '/Photo/Menu/meal14.jpg');";
+                    ('Egg Kottu', 500.00, 2, '/Photo/Menu/1.jpg'),
+
+                    ('Sea Food Kottu', 1200.00, 2, '/Photo/Menu/2.jpg'),
+
+                    ('Chicken Kottu', 1200.00, 3, '/Photo/Menu/5.jpg'),
+
+                    ('Sea Food Kottu', 1000.00, 4, '/Photo/Menu/24.jpg'),
+
+                    ('String Hopper Kottu', 850.00, 5, '/Photo/Menu/27.jpg'),
+
+                    ('Chicken Fried Rice', 900.00,6, '/Photo/Menu/26.jpg'),
+
+                    ('Chilli Chicken Pasta', 1350.00, 7, '/Photo/Menu/25.jpg'),
+
+                    ('Cheese Omelette', 500.00,8, '/Photo/Menu/3.jpg'),
+
+                    ('Chilli Chicken', 1000.00, 9, '/Photo/Menu/6.jpg'),
+
+                    ('Chocolate Roti', 500.00, 10, '/Photo/Menu/16.jpg'),
+
+                    ('Chicken Parata', 950.00, 11, '/Photo/Menu/29.jpg'),
+
+                    ('Devilled Chicken Kottu', 1200.00, 12, '/Photo/Menu/21.jpg'),
+
+                    ('Blue Mojito', 700.00, 13, '/Photo/Menu/20.jpg'),
+
+                    ('Chocolate Milkshake', 700.00, 14, '/Photo/Menu/9.jpg'),
+
+                    ('Orange Mojito', 650.00, 14, '/Photo/Menu/17.jpg');";
             $db->pdo->exec($SQL);
         }
+
 
 
         // Add branch_meal data
@@ -69,7 +85,7 @@ class m0003_adddata{
                     (9, 2, 1), (10, 2, 1), (11, 2, 1), (12, 2, 1),
 
                     (2, 3, 1), (4, 3, 1), (6, 3, 1), (8, 3, 1),
-                    (9, 3, 1), (12, 3, 1), (13, 3, 1), (14, 3, 1);";
+                    (15, 3, 1), (12, 3, 1), (13, 3, 1), (14, 3, 1);";
             $db->pdo->exec($SQL);
         }
 
