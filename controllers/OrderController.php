@@ -492,19 +492,36 @@ class OrderController extends Controller
     }
 
     public function managerOrderDetails($id)
-    {
-        if (Application::$app->user) {
+{
+    if (Application::$app->user) {
+        try {
             $order_id = $id;
-            $orderItems = OrderMeals::getOrderDetails($order_id);
+            $orderItems = Order::getOrderDetails($order_id);
+            
+            // Make sure we're setting the correct content type
+            header('Content-Type: application/json');
+            
             $response = [
-                'items'=> $orderItems
+                'items' => $orderItems
             ];
 
             echo json_encode($response);
-        } else {
-            echo json_encode(['error' => 'No user is logged in']);
+            exit; // Make sure we stop execution after sending the response
+        } catch (Exception $e) {
+            // Set HTTP response code
+            http_response_code(500);
+            header('Content-Type: application/json');
+            echo json_encode(['error' => $e->getMessage()]);
+            exit;
         }
+    } else {
+        // Set HTTP response code
+        http_response_code(401);
+        header('Content-Type: application/json');
+        echo json_encode(['error' => 'No user is logged in']);
+        exit;
     }
+}
 
 
     public function orderMealsConfirmation(){

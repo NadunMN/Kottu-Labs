@@ -688,13 +688,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                   // Get the meal content container
                   const mealContent = document.getElementById("main-content");
-          
+
                   if (data == null || data.length === 0) {
                     mealContent.innerHTML = "No Orders available"; // Show a message if there are no meals
                   } else {
                     mealContent.innerHTML = ""; // Clear previous content if data is available
                   }
-          
+
                   mealContent.innerHTML = `
                       <div class="view-branch-menu-section">
                           <div class="topic-bar">
@@ -711,14 +711,13 @@ document.addEventListener("DOMContentLoaded", () => {
                                       <th>Order Time</th>
                                       <th>Customer Name</th>
                                       <th>Total Amount</th>
-                                      <th>Status</th>
                                       <th>Actions</th>
                                   </tr>
                               </thead>
                               <tbody id="table-content"></tbody>
                           </table>
                       </div>
-          
+
                       <div id="order-details-form" class="add-item-form hidden">
                           <form id="details-form">
                               <h3>Order Details</h3>
@@ -745,28 +744,27 @@ document.addEventListener("DOMContentLoaded", () => {
                           </form>
                       </div>
                   `;
-          
-                  let orderId;
+
                   // Dynamically generate order elements
                   data.forEach((order) => {
                     // Create a new table row
                     const row = document.createElement("tr");
-          
-                    // Populate row HTML
+
+                    // Populate row HTML - removed status column
                     row.innerHTML = `
                         <td class="order-id">${order.order_id}</td>
                         <td>${order.order_date}</td>
                         <td>${order.order_time}</td>
                         <td>${order.customer_name}</td>
                         <td>Rs.${order.total_amount}</td>
-                        <td>${order.status}</td>
                         <td><button class="view-btn" order-id="${order.order_id}">View Details</button></td>
                     `;
-          
+
                     // Append the row directly to the table body
                     document.getElementById("table-content").appendChild(row);
                   });
-          
+
+                  // Rest of the code remains the same
                   const viewButtons = document.querySelectorAll(".view-btn");
                   viewButtons.forEach((button) => {
                     button.addEventListener("click", () => {
@@ -783,7 +781,7 @@ document.addEventListener("DOMContentLoaded", () => {
                           const detailsContent = document.getElementById("details-content");
                           document.getElementById("detail-order-id").innerText = `Order ID: ${orderId}`;
                           detailsContent.innerHTML = ""; // Clear previous content
-          
+
                           orderDetails.items.forEach((item) => {
                             const detailRow = document.createElement("tr");
                             detailRow.innerHTML = `
@@ -799,7 +797,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         });
                     });
                   });
-          
+
                   // Add close button functionality
                   document.querySelector(".close-details-btn").addEventListener("click", (event) => {
                     event.preventDefault();
