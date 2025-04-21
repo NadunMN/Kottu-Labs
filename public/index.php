@@ -212,7 +212,7 @@ $app->router->get('/offer/getpublished', [$offerController, 'getAllPublishedOffe
 $app->router->get('/order/data', [$orderController, 'getOrderData']);
 $app->router->post('/order/confirm', [$orderController, 'updateOrderStatus']);
 $app->router->get('/manager/order/history', [$orderController, 'managerOrderHistory']);
-$app->router->get('/manager/order/details/{id}', [$orderController, 'managerOrderDetails']);
+$app->router->get('/manager/order/details/:id', [$orderController, 'managerOrderDetails']);
 
 
 
