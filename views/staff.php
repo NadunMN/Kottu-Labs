@@ -9,18 +9,14 @@
 
 <body>
     
-    <!-- new section -->
-    <section class="ezy__team-section">
-  <div class="container-1">
-    <h2 class="ezy__team-section-heading">Our Staff Members</h2>
-    <p class="ezy__team-section-subheading">
-      Meet our talented team of professionals dedicated to delivering exceptional service and innovative solutions for your business needs.
-    </p>
-
-    
-    
+    <section class="container1" aria-label="Page Header">
+      <div class="title">
+        <h1>Our Staff</h1>
+      </div>
+    </section>
 
     <div class="ezy__team-grid">
+      
       <!-- Team Member 1 -->
       <div class="ezy__team-card">
         <img 
