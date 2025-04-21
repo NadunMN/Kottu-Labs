@@ -34,78 +34,152 @@ body {
   padding: 0;
   font-family: Arial, sans-serif;
   line-height: 1.6;
+  background-color: var(--color-background);
+  display: block;
+  justify-content: center;
+  align-items: center;
+}
+
+#pinEntrySection{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: auto;
+  min-height: auto;
+  background-color: var(--color-background);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 /* Layout Components */
 .pin-topic {
   text-align: center;
-  padding: var(--spacing-xl) var(--spacing-sm);
   background-color: var(--color-background);
+  width: auto;
 }
 
 .pin-topic h1 {
   margin: 0;
   color: var(--color-text-primary);
+  font-size: 2rem;
 }
 
 .pin-topic p {
   margin: var(--spacing-xs) 0 0;
   color: var(--color-text-secondary);
+  font-size: 1.1rem;
 }
 
+/* Center the entire pin container */
 .pin-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: var(--spacing-xl) var(--spacing-sm);
 }
 
 /* PIN Input Styles */
 .pin-box {
-  background: var(--color-white);
-  padding: var(--spacing-lg);
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-xl);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
+  text-align: center;
+}
+
+.pin-box h2 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text-primary);
 }
 
 .pin-input-container {
   display: flex;
   justify-content: center;
-  gap: var(--spacing-xs);
-  margin-bottom: var(--spacing-sm);
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
 }
 
 .pin-digit {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
+  font-weight: bold;
   border: 2px solid var(--color-border);
   border-radius: var(--radius-sm);
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
 }
 
 .pin-digit:focus {
   border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.pin-digit:not(:placeholder-shown) {
+  border-color: var(--color-primary-dark);
 }
 
 .pin-message {
   text-align: center;
-  margin-bottom: var(--spacing-sm);
+  margin: var(--spacing-sm) 0;
   color: var(--color-danger);
-  min-height: 20px;
+  font-weight: 500;
 }
 
+/* Button Styles */
+.submit-button {
+  width: 100%;
+  padding: var(--spacing-sm);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  margin-top: var(--spacing-md);
+}
+
+.submit-button:hover {
+  background-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+}
+
+.submit-button:disabled {
+  background-color: var(--color-border);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Confirmation related styles */
 .confirmation-box {
   background: var(--color-white);
   align-items: center;
-  width: 60%;
+  width: 90%;
+  max-width: 500px;
   padding: var(--spacing-lg);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   border-radius: var(--radius-lg);
+  margin: 0 auto;
 }
 
 .name-table {
@@ -116,9 +190,13 @@ body {
 }
 
 .form-input {
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-bottom: var(--spacing-sm);
 } 
 
 .form-input:focus {
@@ -128,79 +206,46 @@ body {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Button Styles */
 .buttons {
   display: flex;
-  justify-content: flex-end;
-  gap: 10px; 
-  margin-top: -30px; 
+  justify-content: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
 }
 
-.submit-button{
-  width: 100%;
-  padding: var(--spacing-sm);
-  background-color: var(--color-primary);
+.confirm-button,
+.close-button {
+  padding: var(--spacing-sm) var(--spacing-lg);
   color: var(--color-white);
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
   font-size: 1rem;
+  font-weight: 600;
   text-transform: uppercase;
   transition: all 0.3s ease;
+  min-width: 120px;
 }
-
-.submit-button:hover{
-  background-color: var(--color-accent);
-  transform: translateY(-2px);
-}
-
-.submit-button:active {
-  transform: translateY(0);
-}
-
 
 .confirm-button {
-  padding: var(--spacing-sm);
   background-color: var(--color-primary);
-  color: var(--color-white);
-  border: none;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  font-size: 1rem;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
-}
-
-.confirm-button:hover{
-  background-color: var(--color-accent);
-  transform: translateY(-2px);
-}
-
-.confirm-button:active {
-  transform: translateY(0);
 }
 
 .close-button {
-  padding: var(--spacing-sm);
   background-color: var(--color-danger);
-  color: var(--color-white);
-  border: none;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  font-size: 1rem;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
 }
 
-.close-button:hover{
+.confirm-button:hover,
+.close-button:hover {
   background-color: var(--color-accent);
   transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
 }
 
+.confirm-button:active,
 .close-button:active {
   transform: translateY(0);
 }
-
 
 .confirmed-text {
   display: none;
@@ -211,8 +256,10 @@ body {
   font-size: 1rem;
   text-transform: uppercase;
   text-align: center;
+  margin-top: var(--spacing-md);
 }
 
+/* Success popup */
 .success-pop {
   display: none; 
   position: fixed;
@@ -229,9 +276,10 @@ body {
   text-align: center;
   z-index: 1000;
   max-width: 350px;
-  animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+  animation: fadeInOut 3s ease forwards;
   align-items: center;
 }
+
 .success-pop p {
   margin: 0;
   padding-left: 10px;
@@ -244,43 +292,50 @@ body {
   font-weight: bold;
 }
 
-.dining-option label {
-  cursor: pointer;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
+  .pin-digit {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+  
   .card-content {
     flex-direction: column;
     padding: var(--spacing-md);
     gap: var(--spacing-md);
-    align-items: center; /* Center the content */
+    align-items: center;
   }
 
   .reservation-form {
     grid-template-columns: 1fr;
-    text-align: center; /* Center the text */
+    text-align: center;
   }
 
   .name-table {
-    flex-direction: column; /* Stack items vertically */
-    align-items: center; /* Center the items */
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
   }
 
   .buttons {
-    width: 100%; /* Ensure buttons take full width */
-    justify-content: center; /* Center the buttons */
-    margin-top: var(--spacing-md); /* Add some space above the buttons */
+    width: 100%;
+    justify-content: center;
+    margin-top: var(--spacing-md);
+    flex-direction: column;
   }
-
-  button {
-    grid-column: 1 / -1;
+  
+  .confirm-button,
+  .close-button {
+    width: 100%;
   }
 }
 
 @keyframes fadeInOut {
-  0%, 100% { opacity: 0; }
-  10%, 90% { opacity: 1; }
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 #tableNumber {
@@ -295,7 +350,9 @@ body {
   font-weight: 500;
   line-height: 1.25rem;
   padding: 0.625rem 2.5rem 0.625rem 0.75rem;
-  width: 20%;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
   background-position: right 0.5rem center;
   background-repeat: no-repeat;
@@ -317,7 +374,6 @@ body {
   padding: 0.5rem;
 }
 
-/* For the placeholder option */
 #tableNumber option[disabled] {
   color: #9ca3af;
 }
