@@ -165,28 +165,7 @@ class Order extends OrderModel
         }        
     }
 
-    public static function findOrderDetails($order_id) {
-        $tableName = static::tableName();
-        $statement = self::prepare("
-            SELECT 
-                meals.meal_name,
-                om.quantity,
-                meals.meal_price AS price
-            FROM order_meals om
-            JOIN meals ON om.meal_id = meals.meal_id
-            WHERE om.order_id = :order_id
-        ");
-    
-        $statement->bindValue(":order_id", $order_id);
-    
-        try {
-            $statement->execute();
-            return $statement->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            echo "Error: " . $e->getMessage();
-            return false;
-        }        
-    }
+
 
     public static function getOrderHistory($branch_id){
         $tableName = static::tableName();
@@ -210,6 +189,37 @@ class Order extends OrderModel
             return false;
         }
     }
+
+    public static function getOrderDetails($order_id) {
+        $tableName = static::tableName(); // 'orders'
+    
+        $sql = "
+            SELECT 
+                o.*,                      
+                m.meal_name, 
+                m.meal_price,
+                om.quantity,
+                (om.quantity * m.meal_price) AS total_price
+            FROM {$tableName} o
+            JOIN order_meals om ON o.order_id = om.order_id
+            JOIN meals m ON om.meal_id = m.meal_id
+            WHERE o.order_id = :order_id
+        ";
+    
+        $statement = self::prepare($sql);
+        $statement->bindValue(":order_id", $order_id);
+    
+        try {
+            $statement->execute();
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("SQL ERROR: " . $e->getMessage()); // avoid echo in production
+            http_response_code(500);
+            echo json_encode(["error" => "Failed to retrieve order details."]);
+            exit;
+        }
+    }
+    
 
 
 
