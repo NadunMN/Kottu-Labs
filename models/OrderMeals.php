@@ -197,6 +197,42 @@ public static function findAllBookedMealTakeaway($where)
             return false;
         }
     }
+
+    public function orderMealsStatusUpdate($set, $where)
+    {
+        $tableName = static::tableName();
+        
+        // Build SET clause
+        $setAttributes = array_keys($set);
+        $setClause = implode(', ', array_map(fn($attr) => "$attr = :set_$attr", $setAttributes));
+        
+        // Build WHERE clause
+        $whereAttributes = array_keys($where);
+        $whereClause = implode(' AND ', array_map(fn($attr) => "$attr = :where_$attr", $whereAttributes));
+        
+        $sql = "UPDATE $tableName SET $setClause WHERE $whereClause";
+        
+        error_log("SQL: " . $sql); // Debug log
+        
+        $statement = self::prepare($sql);
+        
+        // Bind SET values
+        foreach ($set as $attr => $value) {
+            $statement->bindValue(":set_$attr", $value);
+        }
+        
+        // Bind WHERE values
+        foreach ($where as $attr => $value) {
+            $statement->bindValue(":where_$attr", $value);
+        }
+        
+        try {
+            return $statement->execute();
+        } catch (\Exception $e) {
+            echo "Update failed: " . $e->getMessage();
+            return false;
+        }
+    }
     
 
     

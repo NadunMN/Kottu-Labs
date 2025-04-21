@@ -332,6 +332,7 @@ class Order extends OrderModel
         $params = array_map(fn($attr) => "$attr = :$attr", $attributes);
 
         $primaryKey = static::primaryKey();
+        // error_log("Primary Key: " . $primaryKey); // Debugging line
         $sql = "UPDATE $tableName SET " . implode(', ', $params) . " WHERE $primaryKey = :$primaryKey";
 
         $statement = self::prepare($sql);
