@@ -284,7 +284,7 @@ class OrderController extends Controller
     {
         $body = json_decode(file_get_contents('php://input'), true);
 
-        if (!isset($body['order_id']) || !isset($body['order_status']) || !isset($body['steward_id'])) {
+        if (!isset($body['order_id']) || !isset($body['order_status'])) {
             http_response_code(400);
             echo json_encode(['error' => 'Invalid request data']);
             return;
@@ -292,7 +292,10 @@ class OrderController extends Controller
 
         $orderId = $body['order_id'];
         $newStatus = $body['order_status'];
-        $stewardId = $body['steward_id'];
+
+        $stewardId = $body['steward_id'] || null; // Optional field
+        $chefId = $body['chef_id'] || null; // Optional field
+
 
         // Validate order status
         if (!in_array($newStatus, [0, 1, 2])) { 
@@ -312,7 +315,16 @@ class OrderController extends Controller
 
         // Update the order status and steward ID
         $order->order_status = $newStatus;
-        $order->steward_id = $stewardId;
+
+        if ($chefId) {
+            $order->chef_id = $chefId;
+        }
+
+        if ($stewardId) {
+            $order->steward_id = $stewardId;
+        }
+      
+
 
         if ($order->update()) {
             http_response_code(200);
@@ -489,6 +501,27 @@ class OrderController extends Controller
             ];
 
             echo json_encode($response);
+        } else {
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+
+
+    public function orderMealsConfirmation(){
+        if (Application::$app->user) {
+
+
+            error_log("Order Meals Confirmation called"); // Log the function call for debugging
+            $orderMeals = new OrderMeals();
+            $orderMeals->loadData(Application::$app->request->getBody());
+
+            $orderId = $orderMeals->order_id; // Assuming you have the order ID from the request
+
+            $orderMeals->orderMealsStatusUpdate(
+                ['status' => 'completed'],   // SET clause
+                ['order_id' => $orderId]            // WHERE clause
+            );
+                        
         } else {
             echo json_encode(['error' => 'No user is logged in']);
         }

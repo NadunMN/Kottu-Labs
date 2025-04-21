@@ -320,6 +320,10 @@ $app->router->get('/gettakeawayBookedData', function() use ($orderController) {
 });
 
 
+//cheforder update
+$app->router->post('/order/confirm/orderMeals', [$orderController, 'orderMealsConfirmation']);
+
+
 
 
 
