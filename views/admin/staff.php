@@ -384,6 +384,24 @@ body {
                             </div>
                         </div>
 
+
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="email">Password *</label>
+                                    <input type="text" name="password" id="email" required>
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="mobile">Confirmation Password *</label>
+                                    <input type="text" name="confirmPassword" id="mobile">
+                                </div>
+                            </div>
+                        </div>
+
+
+
                         <div class="form-group">
                             <label for="address">Address</label>
                             <textarea id="address" name="address" rows="2"></textarea>

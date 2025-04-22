@@ -11,6 +11,8 @@
         <div class="second-part">
             <h1>Login</h1>
 
+
+
             <?php $form = \app\core\form\Form::begin('', 'post')?>
 
             <!-- Email field with email icon -->
@@ -23,6 +25,17 @@
                 <?php echo $form->field($model, 'mobile_number') ?>
             </div>
 
+            <?php if(isset($error) && $error!='customer'): ?>
+                <div class="form-group" data-icon="lock">
+                    <?php echo $form->field($model, 'password')->passwordField() ?>
+                    <?php if ($model->hasError('password')): ?>
+                        <div class="alert alert-danger">
+                            <?php echo $model->getFirstError('password'); ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
             <button type="submit" class="btn btn-primary" onclick="sendOtp()">Log In</button>
 
             <?php echo \app\core\form\Form::end()?>
@@ -32,4 +45,4 @@
         </div>
     </div>
 </body>
-</html>
+</html> 
