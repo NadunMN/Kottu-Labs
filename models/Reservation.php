@@ -135,7 +135,8 @@ class Reservation extends ReservationModel
             SELECT 
                 $tableName.*, 
                 CONCAT(users.firstname, ' ', users.lastname) AS userName, 
-                branches.branch_name AS branchName
+                branches.branch_name AS branchName,
+                users.mobile_number AS mobile_number
             FROM $tableName
             JOIN users ON $tableName.user_id = users.id
             JOIN branches ON $tableName.branch_id = branches.branch_id
