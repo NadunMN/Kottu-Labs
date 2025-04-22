@@ -385,5 +385,62 @@ class ManagerController extends Controller
 
 
 
+    public function addmenuItemsAdmin(){
+        $meal = new Meal();
+        $meal->load(Application::$app->request->getBody());
+
+
+        try {
+
+            if ($meal->add()) {
+
+                $mealId = $meal->meal_id;
+
+
+
+
+
+
+                $branchMeal = new BranchMeal();
+                $branchMeal->meal_id = $mealId;
+
+                $branches = [];
+                foreach (Application::$app->request->getBody() as $key => $value) {
+                    // Assuming branch keys are named like branch2, branch3, etc.
+                    if (strpos($key, 'branch') === 0) {
+                        $branches[] = $value;
+                    }
+                }
+
+                
+            if (count($branches) > 0) {
+                foreach ($branches as $branchId) {
+                    $branchMeal = new BranchMeal();
+                    $branchMeal->meal_id = $mealId;
+                    $branchMeal->branch_id = $branchId;
+
+                    if (!$branchMeal->add()) {
+                        throw new \Exception('Failed to add meal to branches_meal for branch ' . $branchId . ': ' . json_encode($branchMeal->errors));
+                    }
+                }
+
+                
+                echo json_encode(['success' => true]);
+            } else {
+                throw new \Exception('No branch IDs provided');
+            }
+
+            
+            } else {
+                throw new \Exception('Meal validation or save failed: ' . json_encode($meal->errors));
+            }
+        } catch (\Exception $e) {
+            error_log($e->getMessage());
+            echo json_encode(['success' => false, 'errors' => $meal->errors, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+
     
 }

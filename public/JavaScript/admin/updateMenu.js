@@ -289,7 +289,7 @@ fetch("/menuitem/data")
 
         const requestBody = JSON.stringify(data);
         console.log("Request Body:", requestBody);
-        fetch("/menuitem/add", {
+        fetch("/menuitem/admin/add", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

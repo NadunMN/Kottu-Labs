@@ -137,6 +137,7 @@ $app->router->get('/manager/branch', [$managerController, 'getManagerBranch']);
 
 //define route for menuItems
 $app->router->post('/menuitem/add', [$managerController, 'addmenuItems']);
+$app->router->post('/menuitem/admin/add', [$managerController, 'addmenuItemsAdmin']);
 $app->router->get('/menuitem/data', [$managerController, 'getmenuItems']);
 $app->router->get('/managermenuitem/data', [$managerController, 'getmenuItemsManager']);
 $app->router->post('/mealitem/delete', [$managerController, 'deletemenuItems']);
