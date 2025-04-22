@@ -251,6 +251,7 @@ class ManagerController extends Controller
         }
     }
 
+
     
 
     // get reservation number

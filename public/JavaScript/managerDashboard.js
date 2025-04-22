@@ -472,7 +472,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         <th>Customer Name</th>
                         <th>No. Guests</th>
                         <th>Contact Number</th>
-                        <th>Status</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
@@ -495,13 +494,9 @@ document.addEventListener("DOMContentLoaded", () => {
                   <td class="reservation-id">${reservation.confirmation_number}</td>
                   <td>${reservation.reservation_date}</td>
                   <td>${reservation.reservation_time}</td>
+                  <td>${reservation.userName}</td>
                   <td>${reservation.number_of_guests}</td>
-                  <td>${reservation.customer_name}</td>
-                  <td>
-                    <button class="status-btn ${reservation.confirmation_status ? "available" : "unavailable"}">
-                      ${reservation.confirmation_status ? "Confirmed" : "Pending"}
-                    </button>
-                  </td>
+                  <td>${reservation.mobile_number}</td>
                   <td>
                     <div class="action-buttons">
                       <button class="delete-btn" reservation-no='${reservation.reservation_no}'>Delete</button>
@@ -509,27 +504,6 @@ document.addEventListener("DOMContentLoaded", () => {
                   </td>
                 `;
                 tableContent.appendChild(row);
-              });
-          
-              // Handle status button toggle
-              const statusButtons = document.querySelectorAll(".status-btn");
-              statusButtons.forEach((button) => {
-                button.addEventListener("click", () => {
-                  const isAvailable = button.classList.contains("available");
-                  button.classList.toggle("available", !isAvailable);
-                  button.classList.toggle("unavailable", isAvailable);
-                  button.textContent = isAvailable ? "Pending" : "Confirmed";
-                  fetch('/reservation/update', {
-                    method: 'POST',
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                      'confirmation_status': isAvailable ? 0 : 1,
-                      'reservation_no': button.closest("tr").querySelector(".reservation-id").textContent
-                    })
-                  });
-                });
               });
           
             
