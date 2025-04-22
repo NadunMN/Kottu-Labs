@@ -25,6 +25,8 @@ class m0001_initial
             position VARCHAR(20) NOT NULL,
             branch_id INT DEFAULT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            password VARCHAR(255) NOT NULL,
+            confirmPassword VARCHAR(255) NOT NULL,
             FOREIGN KEY (branch_id) REFERENCES branches(branch_id) ON DELETE CASCADE,
             INDEX (branch_id)
         ) ENGINE=INNODB;";

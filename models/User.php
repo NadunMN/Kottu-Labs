@@ -26,6 +26,8 @@ class User extends UserModel
     public string $created_at = '';
     public ?int $branch_id = 1;
     public ?string $photo = '';
+    public string $password = '';
+    public string $confirmPassword = '';
 
     public static User $use;
     public static function tableName(): string
@@ -70,7 +72,7 @@ class User extends UserModel
     public function attributes(): array
     {
         return ['id','firstname', 'lastname', 'email', 'branch_id', 'status', 'position',
-         'mobile_number', 'gender', 'address', 'nationality',  'date_of_birth','photo'];
+         'mobile_number', 'gender', 'address', 'nationality',  'date_of_birth','photo','password', 'confirmPassword'];
     }
 
     public function labels(): array
@@ -85,6 +87,7 @@ class User extends UserModel
             // 'nationality' => 'Nationality',
         ];
     }
+
 
     public function getDisplayName(): string
     {
@@ -108,6 +111,8 @@ class User extends UserModel
             'created_at' => $this->created_at,
             'branch_id' => $this->branch_id,
             'photo' => $this->photo,
+            'password' => $this->password,
+            'confirmPassword' => $this->confirmPassword,
         ];
     }
 
@@ -117,6 +122,13 @@ class User extends UserModel
         $attributes = $this->attributes();
         
 
+        if (!empty($this->password)) {
+            $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        }
+        if (!empty($this->confirmPassword)) {
+            $this->confirmPassword = password_hash($this->confirmPassword, PASSWORD_DEFAULT);
+        }
+        
         $params = array_map(fn($attr) => ":$attr", $attributes);
         $statement = self::prepare("INSERT INTO $tableName (".implode(',', $attributes).") VALUES (".implode(',', $params).")");
         foreach ($attributes as $attribute) {
