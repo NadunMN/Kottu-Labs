@@ -63,36 +63,46 @@ class Reservation extends ReservationModel
     }
 
     public static function findOne($where)
-    {
-        $tableName = static::tableName();
-        $attributes = array_keys($where);
-    
-        // Generate the WHERE clause dynamically
-        $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
-    
-        $statement = self::prepare("
-            SELECT 
-                $tableName.*, 
-                CONCAT(users.firstname, ' ', users.lastname) AS userName
-            FROM $tableName
-            JOIN users ON $tableName.user_id = users.id
-            where $sql
-        ");
-    
-        foreach ($where as $key => $value) {
-            $statement->bindValue(":$key", $value);
-        }
-    
-        // Error handling for the SQL execution
-        try {
-            $statement->execute();
-            return $statement->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            // Log or handle the error appropriately
-            echo "Error: " . $e->getMessage();
-            return false;
-        }
+{
+    $tableName = static::tableName();
+    $attributes = array_keys($where);
+
+    // Generate the WHERE clause dynamically
+    $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+
+    $statement = self::prepare("
+        SELECT 
+            $tableName.*, 
+            CONCAT(users.firstname, ' ', users.lastname) AS userName
+        FROM $tableName
+        JOIN users ON $tableName.user_id = users.id
+        where $sql
+    ");
+
+    foreach ($where as $key => $value) {
+        $statement->bindValue(":$key", $value);
     }
+
+    // Error handling for the SQL execution
+    try {
+        $statement->execute();
+        // Change this line to fetch a single row
+        $result = $statement->fetch(\PDO::FETCH_ASSOC);
+        
+        if (!$result) {
+            return null;
+        }
+        
+        // Create a new instance of the model and load data into it
+        $instance = new static();
+        $instance->load($result);
+        return $instance;
+    } catch (\PDOException $e) {
+        // Log or handle the error appropriately
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
 
     public static function findOneCR($where)
     {
