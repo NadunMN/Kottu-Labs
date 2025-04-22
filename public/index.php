@@ -339,6 +339,11 @@ $app->router->post('/order/confirm/orderMeals', [$orderController, 'orderMealsCo
 $app->router->post('/order/confirm/orderMeals/accept', [$orderController, 'orderMealsAcceptance']);
 
 
+//contactus
+$app->router->post('/cntct/email', [$authController, 'contactus']);
+
+
+
 
 
 

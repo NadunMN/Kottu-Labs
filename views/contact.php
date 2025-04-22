@@ -78,7 +78,7 @@ $this->title = 'Contact';
     <div class="form-login">
         <div class="second-part">
             <h1>Send Message</h1>
-            <?php $form = Form::begin('', 'post', ['id' => 'reservationForm']) ?>
+            <?php $form = Form::begin('/cntct/email', 'post', ['id' => 'reservationForm']) ?>
                 <?php echo $form->field($model, 'subject') ?>
                 <?php echo $form->field($model, 'email') ?>
                 <?php echo new TextareaField($model, 'body') ?>

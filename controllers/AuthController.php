@@ -136,6 +136,30 @@ class AuthController extends Controller
         }
 
     }
+
+
+
+    public function contactus()
+    {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $subject = $_POST['subject'];
+            $email = $_POST['email'];
+            $body = $_POST['body'];
+
+            // var_dump($randomNumber);
+            // exit;
+
+            // Ensure SendMail is initialized
+            if (!isset(SendMail::$sendmail)) {
+                new SendMail();
+            }
+        
+            SendMail::$sendmail->sendMail($email, $subject, $body);
+
+        }
+
+    }
+
 }
 ?>
 
