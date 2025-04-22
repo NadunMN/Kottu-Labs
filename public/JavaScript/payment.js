@@ -26,7 +26,7 @@ function initiatePayHerePayment() {
   }
 
   // Fetch order details for the reservation
-  fetch(`/payment/getOrderDetails?reservationId=${reservationId}`)
+  fetch(`/payment/getPaymentDetails?reservationId=${reservationId}`)
       .then(response => response.json())
       .then(data => {
           if (data.error) {
@@ -43,7 +43,7 @@ function initiatePayHerePayment() {
               cancel_url: data.cancel_url,
               notify_url: data.notify_url,
               order_id: data.order_id,
-              items: Array.isArray(data.items) ? data.items.map(item => `${item.meal_id} x${item.quantity}`).join(', ') : data.items,
+              items: Array.isArray(data.items) ? data.items.map(item => `${item.meal_name} x ${item.quantity}`).join(', ') : data.items,
               amount: data.amount,
               currency: data.currency,
               first_name: data.first_name,
@@ -55,7 +55,37 @@ function initiatePayHerePayment() {
               country: data.country,
               hash: data.hash,
           };
-          console.log("Payment Object:", payment);
+
+          payhere.onCompleted = function onCompleted(orderId) {
+              console.log("Payment completed:", orderId);
+              alert("Payment completed successfully!");
+              // Redirect to success page or perform any other action
+
+                          // Make an API call to update the payment status in the database
+            fetch('/payment/confirm', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  payment_id: orderId, // Use the correct payment_id
+                  payment_status: 2,  // Status 2 indicates success
+                  payment_type: 'card', // Payment type (e.g., 'card', 'cash')
+              }),
+          })
+          .then(response => response.json())
+          .then(result => {
+              if (result.success) {
+                  alert("Payment status updated successfully!");
+              } else {
+                  alert("Failed to update payment status.");
+              }
+          })
+          .catch(error => {
+              console.error("Error updating payment status:", error);
+              alert("An error occurred while updating payment status.");
+          });
+          };
           // Initialize PayHere payment
           payhere.startPayment(payment);
       })

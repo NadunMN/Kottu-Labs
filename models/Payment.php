@@ -148,7 +148,7 @@ class Payment extends PaymentModel
             JOIN orders o ON $tableName.order_id = o.order_id
             JOIN reservations r ON o.reservation_no = r.reservation_no
             JOIN branches ON o.branch_id = branches.branch_id
-            WHERE branches.branch_id = :branch_id
+            WHERE branches.branch_id = :branch_id AND $tableName.payment_status = 0
             GROUP BY o.reservation_no
         ");
 
@@ -163,32 +163,41 @@ class Payment extends PaymentModel
         }        
     }
 
+    public static function findPayments($where)
+    {
+        $attributes = array_keys($where);
+        $sql = $attributes ? " WHERE " . implode(" AND ", array_map(fn($attr) => "r.$attr = :$attr", $attributes)) : "";
     
-public static function findOrders($where)
-{
-    $attributes = array_keys($where);
-    $sql = $attributes ? " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes)) : "";
-
-    $statement = self::prepare("
-        SELECT orders.*, order_meals.meal_id, order_meals.quantity
-        FROM orders
-        LEFT JOIN order_meals ON orders.order_id = order_meals.order_id
-        $sql
-    ");
-
-    foreach ($where as $key => $value) {
-        $statement->bindValue(":$key", $value);
+        $statement = self::prepare("
+            SELECT
+                payments.*, 
+                orders.order_id,
+                COALESCE(order_meals.quantity, 0) AS quantity,
+                COALESCE(meals.meal_description, '') AS meal_description,
+                SUM(payments.payment_amount) AS total_payment
+            FROM payments
+            JOIN orders ON payments.order_id = orders.order_id
+            LEFT JOIN order_meals ON orders.order_id = order_meals.order_id
+            JOIN reservations r ON orders.reservation_no = r.reservation_no
+            LEFT JOIN meals ON order_meals.meal_id = meals.meal_id
+            $sql
+            AND payments.payment_status = 0
+            GROUP BY orders.reservation_no, orders.order_id
+        ");
+    
+        foreach ($where as $key => $value) {
+            $statement->bindValue(":$key", $value);
+        }
+    
+        try {
+            $statement->execute();
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("SQL Error in findOrders: " . $e->getMessage() . " | Conditions: " . json_encode($where));
+            throw $e;
+        }
     }
-
-    try {
-        $statement->execute();
-        return $statement->fetchAll(\PDO::FETCH_ASSOC);
-    } catch (\PDOException $e) {
-        error_log("SQL Error in findOrders: " . $e->getMessage());
-        throw $e;
-    }
-}
-
+    
     public function toArray(): array
     {
         return [
@@ -253,7 +262,8 @@ public static function findOrders($where)
     // Step 2: Update payment_status for all payments linked to the reservation_no
     $updateQuery = "
         UPDATE $tableName
-        SET payment_status = :payment_status
+        SET payment_status = :payment_status,
+            payment_type = :payment_type
         WHERE order_id IN (
             SELECT order_id 
             FROM orders 
@@ -262,6 +272,7 @@ public static function findOrders($where)
     ";
     $updateStatement = self::prepare($updateQuery);
     $updateStatement->bindValue(":payment_status", $this->payment_status);
+    $updateStatement->bindValue(":payment_type", $this->payment_type);
     $updateStatement->bindValue(":reservation_no", $reservationNo);
 
     try {
