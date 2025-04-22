@@ -775,7 +775,7 @@ document.addEventListener("DOMContentLoaded", () => {
                       orderDetailsForm.classList.remove("hidden");
                       
                       // Fetch order details using the order ID
-                      fetch(`/manager/order/details/${orderId}`)
+                      fetch(`/manager/order/details?orderId=${orderId}`)
                         .then((response) => response.json())
                         .then((orderDetails) => {
                           const detailsContent = document.getElementById("details-content");

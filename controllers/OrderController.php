@@ -497,6 +497,8 @@ class OrderController extends Controller
         try {
             $order_id = $id;
             $orderItems = Order::getOrderDetails($order_id);
+
+
             
             // Make sure we're setting the correct content type
             header('Content-Type: application/json');
