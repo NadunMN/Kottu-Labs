@@ -296,4 +296,39 @@ textarea.form-control{
       width: 100%;
     }
   }
+
+  .thank-you-message {
+    display: none;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+  
+    .thank-you-message.show {
+      display: block;
+    }
+    
+    .thank-you-message.hide {
+      display: none;
+    }
+    
+    .thank-you-message.fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   
