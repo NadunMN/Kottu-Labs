@@ -314,7 +314,7 @@ async function handleBooking() {
             id: item.id,
             quantity: item.quantity,
             user_id: userId,
-            status:'preparing',
+            status:'not - accepted',
             type: item.type,
         }));
 
