@@ -366,7 +366,6 @@ async function fetchOrderId(reservationId) {
             return null;
         }
 
-        console.log('Order ID:', data.order_id);
         return data.order_id;
     } catch (error) {
         console.error('Error fetching order ID:', error);
@@ -381,7 +380,7 @@ document.getElementById('payNowBtn').addEventListener('click', async () => {
     }
 
     const orderId = await fetchOrderId(reservationId);
-
+    
     if (!orderId) {
         showToast('No order to pay', { type: 'warning' });
         return;

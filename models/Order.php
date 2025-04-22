@@ -391,7 +391,15 @@ class Order extends OrderModel
 
     public static function findOrderByReservationId($reservationId) {
         try {
-            $statement = Application::$app->db->prepare("SELECT order_id FROM orders WHERE reservation_no = :reservationId");
+            $statement = Application::$app->db->prepare("
+                SELECT 
+                    orders.order_id 
+                FROM orders 
+                JOIN payments ON orders.order_id = payments.order_id
+                WHERE orders.reservation_no = :reservationId AND payments.payment_status = 0
+                ORDER BY orders.order_id DESC
+                LIMIT 1
+            ");
             $statement->bindValue(':reservationId', $reservationId);
             $statement->execute();
             return $statement->fetch(\PDO::FETCH_ASSOC);

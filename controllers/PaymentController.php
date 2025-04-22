@@ -55,6 +55,7 @@ class PaymentController extends Controller
 
         $paymentId = $requestBody['payment_id'];
         $newStatus = $requestBody['payment_status'];
+        $paymentType = $requestBody['payment_type'] ?? null; // Optional field
 
         try {
             // Find the payment by ID
@@ -68,6 +69,7 @@ class PaymentController extends Controller
 
             // Update the payment status
             $payment->payment_status = $newStatus;
+            $payment->payment_type = $paymentType;
 
             if ($payment->update()) {
                 http_response_code(200); // OK
@@ -83,7 +85,7 @@ class PaymentController extends Controller
         }
     }
 
-    public function getOrderDetails()
+    public function getPaymentDetails()
     {
         $reservationId = $_GET['reservationId'] ?? null;
 
@@ -95,11 +97,9 @@ class PaymentController extends Controller
         }
 
         try {
-            // Fetch all orders for the reservation
-            error_log("Fetching orders for reservation ID: $reservationId");
-            $orders = Payment::findOrders(['reservation_no' => $reservationId]);
+            $payments = Payment::findPayments(['reservation_no' => $reservationId]);
 
-            if (!$orders) {
+            if (!$payments) {
                 http_response_code(404); // Not Found
                 echo json_encode(['error' => 'No orders found for the reservation']);
                 return;
@@ -108,11 +108,11 @@ class PaymentController extends Controller
             // Calculate total amount and prepare item details
             $totalAmount = 0;
             $items = [];
-            foreach ($orders as $order) {
-                $totalAmount += $order['order_price'] ?? 0; // Default to 0 if order_price is missing
+            foreach ($payments as $payment) {
+                $totalAmount += $payment['total_payment'] ?? 0;
                 $items[] = [
-                    'meal_id' => $order['meal_id'] ?? null,
-                    'quantity' => $order['quantity'] ?? 0,
+                    'meal_name' => $payment['meal_description'] ?? 'Unknown Meal',
+                    'quantity' => $payment['quantity'] ?? 0,
                 ];
             }
 
@@ -120,21 +120,21 @@ class PaymentController extends Controller
             $user = Application::$app->user;
 
             if (!$user) {
-                http_response_code(401); // Unauthorized
+                http_response_code(401);
                 echo json_encode(['error' => 'User not logged in']);
                 return;
             }
-            // Merchant credentials
-            $merchant_id = '1229387'; // Replace with your actual Merchant ID
-            $merchant_secret = 'MjY1MjE1MTEzNTUxOTQ0MzEwMTg5ODU5NzI4MTMzMTUxMTczMDM='; // Replace with your actual Merchant Secret
+            
+            $merchant_id = '1229387';
+            $merchant_secret = 'MjY1MjE1MTEzNTUxOTQ0MzEwMTg5ODU5NzI4MTMzMTUxMTczMDM=';
 
             // Prepare data for PayHere
             $data = [
-                'merchant_id' => $merchant_id, // Replace with your Merchant ID
+                'merchant_id' => $merchant_id,
                 'return_url' => 'http://localhost:8080/payment/success',
                 'cancel_url' => 'http://localhost:8080/payment/cancel',
                 'notify_url' => 'http://localhost:8080/payment/notify',
-                'order_id' => $reservationId . '_order' . $order['order_id'],
+                'order_id' => $payment['order_id'],
                 'items' => $items,
                 'amount' => number_format($totalAmount, 2, '.', ''),
                 'currency' => 'LKR',
