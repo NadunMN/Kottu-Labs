@@ -469,7 +469,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         <th>Reservation No</th>
                         <th>Date</th>
                         <th>Time</th>
+                        <th>Customer Name</th>
                         <th>No. Guests</th>
+                        <th>Contact Number</th>
                         <th>Status</th>
                         <th>Actions</th>
                       </tr>
@@ -490,10 +492,11 @@ document.addEventListener("DOMContentLoaded", () => {
               data.forEach((reservation) => {
                 const row = document.createElement("tr");
                 row.innerHTML = `
-                  <td class="reservation-id">${reservation.reservation_no}</td>
+                  <td class="reservation-id">${reservation.confirmation_number}</td>
                   <td>${reservation.reservation_date}</td>
                   <td>${reservation.reservation_time}</td>
                   <td>${reservation.number_of_guests}</td>
+                  <td>${reservation.customer_name}</td>
                   <td>
                     <button class="status-btn ${reservation.confirmation_status ? "available" : "unavailable"}">
                       ${reservation.confirmation_status ? "Confirmed" : "Pending"}
