@@ -12,6 +12,7 @@ form.addEventListener('submit', function(e) {
         formData.append('subject', subject);
         formData.append('email', email);
         formData.append('body', body);
+        formData.append('submitMessage', 'true'); // Add this to match your PHP check
 
         fetch('sendmail.php', {
             method: 'POST',
