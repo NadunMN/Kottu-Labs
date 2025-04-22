@@ -336,6 +336,7 @@ $app->router->get('/gettakeawayBookedData', function() use ($orderController) {
 
 //cheforder update
 $app->router->post('/order/confirm/orderMeals', [$orderController, 'orderMealsConfirmation']);
+$app->router->post('/order/confirm/orderMeals/accept', [$orderController, 'orderMealsAcceptance']);
 
 
 

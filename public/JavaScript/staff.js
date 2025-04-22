@@ -1,8 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
     const staffContainer = document.querySelector(".ezy__team-grid");
-    
-
-
 
     function staffGet() {
         // staffContainer.innerHTML = "<div class=\"loder-wrapper\"><div class=\"loader\"></div></div>";
@@ -52,17 +49,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     } else {
                     }
 
-                    const mealCards = data.map(meal => `
-                         
+                    const mealCards = data.map(staff => `
                                 <div class="ezy__team-card">
                                     <img 
-                                    src="${meal.photo}"
-                                    alt="${meal.firstname + " "+meal.lastname  }" 
+                                    src="${staff.photo}"
+                                    alt="${staff.firstname + " "+staff.lastname  }" 
                                     class="ezy__team-card-image"
                                     >
                                     <div class="ezy__team-card-content">
-                                    <h3 class="ezy__team-member-name">${meal.firstname + " "+meal.lastname  }</h3>
-                                    <p class="ezy__team-member-position">${meal.position +'-' + meal.branch_name}</p>
+                                    <h3 class="ezy__team-member-name">${staff.firstname + " "+staff.lastname  }</h3>
+                                    <p class="ezy__team-member-position">${staff.position +'-' + staff.branch_name}</p>
                                     </div>
                                 </div>
                     `).join('');

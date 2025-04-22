@@ -509,7 +509,7 @@ class OrderController extends Controller
 
             echo json_encode($response);
             exit; // Make sure we stop execution after sending the response
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // Set HTTP response code
             http_response_code(500);
             header('Content-Type: application/json');
@@ -538,6 +538,26 @@ class OrderController extends Controller
 
             $orderMeals->orderMealsStatusUpdate(
                 ['status' => 'completed'],   // SET clause
+                ['order_id' => $orderId]            // WHERE clause
+            );
+                        
+        } else {
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+
+    public function orderMealsAcceptance(){
+        if (Application::$app->user) {
+
+
+            error_log("Order Meals Confirmation called"); // Log the function call for debugging
+            $orderMeals = new OrderMeals();
+            $orderMeals->loadData(Application::$app->request->getBody());
+
+            $orderId = $orderMeals->order_id; // Assuming you have the order ID from the request
+
+            $orderMeals->orderMealsStatusUpdate(
+                ['status' => 'Preparing'],   // SET clause
                 ['order_id' => $orderId]            // WHERE clause
             );
                         

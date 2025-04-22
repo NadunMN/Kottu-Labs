@@ -15,8 +15,12 @@
       </div>
     </section>
 
+    <div class="welcome-message">
+      <!-- <h2>Welcome to Our Team</h2> -->
+      <p>Behind every great experience is an even greater team. Meet the passionate professionals who drive innovation, collaboration, and excellence at KOTTU LABS. From creative minds to strategic thinkers, our diverse team is united by a shared commitment to delivering exceptional results. Get to know the faces behind the work. We're proud of the talent, dedication, and warmth that define our crew.</p>
+    </div>
+
     <div class="ezy__team-grid">
-      
       <!-- Team Member 1 -->
       <div class="ezy__team-card">
         <img 
@@ -39,7 +43,7 @@
         >
         <div class="ezy__team-card-content">
           <h3 class="ezy__team-member-name">Mahesh Kumara</h3>
-          <p class="ezy__team-member-position">Manager-Watta</p>
+          <p class="ezy__team-member-position">Manager-Wattala</p>
         </div>
       </div>
 
@@ -89,7 +93,6 @@
     
   </div>
 </section>
-    <!-- new section -->
 
     <script src="/JavaScript/staff.js"></script>
 

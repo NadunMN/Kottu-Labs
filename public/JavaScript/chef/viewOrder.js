@@ -183,12 +183,12 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                     ${order.order_status < 2 ? `
                         <button class="accept-btn" 
                                 data-order-id="${order.order_id}" 
-                                ${order.order_status !== 0 ? 'disabled' : ''}>
+                                ${order.chef_id ? 'disabled' : ''}>
                             Accept
                         </button>
                         <button class="done-btn" 
                                 data-order-id="${order.order_id}"
-                                ${order.order_status !== 1 ? 'disabled' : ''}>
+                                ${order.order_status == 0 && order.chef_id ? '' : 'disabled'}>
                             Done
                         </button>
                     ` : `
@@ -217,7 +217,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                     return;
                 }
                 
-                console.log("Accept Payload:", { order_id: orderId, order_status: 1, chef_id: chefId });
+                console.log("Accept Payload:", { order_id: orderId, order_status: 0, chef_id: chefId });
                 
                 try {
                     const response = await fetch(`/order/confirm`, {
@@ -227,12 +227,32 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                         },
                         body: JSON.stringify({ 
                             order_id: orderId, 
-                            order_status: 1, // Update status to 'Preparing'
+                            order_status: 0, // Update status to 'Preparing'
                             chef_id: chefId 
                         })
                     });
                     
                     if (response.ok) {
+
+                         // Also update the order meals
+                         const response2 = await fetch(`/order/confirm/orderMeals/accept`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({ order_id: orderId })
+                        });
+                        
+                        if (response2.ok) {
+                            alert("Order status updated to Ready!");
+                            fetchOrders();
+                        } else {
+                            console.error("Failed to update order meals");
+                            alert("Error updating order meals. Please try again.");
+                        }
+
+
+
                         alert("Order status updated to Preparing!");
                         fetchOrders();
                     } else {
@@ -255,7 +275,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                     return;
                 }
                 
-                console.log("Done Payload:", { order_id: orderId, order_status: 2 });
+                console.log("Done Payload:", { order_id: orderId, order_status: 1 });
                 
                 try {
                     const response = await fetch(`/order/confirm`, {
@@ -265,7 +285,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                         },
                         body: JSON.stringify({ 
                             order_id: orderId, 
-                            order_status: 2 // Update status to 'Ready'
+                            order_status: 1 // Update status to 'Ready'
                         })
                     });
                     
