@@ -1,47 +1,53 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $subject = $_POST['subject'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $body = $_POST['body'] ?? '';
+// Check for AJAX request or form submission
+if(isset($_POST['email']) && isset($_POST['subject']) && isset($_POST['body'])){
 
-    if ($subject && $email && $body) {
-        $mail = new PHPMailer(true);
+    $email = $_POST['email'];
+    $subject = $_POST['subject'];
+    $body = $_POST['body'];
+    
+    // Create an instance; passing `true` enables exceptions
+    $mail = new PHPMailer(true);
 
-        try {
-            $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
-            $mail->SMTPAuth = true;
-            $mail->Username = 'ranugalecamwasam2002@gmail.com';
-            $mail->Password = 'izdt tdxt bxqx pcpn'; // App password
-            $mail->SMTPSecure = 'tls';
-            $mail->Port = 587;
+    try {
+        // Server settings
+        $mail->SMTPDebug = 0; // Set to 0 for production
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'ranugalecamwasam2002@gmail.com';
+        
+        // IMPORTANT: Store this in a configuration file or use environment variables
+        $mail->Password = 'vlunrmdywjygjdps'; // Use Gmail App Password, not your regular password
+        
+        // Use STARTTLS for port 587
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
 
-            $mail->setFrom($email);
-            $mail->addAddress('ranugalecamwasam2002@gmail.com');
+        // Recipients
+        $mail->setFrom('ranugalecamwasam2002@gmail.com', 'Kottu Labs');
+        $mail->addAddress($email);
 
-            $mail->isHTML(false);
-            $mail->Subject = "Contact Form: $subject";
-            $mail->Body = "From: $email\n\nMessage:\n$body";
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = 'KOTTU-LABS: ' . $subject;
+        $mail->Body = "Thank you for your message on " . $subject . ":" . $body ."<br><br><p>We will get back to you soon.</p>";
+        $mail->AltBody = "Thank you for your message on " . $subject . ":" . $body .". We will get back to you soon.";
 
-            $mail->send();
-            http_response_code(200);
-            echo 'Message has been sent';
-        } catch (Exception $e) {
-            http_response_code(500);
-            echo 'Mailer Error: ' . $mail->ErrorInfo;
-        }
-    } else {
-        http_response_code(400);
-        echo 'Missing fields';
+        $mail->send();
+        echo 'Message has been sent';
+    } catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
-} else {
-    http_response_code(405);
-    echo 'Method Not Allowed';
 }
-
-
+else
+{
+    echo "Missing required parameters";
+}
+?>
