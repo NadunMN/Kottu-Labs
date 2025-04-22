@@ -1148,7 +1148,7 @@ hr {
     /* margin: 0 5px; */
 }
 
-.view-btn {
+.view-btn {     /*order history view details button*/
     padding: 5px 10px;
     font-size: 1rem;
     border: none;
