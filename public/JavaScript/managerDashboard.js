@@ -690,59 +690,59 @@ document.addEventListener("DOMContentLoaded", () => {
                   const mealContent = document.getElementById("main-content");
 
                   if (data == null || data.length === 0) {
-                    mealContent.innerHTML = "No Orders available"; // Show a message if there are no meals
+                    mealContent.innerHTML = "No Orders available"; // Show a message if there are no orders
                   } else {
                     mealContent.innerHTML = ""; // Clear previous content if data is available
                   }
 
                   mealContent.innerHTML = `
-                      <div class="view-branch-menu-section">
-                          <div class="topic-bar">
-                              <div>
-                                  <h2 style="margin:0;">${branchName}</h2>
-                                  <h5 style="margin:0;">${data.length} orders available</h5>
-                              </div>
-                          </div>
-                          <table class="menu-table" id="menu-table">
-                              <thead>
-                                  <tr>
-                                      <th>Order ID</th>                          
-                                      <th>Order Date</th>
-                                      <th>Order Time</th>
-                                      <th>Customer Name</th>
-                                      <th>Total Amount</th>
-                                      <th>Actions</th>
-                                  </tr>
-                              </thead>
-                              <tbody id="table-content"></tbody>
-                          </table>
-                      </div>
+                    <div class="view-branch-menu-section">
+                        <div class="topic-bar">
+                            <div>
+                                <h2 style="margin:0;">${branchName}</h2>
+                                <h5 style="margin:0;">${data.length} orders available</h5>
+                            </div>
+                        </div>
+                        <table class="menu-table" id="menu-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>                          
+                                    <th>Order Date</th>
+                                    <th>Order Time</th>
+                                    <th>Customer Name</th>
+                                    <th>Total Amount</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-content"></tbody>
+                        </table>
+                    </div>
 
-                      <div id="order-details-form" class="add-item-form hidden">
-                          <form id="details-form">
-                              <h3>Order Details</h3>
-                              <h4 id="detail-order-id"></h4>
-                              
-                              <div class="form-group-main">
-                                  <table class="menu-table" id="details-table">
-                                      <thead>
-                                          <tr>
-                                              <th>Meal</th>
-                                              <th>Quantity</th>
-                                              <th>Price</th>
-                                          </tr>
-                                      </thead>
-                                      <tbody id="details-content"></tbody>
-                                  </table>
-                              </div>
-                              
-                              <div class="button-group">
-                                  <div class="form-group">
-                                      <button class="cancel-item-btn close-details-btn">Cancel</button>
-                                  </div>
-                              </div>
-                          </form>
-                      </div>
+                    <div id="order-details-form" class="add-item-form hidden">
+                        <form id="details-form">
+                            <h3>Order Details</h3>
+                            <h4 id="detail-order-id"></h4>
+                            
+                            <div class="form-group-main">
+                                <table class="menu-table" id="details-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Meal</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="details-content"></tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="button-group">
+                                <div class="form-group">
+                                    <button class="cancel-item-btn close-details-btn">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                   `;
 
                   // Dynamically generate order elements
@@ -764,7 +764,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.getElementById("table-content").appendChild(row);
                   });
 
-                  // Rest of the code remains the same
+                  // Add event listeners to view buttons
                   const viewButtons = document.querySelectorAll(".view-btn");
                   viewButtons.forEach((button) => {
                     button.addEventListener("click", () => {
@@ -782,12 +782,36 @@ document.addEventListener("DOMContentLoaded", () => {
                           document.getElementById("detail-order-id").innerText = `Order ID: ${orderId}`;
                           detailsContent.innerHTML = ""; // Clear previous content
 
+                          // Create a meal map to consolidate identical meals
+                          const mealMap = new Map();
+                          
+                          // Group items by meal name and sum their quantities
                           orderDetails.items.forEach((item) => {
+                            const mealName = item.meal_name;
+                            
+                            if (mealMap.has(mealName)) {
+                              // Update existing entry
+                              const existingItem = mealMap.get(mealName);
+                              existingItem.quantity += parseInt(item.quantity);
+                              existingItem.totalPrice += parseFloat(item.total_price);
+                            } else {
+                              // Create new entry
+                              mealMap.set(mealName, {
+                                meal_name: item.meal_name,
+                                quantity: parseInt(item.quantity),
+                                meal_price: parseFloat(item.meal_price),
+                                totalPrice: parseFloat(item.total_price)
+                              });
+                            }
+                          });
+                          
+                          // Add consolidated items to the table
+                          mealMap.forEach((item) => {
                             const detailRow = document.createElement("tr");
                             detailRow.innerHTML = `
                               <td>${item.meal_name}</td>
                               <td>${item.quantity}</td>
-                              <td>Rs.${item.meal_price}</td>
+                              <td>Rs.${(item.meal_price * item.quantity).toFixed(2)}</td>
                             `;
                             detailsContent.appendChild(detailRow);
                           });
