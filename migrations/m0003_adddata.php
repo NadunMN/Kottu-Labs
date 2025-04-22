@@ -21,17 +21,28 @@ class m0003_adddata{
 
         // Add users data
         $checkColumnSQL = "SELECT * FROM `users`;";
-        $result = $db->pdo->query($checkColumnSQL)->fetch();
-        if (!$result) {
-            $SQL = "INSERT INTO users (email, firstname, lastname, status, position,mobile_number, branch_id,photo)
-                    VALUES
-                    ('admin@gmail.com', 'Nadun', 'Madusanka', 1, 'admin','+94764659122', 1,'/Photo/Staff/admin1.jpg'),
-                    ('customer@gmail.com', 'Ranuga', 'Lekawasam', 0, 'customer','+94764659123', 2, 'none'),
-                    ('steward@gmail.com', 'Mahesh', 'Kumara', 0, 'steward','+94764659124', 3, '/Photo/Staff/steward.jpg'),
-                    ('manager@gmail.com', 'Thirani', 'Athukorala', 0, 'manager','+94764659125', 1, '/Photo/Staff/manager3.jpg'),
-                    ('chef@gmail.com', 'Eraji', 'Thenuwara', 0, 'chef','+94764659126', 1, '/Photo/Staff/chef1.jpg');";
-            $db->pdo->exec($SQL);
-        }
+$result = $db->pdo->query($checkColumnSQL)->fetch();
+
+if (!$result) {
+    // Prepare the user data
+    $users = [
+        ['admin@gmail.com', 'Nadun', 'Madusanka', 1, 'admin','+94764659122', 1, '/Photo/Staff/admin1.jpg', 'admin123'],
+        ['customer@gmail.com', 'Ranuga', 'Lekawasam', 0, 'customer','+94764659123', 2, 'none', 'customer123'],
+        ['steward@gmail.com', 'Mahesh', 'Kumara', 0, 'steward','+94764659124', 3, '/Photo/Staff/steward.jpg', 'steward123'],
+        ['manager@gmail.com', 'Thirani', 'Athukorala', 0, 'manager','+94764659125', 1, '/Photo/Staff/manager3.jpg', 'manager123'],
+        ['chef@gmail.com', 'Eraji', 'Thenuwara', 0, 'chef','+94764659126', 1, '/Photo/Staff/chef1.jpg', 'chef123'],
+    ];
+
+    // Prepare SQL
+    $stmt = $db->pdo->prepare("INSERT INTO users (email, firstname, lastname, status, position, mobile_number, branch_id, photo, password, confirmPassword) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+    foreach ($users as $user) {
+        list($email, $first, $last, $status, $position, $mobile, $branch, $photo, $plainPassword) = $user;
+        $hashedPassword = password_hash($plainPassword, PASSWORD_DEFAULT);
+        $stmt->execute([$email, $first, $last, $status, $position, $mobile, $branch, $photo, $hashedPassword, $hashedPassword]);
+    }
+}
+
 
 
         // Add meals data
