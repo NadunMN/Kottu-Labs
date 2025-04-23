@@ -6,9 +6,29 @@
     <title>Menu - Kottu Labs</title>
     <link rel="stylesheet" href="/CSS/menu.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/CSS/selectBranch.css">
 
 </head>
 <body>
+
+<div class="side-nav">
+        <a href="/takeaway/menu" class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                    <span class="nav-text">Menu</span>
+        </a>
+
+        <a href="/takeaway/cart" class="nav-item">
+            <div class="nav-icon">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+            <span class="nav-text">Cart</span>
+        </a>
+        
+    </div>
+
+
 
     <div class="menu-topic">
         <h1>Kottu Labs Menu</h1>
@@ -93,6 +113,8 @@
     </div>
 
     <script src="/JavaScript/takeawayMenu.js"></script>
+    <script src="/JavaScript/sidenav.js"></script>
+
 
     
 

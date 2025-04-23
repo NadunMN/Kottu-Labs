@@ -251,6 +251,7 @@ class UserController extends Controller
     //    error_log('Add Reservation method called');
        $reservation = new Reservation();
        $reservation->loadData(Application::$app->request->getBody());
+
         error_log(print_r($reservation, true));
         // exit;
 
@@ -288,7 +289,9 @@ class UserController extends Controller
    
        if ($reservation->number_of_guests <= $availableSeats) {
            if ($reservation->save()) {
-               echo json_encode(['success' => true]);
+                $reservationNo=$reservation->reservation_no;
+               echo json_encode(['success' => $reservationNo]);
+               error_log('Reservation saved successfully: ' . json_encode($reservation));
            } else {
                error_log('Reservation save failed: ' . json_encode($reservation->errors));
                // Sanitize errors before sending to frontend

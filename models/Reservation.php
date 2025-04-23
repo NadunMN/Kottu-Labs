@@ -4,6 +4,7 @@ namespace app\models;
 
 use app\core\db\DbModel;
 use app\core\Model\ReservationModel;
+use app\core\Application;
 
 class Reservation extends ReservationModel
 {
@@ -268,7 +269,14 @@ class Reservation extends ReservationModel
     }
 
     try {
-        return $statement->execute();
+        if ($statement->execute()) {
+            // Retrieve and set the last inserted ID
+            $lastInsertId = Application::$app->db->pdo->lastInsertId();
+            $primaryKey = static::primaryKey(); // Get the primary key attribute
+            $this->{$primaryKey} = $lastInsertId; // Assign the last insert ID to the primary key attribute
+            
+            return $lastInsertId;
+        }
     } catch (\PDOException $e) {
         error_log('Database save error: ' . $e->getMessage());
         $this->addError('database', 'Failed to save reservation. Please try again.');
