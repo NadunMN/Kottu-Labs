@@ -173,7 +173,6 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                         },
                         body: JSON.stringify({ order_id: orderId, order_status: 2, steward_id: stewardId }) // Update status to 'Completed'
                     });
-                    console.log(response);
                     if (response.ok) {
                         fetchOrders();
                     } else {
