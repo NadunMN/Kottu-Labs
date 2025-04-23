@@ -9,16 +9,13 @@ use app\models\User; // Import User class
 class LoginForm extends Model
 {
     public string $email = '';
-    public string $mobile_number = '';
-    public ?string $password = '';
+    public string $password = '';
 
     public function rules(): array
     {
         return [
             'email' => [self::RULE_REQUIRED, self::RULE_EMAIL],
-            'mobile_number' => [self::RULE_REQUIRED, self::RULE_MOBILE],
-            // 'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 8]],
-            
+            'password' => [self::RULE_REQUIRED]
         ];
     }
 
@@ -26,31 +23,29 @@ class LoginForm extends Model
     {
         return [
             'email' => 'Your Email',
-            'mobile_number' => 'Mobile Number',
-            'password' => 'Password',
+            'password' => 'Password'
         ];
     }
 
     public function login()
     {
-        $user = User::findOne(['email' => $this->email, 'mobile_number' => $this->mobile_number]);
+        $user = User::findOne(['email' => $this->email]);
         if (!$user) {
-            $this->addError('email', 'Email and Mobile Number do not match or user does not exist');
+            $this->addError('email', 'User does not exist with this email');
             return false;
         }
 
-        if (!empty($this->password)) {
-            if (!password_verify($this->password, $user->password)) {
-                $this->addError('password', 'Password is incorrect');
-                return false;
-            }
+        if (!password_verify($this->password, $user->password)) {
+            $this->addError('password', 'Password is incorrect');
+            return false;
         }
-        
-        
+
+        // echo '<pre>';
+        // var_dump($user);
+        // echo '</pre>';
+        // exit;
 
         return Application::$app->login($user);
-        
-        // Application::$app->response->redirect('/otp');
-        // return true;  
+
     }
 }
