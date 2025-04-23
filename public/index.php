@@ -241,9 +241,6 @@ $app->router->get('/getconfirmReservation', function() use ($reservationControll
     $reservationController->findReservation($userId);
 });
 
-$app->router->post('/reservation/addtable', [$reservationController, 'addtableReservation']);
-
-
 
 //cart
 $app->router->post('/cart/add', [$orderController, 'addToCart']);
@@ -264,6 +261,11 @@ $app->router->post('/placeOrderMeal', [$orderController, 'processOrderMeals']);
 $app->router->get('/getReservationDataOrder', function() use ($orderController) {
     $userId = $_GET['userId'] ?? null;
     $orderController->getReservationData($userId);
+});
+
+$app->router->get('/usergetReservationDataOrder', function() use ($orderController) {
+    $userId = $_GET['userId'] ?? null;
+    $orderController->userGetReservationData($userId);
 });
 
 $app->router->get('/getBookedDataOrder', function() use ($orderController) {
@@ -347,14 +349,6 @@ $app->router->get('/gettakeawayBookedData', function() use ($orderController) {
 //cheforder update
 $app->router->post('/order/confirm/orderMeals', [$orderController, 'orderMealsConfirmation']);
 $app->router->post('/order/confirm/orderMeals/accept', [$orderController, 'orderMealsAcceptance']);
-
-
-//contactus
-$app->router->post('/cntct/email', [$authController, 'contactus']);
-
-
-
-
 
 
 
