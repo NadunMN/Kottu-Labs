@@ -76,6 +76,23 @@ class OrderController extends Controller
         }
     }
 
+    public function userGetReservationData($user_id)
+    {
+        if (Application::$app->user) {
+            // Pass just the user_id, not an array
+            $reservations = Reservation::findDineInReservations($user_id);
+            $reservationData = [];
+    
+            foreach ($reservations as $reservation) {
+                $reservationData[] = $reservation;
+            }
+    
+            echo json_encode($reservationData);
+        } else {
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+
     // Method to get cart data
     public function getReservation($user_id)
     {
@@ -260,6 +277,7 @@ class OrderController extends Controller
             echo json_encode(['error' => 'No user is logged in']);
         }
     }
+
 
 
     public function getOrderState($reservation_no)
