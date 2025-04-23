@@ -108,7 +108,7 @@
                     <!-- <button>LEARN MORE</button> -->
                     <!-- <button onclick="window.location.href='/selectBranch'">TAKE AWAY</button> -->
                     <!-- From Uiverse.io by Creatlydev --> 
-                    <button href="#" class="button" style="--clr:rgb(0, 0, 0)" onclick="window.location.href='/selectBranch'">
+                    <button href="#" class="button takeaway" style="--clr:rgb(0, 0, 0)" >
                     <span class="button__icon-wrapper">
                         <svg
                         viewBox="0 0 14 15"
@@ -140,7 +140,7 @@
                     </button>
 
 
-                    <button href="#" class="button" style="--clr:rgb(0, 0, 0)" onclick="window.location.href='/dinein'">
+                    <button href="#" class="button dinein" style="--clr:rgb(0, 0, 0)" >
                     <span class="button__icon-wrapper">
                         <svg
                         viewBox="0 0 14 15"
@@ -361,7 +361,7 @@
 
 
     
-<!-- <script src="/JavaScript/home.js"></script> -->
+<script src="/JavaScript/home.js"></script>
 
 
 
