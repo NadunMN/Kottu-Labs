@@ -236,6 +236,9 @@ $app->router->get('/getconfirmReservation', function() use ($reservationControll
     $reservationController->findReservation($userId);
 });
 
+$app->router->post('/reservation/addtable', [$reservationController, 'addtableReservation']);
+
+
 
 //cart
 $app->router->post('/cart/add', [$orderController, 'addToCart']);
@@ -336,6 +339,9 @@ $app->router->get('/gettakeawayBookedData', function() use ($orderController) {
 
 //cheforder update
 $app->router->post('/order/confirm/orderMeals', [$orderController, 'orderMealsConfirmation']);
+
+
+
 
 
 
