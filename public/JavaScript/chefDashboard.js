@@ -15,7 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const iframe = document.getElementById('dynamicIframe');
     
     // Set default iframe source to dashboard
-    iframe.src = '/profile/view-order';
+    if (iframe) {
+        iframe.src = `/profile/view-order`;
+    } else {
+        console.error("Iframe with ID 'dynamicIframe' not found.");
+    }
   
     const iframeSources = {
       viewOrder: '/profile/view-order',
