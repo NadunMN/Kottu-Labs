@@ -57,6 +57,8 @@ class PaymentController extends Controller
         $newStatus = $requestBody['payment_status'];
         $paymentType = $requestBody['payment_type'] ?? null; // Optional field
 
+  
+
         try {
             // Find the payment by ID
             $payment = Payment::findOneOriginal(['payment_id' => $paymentId]);

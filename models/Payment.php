@@ -182,7 +182,7 @@ class Payment extends PaymentModel
             JOIN reservations r ON orders.reservation_no = r.reservation_no
             LEFT JOIN meals ON order_meals.meal_id = meals.meal_id
             $sql
-            AND payments.payment_status = 0
+            AND payments.payment_status = 0 AND payments.payment_type = 'none'
         ");
     
         foreach ($where as $key => $value) {

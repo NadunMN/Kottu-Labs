@@ -25,6 +25,8 @@ function initiatePayHerePayment() {
       return;
   }
 
+  let orderIdM; // Use the reservation ID as the order ID
+
   // Fetch order details for the reservation
   fetch(`/payment/getPaymentDetails?reservationId=${reservationId}`)
       .then(response => response.json())
@@ -56,8 +58,10 @@ function initiatePayHerePayment() {
               hash: data.hash,
           };
 
+
           payhere.onCompleted = function onCompleted(orderId) {
               console.log("Payment completed:", orderId);
+              orderIdM = orderId; // Store the order ID for later use
               alert("Payment completed successfully!");
               // Redirect to success page or perform any other action
 
@@ -93,4 +97,40 @@ function initiatePayHerePayment() {
           console.error("Error initiating payment:", error);
           alert("Failed to initiate payment. Please try again.");
       });
-}
+
+    
+
+
+    }
+
+
+    function continuePayment() {
+        // Use reservationId from the URL instead of orderIdM
+        console.log("Reservation ID:", reservationId);
+    
+        // Make an API call to update the payment status in the database
+        fetch('/payment/confirm', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                payment_id:12 , // Use reservationId instead of orderIdM
+                payment_status: 0,        // Status 0 indicates pending/awaiting cash payment
+                payment_type: 'cash',
+            }),
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                alert("Cash payment recorded successfully!");
+                // Redirect or update UI as needed
+            } else {
+                alert("Failed to record cash payment.");
+            }
+        })
+        .catch(error => {
+            console.error("Error updating payment status:", error);
+            alert("An error occurred. Please try again.");
+        });
+    }
