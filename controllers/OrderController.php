@@ -249,6 +249,8 @@ class OrderController extends Controller
     {
         if (Application::$app->user) {
             $orderMeals = OrderMeals::findAllBookedMeal(['user_id' => $user_id]);
+
+
             $orderMealData = [];
 
             foreach ($orderMeals as $orderMeal) {

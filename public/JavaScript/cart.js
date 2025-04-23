@@ -85,7 +85,8 @@ fetch('/user/data')
                 quantity: backendItem.quantity,
                 description: backendItem.meal_description || backendItem.offer_description,
                 image: backendItem.meal_photo || backendItem.offer_photo,
-                status: backendItem.status // Default status
+                status: backendItem.status ,// Default status
+                payment_status: backendItem.payment_status,
             });
 
             totalPrice += itemTotal;
@@ -515,6 +516,22 @@ function renderBookedItems() {
     bookedItems.forEach(item => {
         const bookedItemElement = document.createElement('div');
         bookedItemElement.className = 'booked-item';
+    
+        // Determine meal status class and text
+        let statusHtml = '';
+        if (item.status === 'preparing' || item.status === 'not - accepted') {
+            statusHtml += `<div class="meal-status status-pending">${item.status}</div>`;
+        } else {
+            statusHtml += `<div class="meal-status status-ready">${item.status}</div>`;
+        }
+    
+        // Determine payment status
+        const paymentHtml = `
+            <div class="meal-status ${item.payment_status === 0 ? 'status-pending' : 'status-ready'}">
+                ${item.payment_status === 0 ? 'Non-Paid' : 'Paid'}
+            </div>
+        `;
+    
         bookedItemElement.innerHTML = `
             <div class="booked-item-details notification">
                 <div class="item-info">
@@ -524,18 +541,16 @@ function renderBookedItems() {
                         <p class="item-quantity">Quantity: ${item.quantity}</p>
                     </div>
                 </div>
-                ${item.status == 'preparing' ? 
-                    `<div class="meal-status status-pending">
-                        ${item.status}
-                    </div>` : 
-                    `<div class="meal-status status-ready">
-                        ${item.status}
-                    </div>`}
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                ${paymentHtml}
+                ${statusHtml}
+                </div>
             </div>
         `;
+    
         bookedItemsContainer.appendChild(bookedItemElement);
     });
-}
+    }
 
 
 

@@ -106,14 +106,14 @@ document.addEventListener('DOMContentLoaded', function() {
             if (result.success) {
                 pinEntrySection.style.display = 'none';
                 reservationModal.style.display = 'block';
-                document.getElementById('fullname').textContent = result.reservation[0].userName;
-                document.getElementById('reservationDate').textContent = result.reservation[0].reservation_date;
-                document.getElementById('reservationTime').textContent = result.reservation[0].reservation_time;
-                document.getElementById('numberOfGuests').textContent = result.reservation[0].number_of_guests;
+                document.getElementById('fullname').textContent = result.reservation.userName;
+                document.getElementById('reservationDate').textContent = result.reservation.reservation_date;
+                document.getElementById('reservationTime').textContent = result.reservation.reservation_time;
+                document.getElementById('numberOfGuests').textContent = result.reservation.number_of_guests;
 
-                ReservationNo = result.reservation[0].reservation_no;
+                ReservationNo = result.reservation.reservation_no;
 
-                const status = result.reservation[0].confirmation_status;
+                const status = result.reservation.confirmation_status;
 
                 // Fetch user branch ID before rendering
                 let user_branch_id = null;

@@ -71,7 +71,7 @@ class PaymentController extends Controller
             $payment->payment_status = $newStatus;
             $payment->payment_type = $paymentType;
 
-            if ($payment->update()) {
+            if ($payment->updateCard()) {
                 http_response_code(200); // OK
                 echo json_encode(['success' => 'Payment status updated successfully']);
             } else {
@@ -99,19 +99,21 @@ class PaymentController extends Controller
         try {
             $payments = Payment::findPayments(['reservation_no' => $reservationId]);
 
+         
+
             if (!$payments) {
                 http_response_code(404); // Not Found
                 echo json_encode(['error' => 'No orders found for the reservation']);
                 return;
             }
-
+        
             // Calculate total amount and prepare item details
             $totalAmount = 0;
             $items = [];
             foreach ($payments as $payment) {
-                $totalAmount += $payment['total_payment'] ?? 0;
+                $totalAmount += $payment['meal_price']*$payment['quantity'] ?? 0;
                 $items[] = [
-                    'meal_name' => $payment['meal_description'] ?? 'Unknown Meal',
+                    'meal_name' => $payment['meal_name'] ?? 'Unknown Meal',
                     'quantity' => $payment['quantity'] ?? 0,
                 ];
             }
