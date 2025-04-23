@@ -15,17 +15,12 @@ fetch("/managermenuitem/data")
 
       mealContent.innerHTML = `
 
-                                    <div class="view-branch-menu-section">
+      <div class="view-branch-menu-section">
                                             <div class="topic-bar">
                                                 <div>
                                                     <h2 style="margin:0;">Meals</h2>
                                                     <h5 style="margin:0;">${data.length} meals available</h5>
                                                 </div>
-
-                                                <div>
-                                                    <button class="add-item-btn">Add New Item</button>
-                                                </div>
-
                                             </div>
 
                                             <div id="add-item-form" class="add-item-form hidden">
@@ -176,7 +171,7 @@ fetch("/managermenuitem/data")
         row.innerHTML = `
                                         <td class="meal-id" >${meal.meal_id}</td>
                                         <td>${meal.meal_name}</td>
-                                        <td>${meal.meal_description}</td>
+                                        <td>${meal.type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
                                         <td>Rs.${meal.meal_price}</td>                                            
                                       
                                             <div class="action-buttons">

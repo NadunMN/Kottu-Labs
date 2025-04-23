@@ -185,7 +185,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                     statusText = "Ready";
                     break;
                 default:
-                    statusText = "Unknown";
+                    statusText = "Completed";
             }
             
 
