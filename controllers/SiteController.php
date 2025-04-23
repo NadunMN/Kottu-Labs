@@ -184,11 +184,18 @@ class SiteController extends Controller
 
 
     //steward
-    public function orderstatusSteward(Request $request,Response $response)
+    public function dineInSteward(Request $request,Response $response)
     {
         $this->setLayout('auth');
-        return $this->render('/steward/order-status');
+        return $this->render('/steward/dine-in-orders');
     }
+    
+    public function takeAwaySteward(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('/steward/take-away-orders');
+    }
+
 
     public function customerarrivalsSteward(Request $request,Response $response)
     {

@@ -143,9 +143,9 @@ class Order extends OrderModel
             SELECT 
                 $tableName.*,
                 om.quantity,
-                meals.meal_description AS mealName,
+                meals.meal_name,
                 r.table_number,
-                r.type
+                r.reservation_name
             FROM $tableName
             JOIN order_meals om ON $tableName.order_id = om.order_id
             JOIN meals ON om.meal_id = meals.meal_id
@@ -369,7 +369,6 @@ class Order extends OrderModel
         $primaryKey = static::primaryKey();
         // error_log("Primary Key: " . $primaryKey); // Debugging line
         $sql = "UPDATE $tableName SET " . implode(', ', $params) . " WHERE $primaryKey = :$primaryKey";
-
         $statement = self::prepare($sql);
 
         foreach ($attributes as $attribute) {
@@ -415,6 +414,63 @@ class Order extends OrderModel
         $statement->bindValue(':id', $orderId);
         $statement->bindValue(':status', $status);
         return $statement->execute();
+    }
+
+    
+    public static function findDineInData($branch_id) {
+        $tableName = static::tableName();
+        $statement = self::prepare("
+            SELECT 
+                o.*,
+                om.quantity,
+                m.meal_name,
+                r.table_number,
+                r.reservation_name
+            FROM {$tableName} o
+            JOIN order_meals om ON o.order_id = om.order_id
+            JOIN meals m ON om.meal_id = m.meal_id
+            JOIN reservations r ON o.reservation_no = r.reservation_no
+            JOIN branches b ON o.branch_id = b.branch_id
+            WHERE b.branch_id = :branch_id AND r.type = 'dinein'
+        ");
+
+        $statement->bindValue(":branch_id", $branch_id);
+
+        try {
+            $statement->execute();
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("Error fetching dine-in data: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public static function findTakeAwayData($branch_id) {
+        $tableName = static::tableName();
+        $statement = self::prepare("
+            SELECT 
+                o.*,
+                om.quantity,
+                m.meal_name,
+                r.reservation_name,
+                r.reservation_no
+            FROM {$tableName} o
+            JOIN order_meals om ON o.order_id = om.order_id
+            JOIN meals m ON om.meal_id = m.meal_id
+            JOIN reservations r ON o.reservation_no = r.reservation_no
+            JOIN branches b ON o.branch_id = b.branch_id
+            WHERE b.branch_id = :branch_id AND r.type = 'takeaway'
+        ");
+
+        $statement->bindValue(":branch_id", $branch_id);
+
+        try {
+            $statement->execute();
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("Error fetching dine-in data: " . $e->getMessage());
+            return false;
+        }
     }
 
 }
