@@ -165,6 +165,11 @@ $app->router->get('/addMeal', [$siteController, 'addMeal']);
 
 //new enter pin
 $app->router->get('/enterpin', [$siteController, 'enterpin']);
+$app->router->get('/order/takeawayDetails', function() use ($orderController) {
+    $reservationNo = $_GET['reservation_no'] ?? null;
+    $orderController->getOrderDetails($reservationNo);
+});
+
 
 
 //menu
