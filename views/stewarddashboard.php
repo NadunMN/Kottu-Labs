@@ -43,7 +43,8 @@ iframe {
             <ul>
                 <?php
                     $menuItems = [
-                        ['id' => 'viewOrderStatus', 'icon' => '/Photo/icon/clipboard.png', 'text' => 'View OrderStatus'],
+                        ['id' => 'viewDineInOrders', 'icon' => '/Photo/icon/clipboard.png', 'text' => 'Dine In Orders'],
+                        ['id' => 'viewTakeAwayOrders', 'icon' => '/Photo/icon/clipboard.png', 'text' => 'Take Away Orders'],
                         ['id' => 'customerArrivals', 'icon' => '/Photo/icon/travel.png', 'text' => 'Customer Arrivals'],
                         ['id' => 'customerPayments', 'icon' => '/Photo/icon/wallet (1).png', 'text' => 'Customer Payments']
                     ];

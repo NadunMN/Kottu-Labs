@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const sidebarOptions = document.querySelectorAll(".sidebar ul li");
 
-  const defaultOption = document.getElementById("viewOrderStatus");
+  const defaultOption = document.getElementById("viewDineInOrders");
   defaultOption.classList.add("selected");
 
   sidebarOptions.forEach((option) => {
@@ -15,10 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const iframe = document.getElementById('dynamicIframe');
   
   // Set default iframe source to dashboard
-  iframe.src = '/profile/view-order-status';
+  iframe.src = '/profile/dine-in-orders';
 
   const iframeSources = {
-    viewOrderStatus: '/profile/view-order-status',
+    viewDineInOrders: '/profile/dine-in-orders',
+    viewTakeAwayOrders: '/profile/take-away-orders',
     customerArrivals: '/profile/customer-arrivals',
     customerPayments: '/profile/customer-payments'
   };

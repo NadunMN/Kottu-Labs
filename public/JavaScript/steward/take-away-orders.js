@@ -3,7 +3,7 @@ let stewardId = null;
 async function fetchOrders(selectedDate = null, selectedTime = null) {
     try {
         // Fetch order data
-        const response = await fetch("/order/data");
+        const response = await fetch("/order/takeAwayData");
         if (!response.ok) {
             throw new Error("Network response was not ok");
         }
@@ -17,6 +17,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
             document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
             return;
         }
+        console.log(data);
 
         if (!Array.isArray(data)) {
             console.error("Data is not an array");
@@ -83,7 +84,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
             }
             
             ordersGroupedByOrderId[order.order_id].meals.push({
-                mealName: order.mealName,
+                mealName: order.meal_name,
                 quantity: order.quantity
             });
         });
@@ -107,11 +108,13 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                 <table class="menu-table" id="menu-table">
                     <thead>
                         <tr>
-                            <th>Order Id</th>
+                            <th>Customer</th>
+                            <th>Order ID</th>
+                            <th>Time</th>
                             <th>Meal Name</th>
-                            <th>Table No</th>
-                            <th>Type</th>
+                            <th>Reservation No</th>
                             <th>Status</th>
+                            <th>Arrival</th>
                         </tr>
                     </thead>
                     <tbody id="table-content"></tbody>
@@ -136,21 +139,23 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
 
             const mealsDropdown = order.meals.map((meal) => `<li>${meal.mealName} - ${meal.quantity}</li>`).join("");
             row.innerHTML = `
-                <td class="order-id">${order.order_id}</td> 
+                <td class="name">${order.reservation_name}</td>
+                <td class="order_id">${order.order_id}</td> 
+                <td>${order.order_time}</td>
                 <td>
                     <details>
                         <summary>View Meals</summary>
                         <ul>${mealsDropdown}</ul>
                     </details>
                 </td>
-                <td>${order.type === 'dinein' ? order.table_number : 'Null'}</td>
-                <td>${order.type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
+                <td>${order.reservation_no}</td>
                 <td class="status">
                     <span class="status-${order.order_status}">
                         ${order.order_status == 1 ? "Ready" : order.order_status == 2 ? "Completed" :  "Processing"}
                     </span>
                     ${order.order_status === 1 ? `<button class="confirm-btn" data-order-id="${order.order_id}">Confirm</button>` : ""}
                 </td>
+                <td></td>
             `;
             tableContent.appendChild(row);
         });
