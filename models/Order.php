@@ -396,7 +396,7 @@ class Order extends OrderModel
                     orders.order_id 
                 FROM orders 
                 JOIN payments ON orders.order_id = payments.order_id
-                WHERE orders.reservation_no = :reservationId AND payments.payment_status = 0
+                WHERE orders.reservation_no = :reservationId AND payments.payment_status = 0 AND payments.payment_type = 'none'
                 ORDER BY orders.order_id DESC
                 LIMIT 1
             ");

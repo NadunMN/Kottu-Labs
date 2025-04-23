@@ -175,7 +175,7 @@ body {
   background: var(--color-white);
   align-items: center;
   width: 90%;
-  max-width: 500px;
+  max-width: 750px;
   padding: var(--spacing-lg);
   box-shadow: var(--shadow-md);
   border-radius: var(--radius-lg);
@@ -234,7 +234,7 @@ body {
 
 .buttons {
   display: flex;
-  justify-content: center;
+  justify-content: right;
   gap: var(--spacing-sm);
   margin-top: var(--spacing-md);
 }
@@ -340,7 +340,7 @@ body {
 
   .name-table {
     flex-direction: column;
-    align-items: center;
+    align-items: right;
     gap: var(--spacing-sm);
   }
 
@@ -378,7 +378,7 @@ body {
   padding: 0.625rem 2.5rem 0.625rem 0.75rem;
   width: 100%;
   max-width: 200px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
   background-position: right 0.5rem center;
   background-repeat: no-repeat;

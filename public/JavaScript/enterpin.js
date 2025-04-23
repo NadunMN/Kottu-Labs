@@ -106,7 +106,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (result.success) {
                 pinEntrySection.style.display = 'none';
                 reservationModal.style.display = 'block';
+
                 document.getElementById('fullname').textContent = result.reservation.reservation_name;
+
                 document.getElementById('reservationDate').textContent = result.reservation.reservation_date;
                 document.getElementById('reservationTime').textContent = result.reservation.reservation_time;
                 document.getElementById('numberOfGuests').textContent = result.reservation.number_of_guests;
@@ -114,6 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 ReservationNo = result.reservation.reservation_no;
 
                 const status = result.reservation.confirmation_status;
+
                 const reservationType = result.reservation.type;
 
                 if (reservationType === 'takeaway') {
@@ -145,6 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.getElementById('tableNumber').required = true; // Make table selection required
                     document.getElementById('numberOfGuests').parentElement.style.display = 'block'; // Show number of guests
                 }
+
 
                 // Fetch user branch ID before rendering
                 let user_branch_id = null;

@@ -17,7 +17,7 @@ class AuthController extends Controller
 
     public function __construct()
     {
-        $this->registerMiddleware(new AuthMiddleware(['userProfile']));//access array
+        $this->registerMiddleware(new AuthMiddleware(['userProfile'])); //access array
     }
 
 
