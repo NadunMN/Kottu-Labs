@@ -22,19 +22,9 @@
 
             <!-- Mobile number field with user icon -->
             <div class="form-group" data-icon="user">
-                <?php echo $form->field($model, 'mobile_number') ?>
+            <?php echo $form->field($model, 'password')->passwordField() ?>
             </div>
 
-            <?php if(isset($error) && $error!='customer'): ?>
-                <div class="form-group" data-icon="lock">
-                    <?php echo $form->field($model, 'password')->passwordField() ?>
-                    <?php if ($model->hasError('password')): ?>
-                        <div class="alert alert-danger">
-                            <?php echo $model->getFirstError('password'); ?>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            <?php endif; ?>
 
             <button type="submit" class="btn btn-primary" onclick="sendOtp()">Log In</button>
 
