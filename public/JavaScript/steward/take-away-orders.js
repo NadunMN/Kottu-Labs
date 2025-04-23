@@ -153,9 +153,13 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                     <span class="status-${order.order_status}">
                         ${order.order_status == 1 ? "Ready" : order.order_status == 2 ? "Completed" :  "Processing"}
                     </span>
-                    ${order.order_status === 1 ? `<button class="confirm-btn" data-order-id="${order.order_id}">Confirm</button>` : ""}
                 </td>
-                <td></td>
+                <td class="status">
+                    <span class="status-${order.confirmation_status}">
+                        ${order.confirmation_status === 0 ? "NO" : "YES"}
+                    </span>
+                    ${order.order_status === 1 && order.confirmation_status === 1 ? `<button class="confirm-btn" data-order-id="${order.order_id}">Confirm</button>` : ""}
+                </td>
             `;
             tableContent.appendChild(row);
         });
@@ -178,17 +182,14 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                         },
                         body: JSON.stringify({ order_id: orderId, order_status: 2, steward_id: stewardId }) // Update status to 'Completed'
                     });
-                    console.log(response);
+                    
                     if (response.ok) {
-                        alert("Order status updated to Completed!");
                         fetchOrders();
                     } else {
                         console.error("Failed to update order status");
-                        alert("Error updating order status. Please try again.");
                     }
                 } catch (error) {
                     console.error("Error:", error);
-                    alert("Error updating order status. Please try again.");
                 }
             });
         });

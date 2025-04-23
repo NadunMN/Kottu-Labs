@@ -453,7 +453,8 @@ class Order extends OrderModel
                 om.quantity,
                 m.meal_name,
                 r.reservation_name,
-                r.reservation_no
+                r.reservation_no,
+                r.confirmation_status
             FROM {$tableName} o
             JOIN order_meals om ON o.order_id = om.order_id
             JOIN meals m ON om.meal_id = m.meal_id
