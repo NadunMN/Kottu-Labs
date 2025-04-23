@@ -1,3 +1,21 @@
+const mealDescriptions = {
+  1: "All",
+  2: "Classic Kottu",
+  3: "Dolphin Kottu",
+  4: "Cheese Kottu",
+  5: "String Hopper Kottu",
+  6: "KL Special Fried Rice",
+  7: "Pasta",
+  8: "Appetizers",
+  9: "KL Inventions",
+  10: "Wraps & Rotti Sandwiches",
+  11: "Parata",
+  12: "Devilled Portions",
+  13: "Mocktails",
+  14: "Beverages"
+};
+
+
 fetch("/managermenuitem/data")
   .then((response) => response.json())
   .then((data) => {
@@ -171,7 +189,7 @@ fetch("/managermenuitem/data")
         row.innerHTML = `
                                         <td class="meal-id" >${meal.meal_id}</td>
                                         <td>${meal.meal_name}</td>
-                                        <td>${meal.type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
+                                        <td>${mealDescriptions[meal.meal_description]}</td>
                                         <td>Rs.${meal.meal_price}</td>                                            
                                       
                                             <div class="action-buttons">
@@ -290,45 +308,45 @@ fetch("/managermenuitem/data")
       //   });
       // });
 
-      function addNewItem(event) {
-        event.preventDefault();
+      // function addNewItem(event) {
+      //   event.preventDefault();
 
-        const fileInput = document.getElementById("meal_photo");
-        const formData = new FormData(addForm);
+      //   const fileInput = document.getElementById("meal_photo");
+      //   const formData = new FormData(addForm);
 
-        if (fileInput.files[0]) {
-          formData.append(
-            "meal_photo",
-            "/Photo/Menu/" + fileInput.files[0].name
-          );
-        }
+      //   if (fileInput.files[0]) {
+      //     formData.append(
+      //       "meal_photo",
+      //       "/Photo/Menu/" + fileInput.files[0].name
+      //     );
+      //   }
 
-        const data = Object.fromEntries(formData.entries());
+      //   const data = Object.fromEntries(formData.entries());
 
-        const requestBody = JSON.stringify(data);
-        console.log("Request Body:", requestBody);
-        fetch("/menuitem/add", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: requestBody,
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log("Success:", data);
-            addItemForm.classList.add("hidden");
-            resetForm();
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
-      }
+      //   const requestBody = JSON.stringify(data);
+      //   console.log("Request Body:", requestBody);
+      //   fetch("/menuitem/add", {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: requestBody,
+      //   })
+      //     .then((response) => {
+      //       if (!response.ok) {
+      //         throw new Error(`HTTP error! status: ${response.status}`);
+      //       }
+      //       return response.json();
+      //     })
+      //     .then((data) => {
+      //       console.log("Success:", data);
+      //       addItemForm.classList.add("hidden");
+      //       resetForm();
+      //     })
+      //     .catch((error) => {
+      //       console.error("Error:", error);
+      //     });
+      // }
 
       // Function to update an existing item
       // function updateItem(event) {
@@ -379,43 +397,43 @@ fetch("/managermenuitem/data")
 
       // Add event listeners to delete buttons
       const deleteButtons = document.querySelectorAll(".delete-btn");
-      deleteButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          // const row = button.closest('tr');
-          // row.remove();
+      // deleteButtons.forEach((button) => {
+      //   button.addEventListener("click", () => {
+      //     const row = button.closest('tr');
+      //     row.remove();
 
-          if (
-            confirm(
-              "Are you sure you want to delete this meal? This action cannot be undone."
-            )
-          ) {
-            const mealId = button.getAttribute("meal-id");
+      //     if (
+      //       confirm(
+      //         "Are you sure you want to delete this meal? This action cannot be undone."
+      //       )
+      //     ) {
+      //       const mealId = button.getAttribute("meal-id");
 
-            const requestBody = JSON.stringify({ meal_id: mealId });
-            console.log("Request Body:", requestBody);
+      //       const requestBody = JSON.stringify({ meal_id: mealId });
+      //       console.log("Request Body:", requestBody);
 
-            fetch("/mealitem/delete", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: requestBody,
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                if (data.success) {
-                  alert("The meal has been deleted.");
-                  button.closest("tr").remove();
-                } else {
-                  alert(
-                    "There was an error deleting the meal: " + data.message
-                  );
-                  console.error("Error:", data.message);
-                }
-              })
-              .catch((error) => console.error("Error:", error));
-          }
-        });
-      });
+      //       fetch("/mealitem/delete", {
+      //         method: "POST",
+      //         headers: {
+      //           "Content-Type": "application/json",
+      //         },
+      //         body: requestBody,
+      //       })
+      //         .then((response) => response.json())
+      //         .then((data) => {
+      //           if (data.success) {
+      //             alert("The meal has been deleted.");
+      //             button.closest("tr").remove();
+      //           } else {
+      //             alert(
+      //               "There was an error deleting the meal: " + data.message
+      //             );
+      //             console.error("Error:", data.message);
+      //           }
+      //         })
+      //         .catch((error) => console.error("Error:", error));
+      //     }
+      //   });
+      // });
     }
   });
