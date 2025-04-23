@@ -206,6 +206,21 @@ class Reservation extends ReservationModel
         return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
 }
 
+public static function findDineInReservations($user_id)
+{
+    // Check if $user_id is an array and extract the value if needed
+    if (is_array($user_id) && isset($user_id['user_id'])) {
+        $user_id = $user_id['user_id'];
+    }
+    
+    $tableName = static::tableName();
+    $sql = "SELECT * FROM $tableName WHERE user_id = :user_id AND type = 'dinein'";
+    $statement = self::prepare($sql);
+    $statement->bindValue(":user_id", $user_id);
+    $statement->execute();
+    return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
+}
+
     public static function findAllreservationTakeawayOrder($where)
 {
         $tableName = static::tableName();

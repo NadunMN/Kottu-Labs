@@ -11,7 +11,7 @@ fetch('/user/data')
 
                // Fetch reservation data after userId is set
                const userId = data.id;
-            fetch(`/getReservationData?userId=${userId}`)
+            fetch(`/usergetReservationDataOrder?userId=${userId}`)
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
@@ -159,5 +159,6 @@ fetch('/user/data')
                 console.error('Error fetching reservation:', error);
             });
            }
-       })
+           }
+       )
        .catch(error => console.error('Error fetching user data:', error));
