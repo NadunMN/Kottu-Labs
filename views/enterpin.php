@@ -8,12 +8,12 @@
 </head>
 <body>
     <div id="pinEntrySection">
-        <div class="pin-topic" >
+        <div class="pin-topic">
             <h1>Enter Confirmation PIN</h1>
             <p>Please enter the PIN to continue</p>
         </div>
 
-        <div class="pin-container" >
+        <div class="pin-container">
             <div class="pin-box">
                 <div class="pin-input-container">
                     <input type="text" maxlength="1" class="pin-digit">
@@ -40,37 +40,43 @@
         <div class="pin-container">
             <div class="confirmation-box">
                 <form id="reservationConfirmationForm" class="reservation-form" method="POST">
-                    <div class="name-table">
-                        <h2><span id="fullname"></span></h2>
-                        <select name="table_number" id="tableNumber" class="form-input" required>
-                            <option value="" disabled selected>Select a table</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                        </select>
+                    <div class="form-layout">
+                        <div class="details-section">
+                            <h2 id="fullname"></h2>
+                            <div class="date-time">
+                                <span id="reservationDate"></span>
+                                <span id="reservationTime"></span>
+                            </div>
+                            <h4><span id="branch"></span> Branch</h4>
+                            <div class="dining-option">
+                                <span id="reservationTypeLabel"></span>
+                            </div>
+                            <div>
+                                <h4>Number of Guests: <span id="numberOfGuests"></span></h4>
+                            </div>
+                        </div>
+                        <div class="table-assignment-section">
+                            <select name="table_number" id="tableNumber" class="form-input" required>
+                                <option value="" disabled selected>Select a table</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                            </select>
+                        </div>
                     </div>
-                    <div>
-                        <div class="date-time">
-                            <span id="reservationDate"></span>
-                            <span id="reservationTime"></span>
-                        </div>
-                        <h4><span id="branch"></span> Branch</h4>
-                        <div class="dining-option">
-                            <label id="dineInLabel"> Dine In <span class="strike-through"></span></label>
-                            <label id="takeAwayLabel"> Take Away <span class="strike-through"></span></label>
-                        </div>
-                        <div>
-                            <h4>Number of Guest is <span id="numberOfGuests"></span></h4>
-                        </div>
-                        <div class="buttons">
-                            <button type="submit" class="confirm-button">Confirm Reservation</button>
-                            <span class="confirmed-text">Already Confirmed!</span>
-                            <button type="button" class="close-button">Close</button>
-                        </div>
+                    <div id="orderDetails" style="display: none;">
+                        <p><strong>Order Number:</strong> <span id="orderNumber"></span></p>
+                        <p><strong>Order Items:</strong> <span id="orderItems"></span></p>
+                        <p><strong>Total Price:</strong> <span id="totalPrice"></span></p>
+                    </div>
+                    <div class="buttons">
+                        <button type="submit" class="confirm-button">Confirm Reservation</button>
+                        <span class="confirmed-text">Already Confirmed!</span>
+                        <button type="button" class="close-button">Close</button>
                     </div>
                 </form>
             </div>
@@ -82,6 +88,5 @@
     </div>
 
     <script src="/JavaScript/enterpin.js"></script>
-
 </body>
 </html>

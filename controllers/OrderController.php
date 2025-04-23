@@ -569,9 +569,51 @@ class OrderController extends Controller
     }
 
 
-        
+    public function getOrderDetails($reservationNo)
+{
+    if (!$reservationNo) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Reservation number is required']);
+        return;
+    }
 
+    // Fetch the order using the reservation number
+    $order = Order::findOrderByReservationId($reservationNo);
 
+    if (!$order) {
+        http_response_code(404);
+        echo json_encode(['error' => 'Order not found']);
+        return;
+    }
 
+    // Fetch detailed order items
+    $orderDetails = Order::getOrderDetails($order['order_id']);
+
+    if (!$orderDetails) {
+        http_response_code(404);
+        echo json_encode(['error' => 'Order details not found']);
+        return;
+    }
+
+    // Prepare the response
+    $items = [];
+    $totalPrice = 0;
+
+    foreach ($orderDetails as $detail) {
+        $items[] = [
+            'meal_name' => $detail['meal_name'],
+            'quantity' => $detail['quantity'],
+            'price' => $detail['meal_price'],
+            'total' => $detail['total_price']
+        ];
+        $totalPrice += $detail['total_price'];
+    }
+
+    echo json_encode([
+        'order_number' => $order['order_id'],
+        'items' => $items,
+        'total_price' => $totalPrice
+    ]);
+}
 
 }

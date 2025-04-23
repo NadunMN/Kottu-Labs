@@ -106,7 +106,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (result.success) {
                 pinEntrySection.style.display = 'none';
                 reservationModal.style.display = 'block';
-                document.getElementById('fullname').textContent = result.reservation.userName;
+
+                document.getElementById('fullname').textContent = result.reservation.reservation_name;
+
                 document.getElementById('reservationDate').textContent = result.reservation.reservation_date;
                 document.getElementById('reservationTime').textContent = result.reservation.reservation_time;
                 document.getElementById('numberOfGuests').textContent = result.reservation.number_of_guests;
@@ -114,6 +116,39 @@ document.addEventListener('DOMContentLoaded', function() {
                 ReservationNo = result.reservation.reservation_no;
 
                 const status = result.reservation.confirmation_status;
+
+                const reservationType = result.reservation.type;
+
+                if (reservationType === 'takeaway') {
+                    // Hide table assignment fields and number of guests if reservation type is "Take Away"
+                    document.querySelector('.table-assignment-section').style.display = 'none';
+                    document.getElementById('tableNumber').required = false; // Make table selection not required
+                    document.getElementById('numberOfGuests').parentElement.style.display = 'none'; // Hide number of guests
+                
+                    // Fetch and display order details
+                    try {
+                        const orderResponse = await fetch(`/order/takeawayDetails?reservation_no=${ReservationNo}`);
+                        if (!orderResponse.ok) {
+                            throw new Error("Failed to fetch order details");
+                        }
+                        const orderData = await orderResponse.json();
+                
+                        document.getElementById('orderNumber').textContent = orderData.order_number;
+                        document.getElementById('orderItems').textContent = orderData.items
+                            .map(item => `${item.meal_name} (x${item.quantity})`)
+                            .join(', ');
+                        document.getElementById('totalPrice').textContent = `$${orderData.total_price.toFixed(2)}`;
+                
+                        document.getElementById('orderDetails').style.display = 'block';
+                    } catch (error) {
+                        console.error("Error fetching order details:", error);
+                    }
+                } else {
+                    document.querySelector('.table-assignment-section').style.display = 'block';
+                    document.getElementById('tableNumber').required = true; // Make table selection required
+                    document.getElementById('numberOfGuests').parentElement.style.display = 'block'; // Show number of guests
+                }
+
 
                 // Fetch user branch ID before rendering
                 let user_branch_id = null;
@@ -123,13 +158,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         throw new Error("Network response was not ok");
                     }
                     const userData = await userResponse.json();
-                    if (userData.error) {
-                        console.error(userData.error);
-                    } else {
-                        user_branch_id = userData.branch_id;
-                    }
+                    user_branch_id = userData.branch_id;
                 } catch (error) {
-                console.error('Error fetching user data:', error);
+                    console.error('Error fetching user data:', error);
                 }
                 
                 if (status === 1) {
@@ -138,34 +169,29 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.getElementById('tableNumber').style.display = 'none';
                 }
 
-                const branch_id = result.reservation[0].branch_id;
+                const branch_id = Number(result.reservation.branch_id);
                 const reservationBranchInput = document.getElementById('branch');
                 const branchName = branch_id === 1 ? 'Wattala' : branch_id === 2 ? 'Kelaniya' : 'Kotahena';
                 document.getElementById('branch').textContent = branchName;
 
                 // Set the text content of the labels and apply strike-through effect
-                const reservationType = result.reservation[0].type;
-
-                if (reservationType === 'dinein') {
-                    document.getElementById('dineInLabel').innerHTML = 'Dine In';
-                    document.getElementById('takeAwayLabel').innerHTML = '<s>Take Away</s>';
-                } else {
-                    document.getElementById('dineInLabel').innerHTML = '<s>Dine In</s>';
-                    document.getElementById('takeAwayLabel').innerHTML = 'Take Away';
-                }
+                
+                const reservationTypeLabel = document.getElementById('reservationTypeLabel'); // Use a single label element
+                reservationTypeLabel.textContent = reservationType === 'dinein' ? 'Dine In' : 'Take Away';
 
                 // Check if user_branch_id matches branch_id
-                if (user_branch_id !== branch_id) {
+                if (Number(user_branch_id) !== Number(branch_id)) {
                     document.querySelector('.confirm-button').style.display = 'none';
                     document.getElementById('tableNumber').style.display = 'none';
                     reservationBranchInput.style.color = 'red'; 
                 }
+                
 
                 // check with the current date
                 const currentDate = new Date();
                 const formattedCurrentDate = currentDate.toISOString().split('T')[0];
 
-                const reservationDate = result.reservation[0].reservation_date;
+                const reservationDate = result.reservation.reservation_date;
                 const reservationDateInput = document.getElementById('reservationDate');
                 if (reservationDate != formattedCurrentDate) {
                     reservationDateInput.style.color = 'red';
