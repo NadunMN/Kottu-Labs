@@ -31,6 +31,16 @@
                 <?php echo $form->field($model, 'mobile_number') ?>
             </div>
 
+            <!-- Password field with lock icon -->
+            <div class="form-group" data-icon="lock">
+                <?php echo $form->field($model, 'password')->passwordField() ?>
+            </div>
+
+            <!-- Confirm Password field with lock icon -->
+            <div class="form-group" data-icon="lock">
+                <?php echo $form->field($model, 'confirmPassword')->passwordField() ?>
+            </div>
+
             <button type="submit" class="btn btn-primary">Submit</button>
             <p style="margin-top: 10px;">Have an account? <a href="/login">Sign In</a></p>
 

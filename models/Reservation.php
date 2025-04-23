@@ -4,6 +4,7 @@ namespace app\models;
 
 use app\core\db\DbModel;
 use app\core\Model\ReservationModel;
+use app\core\Application;
 
 class Reservation extends ReservationModel
 {
@@ -206,6 +207,21 @@ class Reservation extends ReservationModel
         return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
 }
 
+public static function findDineInReservations($user_id)
+{
+    // Check if $user_id is an array and extract the value if needed
+    if (is_array($user_id) && isset($user_id['user_id'])) {
+        $user_id = $user_id['user_id'];
+    }
+    
+    $tableName = static::tableName();
+    $sql = "SELECT * FROM $tableName WHERE user_id = :user_id AND type = 'dinein'";
+    $statement = self::prepare($sql);
+    $statement->bindValue(":user_id", $user_id);
+    $statement->execute();
+    return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
+}
+
     public static function findAllreservationTakeawayOrder($where)
 {
         $tableName = static::tableName();
@@ -268,7 +284,14 @@ class Reservation extends ReservationModel
     }
 
     try {
-        return $statement->execute();
+        if ($statement->execute()) {
+            // Retrieve and set the last inserted ID
+            $lastInsertId = Application::$app->db->pdo->lastInsertId();
+            $primaryKey = static::primaryKey(); // Get the primary key attribute
+            $this->{$primaryKey} = $lastInsertId; // Assign the last insert ID to the primary key attribute
+            
+            return $lastInsertId;
+        }
     } catch (\PDOException $e) {
         error_log('Database save error: ' . $e->getMessage());
         $this->addError('database', 'Failed to save reservation. Please try again.');
