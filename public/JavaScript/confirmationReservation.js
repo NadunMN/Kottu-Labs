@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", function() {
         try {
             requestBody = JSON.parse(storedRequestBody);
             confirmationNumber = requestBody.confirmation_number;
-            // console.log('Stored Request Body:', requestBody);
-            // console.log('Confirmation Number:', confirmationNumber);
+            console.log('Stored Request Body:', requestBody);
+            console.log('Confirmation Number:', confirmationNumber);
         } catch (error) {
             console.error("Error parsing stored request body:", error);
             messageDiv.textContent = 'Error loading reservation data.';
