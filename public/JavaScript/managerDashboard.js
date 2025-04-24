@@ -153,15 +153,16 @@ document.addEventListener("DOMContentLoaded", () => {
     </form>
                                         </div>
                                       
-                                        <table class="menu-table" id="menu-table">
+                                         <table class="menu-table" id="menu-table">
                                           <thead>
                                             <tr>
                                               <th>Meal ID</th>
+                                              <th>Meal Photo</th>  
                                               <th>Name</th>
                                               <th>Type</th>
                                               <th>Price</th>
-                                              <th>Availability</th>
-                                              <th>Status</th>
+                                              <th>Availability</th>      
+                                              <th>Actions</th>    
                                             </tr>
                                           </thead>
                                           <tbody id="table-content"></tbody>
@@ -181,6 +182,11 @@ document.addEventListener("DOMContentLoaded", () => {
                                         <td class="meal-id" >${
                                           meal.meal_id
                                         }</td>
+                                        <td>
+                                        <img src="${meal.meal_photo || '/Photo/Menu/default-meal.png'}" 
+                                            alt="${meal.meal_name}" 
+                                            style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+                                        </td>
                                         <td>${meal.meal_name}</td>
                                         <td>${meal.meal_description}</td>
                                         <td>Rs.${meal.meal_price}</td>
@@ -337,33 +343,39 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Function to update an existing item
                 function updateItem(event) {
                   event.preventDefault();
-                  const formData = new FormData(addForm);
+                  
+                  const formData = new FormData();
                   const fileInput = document.getElementById("meal_photo");
-                  if (fileInput.files[0]) {
-                    formData.append(
-                      "meal_photo",
-                      "/Photo/Menu/" + fileInput.files[0].name
-                    );
-                  }
+                  const mealName = document.getElementById("item-name").value;
+                  const mealPrice = document.getElementById("item-price").value;
                   const mealDescriptionSelect = document.getElementById("meal_description");
                   const selectedText = mealDescriptionSelect.options[mealDescriptionSelect.selectedIndex].text;
-                  formData.set("meal_description", selectedText);
-                  let data = Object.fromEntries(formData.entries());
-                  data.meal_id = mealId;
-                  const requestBody = JSON.stringify(data);
-                  console.log("Request Body:", requestBody);
+                  
+                  // Append all form data
+                  formData.append("meal_id", mealId);
+                  formData.append("meal_name", mealName);
+                  formData.append("meal_price", mealPrice);
+                  formData.append("meal_description", selectedText);
+                  
+                  // Only append file if selected
+                  if (fileInput.files[0]) {
+                    formData.append("meal_photo", fileInput.files[0]);
+                  }
+                  
+                  // Get branch availability
+                  const branches = [];
+                  if (document.getElementById("wattala").checked) branches.push(1);
+                  if (document.getElementById("kelaniya").checked) branches.push(2);
+                  if (document.getElementById("kotahena").checked) branches.push(3);
+                  formData.append("branches", JSON.stringify(branches));
+                  
                   fetch("/menuitem/update", {
                     method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: requestBody,
+                    body: formData, // Send as FormData (not JSON)
                   })
                     .then((response) => {
                       if (!response.ok) {
-                        throw new Error(
-                          `HTTP error! status: ${response.status}`
-                        );
+                        throw new Error(`HTTP error! status: ${response.status}`);
                       }
                       return response.json();
                     })
@@ -371,11 +383,11 @@ document.addEventListener("DOMContentLoaded", () => {
                       console.log("Success:", data);
                       addItemForm.classList.add("hidden");
                       resetForm();
-                      addForm.removeEventListener("submit", updateItem);
-                      addForm.addEventListener("submit", addNewItem);
+                      location.reload(); // Reload to see changes
                     })
                     .catch((error) => {
                       console.error("Error:", error);
+                      alert("Failed to update item. Please try again.");
                     });
                 }
 
