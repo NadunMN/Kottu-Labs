@@ -105,12 +105,17 @@ class PaymentController extends Controller
 
         $paymentId = $body['payment_id'];
         $newStatus = (int) $body['payment_status'];
-
-        
+        $stewardId = $body['steward_id'];  
+        // Check if fields are valid
+    if (empty($paymentId) || !is_numeric($newStatus) || empty($stewardId)) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'Invalid input: Ensure all fields are non-empty and valid']);
+        return;
+    }
 
         try {
             $reservationNo = Payment::getCashReservationNo($paymentId, $newStatus);
-
+            
             if (!$reservationNo) {
                 http_response_code(404);
                 echo json_encode(['error' => 'Reservation not found for the payment']);
@@ -118,7 +123,7 @@ class PaymentController extends Controller
             }
 
             // Update all payments
-            $updateResult = Payment::updateCashPayments($reservationNo, $newStatus);
+            $updateResult = Payment::updateCashPayments($reservationNo, $newStatus, $stewardId);
 
             if ($updateResult) {
                 http_response_code(200);
