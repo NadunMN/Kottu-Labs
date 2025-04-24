@@ -174,11 +174,13 @@ class Order extends OrderModel
                 $tableName.order_id AS order_id,
                 $tableName.order_date AS order_date,
                 $tableName.order_price AS order_price,
+                r.type AS reservation_type,
                 CONCAT(users.firstname, ' ', users.lastname) AS customer_name,
                 branches.branch_name AS branchName
             FROM $tableName
             JOIN users ON $tableName.user_id = users.id
             JOIN branches ON $tableName.branch_id = branches.branch_id
+            JOIN reservations r ON $tableName.reservation_no = r.reservation_no
         ");
 
         try {

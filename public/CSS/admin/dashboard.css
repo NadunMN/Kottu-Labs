@@ -67,6 +67,86 @@ body {
     box-shadow: var(--hover-shadow);
 }
 
+/* Add to your dashboard.css */
+.filter-controls {
+    margin: 15px 0;
+    padding: 15px;
+    background: rgba(230, 57, 70, 0.05);
+    border-radius: var(--border-radius);
+}
+
+.date-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.date-filter label {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.filter-btn {
+    padding: 8px 15px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+input[type="date"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-family: inherit;
+}
+
+.filter-controls {
+    margin: 15px 0;
+    padding: 15px;
+    background: rgba(230, 57, 70, 0.05);
+    border-radius: var(--border-radius);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.filter-group label {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.filter-group input, .filter-group select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-family: inherit;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 10px;
+    align-self: flex-end;
+}
+
+.filter-group span {
+    align-self: center;
+    margin: 0 5px;
+}
+
 .dashboard-header {
     display: flex;
     justify-content: space-between;
