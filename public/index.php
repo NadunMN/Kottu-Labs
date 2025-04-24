@@ -2,6 +2,7 @@
 
 use app\core\Application;
 use app\controllers\SiteController;
+use app\controllers\AdminController;
 use app\controllers\AuthController;
 use app\controllers\UserController;
 use app\controllers\ManagerController;
@@ -36,6 +37,7 @@ $config = [
 $app = new Application(dirname(__DIR__), $config);
 $siteController = new SiteController();
 $authController = new AuthController();
+$adminController = new AdminController();
 $userController = new UserController();
 $managerController = new ManagerController();
 $mealController = new MealController();
@@ -392,12 +394,16 @@ $app->router->get('/unregmenu', [$siteController, 'unRegMenu']);
 $app->router->get('/stewardmenu', [$siteController, 'stewardMenu']);
 
 
+
 $app->router->get('/reservartionData', function() use ($reservationController) {
     $reservationNo = $_GET['reservationNo'] ?? null;
     $reservationController->reservtionData($reservationNo);
 });
 
 $app->router->post('/user/store', [$reservationController, 'userStore']);
+
+//admin routes for reports
+$app->router->get('/admin/reports/orders', [$adminController, 'orderReports']);
 
 
 
