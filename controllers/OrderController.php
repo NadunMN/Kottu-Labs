@@ -314,8 +314,8 @@ class OrderController extends Controller
         $orderId = $body['order_id'];
         $newStatus = $body['order_status'];
 
-        $stewardId = $body['steward_id'] || null; // Optional field
-        $chefId = $body['chef_id'] || null; // Optional field
+        $stewardId = $body['steward_id'];
+        $chefId = $body['chef_id'];
 
 
         // Validate order status
@@ -339,14 +339,14 @@ class OrderController extends Controller
 
         if ($chefId) {
             $order->chef_id = $chefId;
-            $order->steward_id = null; // Clear steward ID if chef ID is provided
+
+            $order->steward_id = null;
+
         }
 
         if ($stewardId) {
             $order->steward_id = $stewardId;
         }
-      
-
 
         if ($order->update()) {
             http_response_code(200);
@@ -638,6 +638,7 @@ class OrderController extends Controller
 
 
 
+
 public function getReservationUnReg($temp_id){
 
     
@@ -655,4 +656,56 @@ public function getReservationUnReg($temp_id){
 }
 
 
+
+
+    public function getDineInData()
+    {
+        if (Application::$app->user) {
+            try {
+                $branch_id = Application::$app->user->branch_id;
+
+                if (!$branch_id) {
+                throw new \Exception("Branch ID is missing for the logged-in user.");
+            }
+
+                $orders = Order::findDineInData($branch_id);
+                echo json_encode($orders);
+            } catch (\Exception $e) {
+                // Log the error and return a proper JSON response
+                error_log("Error fetching order data: " . $e->getMessage());
+                http_response_code(500); // Set HTTP status code to 500
+                echo json_encode(['error' => 'Failed to fetch order data', 'details' => $e->getMessage()]);
+            }
+        } else {
+            http_response_code(401); // Set HTTP status code to 401 (Unauthorized)
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+
+    public function getTakeAwayData()
+    {
+        if (Application::$app->user) {
+            try {
+                $branch_id = Application::$app->user->branch_id;
+
+                if (!$branch_id) {
+                throw new \Exception("Branch ID is missing for the logged-in user.");
+            }
+
+                $orders = Order::findTakeAwayData($branch_id);
+                echo json_encode($orders);
+            } catch (\Exception $e) {
+                // Log the error and return a proper JSON response
+                error_log("Error fetching order data: " . $e->getMessage());
+                http_response_code(500); // Set HTTP status code to 500
+                echo json_encode(['error' => 'Failed to fetch order data', 'details' => $e->getMessage()]);
+            }
+        } else {
+            http_response_code(401); // Set HTTP status code to 401 (Unauthorized)
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+    }
+
+
+}
 

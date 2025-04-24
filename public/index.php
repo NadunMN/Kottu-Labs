@@ -82,9 +82,8 @@ if (Application::$app->user && Application::$app->user->position == 'admin') {
 
 }else if(Application::$app->user && Application::$app->user->position == 'steward') {
     $app->router->get('/profile', [$siteController, 'stewardDashboard']);
-    
-    //steward
-    $app->router->get('/profile/view-order-status', [$siteController, 'orderstatusSteward']);
+    $app->router->get('/profile/dine-in-orders', [$siteController, 'dineInSteward']);
+    $app->router->get('/profile/take-away-orders', [$siteController, 'takeAwaySteward']);
     $app->router->get('/profile/customer-arrivals', [$siteController, 'customerarrivalsSteward']);
     $app->router->get('/profile/customer-payments', [$siteController, 'paymentsSteward']);
 
@@ -216,6 +215,8 @@ $app->router->post('/feedback/delete', [$feedbacksController, 'deleteReviews']);
 $app->router->get('/offer/getpublished', [$offerController, 'getAllPublishedOffers']);
 
 // order data
+$app->router->get('/order/dineInData', [$orderController, 'getDineInData']);
+$app->router->get('/order/takeAwayData', [$orderController, 'getTakeAwayData']);
 $app->router->get('/order/data', [$orderController, 'getOrderData']);
 $app->router->post('/order/confirm', [$orderController, 'updateOrderStatus']);
 $app->router->get('/manager/order/history', [$orderController, 'managerOrderHistory']);
@@ -297,7 +298,8 @@ $app->router->post('/payment/initiate', [$paymentController, 'initiatePayment'])
 $app->router->post('/payment/notify', [$paymentController, 'handleNotify']);
 $app->router->get('/payment/success', [$paymentController, 'handleReturn']);
 $app->router->get('/payment/cancel', [$paymentController, 'handleCancel']);
-$app->router->get('/payment/getPaymentDetails', [$paymentController, 'getPaymentDetails']);
+$app->router->get('/payment/getCardPaymentDetails', [$paymentController, 'getCardPayments']);
+$app->router->get('/payment/getCashPaymentDetails', [$paymentController, 'getCashPayments']);
 
 
 
