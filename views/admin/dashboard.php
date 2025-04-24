@@ -130,26 +130,62 @@
         </div>
     </div>
 
-    <!-- Order Report Model -->
+    <!-- Order Report Modal -->
     <div id="orderReportModal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal">&times;</span>
-        <h2>Order Report</h2>
-        <div class="modal-body">
-        <table>
-            <thead>
-            <tr>
-                <th>Order ID</th>
-                <th>Date</th>
-                <th>Customer</th>
-                <th>Branch</th>
-                <th>Total</th>
-            </tr>
-            </thead>
-            <tbody id="orderReportTableBody"></tbody>
-        </table>
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Orders Report</h2>
+            
+            <!-- Enhanced Filter Controls -->
+            <div class="filter-controls">
+                <!-- Date Filter -->
+                <div class="filter-group">
+                    <label for="reportDate">Date:</label>
+                    <input type="date" id="reportDate" name="reportDate">
+                </div>
+                
+                <!-- Branch Filter -->
+                <div class="filter-group">
+                    <label for="branchFilter">Branch:</label>
+                    <select id="branchFilter">
+                        <option value="">All Branches</option>
+                        <option value="Wattala">Wattala</option>
+                        <option value="Kelaniya">Kelaniya</option>
+                        <option value="Kotahena">Kotahena</option>
+                    </select>
+                </div>
+                
+                <!-- Price Range Filter -->
+                <div class="filter-group">
+                    <label for="minPrice">Price Range:</label>
+                    <input type="number" id="minPrice" placeholder="Min" min="0">
+                    <span>to</span>
+                    <input type="number" id="maxPrice" placeholder="Max" min="0">
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="filter-actions">
+                    <button id="applyFilters" class="filter-btn">Apply Filters</button>
+                    <button id="resetFilters" class="filter-btn">Reset All</button>
+                </div>
+            </div>
+            
+            <div class="modal-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Customer</th>
+                            <th>Branch</th>
+                            <th>Type</th>
+                            <th>Total (Rs.)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderReportTableBody"></tbody>
+                </table>
+            </div>
         </div>
-    </div>
     </div>
 
 
