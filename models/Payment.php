@@ -15,6 +15,7 @@ class Payment extends PaymentModel
     public int $payment_status = 0;
     public string $payment_amount = '';
     public string $order_id = '';
+    public ?int $steward_id = null;
 
     public static function tableName(): string
     {
@@ -38,7 +39,7 @@ class Payment extends PaymentModel
 
     public function attributes(): array
     {
-        return ['payment_id', 'payment_date', 'payment_type', 'payment_status', 'payment_amount', 'order_id'];
+        return ['payment_id', 'payment_date', 'payment_type', 'payment_status', 'payment_amount', 'order_id', 'steward_id'];
     }
 
     public function rules(): array
@@ -233,7 +234,8 @@ class Payment extends PaymentModel
             'payment_type' => $this->payment_type,
             'payment_amount' => $this->payment_amount,
             'payment_status' => $this->payment_status,
-            'order_id' => $this->order_id,    
+            'order_id' => $this->order_id,
+            'steward_id' => $this->steward_id,    
         ];
     }
 
@@ -392,33 +394,59 @@ public static function updatePaymentsByReservation($reservationNo, $newStatus, $
     }
 }
 
-public static function updateCashPayments($reservationNo, $newStatus)
+public static function updateCashPayments($reservationNo, $newStatus, $stewardId)
 {
-    $previousStatus = $newStatus - 1;
     $tableName = static::tableName();
-    $sql = "
-        UPDATE $tableName
-        SET payment_status = :payment_status
-        WHERE order_id IN (
-            SELECT order_id
-            FROM orders
-            WHERE reservation_no = :reservation_no
-        )
-        AND payment_type = 'cash' AND payment_status = :previous_status
-    ";
+
+    if ($newStatus === 1) {
+        // First confirm: allow update and assign steward
+        $sql = "
+            UPDATE $tableName
+            SET payment_status = :status, steward_id = :steward_id
+            WHERE payment_id IN (
+                SELECT p.payment_id
+                FROM $tableName p
+                JOIN orders o ON p.order_id = o.order_id
+                WHERE o.reservation_no = :reservation_no
+                AND p.payment_type = 'cash'
+                AND p.payment_status = 0
+            )
+        ";
+    } else if ($newStatus === 2) {
+        // Second confirm: allow only if steward_id matches
+        $sql = "
+            UPDATE $tableName
+            SET payment_status = :status
+            WHERE payment_id IN (
+                SELECT p.payment_id
+                FROM $tableName p
+                JOIN orders o ON p.order_id = o.order_id
+                WHERE o.reservation_no = :reservation_no
+                AND p.payment_type = 'cash'
+                AND p.payment_status = 1
+                AND p.steward_id = :steward_id
+            )
+        ";
+
+    } else {
+        return false;
+    }
 
     $statement = self::prepare($sql);
-    $statement->bindValue(':payment_status', $newStatus);
+    $statement->bindValue(':status', $newStatus);
     $statement->bindValue(':reservation_no', $reservationNo);
-    
-    $statement->bindValue(':previous_status', $previousStatus);
+    $statement->bindValue(':steward_id', $stewardId);
 
     try {
-        return $statement->execute();
+        $executed = $statement->execute();
+        if ($executed && $statement->rowCount() > 0) {
+            return true; // At least one row was updated
+        } else {
+            return false; // No rows matched the conditions
+        }
     } catch (\PDOException $e) {
-        error_log("Error updating payments: " . $e->getMessage());
+        error_log("DB Error: " . $e->getMessage());
         return false;
     }
 }
-
 }
