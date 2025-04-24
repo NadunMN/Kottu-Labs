@@ -12,11 +12,12 @@ class Order extends OrderModel
     public string $order_time = '';
     public int $order_status = 0;
     public string $branch_id = '';
-    public string $user_id = '';
+    public ?int $user_id = null;
     public string $reservation_no = '';
     public int $order_price;
     public ?int $chef_id=null;
     public ?int $steward_id= null;
+    public ?int $temp_id= null;
 
     public static function tableName(): string
     {
@@ -40,7 +41,7 @@ class Order extends OrderModel
 
     public function attributes(): array
     {
-        return ['order_id', 'order_date', 'order_time', 'order_status', 'branch_id', 'reservation_no', 'user_id', 'order_price','chef_id', 'steward_id'];
+        return ['order_id', 'order_date', 'order_time', 'order_status', 'branch_id', 'reservation_no', 'user_id','temp_id', 'order_price','chef_id', 'steward_id'];
     }
 
     public function rules(): array

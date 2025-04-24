@@ -22,9 +22,13 @@ fetch(`/user/data`)
 
             dineInButton.addEventListener('click', function() {
                 showToast("Reserve your seat at the feast — log in now", { type: 'info' });
+                window.location.href = '/dinein';
             });
             takeAwayButton.addEventListener('click', function() {
                 showToast("Reserve your seat at the feast — log in now", { type: 'info' });
+                // Optionally, you can also set the onclick for the takeAwayButton
+                window.location.href='/selectBranch';
+         
             });
            
 

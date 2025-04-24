@@ -151,6 +151,7 @@ $app->router->get('/offer/offerview', [$siteController, 'viewOfferMain']);
 
 //define route for reservations
 $app->router->post('/reservation/add', [$userController, 'addReservation']);
+
 $app->router->get('/reservation/data', [$managerController, 'getReservation']);
 $app->router->get('/reservation/otp', [$managerController, 'getOtp']);
 $app->router->post('/reservation/delete', [$managerController, 'deleteReservation']);
@@ -349,6 +350,31 @@ $app->router->get('/gettakeawayBookedData', function() use ($orderController) {
 //cheforder update
 $app->router->post('/order/confirm/orderMeals', [$orderController, 'orderMealsConfirmation']);
 $app->router->post('/order/confirm/orderMeals/accept', [$orderController, 'orderMealsAcceptance']);
+
+
+//staff data get
+$app->router->get('/user/data/staff', function() use ($userController) {
+    $userId = $_GET['id'] ?? null;
+    $userController->getStaffData($userId);
+});
+
+
+//unreg
+$app->router->get('/menuaccess', [$siteController, 'menuAccess']);
+$app->router->post('/unreg/add', [$userController, 'addUnreg']);
+
+$app->router->get('/menuaccess/pin', function() use ($userController) {
+    $pin = $_GET['enterPin'] ?? null;
+    $userController->getUnreg($pin);
+});
+
+$app->router->post('/unRegMenu/accept', [$userController, 'acceptUnregData']);
+
+$app->router->get('/getReservationDataUnReg', function() use ($orderController) {
+    $tempId = $_GET['tempId'] ?? null;
+    $orderController->getReservationUnReg($tempId);
+});
+
 
 
 

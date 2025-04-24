@@ -55,6 +55,59 @@ document.addEventListener("DOMContentLoaded", function () {
 
         console.log('Request Body:', requestBody); // Log the request body for debugging
 
+        if(userId === undefined) {
+
+            showToast("Please log in to make a reservation.", { type: 'info', duration: 5000 });
+
+
+            try {
+                const response = await fetch("/unreg/add", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: requestBody,
+                });
+            
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => null);
+                    throw new Error(errorData?.message || `HTTP error! Status: ${response.status}`);
+                }
+            
+                const data = await response.json();
+            
+                // Check success field in response body
+                if (!data.success) {
+                    showToast("That time slot is currently unavailable. Kindly choose another.",  { type: 'info', duration: 5000});
+                    
+                    throw new Error(data.message || "Reservation failed.");
+                }
+            
+                console.log(data.success);
+                showToast("Reservation successful!", "success");
+
+
+                // Change form action
+            reservationForm.action = `/reservationNumber?random=${data.success}`;
+            
+            // Submit the form programmatically after ensuring action is set
+            setTimeout(() => {
+                reservationForm.submit(); 
+            }, 100); // Add a slight delay to ensure `action` is set
+    
+            // Redirect only **after** form submission is processed
+            setTimeout(() => {
+                window.location.href = '/successreservation';
+            }, 500);
+    
+    
+            
+            } catch (error) {
+                console.error("Error:", error);
+                showToast(error.message || "Something went wrong!",  { type: 'warning'});
+                // showToast("Something went wrong!",  { type: 'info'});
+            }
+            // return;
+
+        }else{
         try {
             const response = await fetch("/reservation/add", {
                 method: "POST",
@@ -104,6 +157,8 @@ document.addEventListener("DOMContentLoaded", function () {
             showToast(error.message || "Something went wrong!",  { type: 'warning'});
             // showToast("Something went wrong!",  { type: 'info'});
         }
+
+    }
 
 
 

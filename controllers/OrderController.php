@@ -14,6 +14,7 @@ use app\models\OrderMeals;
 use app\models\Payment;
 use app\models\takeawayCart;
 use Error;
+use app\models\UnregUser;
 
 class OrderController extends Controller
 {
@@ -338,6 +339,7 @@ class OrderController extends Controller
 
         if ($chefId) {
             $order->chef_id = $chefId;
+            $order->steward_id = null; // Clear steward ID if chef ID is provided
         }
 
         if ($stewardId) {
@@ -634,4 +636,23 @@ class OrderController extends Controller
     ]);
 }
 
+
+
+public function getReservationUnReg($temp_id){
+
+    
+        $reservations = UnregUser::findAllreservationUnReg(['temp_id' => $temp_id]);
+        $reservationData = [];
+
+        foreach ($reservations as $reservation) {
+            $reservationData[] = $reservation;
+        }
+
+        echo json_encode($reservationData);
+    
 }
+
+}
+
+
+
