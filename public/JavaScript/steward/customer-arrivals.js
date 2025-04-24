@@ -1,4 +1,4 @@
-async function fetchReservations(selectedDate = null, selectedTime = null) {
+async function fetchReservations() {
   try {
     const response = await fetch("/reservation/stewardData");
     if (!response.ok) {
@@ -37,16 +37,10 @@ async function fetchReservations(selectedDate = null, selectedTime = null) {
 
     // Determine branch name
     const branchName = branch_id === 1 ? 'Wattala' : branch_id === 2 ? 'Kelaniya' : 'Kotahena';
-    const currentDate = selectedDate || new Date().toISOString().split('T')[0];
-
-    // Filter reservations for the selected date and branch
-    const filteredData = data.filter(reservation => {
-      const reservationDate = new Date(reservation.reservation_date).toISOString().slice(0, 10);
-      return reservationDate === currentDate;
-    });
+    const currentDate = new Date().toLocaleDateString('en-CA'); // Format: YYYY-MM-DD
 
     // Count pending reservations
-    const pendingCount = filteredData.filter(reservation => reservation.confirmation_status !== 1).length;
+    const pendingCount = data.filter(reservation => reservation.confirmation_status !== 1).length;
 
     reservationContent.innerHTML = `
       <div class="main-section">
@@ -54,14 +48,7 @@ async function fetchReservations(selectedDate = null, selectedTime = null) {
           <div class="topic-bar-text">
             <h2>Customer Arrivals - ${branchName} </h2>
             <span>${currentDate}</span>
-            <h4>${filteredData.length} reservations available  &emsp; ${pendingCount} pending reservations</h4>
-          </div>
-          <div class="date-filter-container">
-            <div class="date-input-group">
-                <label for="date-filter">Select Date:</label>
-                <input type="date" id="date-filter" value="${currentDate}"  />
-            </div>
-            <button id="current-date-button">Go to Current Date</button>
+            <h4>${data.length} reservations available  &emsp; ${pendingCount} pending reservations</h4>
           </div>
         </div> 
         
@@ -88,18 +75,14 @@ async function fetchReservations(selectedDate = null, selectedTime = null) {
     }
 
     // Sort reservations: pending first, then confirmed, sorted by time
-    filteredData.sort((a, b) => {
-      // Prioritize pending reservations over confirmed ones
+    data.sort((a, b) => {
       if (a.confirmation_status !== 1 && b.confirmation_status === 1) return -1;
       if (a.confirmation_status === 1 && b.confirmation_status !== 1) return 1;
-
-      // If both have the same status, sort by time
       return a.reservation_time.localeCompare(b.reservation_time);
     });
 
-    // Populate the table with filtered reservation data
-    filteredData.forEach((reservation) => {
-      
+    // Populate the table with reservation data
+    data.forEach((reservation) => {
       const row = document.createElement("tr");
       row.innerHTML = `
         <td class="reservation-id">${reservation.reservation_no}</td>
@@ -111,27 +94,9 @@ async function fetchReservations(selectedDate = null, selectedTime = null) {
                 ${reservation.confirmation_status === 1 ? 'Confirmed' : 'pending'}
             </span>
         </td>
-        <td>${reservation.table_number === 0? 'Null' : reservation.table_number}</td>
+        <td>${reservation.table_number === 0 ? 'Null' : reservation.table_number}</td>
       `;
       tableContent.appendChild(row);
-    });
-
-    // Remove existing event listeners to avoid duplication
-    const dateFilter = document.getElementById("date-filter");
-    const currentDateButton = document.getElementById("current-date-button");
-
-    dateFilter.replaceWith(dateFilter.cloneNode(true));
-    currentDateButton.replaceWith(currentDateButton.cloneNode(true));
-
-    document.getElementById("date-filter").addEventListener("change", () => {
-      const selectedDate = new Date(document.getElementById("date-filter").value).toISOString().slice(0, 10);
-      fetchReservations(selectedDate);
-    });
-
-    document.getElementById("current-date-button").addEventListener("click", () => {
-      const currentDate = new Date().toISOString().split('T')[0];
-      document.getElementById("date-filter").value = currentDate;
-      fetchReservations(currentDate);
     });
 
   } catch (error) {
@@ -143,6 +108,6 @@ async function fetchReservations(selectedDate = null, selectedTime = null) {
 // Refresh reservations every minute
 setInterval(() => {
   fetchReservations();
-}, 60000); 
+}, 60000);
 
 fetchReservations();

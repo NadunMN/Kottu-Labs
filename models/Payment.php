@@ -139,7 +139,9 @@ class Payment extends PaymentModel
     }
 
     public static function findPaymentsByBranch($branch_id){
+        
         $tableName = static::tableName();
+        $currentDate = date('Y-m-d');
         $statement = self::prepare("
             SELECT 
                 $tableName.*,
@@ -149,11 +151,12 @@ class Payment extends PaymentModel
             JOIN orders o ON $tableName.order_id = o.order_id
             JOIN reservations r ON o.reservation_no = r.reservation_no
             JOIN branches ON o.branch_id = branches.branch_id
-            WHERE branches.branch_id = :branch_id
+            WHERE branches.branch_id = :branch_id AND r.reservation_date = :current_date
             GROUP BY o.reservation_no, $tableName.payment_type, $tableName.payment_status
         ");
 
         $statement->bindValue(":branch_id", $branch_id);
+        $statement->bindValue(":current_date", $currentDate);
 
         try {
             $statement->execute();

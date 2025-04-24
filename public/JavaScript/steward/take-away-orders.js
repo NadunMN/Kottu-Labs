@@ -1,6 +1,6 @@
 let stewardId = null;
 
-async function fetchOrders(selectedDate = null, selectedTime = null) {
+async function fetchOrders() {
     try {
         // Fetch order data
         const response = await fetch("/order/takeAwayData");
@@ -17,7 +17,6 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
             document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
             return;
         }
-        console.log(data);
 
         if (!Array.isArray(data)) {
             console.error("Data is not an array");
@@ -50,8 +49,8 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
         }
 
         const branchName = branch_id === 1 ? 'Wattala' : branch_id === 2 ? 'Kelaniya' : 'Kotahena';
-        const currentDate = selectedDate || new Date().toISOString().split('T')[0];
-        const todayOrders = data.filter(order => order.order_date === currentDate);
+        const currentDate = new Date().toLocaleDateString('en-CA');
+        const todayOrders = data;
 
         // Sort reservations
         todayOrders.sort((a, b) => {
@@ -64,12 +63,12 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
 
         const readyOrders = new Set(
             todayOrders.filter(order => order.order_status == 1).map(order => order.order_id)
-        ).size;;
+        ).size;
         const uniqueAvailableOrders = new Set(
             todayOrders.filter(order => order.order_status !== 2).map(order => order.order_id)
         );
         const availableOrders = uniqueAvailableOrders.size;
-        
+
         // Group meals
         const ordersGroupedByOrderId = {};
         const groupedOrdersArray = [];
@@ -82,7 +81,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                 };
                 groupedOrdersArray.push(ordersGroupedByOrderId[order.order_id]); // Maintain sorted order
             }
-            
+
             ordersGroupedByOrderId[order.order_id].meals.push({
                 mealName: order.meal_name,
                 quantity: order.quantity
@@ -97,11 +96,6 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                         <h2>Order Status - ${branchName} </h2>
                         <span>${currentDate}</span>
                         <h4>Available orders - ${availableOrders} &emsp; Ready orders - ${readyOrders}</h4>
-                    </div>
-                    <div class="filter-section">
-                        <input type="text" id="tableFilter" placeholder="Filter by Table No...">
-                        <button onclick="filterOrders()">Filter</button>
-                        <button onclick="resetFilter()">Reset</button>
                     </div>
                 </div> 
                 
@@ -134,8 +128,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
         // Render rows directly from the grouped orders
         groupedOrdersArray.forEach(order => {
             const row = document.createElement("tr");
-            row.classList.add("order-item")
-            row.setAttribute("data-table-number", order.table_number);
+            row.classList.add("order-item");
 
             const mealsDropdown = order.meals.map((meal) => `<li>${meal.mealName} - ${meal.quantity}</li>`).join("");
             row.innerHTML = `
@@ -172,8 +165,6 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                     alert("Steward ID is not available. Please try again.");
                     return;
                 }
-                // Log the payload being sent to the server
-        console.log("Payload:", { order_id: orderId, order_status: 2, steward_id: stewardId });
                 try {
                     const response = await fetch(`/order/confirm`, {
                         method: "POST",
@@ -198,28 +189,6 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
         console.error("Fetch error:", error);
         document.getElementById("main-content").innerHTML = "<p>Error loading reservations.</p>";
     }
-}
-
-function filterOrders() {
-    const input = document.getElementById("tableFilter").value.trim();
-    const orders = document.querySelectorAll(".order-item");
-    
-    orders.forEach(order => {
-        const tableNo = order.getAttribute("data-table-number");
-        if (tableNo && tableNo.includes(input)) {
-            order.style.display = "";
-        } else {
-            order.style.display = "none";
-        }
-    });
-}
-
-function resetFilter() {
-    document.getElementById("tableFilter").value = "";
-    const orders = document.querySelectorAll(".order-item");
-    orders.forEach(order => {
-        order.style.display = "";
-    });
 }
 
 // Refresh orders
