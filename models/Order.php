@@ -166,7 +166,29 @@ class Order extends OrderModel
         }        
     }
 
+    public static function findAllOrders(){
+        $tableName = static::tableName();
+        $statement = self::prepare("
+            SELECT 
+                $tableName.*,
+                $tableName.order_id AS order_id,
+                $tableName.order_date AS order_date,
+                $tableName.order_price AS order_price,
+                CONCAT(users.firstname, ' ', users.lastname) AS customer_name,
+                branches.branch_name AS branchName
+            FROM $tableName
+            JOIN users ON $tableName.user_id = users.id
+            JOIN branches ON $tableName.branch_id = branches.branch_id
+        ");
 
+        try {
+            $statement->execute();
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
 
     public static function getOrderHistory($branch_id){
         $tableName = static::tableName();
