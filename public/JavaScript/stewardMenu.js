@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     const branchSelect = document.getElementById("branch-select");
     const searchSelection = document.getElementById("search-selection-2");
     const menuContainer = document.querySelector(".menu-items");
@@ -7,15 +7,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchButton = document.querySelector(".search-button-menu");
     let flag = 1;
 
-    let userId = null;
+   
 
     // Get the current URL's query parameters
 const urlParams = new URLSearchParams(window.location.search);
 
 // Retrieve the `id` parameter (or any other parameter)
-const tempId = urlParams.get('temp_id');
+const reservationNo = urlParams.get('reservationNo');
 
-console.log("Temp ID:", tempId); // Log the temp_id for debugging
+// console.log("Temp ID:", reservationNo); // Log the temp_id for debugging
 
 
 
@@ -36,19 +36,42 @@ console.log("Temp ID:", tempId); // Log the temp_id for debugging
         14: "Beverages"
     };
 
-    // Fetch user data from the backend
-    fetch('/user/data')
-        .then(response => response.json())
-    .then(data => {
-        if (data.error) {
-            console.error(data.error);
+    let userId = null;
+    let tempId = null;
+    
+    try {
+        // Fetch user data from the backend
+        const userResponse = await fetch('/user/data');
+        const userData = await userResponse.json();
+    
+        if (userData.error) {
+            console.error(userData.error);
         } else {
-            userId = data.id;
+            userId = userData.id;
         }
-    })
-    .catch(error => console.error('Error fetching user data:', error));
-
-
+    
+        // Fetch reservation data
+        const reservationResponse = await fetch(`/reservartionData?reservationNo=${reservationNo}`);
+        const reservationData = await reservationResponse.json();
+    
+        if (reservationData.error) {
+            console.error(reservationData.error);
+        } else {
+            if (reservationData.reservation.tempId !== null) {
+                tempId = reservationData.reservation.temp_id;
+                console.log("Temp ID:", tempId); // Log the temp_id for debugging
+            } else {
+                userId = reservationData.reservation.user_id;
+                console.log("User ID:", userId); // Log the user_id for debugging
+            }
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+    
+    // Log the final values after both fetch requests are completed
+    console.log("Final User ID:", userId);
+    console.log("Final Temp ID:", tempId);
     
 
 
@@ -183,6 +206,22 @@ console.log("Temp ID:", tempId); // Log the temp_id for debugging
             .then(data => {
                 if (data.success) {
                     // alert('Added to cart successfully!');
+
+                    fetch('/user/store', {
+                      method:'POST',
+                      headers: { 
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({ reservation_no: reservationNo, user_id: userId}),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                      if (data.success) {
+                        console.log("Reservation number stored successfully.");
+                      } else {
+                        console.error("Failed to store reservation number:", data.error);
+                      }
+                    })
 
                 // Use this:
                 showToast('Added to cart successfully!' , { type: 'success' });

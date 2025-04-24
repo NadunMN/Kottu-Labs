@@ -15,7 +15,8 @@ class Reservation extends ReservationModel
     public string $number_of_guests = '';
     public int $confirmation_status = 0;
     public string $branch_id = '';
-    public string $user_id = '';
+    public ?int $user_id = null;
+    public ?int $temp_id = null; // Assuming this is nullable
     public string $confirmation_number = '';
     public string $reservation_name = '';
     public string $table_number = '';
@@ -46,7 +47,7 @@ class Reservation extends ReservationModel
     public function attributes(): array
     {
         return ['reservation_no','reservation_date', 'reservation_time', 'number_of_guests', 
-        'confirmation_status', 'branch_id', 'user_id', 'confirmation_number', 'reservation_name', 'table_number', 'type'];
+        'confirmation_status', 'branch_id', 'user_id', 'confirmation_number', 'reservation_name', 'table_number', 'type', 'temp_id'];
     }
 
     public function rules(): array
@@ -105,6 +106,49 @@ class Reservation extends ReservationModel
     }
 }
 
+
+
+
+
+public static function findOneRegOrUnReg($where)
+{
+    $tableName = static::tableName();
+    $attributes = array_keys($where);
+
+    // Generate the WHERE clause dynamically
+    $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+
+    $statement = self::prepare("
+        SELECT 
+            $tableName.* 
+        FROM $tableName
+        where $sql
+    ");
+
+    foreach ($where as $key => $value) {
+        $statement->bindValue(":$key", $value);
+    }
+
+    // Error handling for the SQL execution
+    try {
+        $statement->execute();
+        // Change this line to fetch a single row
+        $result = $statement->fetch(\PDO::FETCH_ASSOC);
+        
+        if (!$result) {
+            return null;
+        }
+        
+        // Create a new instance of the model and load data into it
+        $instance = new static();
+        $instance->load($result);
+        return $instance;
+    } catch (\PDOException $e) {
+        // Log or handle the error appropriately
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
     public static function findOneCR($where)
     {
         $tableName = static::tableName();
@@ -265,6 +309,8 @@ public static function findDineInReservations($user_id)
             'branch_id' => $this->branch_id,
             'user_id' => $this->user_id,     
             'confirmation_number' => $this->confirmation_number,
+            'temp_id' => $this->temp_id,
+            
         ];
     }
 
@@ -273,6 +319,7 @@ public static function findDineInReservations($user_id)
     $tableName = static::tableName();
     $attributes = $this->attributes();
     $params = array_map(fn($attr) => ":$attr", $attributes);
+
 
     $sql = "INSERT INTO $tableName (" . implode(', ', $attributes) . ") 
             VALUES (" . implode(', ', $params) . ")";
@@ -336,6 +383,8 @@ public static function findDineInReservations($user_id)
         $tableName = static::tableName();
         $attributes = $this->attributes();
         $params = array_map(fn($attr) => "$attr = :$attr", $attributes);
+
+        // Debugging logs and exit removed for production use
         
         // Assuming primaryKey() returns a string key name
         $primaryKey = static::primaryKey();
@@ -349,6 +398,43 @@ public static function findDineInReservations($user_id)
             $statement->bindValue(":$attribute", $this->{$attribute});
         }
         $statement->bindValue(":$primaryKey", $this->{$primaryKey});
+    
+        // Execute statement and return result
+        try {
+            return $statement->execute();
+        } catch (\Exception $e) {
+            // Error handling here
+            echo "Update failed: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function updateUserId()
+    {
+
+        $tableName = static::tableName();
+        $attributes = $this->attributes();
+        $params = array_map(fn($attr) => "$attr = :$attr", $attributes);
+
+        // Debugging logs and exit removed for production use
+        
+        // Assuming primaryKey() returns a string key name
+        $primaryKey = static::primaryKey();
+        $sql = "UPDATE $tableName SET user_id=:user_id WHERE $primaryKey = :$primaryKey";
+        
+        // Ensure prepare method is available and connects to PDO
+        $statement = self::prepare($sql);  // Ensure prepare is implemented correctly
+        
+        // Bind attribute values
+        // foreach ($attributes as $attribute) {
+        //     $statement->bindValue(":$attribute", $this->{$attribute});
+        // }
+        $statement->bindValue(":user_id", $this->user_id);
+        $statement->bindValue(":$primaryKey", $this->{$primaryKey});
+
+        error_log("User ID: " . $this->user_id); // Log the user ID for debugging
+        error_log("Primary Key: " . $this->{$primaryKey}); // Log the primary key for debugging
+        // exit;
     
         // Execute statement and return result
         try {
@@ -422,6 +508,25 @@ public static function findDineInReservations($user_id)
     $statement->execute();
     return $statement->fetchAll(\PDO::FETCH_ASSOC);
 }
+
+
+public static function findAllreservationUnReg($where)
+    {
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+        // Start with the base WHERE clause
+        $sql = "SELECT $tableName.* FROM $tableName WHERE confirmation_status = 1 AND type = 'dinein'";
+        // Append additional conditions if any
+        if (!empty($attributes)) {
+            $sql .= " AND " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+        }
+        $statement = self::prepare($sql);
+        foreach ($where as $key => $item) {
+            $statement->bindValue(":$key", $item);
+        }
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
 
 
 

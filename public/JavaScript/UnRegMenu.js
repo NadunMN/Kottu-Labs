@@ -26,7 +26,7 @@ verifyBtn.addEventListener('click', function () {
 
 
     // Fetch validation from the server
-    fetch(`/getReservationDataUnReg?tempId=${enteredString}`)
+    fetch(`/getReservationDataUnReg?reservationNo=${enteredString}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Network response was not ok: ${response.statusText}`);
@@ -48,12 +48,12 @@ verifyBtn.addEventListener('click', function () {
                 inputField.style.borderColor = '#28a745';
 
                 // Update expectedString if needed (e.g., for future checks)
-                expectedString = data[0].temp_id || expectedString;
+                expectedString = data[0].reservation_no || expectedString;
 
                 console.log('Expected String:', expectedString); // Log the expected string for debugging
 
 
-                window.location.href = `/stewardmenu?temp_id=${encodeURIComponent(expectedString)}`;
+                window.location.href = `/stewardmenu?reservationNo=${encodeURIComponent(expectedString)}`;
 
                 
 

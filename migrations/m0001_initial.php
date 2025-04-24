@@ -52,7 +52,7 @@ class m0001_initial
             number_of_guests INT NOT NULL,
             confirmation_status TINYINT NOT NULL DEFAULT 0,
             branch_id INT NOT NULL,
-            user_id INT NOT NULL,
+            user_id INT NULL,
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
             FOREIGN KEY (branch_id) REFERENCES branches(branch_id) ON DELETE CASCADE,
             INDEX (branch_id),
