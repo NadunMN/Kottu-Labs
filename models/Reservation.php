@@ -216,15 +216,18 @@ public static function findOneRegOrUnReg($where)
     public static function findAllByBranch($branch_id)
     {
         $tableName = static::tableName();
+        $currentDate = date('Y-m-d');
         $statement = self::prepare("
             SELECT 
                 $tableName.*
             FROM $tableName
             JOIN branches ON $tableName.branch_id = branches.branch_id
             WHERE branches.branch_id = :branch_id
+            AND $tableName.reservation_date = :currentDate
         ");
 
         $statement->bindValue(":branch_id", $branch_id);
+        $statement->bindValue(":currentDate", $currentDate);
 
         try {
             $statement->execute();

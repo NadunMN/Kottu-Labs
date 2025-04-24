@@ -445,6 +445,7 @@ class Order extends OrderModel
     
     public static function findDineInData($branch_id) {
         $tableName = static::tableName();
+        $currentDate = date('Y-m-d');
         $statement = self::prepare("
             SELECT 
                 o.*,
@@ -457,10 +458,11 @@ class Order extends OrderModel
             JOIN meals m ON om.meal_id = m.meal_id
             JOIN reservations r ON o.reservation_no = r.reservation_no
             JOIN branches b ON o.branch_id = b.branch_id
-            WHERE b.branch_id = :branch_id AND r.type = 'dinein'
+            WHERE b.branch_id = :branch_id AND r.type = 'dinein' AND r.reservation_date = :current_date
         ");
 
         $statement->bindValue(":branch_id", $branch_id);
+        $statement->bindValue(":current_date", $currentDate);
 
         try {
             $statement->execute();
@@ -473,6 +475,7 @@ class Order extends OrderModel
 
     public static function findTakeAwayData($branch_id) {
         $tableName = static::tableName();
+        $currentDate = date('Y-m-d');
         $statement = self::prepare("
             SELECT 
                 o.*,
@@ -486,10 +489,11 @@ class Order extends OrderModel
             JOIN meals m ON om.meal_id = m.meal_id
             JOIN reservations r ON o.reservation_no = r.reservation_no
             JOIN branches b ON o.branch_id = b.branch_id
-            WHERE b.branch_id = :branch_id AND r.type = 'takeaway'
+            WHERE b.branch_id = :branch_id AND r.type = 'takeaway' AND r.reservation_date = :current_date
         ");
 
         $statement->bindValue(":branch_id", $branch_id);
+        $statement->bindValue(":current_date", $currentDate);
 
         try {
             $statement->execute();
