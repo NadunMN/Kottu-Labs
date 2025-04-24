@@ -175,3 +175,151 @@ function renderOrderTable(orders) {
   `;
   tbody.appendChild(totalRow);
 }
+
+
+// Initialize printing functionality when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  initPrintFunctionality();
+});
+
+function initPrintFunctionality() {
+  // Create the print button
+  const filterActions = document.querySelector('.filter-actions');
+  if (filterActions) {
+    const printBtn = document.createElement('button');
+    printBtn.id = 'printReportBtn';
+    printBtn.className = 'print-btn';
+    printBtn.innerHTML = '<img src="/Photo/icon/print.png" alt="Print"> Print Report';
+    
+    // Add print button to filter actions
+    filterActions.appendChild(printBtn);
+    
+    // Add event listener to print button
+    printBtn.addEventListener('click', printOrderReport);
+  }
+}
+
+/**
+ * Handle printing the order report
+ */
+function printOrderReport() {
+  // Get current state
+  const selectedDate = document.getElementById('reportDate').value;
+  const selectedBranch = document.getElementById('branchFilter').value;
+  const minPrice = document.getElementById('minPrice').value;
+  const maxPrice = document.getElementById('maxPrice').value;
+  
+  // Create print elements that will only show when printing
+  createPrintElements(selectedDate, selectedBranch, minPrice, maxPrice);
+  
+  // Disable print button to prevent multiple clicks
+  const printBtn = document.getElementById('printReportBtn');
+  printBtn.disabled = true;
+  printBtn.classList.add('print-btn-disabled');
+  
+  // Set timeout to ensure print elements are rendered
+  setTimeout(() => {
+    // Trigger browser print dialog
+    window.print();
+    
+    // Re-enable print button after printing
+    setTimeout(() => {
+      printBtn.disabled = false;
+      printBtn.classList.remove('print-btn-disabled');
+      
+      // Clean up print elements
+      removePrintElements();
+    }, 1000);
+  }, 200);
+}
+
+/**
+ * Create print-specific elements for the report
+ */
+function createPrintElements(selectedDate, selectedBranch, minPrice, maxPrice) {
+  // Create container for print elements
+  const printContainer = document.createElement('div');
+  printContainer.className = 'print-only';
+  printContainer.id = 'printContainer';
+  
+  // Format current date for the report
+  const now = new Date();
+  const formattedDate = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+  
+  // Create header
+  const header = document.createElement('div');
+  header.className = 'print-header';
+  
+  const title = document.createElement('h1');
+  title.textContent = 'Orders Report';
+  header.appendChild(title);
+  
+  const dateElement = document.createElement('div');
+  dateElement.className = 'print-date';
+  dateElement.textContent = 'Generated on: ' + formattedDate;
+  header.appendChild(dateElement);
+  
+  printContainer.appendChild(header);
+  
+  // Create filter summary if any filters are applied
+  if (selectedDate || selectedBranch || minPrice || maxPrice) {
+    const filterSummary = document.createElement('div');
+    filterSummary.className = 'print-filters';
+    
+    let filterText = '<strong>Filters Applied:</strong> ';
+    
+    if (selectedDate) {
+      filterText += 'Date: ' + selectedDate + ' | ';
+    }
+    
+    if (selectedBranch) {
+      filterText += 'Branch: ' + selectedBranch + ' | ';
+    }
+    
+    if (minPrice || maxPrice) {
+      filterText += 'Price Range: ';
+      if (minPrice) filterText += 'Rs.' + minPrice;
+      filterText += ' to ';
+      if (maxPrice) filterText += 'Rs.' + maxPrice;
+      else filterText += 'any';
+    }
+    
+    // Remove trailing separator if exists
+    if (filterText.endsWith(' | ')) {
+      filterText = filterText.slice(0, -3);
+    }
+    
+    filterSummary.innerHTML = filterText;
+    printContainer.appendChild(filterSummary);
+  }
+  
+  // Create footer
+  const footer = document.createElement('div');
+  footer.className = 'print-footer';
+  footer.innerHTML = '© ' + new Date().getFullYear() + ' Kottu-Labs. All rights reserved.';
+  printContainer.appendChild(footer);
+  
+  // Add to document body
+  document.body.appendChild(printContainer);
+  
+  // Mark the total row with a class for print styling
+  const tbody = document.getElementById('orderReportTableBody');
+  if (tbody && tbody.lastElementChild) {
+    tbody.lastElementChild.classList.add('total-row');
+  }
+}
+
+/**
+ * Remove print elements after printing
+ */
+function removePrintElements() {
+  const printContainer = document.getElementById('printContainer');
+  if (printContainer) {
+    printContainer.remove();
+  }
+}
+
+// Utility function to format currency
+function formatCurrency(amount) {
+  return 'Rs.' + parseFloat(amount).toFixed(2);
+}

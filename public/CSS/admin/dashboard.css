@@ -540,4 +540,161 @@ tr:hover td {
     to { transform: translateY(-50%) rotate(360deg); }
   }
 
+  /* Print-specific styles for Order Reports */
+
+/* Reset some browser defaults for printing */
+@media print {
+    * {
+      background: transparent !important;
+      color: black !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
+    
+    /* Hide elements that shouldn't be printed */
+    .container, .left-column, .right-column,
+    .filter-controls, .close-modal, .filter-actions,
+    .section-title, .modal .filter-group,
+    #printReportBtn, .filter-btn {
+      display: none !important;
+    }
+    
+    /* Show only the report content */
+    .modal-content {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+      background: white !important;
+    }
+    
+    /* Report title styling */
+    .print-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .print-header h1 {
+      font-size: 24pt;
+      margin-bottom: 8px;
+    }
+    
+    .print-date {
+      font-size: 12pt;
+      color: #555;
+    }
+    
+    .print-filters {
+      margin: 15px 0;
+      font-size: 11pt;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+    
+    /* Table styling for print */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+    
+    th {
+      background-color: #f0f0f0 !important;
+      font-weight: bold;
+    }
+    
+    /* Make sure table header is repeated on each page */
+    thead {
+      display: table-header-group;
+    }
+    
+    /* Prevent row breaks */
+    tr {
+      page-break-inside: avoid;
+    }
+    
+    /* Total row styling */
+    .total-row {
+      font-weight: bold;
+      background-color: #f0f0f0 !important;
+    }
+    
+    /* Print footer */
+    .print-footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 10pt;
+      color: #777;
+      border-top: 1px solid #ddd;
+      padding-top: 10px;
+    }
+    
+    /* Page margins */
+    @page {
+      margin: 2cm;
+    }
+  }
   
+  /* Non-print styles - for the Print button in UI */
+  .print-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .print-btn:hover {
+    background-color: #45a049;
+  }
+
+  .print-btn, #printReportBtn {
+    background-color: #4CAF50;
+    color: white;
+    min-width: 140px; /* Wider to accommodate "Print Report" text */
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+  
+  /* Make all buttons the same width for consistency */
+  .filter-actions button,
+  #applyFilters,
+  #resetFilters {
+    min-width: 140px;
+    white-space: nowrap;
+  }
+  
+  .print-btn img {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+  }
+  
+  .print-btn-disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  /* Print preview elements (hidden by default in UI) */
+  .print-only {
+    display: none;
+  }
+  
+  @media print {
+    .print-only {
+      display: block;
+    }
+  }
