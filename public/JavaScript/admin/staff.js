@@ -1,9 +1,13 @@
+//staff.js
+
 const toggleFormBtn = document.getElementById("toggleFormBtn");
 const formContainer = document.getElementById("staffForm");
 
 // Toggle form visibility
 toggleFormBtn.addEventListener("click", () => {
   formContainer.classList.toggle("show");
+  resetForm();
+  formContainer.removeAttribute("data-staff-id");
 });
 
 // Form submission handler
@@ -34,7 +38,7 @@ async function addNewItem(event) {
       body: JSON.stringify(Object.fromEntries(formData))
     });
 
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    if (!response.ok) throw new Error("HTTP error! status: ${response.status}");
     
     console.log("Success:", await response.json());
     formContainer.classList.remove("show");
@@ -55,7 +59,7 @@ function resetForm() {
 function loadStaffData() {
   fetch("/staff/data")
     .then(response => {
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      if (!response.ok) throw new Error("HTTP error! status: ${response.status}");
       return response.json();
     })
     .then(updateStaffTable)
@@ -142,7 +146,161 @@ document.getElementById("table-content").addEventListener("click", async (event)
   }
   
   if (event.target.classList.contains("edit-btn")) {
-    // Add edit functionality here
+    // Define formContainer
+    const formContainer = document.getElementById("staffForm");
+    fetch(`/user/data/staff?id=${staffId}`)
+        .then(response => {
+            if (!response.ok) throw new Error(data.error);
+            return response.json();
+            })
+        .then(data => {
+            if (data.error) {
+                console.error("Error:", data.error);
+                alert("Error loading staff data for edit");
+                return;
+            }
+            
+            formContainer.classList.add("show");
+
+            formContainer.elements["firstname"].value = data.firstname;
+            formContainer.elements["lastname"].value = data.lastname;
+            formContainer.elements["email"].value = data.email;
+            formContainer.elements["mobile_number"].value = data.mobile_number;
+            formContainer.elements["address"].value = data.address;
+            formContainer.elements["password"].value = data.password;
+            formContainer.elements["confirmPassword"].value = data.confirmPassword;
+            formContainer.elements["photo"].value = data.photo || null;
+            if (data.date_of_birth) {
+              try {
+                // Convert from database format to yyyy-mm-dd if needed
+                const dateObj = new Date(data.date_of_birth);
+                if (!isNaN(dateObj.getTime())) { // Check if it's a valid date
+                  const formattedDate = dateObj.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+                  formContainer.elements["date_of_birth"].value = formattedDate;
+                  console.log("Set date to:", formattedDate); // Debug
+                } else {
+                  console.warn("Invalid date:", data.date_of_birth);
+                }
+              } catch (e) {
+                console.error("Error formatting date:", e);
+              }
+            }
+            if (data.branch_id) {
+              formContainer.elements["branch_id"].value = data.branch_id;
+            } else if (data.branch_name) {
+              // Handle branch by name if needed
+              const branchSelect = formContainer.elements["branch_id"];
+              for (let i = 0; i < branchSelect.options.length; i++) {
+                if (branchSelect.options[i].textContent.toLowerCase() === data.branch_name.toLowerCase()) {
+                  branchSelect.selectedIndex = i;
+                  break;
+                }
+              }
+            }
+
+            if (data.gender) {
+              console.log('Selected gender:', data.gender);  // Debugging
+              const genderRadios = formContainer.elements["gender"];
+              for (let i = 0; i < genderRadios.length; i++) {
+                if (genderRadios[i].value === data.gender) {
+                  genderRadios[i].checked = true;
+                  break;
+                }
+              }
+            } else {
+              console.log('No gender data available.');
+            }
+
+            function capitalize(str) {
+              return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+            }
+            
+            if (data.position) {
+              formContainer.elements["position"].value = capitalize(data.position);
+            }
+            
+            if (data.nationality) {
+              formContainer.elements["nationality"].value = data.nationality || "";
+            }
+
+            const genderMap = {
+              male: "male",
+              female: "female",
+              other: "other"
+            };
+            
+            if (data.gender) {
+              const genderRadios = formContainer.elements["gender"];
+              for (let i = 0; i < genderRadios.length; i++) {
+                if (genderRadios[i].value === data.gender) {
+                  genderRadios[i].checked = true;
+                  break;
+                }
+              }
+            }
+            
+            // Pre-select position
+            if (data.position) {
+              const positionSelect = formContainer.elements["position"];
+              positionSelect.value = data.position || "";
+            }
+            
+            formContainer.addEventListener("submit", function(event) {
+              event.preventDefault();
+                
+              const formData = {};
+              
+              Array.from(formContainer.elements).forEach(element => {
+                if (element.name && element.name !== "" && element.type !== "file") {
+                    // For radio buttons, only include checked ones
+                    if (element.type === "radio") {
+                        if (element.checked) {
+                            formData[element.name] = element.value;
+                        }
+                    } 
+                    // For other elements (except files and submit)
+                    else if (element.type !== "submit") {
+                        formData[element.name] = element.value;
+                    }
+                }
+              });
+
+              // Explicitly set photo to null to avoid sending an array
+              formData.photo = null;
+              
+              // Add staff ID
+              formData.id = staffId;
+  
+              fetch("/staff/update", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
+              })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      alert("Staff member updated successfully!");
+                      loadStaffData();
+                      formContainer.classList.remove("show");
+                      resetForm();
+                  } else {
+                      alert("Error updating staff member: " + (data.message || "Unknown error"));
+                  }
+              })
+              .catch(error => {
+                console.error("Error:", error);
+                alert("Error processing request. Please check console for details.");
+               });
+            
+              }
+              
+            );
+
+            
+
+        });
+
+
     console.log("Edit staff member:", staffId);
   }
 });

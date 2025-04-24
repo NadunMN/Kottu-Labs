@@ -346,10 +346,10 @@ body {
                                     <label for="position">Position *</label>
                                     <select id="position" name="position" required>
                                         <option value="">Select Position</option>
-                                        <option value="adim">Admin</option>
-                                        <option value="manager">Manager</option>
-                                        <option value="chef">Chef</option>
-                                        <option value="steward">Steward</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Manager">Manager</option>
+                                        <option value="Chef">Chef</option>
+                                        <option value="Steward">Steward</option>
                                     </select>
                                 </div>
                             </div>
@@ -389,13 +389,13 @@ body {
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="email">Password *</label>
-                                    <input type="text" name="password" id="email" required>
+                                    <input type="text" name="password" id="password" required>
                                 </div>
                             </div>
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="mobile">Confirmation Password *</label>
-                                    <input type="text" name="confirmPassword" id="mobile">
+                                    <input type="text" name="confirmPassword" id="confirmPassword" required>
                                 </div>
                             </div>
                         </div>
@@ -410,7 +410,7 @@ body {
                 </div>
             </div>
 
-            <button type="submit" class="submit-btn">Add Staff Member</button>
+            <button type="submit" class="submit-btn">Submit</button>
         </form>
     </div>
 

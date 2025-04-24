@@ -93,6 +93,8 @@ class UserController extends Controller
         }
     }
 
+    
+
 
     //add review
     public function addReview()
@@ -301,6 +303,68 @@ class UserController extends Controller
            echo json_encode(['success' => false, 'message' => 'Not enough available seats']);
        }
    }
+
+   public function getStaffById($staffId) {
+    // Validate that staffId is provided
+    if (!$staffId) {
+        echo json_encode(['error' => 'Staff ID is required']);
+        return;
+    }
+    
+    // Verify the current user is authorized to view staff data
+    if (!Application::$app->user) {
+        echo json_encode(['error' => 'Not authorized']);
+        return;
+    }
+    
+    // Find the staff member by ID
+    $staff = User::findOne(['id' => $staffId]);
+    
+    if (!$staff) {
+        echo json_encode(['error' => 'Staff member not found']);
+        return;
+    }
+    
+    echo json_encode($staff);
+}
+
+public function updateStaff()
+{
+    $staffId = Application::$app->request->getBody()['id'] ?? null;  // Get staff ID from the body
+
+    if (!$staffId) {
+        echo json_encode(['success' => false, 'message' => 'Staff ID is required']);
+        return;
+    }
+
+    try {
+        $user = User::findOne(['id' => $staffId]);
+
+        if (!$user) {
+            throw new \Exception('User not found');
+        }
+
+        $userData = Application::$app->request->getBody();
+        
+        // Fix for photo property if it's an array
+        if (isset($userData['photo']) && is_array($userData['photo'])) {
+            // Either process the array or remove it
+            unset($userData['photo']);
+        }
+        
+        $user->loadData($userData);
+
+        if (!$user->update()) {
+            throw new \Exception('Failed to update user');
+        }
+
+        echo json_encode(['success' => true]);
+    } catch (\Exception $e) {
+        error_log($e->getMessage());
+        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    }
+}
+
 
 
 
