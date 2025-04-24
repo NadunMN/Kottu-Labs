@@ -301,6 +301,7 @@ $app->router->post('/staff/update', [$userController, 'updateStaff']);
 //payment
 $app->router->get('/payment/data', [$paymentController, 'getPaymentData']);
 $app->router->post('/payment/confirm', [$paymentController, 'updatePaymentStatus']);
+$app->router->post('/payment/stewardCashConfirm', [$paymentController, 'updateCashStatus']);
 $app->router->post('/payment/initiate', [$paymentController, 'initiatePayment']);
 $app->router->post('/payment/notify', [$paymentController, 'handleNotify']);
 $app->router->get('/payment/success', [$paymentController, 'handleReturn']);

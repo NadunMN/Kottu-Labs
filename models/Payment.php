@@ -148,8 +148,8 @@ class Payment extends PaymentModel
             JOIN orders o ON $tableName.order_id = o.order_id
             JOIN reservations r ON o.reservation_no = r.reservation_no
             JOIN branches ON o.branch_id = branches.branch_id
-            WHERE branches.branch_id = :branch_id AND $tableName.payment_status = 0
-            GROUP BY o.reservation_no
+            WHERE branches.branch_id = :branch_id
+            GROUP BY o.reservation_no, $tableName.payment_type, $tableName.payment_status
         ");
 
         $statement->bindValue(":branch_id", $branch_id);
@@ -335,6 +335,35 @@ public static function getReservationNoByPaymentId($paymentId)
     }
 }
 
+public static function getCashReservationNo($paymentId, $newStatus)
+{
+    // Calculate the previous status
+    $previousStatus = $newStatus - 1;
+    $tableName = static::tableName();
+
+    $sql = "
+        SELECT r.reservation_no
+        FROM $tableName
+        JOIN orders o ON $tableName.order_id = o.order_id
+        JOIN reservations r ON o.reservation_no = r.reservation_no
+        WHERE $tableName.payment_id = :payment_id 
+            AND $tableName.payment_type = 'cash' 
+            AND $tableName.payment_status = :previous_status
+    ";
+
+    $statement = self::prepare($sql);
+
+    $statement->bindValue(':payment_id', $paymentId);
+    $statement->bindValue(':previous_status', $previousStatus);
+
+    try {
+        $statement->execute();
+        return $statement->fetchColumn();
+    } catch (\PDOException $e) {
+        error_log("Error fetching reservation number: " . $e->getMessage());
+        return false;
+    }
+}
 
 public static function updatePaymentsByReservation($reservationNo, $newStatus, $paymentType)
 {
@@ -362,35 +391,34 @@ public static function updatePaymentsByReservation($reservationNo, $newStatus, $
         return false;
     }
 }
-public function updateCard()
+
+public static function updateCashPayments($reservationNo, $newStatus)
 {
+    $previousStatus = $newStatus - 1;
     $tableName = static::tableName();
-        $attributes = $this->attributes();
-        $params = array_map(fn($attr) => "$attr = :$attr", $attributes);
-        
-        // Assuming primaryKey() returns a string key name
-        $primaryKey = static::primaryKey();
-        $sql = "UPDATE $tableName SET " . implode(', ', $params) . " WHERE $primaryKey = :$primaryKey";
-        
-        // Ensure prepare method is available and connects to PDO
-        $statement = self::prepare($sql);  // Ensure prepare is implemented correctly
-        
-        // Bind attribute values
-        foreach ($attributes as $attribute) {
-            $statement->bindValue(":$attribute", $this->{$attribute});
-        }
-        $statement->bindValue(":$primaryKey", $this->{$primaryKey});
+    $sql = "
+        UPDATE $tableName
+        SET payment_status = :payment_status
+        WHERE order_id IN (
+            SELECT order_id
+            FROM orders
+            WHERE reservation_no = :reservation_no
+        )
+        AND payment_type = 'cash' AND payment_status = :previous_status
+    ";
+
+    $statement = self::prepare($sql);
+    $statement->bindValue(':payment_status', $newStatus);
+    $statement->bindValue(':reservation_no', $reservationNo);
     
-        // Execute statement and return result
-        try {
-            return $statement->execute();
-        } catch (\Exception $e) {
-            // Error handling here
-            echo "Update failed: " . $e->getMessage();
-            return false;
-        }
+    $statement->bindValue(':previous_status', $previousStatus);
+
+    try {
+        return $statement->execute();
+    } catch (\PDOException $e) {
+        error_log("Error updating payments: " . $e->getMessage());
+        return false;
+    }
 }
-
-
 
 }
