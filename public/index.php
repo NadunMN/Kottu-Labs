@@ -243,6 +243,8 @@ $app->router->get('/getconfirmReservation', function() use ($reservationControll
     $reservationController->findReservation($userId);
 });
 
+$app->router->post('/reservation/addtable', [$reservationController, 'addtableReservation']);
+
 
 //cart
 $app->router->post('/cart/add', [$orderController, 'addToCart']);
@@ -384,6 +386,8 @@ $app->router->get('/getReservationDataUnReg', function() use ($orderController) 
     $tempId = $_GET['tempId'] ?? null;
     $orderController->getReservationUnReg($tempId);
 });
+
+$app->router->post('/reservation/addtable/non', [$reservationController, 'addtableReservationUnReg']);
 
 
 

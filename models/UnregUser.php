@@ -18,6 +18,7 @@ class UnregUser extends DbModel
     public string $branch_id ='';
     public int $confirmation_status = 0;
     public string $type = '';
+    public ?int $table_number = null; // Assuming this is an integer, adjust as necessary
     
 
     public static function tableName(): string
@@ -42,7 +43,7 @@ class UnregUser extends DbModel
 
     public function attributes(): array
     {
-        return ['reservation_name', 'email', 'reservation_date', 'reservation_time', 'number_of_guests', 'branch_id', 'confirmation_status', 'type'];
+        return ['reservation_name', 'email', 'reservation_date', 'reservation_time', 'number_of_guests', 'branch_id', 'confirmation_status', 'type', 'table_number'];
     }
 
     public function rules(): array
@@ -108,7 +109,8 @@ class UnregUser extends DbModel
             'number_of_guests' => $this->number_of_guests,
             'branch_id' => $this->branch_id,
             'confirmation_status' => $this->confirmation_status,
-            'type' => $this->type,    
+            'type' => $this->type,   
+            'table_number' => $this->table_number, 
         ];
     }
 
@@ -239,6 +241,28 @@ class UnregUser extends DbModel
         }
         $statement->execute();
         return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
+
+
+    public function addTable()
+    {
+        $tableName = static::tableName();
+        
+        // Ensure table_number and reservation_no are properties
+        if (!isset($this->table_number) || !isset($this->temp_id)) {
+            throw new \Exception("Table number or reservation number is not set.");
+        }
+
+    
+
+        $sql = "UPDATE $tableName SET table_number = :table_number, confirmation_status = :confirmation_status WHERE temp_id = :temp_id";
+    
+        $statement = self::prepare($sql);
+        $statement->bindValue(':table_number', $this->table_number);
+        $statement->bindValue(':temp_id', $this->temp_id);
+        $statement->bindValue(':confirmation_status', $this->confirmation_status);
+    
+        return $statement->execute();
     }
     
 
