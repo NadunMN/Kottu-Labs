@@ -8,7 +8,8 @@ use app\core\Model\cartModel;
 class Cart extends cartModel
 {
     public int $cart_id;
-    public int $user_id;
+    public ?int $user_id=null;
+    public ?int $temp_id=null;
     public ?int $meal_id = null; // Nullable to allow for optional meal_id
     public ?int $offer_id = null; // Nullable to allow for optional offer_id
     public int $quantity;
@@ -36,7 +37,7 @@ class Cart extends cartModel
 
     public function attributes(): array
     {
-        return ['user_id', 'meal_id', 'quantity', 'offer_id'];
+        return ['user_id','temp_id', 'meal_id', 'quantity', 'offer_id'];
     }
 
     public function rules(): array
@@ -95,6 +96,7 @@ public static function findAllcartMeal($where)
         return [
             'cart_id' => $this->cart_id,
             'user_id' => $this->user_id,
+            'temp_id' => $this->temp_id,
             'meal_id' => $this->meal_id,
             'offer_id' => $this->offer_id,
             'quantity' => $this->quantity,

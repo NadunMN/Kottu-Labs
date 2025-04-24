@@ -61,6 +61,22 @@ class m0001_initial
         $db->pdo->exec($SQL);
 
 
+        // unreguser table
+        $SQL = "CREATE TABLE unreguser (
+            temp_id INT AUTO_INCREMENT PRIMARY KEY,
+            reservation_name VARCHAR(255) NOT NULL,
+            branch_id INT,
+            email varchar(255) NOT NULL,
+            reservation_date DATE NOT NULL,
+            reservation_time TIME NOT NULL,
+            number_of_guests INT NOT NULL,
+            confirmation_status INT NOT NULL DEFAULT 0,
+            type VARCHAR(255) NOT NULL,
+            FOREIGN KEY (branch_id) REFERENCES branches(branch_id) ON DELETE CASCADE
+        ) ENGINE=INNODB;";
+        $db->pdo->exec($SQL);
+
+
         // orders table
         $SQL = "CREATE TABLE IF NOT EXISTS orders (
             order_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -68,8 +84,10 @@ class m0001_initial
             order_status TINYINT NOT NULL DEFAULT 0,
             branch_id INT NOT NULL,
             reservation_no INT DEFAULT NULL,
-            user_id INT NOT NULL,
+            user_id INT,
+            temp_id INT DEFAULT NULL,
             FOREIGN KEY (branch_id) REFERENCES branches(branch_id) ON DELETE CASCADE,
+            FOREIGN KEY (temp_id) REFERENCES unreguser(temp_id) ON DELETE CASCADE,
             FOREIGN KEY (reservation_no) REFERENCES reservations(reservation_no) ON DELETE SET NULL,
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
         ) ENGINE=INNODB;";

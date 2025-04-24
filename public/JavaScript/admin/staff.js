@@ -142,6 +142,79 @@ document.getElementById("table-content").addEventListener("click", async (event)
   }
   
   if (event.target.classList.contains("edit-btn")) {
+
+
+    // fetch(`/user/data/staff?id=${staffId}`)
+    //   .then(response => {
+    //     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    //     return response.json();
+    //   })
+    //   .then(data => {
+    //     if (data.error) throw new Error(data.error);
+        
+    //     formContainer.classList.add("show");
+
+
+
+        
+    //     // Populate form with staff data for editing
+    //     // formContainer.elements["id"].value = data.id;
+    //     formContainer.elements["firstname"].value = data.firstname;
+    //     formContainer.elements["lastname"].value = data.lastname;
+    //     formContainer.elements["date_of_birth"].value = data.date_of_birth;
+    //     formContainer.elements["nationality"].value = data.nationality;
+    //     formContainer.elements["email"].value = data.email;
+
+    //     if(data.gender == 'male'){
+
+    //     }
+    //     formContainer.elements["mobile_number"].value = data.mobile_number;
+    //     formContainer.elements["position"].value = data.position;
+    //     formContainer.elements["branch_name"].value = data.branch_name;
+
+
+        
+        
+    //   })
+    //   .catch(error => {
+    //     console.error("Fetch error:", error);
+    //     alert("Error loading staff data for editing. Please check console for details.");
+    //   });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Add edit functionality here
     console.log("Edit staff member:", staffId);
   }

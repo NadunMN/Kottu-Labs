@@ -11,7 +11,7 @@ class MealController extends Controller
     //get menu data
     public function mealsByBranch($branchId, $selectionId, $searchTerm )
     {
-        if (Application::$app->user) {
+        
             // Fetch meals by branch ID
             if($selectionId == 1){
                 $meals = Meal::findAllWithoutGroup(['branch_id' => $branchId], $searchTerm);
@@ -23,8 +23,6 @@ class MealController extends Controller
                 $mealData[] = $meal;
             }
             echo json_encode($mealData);
-        } else {
-            echo json_encode(['error' => 'No user is logged in']);
-        }
+        
     }
 }

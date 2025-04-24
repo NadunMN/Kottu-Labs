@@ -258,5 +258,13 @@ class SiteController extends Controller
         return $this->render('takeawayCart');
     }
 
+
+    public function menuAccess(Request $request,Response $response)
+    {
+        $this->setLayout('dashboard');
+        return $this->render('menuAccess');
+    }
+
+    
 }
 ?>
