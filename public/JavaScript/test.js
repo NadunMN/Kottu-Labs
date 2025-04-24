@@ -115,9 +115,3 @@ fetch("/dashboard/getRegistrationsCount")
       orderReportModal.style.display = "none";
     }
   });
-  
-
-
-
-
-
