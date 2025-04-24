@@ -290,6 +290,13 @@ $app->router->post('/staff/add', [$userController, 'addStaff']);
 $app->router->get('/staff/data', [$userController, 'getStaff']);
 $app->router->post('/staff/delete', [$userController, 'deleteStaff']);
 
+$app->router->get('/user/data/staff', function() use ($userController) {
+    $staffId = $_GET['id'] ?? null;
+    $userController->getStaffById($staffId);
+});
+
+$app->router->post('/staff/update', [$userController, 'updateStaff']);
+
 
 //payment
 $app->router->get('/payment/data', [$paymentController, 'getPaymentData']);

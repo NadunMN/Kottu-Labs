@@ -59,14 +59,22 @@ class User extends UserModel
         ];
     }
 
-    public function load($data)
+    public function loadData($data)
     {
-        // Load the data only if the keys exist
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
+                // Special handling for photo property
+                if ($key === 'photo' && is_array($value)) {
+                    // Skip array assignments to string properties
+                    continue;
+                }
+                
+                // Otherwise assign the value
                 $this->{$key} = $value;
             }
         }
+        
+        return true;
     }
 
     public function attributes(): array
