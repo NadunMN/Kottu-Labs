@@ -28,7 +28,7 @@ function initiatePayHerePayment() {
   let orderIdM; // Use the reservation ID as the order ID
 
   // Fetch order details for the reservation
-  fetch(`/payment/getPaymentDetails?reservationId=${reservationId}`)
+  fetch(`/payment/getCardPaymentDetails?reservationId=${reservationId}`)
       .then(response => response.json())
       .then(data => {
           if (data.error) {
@@ -61,11 +61,7 @@ function initiatePayHerePayment() {
 
           payhere.onCompleted = function onCompleted(orderId) {
               console.log("Payment completed:", orderId);
-              orderIdM = orderId; // Store the order ID for later use
-              alert("Payment completed successfully!");
-              // Redirect to success page or perform any other action
-
-                          // Make an API call to update the payment status in the database
+              orderIdM = orderId; 
             fetch('/payment/confirm', {
               method: 'POST',
               headers: {
@@ -105,32 +101,50 @@ function initiatePayHerePayment() {
 
 
     function continuePayment() {
-        // Use reservationId from the URL instead of orderIdM
-        console.log("Reservation ID:", reservationId);
+        if (!reservationId) {
+            alert("Reservation ID is missing!");
+            return;
+        }
     
-        // Make an API call to update the payment status in the database
-        fetch('/payment/confirm', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                payment_id:12 , // Use reservationId instead of orderIdM
-                payment_status: 0,        // Status 0 indicates pending/awaiting cash payment
-                payment_type: 'cash',
-            }),
-        })
-        .then(response => response.json())
-        .then(result => {
-            if (result.success) {
-                alert("Cash payment recorded successfully!");
-                // Redirect or update UI as needed
-            } else {
-                alert("Failed to record cash payment.");
-            }
-        })
-        .catch(error => {
-            console.error("Error updating payment status:", error);
-            alert("An error occurred. Please try again.");
-        });
+        // Fetch the order ID or cash payment details for the reservation
+        fetch(`/payment/getCashPaymentDetails?reservationId=${reservationId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+                console.log("Cash payment details:", data);
+    
+                // Use the fetched order ID or payment ID from the response
+                const paymentId = data.payment_id; // Adjust based on API response structure
+    
+                // Make an API call to update the payment status in the database
+                fetch('/payment/confirm', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        payment_id: paymentId, // Use the fetched payment ID
+                        payment_status: 0,    // Status 0 indicates pending/awaiting cash payment
+                        payment_type: 'cash', // Payment type is 'cash'
+                    }),
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        window.location.href = '/cart';
+                    } else {
+                        console.error("Failed to update payment status:", result.error);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error updating payment status:", error);
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching cash payment details:", error);
+            });
     }
+    

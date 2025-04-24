@@ -9,6 +9,7 @@ use app\core\Response;
 use app\models\User;
 use app\models\Review;
 use app\models\Reservation;
+use app\models\UnregUser;
 
 class UserController extends Controller
 {
@@ -365,6 +366,81 @@ public function updateStaff()
     }
 }
 
+
+
+
+
+
+    public function getStaffData($userId)
+    {
+         if (Application::$app->user) {
+              $userId = Application::$app->user->id;
+              $user1 = User::findOne(['id' => $userId]);
+              echo json_encode($user1);
+         } else {
+              echo json_encode(['error' => 'No user is logged in']);
+         }
+    }
+
+
+    public function addUnreg()
+{
+    $unregUser = new UnregUser();
+    $unregUser->loadData(Application::$app->request->getBody());
+
+    // Log the UnregUser object as a JSON string
+    error_log('UnregUser data: ' . json_encode($unregUser));
+    // exit;
+
+    if ($unregUser->save()) {
+        $tempId = $unregUser->temp_id; // Assuming temp_id is the primary key or unique identifier
+        echo json_encode(['success' => $tempId]);
+    } else {
+        // Log validation errors if saving fails
+        error_log('Unregistered user validation or save failed: ' . json_encode($unregUser->errors));
+        echo json_encode(['success' => false, 'errors' => $unregUser->errors]);
+    }
+}
+
+
+public function getUnreg($id){
+    // $unregUser = new UnregUser();
+
+    $unregUser = UnregUser::findOne(['temp_id' => $id]);
+    if ($unregUser) {
+        echo json_encode($unregUser);
+    } else {
+        echo json_encode(['error' => 'No unregistered user found']);
+    }
+
+    
+}
+
+
+public function acceptUnregData(){
+    $unregUser = new UnregUser();
+    $unregUser->loadData(Application::$app->request->getBody());
+
+    // Log the UnregUser object as a JSON string
+    // error_log('UnregUser data: ' . json_encode($unregUser));
+    // exit;
+
+    if ($unregUser->update()) {
+        // $tempId = $unregUser->temp_id; // Assuming temp_id is the primary key or unique identifier
+        echo json_encode(['success' => true]);
+    } else {
+        // Log validation errors if saving fails
+        error_log('Unregistered user validation or save failed: ' . json_encode($unregUser->errors));
+        echo json_encode(['success' => false, 'errors' => $unregUser->errors]);
+    }
+}
+
+
+
+    
+   
+
+    
 
 
 

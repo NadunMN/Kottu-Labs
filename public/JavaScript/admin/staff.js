@@ -300,7 +300,6 @@ document.getElementById("table-content").addEventListener("click", async (event)
 
         });
 
-
     console.log("Edit staff member:", staffId);
   }
 });

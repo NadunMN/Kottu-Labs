@@ -14,6 +14,7 @@ use app\models\OrderMeals;
 use app\models\Payment;
 use app\models\takeawayCart;
 use Error;
+use app\models\UnregUser;
 
 class OrderController extends Controller
 {
@@ -338,7 +339,9 @@ class OrderController extends Controller
 
         if ($chefId) {
             $order->chef_id = $chefId;
+
             $order->steward_id = null;
+
         }
 
         if ($stewardId) {
@@ -633,53 +636,82 @@ class OrderController extends Controller
     ]);
 }
 
-    public function getDineInData()
-    {
-        if (Application::$app->user) {
-            try {
-                $branch_id = Application::$app->user->branch_id;
 
-                if (!$branch_id) {
-                throw new \Exception("Branch ID is missing for the logged-in user.");
-            }
 
-                $orders = Order::findDineInData($branch_id);
-                echo json_encode($orders);
-            } catch (\Exception $e) {
-                // Log the error and return a proper JSON response
-                error_log("Error fetching order data: " . $e->getMessage());
-                http_response_code(500); // Set HTTP status code to 500
-                echo json_encode(['error' => 'Failed to fetch order data', 'details' => $e->getMessage()]);
-            }
-        } else {
-            http_response_code(401); // Set HTTP status code to 401 (Unauthorized)
-            echo json_encode(['error' => 'No user is logged in']);
+
+public function getReservationUnReg($temp_id){
+
+    
+        $reservations = UnregUser::findAllreservationUnReg(['temp_id' => $temp_id]);
+        $reservationData = [];
+
+        foreach ($reservations as $reservation) {
+            $reservationData[] = $reservation;
         }
-    }
 
-    public function getTakeAwayData()
-    {
-        if (Application::$app->user) {
-            try {
-                $branch_id = Application::$app->user->branch_id;
+        echo json_encode($reservationData);
+    
+}
 
-                if (!$branch_id) {
-                throw new \Exception("Branch ID is missing for the logged-in user.");
-            }
 
-                $orders = Order::findTakeAwayData($branch_id);
-                echo json_encode($orders);
-            } catch (\Exception $e) {
-                // Log the error and return a proper JSON response
-                error_log("Error fetching order data: " . $e->getMessage());
-                http_response_code(500); // Set HTTP status code to 500
-                echo json_encode(['error' => 'Failed to fetch order data', 'details' => $e->getMessage()]);
-            }
-        } else {
-            http_response_code(401); // Set HTTP status code to 401 (Unauthorized)
-            echo json_encode(['error' => 'No user is logged in']);
+public function getDineInData()
+{
+    if (Application::$app->user) {
+        try {
+            $branch_id = Application::$app->user->branch_id;
+
+            if (!$branch_id) {
+            throw new \Exception("Branch ID is missing for the logged-in user.");
         }
+
+            $orders = Order::findDineInData($branch_id);
+            echo json_encode($orders);
+        } catch (\Exception $e) {
+            // Log the error and return a proper JSON response
+            error_log("Error fetching order data: " . $e->getMessage());
+            http_response_code(500); // Set HTTP status code to 500
+            echo json_encode(['error' => 'Failed to fetch order data', 'details' => $e->getMessage()]);
+        }
+    } else {
+        http_response_code(401); // Set HTTP status code to 401 (Unauthorized)
+        echo json_encode(['error' => 'No user is logged in']);
     }
+}
+
+
+public function getTakeAwayData()
+{
+    if (Application::$app->user) {
+        try {
+            $branch_id = Application::$app->user->branch_id;
+
+            if (!$branch_id) {
+            throw new \Exception("Branch ID is missing for the logged-in user.");
+        }
+
+            $orders = Order::findTakeAwayData($branch_id);
+            echo json_encode($orders);
+        } catch (\Exception $e) {
+            // Log the error and return a proper JSON response
+            error_log("Error fetching order data: " . $e->getMessage());
+            http_response_code(500); // Set HTTP status code to 500
+            echo json_encode(['error' => 'Failed to fetch order data', 'details' => $e->getMessage()]);
+        }
+    } else {
+        http_response_code(401); // Set HTTP status code to 401 (Unauthorized)
+        echo json_encode(['error' => 'No user is logged in']);
+    }
+}
 
 
 }
+
+
+
+
+
+
+   
+
+
+

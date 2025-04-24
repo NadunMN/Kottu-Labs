@@ -386,7 +386,7 @@ body {
 
 
                         <div class="form-row">
-                            <div class="form-col">
+                           <div class="form-col">
                                 <div class="form-group">
                                     <label for="email">Password *</label>
                                     <input type="text" name="password" id="password" required>
