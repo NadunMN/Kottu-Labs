@@ -98,5 +98,37 @@ class ReservationController extends Controller
          ]);
      }
  }
-                                       
+
+
+ public function reservtionData($reservationNo)
+ {
+    $reservation = Reservation::findOneRegOrUnReg(['reservation_no' => $reservationNo]);
+    if ($reservation) {
+        
+
+        echo json_encode([
+            'success' => true,
+            'reservation' => $reservation,
+        ]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Reservation not found.']);
+    }
+ }
+
+    public function userStore()
+    {
+        $data = Application::$app->request->getBody();
+        $reservation = new Reservation();
+        $reservation->load($data);
+
+        error_log("User data: " . print_r($reservation, true)); // Log the user data for debugging
+        // exit;
+
+        if ($reservation->updateUserId()) {
+            echo json_encode(['success' => true, 'message' => 'User data saved successfully.']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to save user data.']);
+        }
+    }
+                                  
 }

@@ -56,7 +56,7 @@ verifyBtn.addEventListener('click', async function () {
                 pinForm.style.display = 'none';
                 reservationModal.style.display = 'block';
 
-                if (data.type === 'regUser') {
+                if (data.data.temp_id === null) {
                     const userData = data.data;
                     console.log('User Type:', userData.reservation_name);
 
@@ -140,7 +140,7 @@ verifyBtn.addEventListener('click', async function () {
         const data = Object.fromEntries(formData.entries());
         data.reservation_no = ReservationNo;
 
-        // console.log('Form Data:', data); // Log the form data for debugging
+        console.log('Form Data:', data); // Log the form data for debugging
 
         const requestBody = JSON.stringify(data);
         fetch("/reservation/addtable", {
@@ -213,7 +213,7 @@ verifyBtn.addEventListener('click', async function () {
                      document.getElementById('reservationTime').textContent = userData.reservation_time;
                      document.getElementById('numberOfGuests').textContent = userData.number_of_guests;
 
-                     const ReservationNo = userData.temp_id;
+                     const ReservationNo = userData.reservation_no;
                     const status = userData.confirmation_status;
                     const reservationType = userData.type;
 
@@ -264,12 +264,12 @@ verifyBtn.addEventListener('click', async function () {
 
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
-        data.temp_id = ReservationNo;
+        data.reservation_no = ReservationNo;
 
         console.log('Form Data:', data); // Log the form data for debugging
 
         const requestBody = JSON.stringify(data);
-        fetch("/reservation/addtable/non", {
+        fetch("/reservation/addtable", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

@@ -31,7 +31,7 @@
         
         <div class="menu-iconbox">
         <div class="icon-box">
-            <a href="/cart"><img src="/Photo/icon/shopping-cart.png" alt="Cart"></a>
+            <a id="cart-id" href="/cart"><img src="/Photo/icon/shopping-cart.png" alt="Cart"></a>
 
             <div class="drop-down">
                 <a href="#" onclick="toggleMenuprofile()"><img src="/Photo/icon/user.png" alt="Profile"></a>
@@ -62,5 +62,6 @@
         </div>
     </div>
     <script src="/JavaScript/NavBar.js"></script>
+    
 </body>
 </html>

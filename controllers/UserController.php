@@ -406,15 +406,13 @@ public function updateStaff()
 public function getUnreg($id){
     // $unregUser = new UnregUser();
 
-    $unregUser = UnregUser::findOne(['temp_id' => $id]);
-    $regUser = Reservation::findOne(['reservation_no' => $id]);
+    // $unregUser = UnregUser::findOne(['temp_id' => $id]);
+    $regUser = Reservation::findOneRegOrUnReg(['reservation_no' => $id]);
 
 
-    if ($unregUser) {
-        echo json_encode(['type' => 'unregUser', 'data' => $unregUser]);
-    } elseif ($regUser) {
-        echo json_encode(['type' => 'regUser', 'data' => $regUser]);
-    } else {
+    if ($regUser) {
+        echo json_encode(['type' => 'User', 'data' => $regUser]);
+    }else {
         echo json_encode(['error' => 'No user found']);
     }
 

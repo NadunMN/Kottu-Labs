@@ -13,7 +13,7 @@ class Order extends OrderModel
     public int $order_status = 0;
     public string $branch_id = '';
     public ?int $user_id = null;
-    public string $reservation_no = '';
+    public int $reservation_no;
     public int $order_price;
     public ?int $chef_id=null;
     public ?int $steward_id= null;
@@ -315,7 +315,8 @@ class Order extends OrderModel
             'reservation_no' => $this->reservation_no,
             'order_price' => $this->order_price,
             'steward_id' => $this->steward_id,
-            'chef_id' => $this->chef_id
+            'chef_id' => $this->chef_id,
+            'temp_id' => $this->temp_id,
         ];
     }
 

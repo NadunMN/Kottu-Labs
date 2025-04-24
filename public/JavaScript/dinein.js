@@ -72,21 +72,56 @@ document.addEventListener("DOMContentLoaded", function () {
                     throw new Error(errorData?.message || `HTTP error! Status: ${response.status}`);
                 }
             
-                const data = await response.json();
+                const data1 = await response.json();
             
                 // Check success field in response body
-                if (!data.success) {
+                if (!data1.success) {
                     showToast("That time slot is currently unavailable. Kindly choose another.",  { type: 'info', duration: 5000});
                     
-                    throw new Error(data.message || "Reservation failed.");
+                    throw new Error(data1.message || "Reservation failed.");
+                }
+
+                console.log(data1.success);
+                showToast("Reservation successful!", "success");
+
+                let temp_id = data1.success; // Get the temp_id from the response
+                console.log("Temporary ID:", temp_id); // Log the temporary ID for debugging
+                data.temp_id = temp_id; // Add temp_id to the data object
+                const requestBody2 = JSON.stringify(data); // Update the request body with the new data
+
+                console.log('Updated Request Body:', requestBody2); // Log the updated request body for debugging
+
+                const response2 = await fetch("/reservation/add", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: requestBody2,
+                });
+            
+
+                if (!response2.ok) {
+                    const errorData = await response.json().catch(() => null);
+                    throw new Error(errorData?.message || `HTTP error! Status: ${response.status}`);
                 }
             
-                console.log(data.success);
+                const data2 = await response2.json();
+            
+                // Check success field in response body
+                if (!data2.success) {
+                    showToast("That time slot is currently unavailable. Kindly choose another.",  { type: 'info', duration: 5000});
+                    
+                    throw new Error(data2.message || "Reservation failed.");
+                }
+            
+                console.log(data2.success);
                 showToast("Reservation successful!", "success");
 
 
+            
+                
+
+
                 // Change form action
-            reservationForm.action = `/reservationNumber?random=${data.success}`;
+            reservationForm.action = `/reservationNumber?random=${data2.success}`;
             
             // Submit the form programmatically after ensuring action is set
             setTimeout(() => {

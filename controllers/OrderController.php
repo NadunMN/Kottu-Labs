@@ -639,10 +639,10 @@ class OrderController extends Controller
 
 
 
-public function getReservationUnReg($temp_id){
+public function getReservationUnReg($reservationNo){
 
     
-        $reservations = UnregUser::findAllreservationUnReg(['temp_id' => $temp_id]);
+        $reservations = Reservation::findAllreservationUnReg(['reservation_no' => $reservationNo]);
         $reservationData = [];
 
         foreach ($reservations as $reservation) {

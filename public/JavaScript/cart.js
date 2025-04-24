@@ -27,6 +27,8 @@ fetch('/user/data')
     
     userId = userData.id;
 
+
+
     //fetch reservation data
     fetch(`/getReservationDataOrder?userId=${userId}`)
     .then(response => response.json())
@@ -124,7 +126,8 @@ renderBookedItems();
                 description: backendItem.meal_description  || backendItem.offer_description,
                 image: backendItem.meal_photo || backendItem.offer_photo,
                 status: 'Not Ordered', // Default status
-                type: backendItem.meal_id ? 'meal' : 'offer'
+                type: backendItem.meal_id ? 'meal' : 'offer',
+                tempId: backendItem.temp_id || null
             });
         });
         
@@ -281,7 +284,8 @@ async function handleBooking() {
         reservation_no: reservationId,
         user_id: userId,
         order_time: new Date().toTimeString().split(' ')[0],
-        order_price: cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)
+        order_price: cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2),
+        temp_id: cartItems[0].tempId || null // Use the tempId of the first item in the cart
     };
 
     console.log('Order data:', orderData);

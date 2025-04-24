@@ -383,14 +383,21 @@ $app->router->get('/menuaccess/pin', function() use ($userController) {
 $app->router->post('/unRegMenu/accept', [$userController, 'acceptUnregData']);
 
 $app->router->get('/getReservationDataUnReg', function() use ($orderController) {
-    $tempId = $_GET['tempId'] ?? null;
-    $orderController->getReservationUnReg($tempId);
+    $reservationNo = $_GET['reservationNo'] ?? null;
+    $orderController->getReservationUnReg($reservationNo);
 });
 
-$app->router->post('/reservation/addtable/non', [$reservationController, 'addtableReservationUnReg']);
+// $app->router->post('/reservation/addtable/non', [$reservationController, 'addtableReservationUnReg']);
 $app->router->get('/unregmenu', [$siteController, 'unRegMenu']);
 $app->router->get('/stewardmenu', [$siteController, 'stewardMenu']);
 
+
+$app->router->get('/reservartionData', function() use ($reservationController) {
+    $reservationNo = $_GET['reservationNo'] ?? null;
+    $reservationController->reservtionData($reservationNo);
+});
+
+$app->router->post('/user/store', [$reservationController, 'userStore']);
 
 
 
