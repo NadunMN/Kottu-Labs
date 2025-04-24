@@ -93,6 +93,47 @@ class PaymentController extends Controller
         }
     }
 
+    public function updateCashStatus()
+    {
+        $body = json_decode(file_get_contents("php://input"), true);
+
+        // Validate input
+        if (!isset($body['payment_id'], $body['payment_status'])) {
+            http_response_code(400);
+            return json_encode(['success' => false, 'message' => 'Invalid input']);
+        }
+
+        $paymentId = $body['payment_id'];
+        $newStatus = (int) $body['payment_status'];
+
+        
+
+        try {
+            $reservationNo = Payment::getCashReservationNo($paymentId, $newStatus);
+
+            if (!$reservationNo) {
+                http_response_code(404);
+                echo json_encode(['error' => 'Reservation not found for the payment']);
+                return;
+            }
+
+            // Update all payments
+            $updateResult = Payment::updateCashPayments($reservationNo, $newStatus);
+
+            if ($updateResult) {
+                http_response_code(200);
+                echo json_encode(['success' => 'Payment status updated successfully']);
+            } else {
+                http_response_code(500); // Internal Server Error
+                echo json_encode(['error' => 'Failed to update payment status']);
+            }
+        } catch (\Exception $e) {
+            error_log("Error updating payment status: " . $e->getMessage());
+            http_response_code(500); // Internal Server Error
+            echo json_encode(['error' => 'An error occurred', 'details' => $e->getMessage()]);
+        }
+    }
+
     public function getCardPayments()
     {
         $reservationId = $_GET['reservationId'] ?? null;

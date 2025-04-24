@@ -130,9 +130,9 @@ async function fetchPayments(selectedDate = null, selectedTime = null) {
               </span>
               ${
                   payment.payment_type === 'cash' && payment.payment_status === 0
-                  ? `<button class="confirm-btn" payment-status-id="${payment.payment_id}" next-status="1">Confirm</button>`
+                  ? `<button class="confirm-btn" name="confirm-btn" payment-status-id="${payment.payment_id}" next-status="1">Confirm</button>`
                   : payment.payment_type === 'cash' && payment.payment_status === 1
-                  ? `<button class="confirm-btn" payment-status-id="${payment.payment_id}" next-status="2">Confirm</button>`
+                  ? `<button class="confirm-btn" name="confirm-btn" payment-status-id="${payment.payment_id}" next-status="2">Confirm</button>`
                   : ""
                 }
           </td>
@@ -141,33 +141,36 @@ async function fetchPayments(selectedDate = null, selectedTime = null) {
         tableContent.appendChild(row);
       });
     
-      // Add event listeners to confirm buttons
-      document.querySelectorAll(".confirm-btn").forEach(button => {
-        button.addEventListener("click", async (event) => {
+      document.getElementById("table-content").addEventListener("click", async (event) => {
+        if (event.target.classList.contains("confirm-btn")) {
             const paymentId = event.target.getAttribute("payment-status-id");
             const nextStatus = parseInt(event.target.getAttribute("next-status"), 10);
-    
-            try {
-                const response = await fetch(`/payment/confirm`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        payment_id: paymentId,
-                        payment_status: nextStatus
-                    })
-                });
-    
-                if (response.ok) {
-                    fetchPayments(); // Refresh the payments list
-                } else {
-                    console.error("Failed to update status");
-                }
+            
+            try {fetch('/payment/stewardCashConfirm', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  payment_id: paymentId,
+                  payment_status: nextStatus,    
+              }),
+          })
+          .then(response => response.json())
+          .then(result => {
+              if (result.success) {
+                  fetchPayments(selectedDate);
+              } else {
+                  console.error("Failed to update payment status:", result.error);
+              }
+          })
+          .catch(error => {
+              console.error("Error updating payment status:", error);
+          });
             } catch (error) {
                 console.error("Error:", error);
             }
-        });
+        }
     });
 
       // Remove existing event listeners to avoid duplication
