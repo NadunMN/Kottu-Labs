@@ -7,29 +7,6 @@
     <link rel="stylesheet" href="/CSS/enterpin.css">
 </head>
 <body>
-    <div id="pinEntrySection">
-        <div class="pin-topic">
-            <h1>Enter Confirmation PIN</h1>
-            <p>Please enter the PIN to continue</p>
-        </div>
-
-        <div class="pin-container">
-            <div class="pin-box">
-                <div class="pin-input-container">
-                    <input type="text" maxlength="1" class="pin-digit">
-                    <input type="text" maxlength="1" class="pin-digit">
-                    <input type="text" maxlength="1" class="pin-digit">
-                    <input type="text" maxlength="1" class="pin-digit">
-                    <input type="text" maxlength="1" class="pin-digit">
-                    <input type="text" maxlength="1" class="pin-digit">
-                </div>
-                <div class="pin-message">
-                    <!-- Error or success messages will appear here -->
-                </div>
-                <button class="submit-button">Submit</button>
-            </div>
-        </div>
-    </div>
 
     <div id="reservationModal" style="display:none;">
         <div class="pin-topic">

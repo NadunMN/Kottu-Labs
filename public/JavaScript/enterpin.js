@@ -28,46 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Initialize the clock immediately
       updateTime();
-
-    // Auto-focus next input
-    inputs.forEach((input, index) => {
-        input.addEventListener('input', function() {
-            if (this.value.length === 1) {
-                if (index < inputs.length - 1) {
-                    inputs[index + 1].focus();
-                }
-            }
-        });
-
-        input.addEventListener('keydown', function(e) {
-            if (e.key === 'Backspace' && !this.value && index > 0) {
-                inputs[index - 1].focus();
-            }
-        });
-
-        input.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                submitButton.click();
-            }
-        });
-
-        // Paste the pin
-        if (index === 0) {
-            input.addEventListener('paste', function(e) {
-                const pasteData = e.clipboardData.getData('text');
-                if (pasteData.length === inputs.length) {
-                    inputs.forEach((input, i) => {
-                        input.value = pasteData[i];
-                    });
-                    inputs[inputs.length - 1].focus();
-                }
-                e.preventDefault();
-            });
-        }
-    });
-    inputs[0].focus();
-
+      
     // Submit handler
     submitButton.addEventListener('click', async function() {
         let pin = '';

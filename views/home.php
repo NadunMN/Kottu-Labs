@@ -11,12 +11,6 @@
 <body>
 
 
-<div class="order-button" id="order-button">
-    <button class="order-button" onclick="window.location.href='/menu'">Order Now</button>
-</div>
-
-
-
     <div class="home-top-main" id="home-top-main">
         <div class="first-background-img">
             <div class="first-background-overlay">

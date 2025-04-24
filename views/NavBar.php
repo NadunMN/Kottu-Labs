@@ -40,7 +40,7 @@
                     <!-- <hr style="width: 100%; border:0.5px solid black; background:black; margin: auto; "> -->
                     <a href="/offer"> <img class="drop-icon" src="/Photo/icon/special-offer.png" alt=""> Special Offers</a>
                     <?php if (\app\core\Application::$app->user !== null && \app\core\Application::$app->user->position === 'steward'): ?>
-                        <a href="/enterpin"> <img class="drop-icon" src="/Photo/icon/enterpin.png" alt=""> Enter Pin</a>
+                        <a href="/menuaccess"> <img class="drop-icon" src="/Photo/icon/enterpin.png" alt=""> Enter Pin</a>
                     <?php endif; ?>
                     <?php if (\app\core\Application::$app->user ==null): ?>
                         <a href="/login"> <img class="drop-icon" src="/Photo/icon/login.png" alt=""> Log In</a>

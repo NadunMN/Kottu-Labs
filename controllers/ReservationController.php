@@ -8,7 +8,7 @@ use app\models\BranchOffer;
 use app\models\MealOffers;
 use app\models\Offer;
 use app\models\Reservation;
-
+use app\models\UnregUser;
 
 class ReservationController extends Controller
 {
@@ -59,6 +59,24 @@ class ReservationController extends Controller
               echo json_encode(['success' => false, 'message' => 'Failed to add reservation']);
          }
    }
+
+
+   public function addtableReservationUnReg(){
+         $data = Application::$app->request->getBody();
+         $reservation = new UnregUser();
+
+         
+         $reservation->load($data);
+
+         $reservation->confirmation_status = '1';
+         if ($reservation->addTable()) {
+              echo json_encode(['success' => true, 'message' => 'Reservation added successfully']);
+         } else {
+              echo json_encode(['success' => false, 'message' => 'Failed to add reservation']);
+         }
+   }
+
+
 
    public function findReservation($userID) {
      $reservation = Reservation::findOneCR([
