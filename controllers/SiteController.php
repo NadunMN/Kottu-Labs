@@ -265,6 +265,20 @@ class SiteController extends Controller
         return $this->render('menuAccess');
     }
 
+
+    public function unRegMenu(Request $request,Response $response)
+    {
+        $this->setLayout('dashboard');
+        return $this->render('UnRegMenu');
+    }
+
+
+    public function stewardMenu(Request $request,Response $response)
+    {
+        $this->setLayout('dashboard');
+        return $this->render('stewardMenu');
+    }
+
     
 }
 ?>

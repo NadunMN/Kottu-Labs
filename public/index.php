@@ -388,6 +388,8 @@ $app->router->get('/getReservationDataUnReg', function() use ($orderController) 
 });
 
 $app->router->post('/reservation/addtable/non', [$reservationController, 'addtableReservationUnReg']);
+$app->router->get('/unregmenu', [$siteController, 'unRegMenu']);
+$app->router->get('/stewardmenu', [$siteController, 'stewardMenu']);
 
 
 

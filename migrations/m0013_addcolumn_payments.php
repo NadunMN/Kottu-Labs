@@ -2,7 +2,7 @@
 
 use app\core\Application;
 
-class m00013_addcolumn_payments
+class m0013_addcolumn_payments
 {
     public function up()
     {
