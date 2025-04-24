@@ -163,7 +163,7 @@ class Payment extends PaymentModel
         }        
     }
 
-    public static function findPayments($where)
+    public static function findCardPayments($where)
     {
         $attributes = array_keys($where);
         $sql = $attributes ? " WHERE " . implode(" AND ", array_map(fn($attr) => "r.$attr = :$attr", $attributes)) : "";
@@ -175,7 +175,6 @@ class Payment extends PaymentModel
                 order_meals.quantity,
                 meals.meal_name,
                 meals.meal_price
-
             FROM payments
             JOIN orders ON payments.order_id = orders.order_id
             LEFT JOIN order_meals ON orders.order_id = order_meals.order_id
@@ -183,6 +182,34 @@ class Payment extends PaymentModel
             LEFT JOIN meals ON order_meals.meal_id = meals.meal_id
             $sql
             AND payments.payment_status = 0 AND payments.payment_type = 'none'
+        ");
+    
+        foreach ($where as $key => $value) {
+            $statement->bindValue(":$key", $value);
+        }
+    
+        try {
+            $statement->execute();
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("SQL Error in findOrders: " . $e->getMessage() . " | Conditions: " . json_encode($where));
+            throw $e;
+        }
+    }
+
+    public static function findCashPayments($where)
+    {
+        $attributes = array_keys($where);
+        $sql = $attributes ? " WHERE " . implode(" AND ", array_map(fn($attr) => "orders.$attr = :$attr", $attributes)) : "";
+    
+        $statement = self::prepare("
+            SELECT
+                payments.payment_id
+            FROM payments
+            JOIN orders ON payments.order_id = orders.order_id
+            $sql
+            AND payments.payment_status = 0 AND payments.payment_type = 'none'
+            GROUP BY orders.reservation_no
         ");
     
         foreach ($where as $key => $value) {
@@ -285,8 +312,56 @@ class Payment extends PaymentModel
 }
 
 
+public static function getReservationNoByPaymentId($paymentId)
+{
+    $tableName = static::tableName();
+    $sql = "
+        SELECT r.reservation_no
+        FROM $tableName
+        JOIN orders o ON $tableName.order_id = o.order_id
+        JOIN reservations r ON o.reservation_no = r.reservation_no
+        WHERE $tableName.payment_id = :payment_id
+    ";
+
+    $statement = self::prepare($sql);
+    $statement->bindValue(':payment_id', $paymentId);
+
+    try {
+        $statement->execute();
+        return $statement->fetchColumn();
+    } catch (\PDOException $e) {
+        error_log("Error fetching reservation number: " . $e->getMessage());
+        return false;
+    }
+}
 
 
+public static function updatePaymentsByReservation($reservationNo, $newStatus, $paymentType)
+{
+    $tableName = static::tableName();
+    $sql = "
+        UPDATE $tableName
+        SET payment_status = :payment_status, payment_type = :payment_type
+        WHERE order_id IN (
+            SELECT order_id
+            FROM orders
+            WHERE reservation_no = :reservation_no
+        )
+        AND payment_status = 0 AND payment_type = 'none'
+    ";
+
+    $statement = self::prepare($sql);
+    $statement->bindValue(':payment_status', $newStatus);
+    $statement->bindValue(':payment_type', $paymentType);
+    $statement->bindValue(':reservation_no', $reservationNo);
+
+    try {
+        return $statement->execute();
+    } catch (\PDOException $e) {
+        error_log("Error updating payments: " . $e->getMessage());
+        return false;
+    }
+}
 public function updateCard()
 {
     $tableName = static::tableName();

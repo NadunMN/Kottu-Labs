@@ -43,8 +43,8 @@ class PaymentController extends Controller
         }
     }
 
-    public function updatePaymentStatus(){
-
+    public function updatePaymentStatus()
+    {
         $requestBody = json_decode(file_get_contents("php://input"), true);
 
         if (!isset($requestBody['payment_id'], $requestBody['payment_status'])) {
@@ -57,8 +57,6 @@ class PaymentController extends Controller
         $newStatus = $requestBody['payment_status'];
         $paymentType = $requestBody['payment_type'] ?? null; // Optional field
 
-  
-
         try {
             // Find the payment by ID
             $payment = Payment::findOneOriginal(['payment_id' => $paymentId]);
@@ -69,11 +67,19 @@ class PaymentController extends Controller
                 return;
             }
 
-            // Update the payment status
-            $payment->payment_status = $newStatus;
-            $payment->payment_type = $paymentType;
+            // Retrieve the reservation number associated with the payment
+            $reservationNo = Payment::getReservationNoByPaymentId($paymentId);
 
-            if ($payment->updateCard()) {
+            if (!$reservationNo) {
+                http_response_code(404); // Not Found
+                echo json_encode(['error' => 'Reservation not found for the payment']);
+                return;
+            }
+
+            // Update all payments
+            $updateResult = Payment::updatePaymentsByReservation($reservationNo, $newStatus, $paymentType);
+
+            if ($updateResult) {
                 http_response_code(200); // OK
                 echo json_encode(['success' => 'Payment status updated successfully']);
             } else {
@@ -87,7 +93,7 @@ class PaymentController extends Controller
         }
     }
 
-    public function getPaymentDetails()
+    public function getCardPayments()
     {
         $reservationId = $_GET['reservationId'] ?? null;
 
@@ -99,7 +105,7 @@ class PaymentController extends Controller
         }
 
         try {
-            $payments = Payment::findPayments(['reservation_no' => $reservationId]);
+            $payments = Payment::findCardPayments(['reservation_no' => $reservationId]);
 
          
 
@@ -200,6 +206,43 @@ class PaymentController extends Controller
     public function handleCancel()
     {
         echo "Payment was canceled. Redirect the user to a cancellation page.";
+    }
+
+    public function getCashPayments(){
+        $reservationId = $_GET['reservationId'] ?? null;
+
+        if (!$reservationId) {
+            error_log("Reservation ID is missing");
+            http_response_code(400); // Bad Request
+            echo json_encode(['error' => 'Reservation ID is missing']);
+            return;
+        }
+
+        try {
+            $payments = Payment::findCashPayments(['reservation_no' => $reservationId]);
+            if (!$payments) {
+                http_response_code(404); // Not Found
+                echo json_encode(['error' => 'No orders found for the reservation']);
+                return;
+            }
+            
+            // Get the first payment ID
+            $paymentId = $payments[0]['payment_id'] ?? null;
+
+            if (!$paymentId) {
+                http_response_code(404); // Not Found
+                echo json_encode(['error' => 'No valid payment ID found']);
+                return;
+            }
+
+            http_response_code(200); // OK
+            echo json_encode(['payment_id' => $paymentId]);
+        } catch (\Exception $e) {
+            error_log("Error fetching order details: " . $e->getMessage());
+            http_response_code(500); // Internal Server Error
+            echo json_encode(['error' => 'Failed to fetch order details', 'details' => $e->getMessage()]);
+        }
+
     }
     
   }
