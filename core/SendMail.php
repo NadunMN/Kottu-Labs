@@ -21,12 +21,12 @@ class SendMail
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = "teamkottulabs@gmail.com"; // Your email
-            $mail->Password = 'zsgw aekx mtzq ghof'; // Your password
+            $mail->Username = "nadunmadusanka564@gmail.com"; // Your email
+            $mail->Password = 'ymxz dwlx huom vkvm'; // Your password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
-            $mail->setFrom("teamkottulabs@gmail.com", "Kottu Labs");
+            $mail->setFrom("nadunmadusanka564@gmail.com", "Kottu Labs");
             $mail->addAddress($email, $name);
 
             // HTML Email Body

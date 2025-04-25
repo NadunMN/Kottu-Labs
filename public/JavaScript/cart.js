@@ -8,6 +8,9 @@ let branchId;
 let totalPrice = 0;
 let orderState; // Default value
 
+const storedValue = localStorage.getItem('reservationNo');
+console.log('Stored Value:', storedValue);
+
 // DOM Elements
 const cartItemsContainer = document.getElementById('cartItemsContainer');
 const bookedItemsContainer = document.getElementById('bookedItemsContainer');
@@ -38,7 +41,7 @@ fetch('/user/data')
             return;
         }
         
-        reservationId = reservationData[0].reservation_no;
+        reservationId = storedValue || reservationData[0].reservation_no;
         branchId = reservationData[0].branch_id;
         console.log('Branch ID:', branchId);
         console.log('Reservation ID:', reservationId);
