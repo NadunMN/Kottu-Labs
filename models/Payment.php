@@ -452,4 +452,64 @@ public static function updateCashPayments($reservationNo, $newStatus, $stewardId
         return false;
     }
 }
+
+
+public static function findPaymentsUnReg($reservationNo)
+{
+    $tableName = static::tableName();
+
+    $sql = "
+        SELECT 
+            p.payment_id, 
+            p.payment_date, 
+            p.payment_type, 
+            p.payment_status, 
+            o.order_id,
+            om.*,
+            m.meal_name,
+            m.meal_price,
+            r.table_number
+        FROM $tableName p
+        JOIN orders o ON p.order_id = o.order_id
+        JOIN order_meals om ON o.order_id = om.order_id
+        JOIN reservations r ON o.reservation_no = r.reservation_no
+        JOIN meals m ON om.meal_id = m.meal_id
+        WHERE r.reservation_no = :reservation_no AND p.payment_status !=2
+        group by p.payment_id, om.meal_id
+    ";
+
+    $statement = self::prepare($sql);
+    $statement->bindValue(':reservation_no', $reservationNo);
+
+    try {
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    } catch (\PDOException $e) {
+        error_log("Error fetching payment details: " . $e->getMessage());
+        return false;
+    }
+}
+
+
+public static function updatePaymentStatus($paymentId, $paymentType, $paymentStatus, $stewardId){
+
+    $tableName = static::tableName();
+    $primaryKey = static::primaryKey();
+
+    $sql = "UPDATE $tableName SET payment_status = :payment_status, payment_type= :payment_type, steward_id= :steward_id WHERE $primaryKey = :$primaryKey";
+    $statement = self::prepare($sql);
+    $statement->bindValue(":$primaryKey",$paymentId);
+    $statement->bindValue(":payment_type", $paymentType);
+    $statement->bindValue(":payment_status", $paymentStatus);
+    $statement->bindValue(":steward_id", $stewardId );
+    return $statement->execute();
+}
+
+
+
+
+
+
+
+
 }

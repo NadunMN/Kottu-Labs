@@ -285,6 +285,7 @@ class SiteController extends Controller
         return $this->render('stewardMenu');
     }
 
+
     public function mealReport(Request $request,Response $response)
     {
         $this->setLayout('auth');
@@ -295,6 +296,18 @@ class SiteController extends Controller
     {
         $this->setLayout('auth');
         return $this->render('orderReport');
+
+    public function unRegPayment(Request $request,Response $response)
+    {
+        $this->setLayout('dashboard');
+        return $this->render('unRegPayment');
+    }
+
+    public function paymentCollection(Request $request,Response $response)
+    {
+        $this->setLayout('dashboard');
+        return $this->render('paymentCollection');
+
     }
 
     

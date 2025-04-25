@@ -593,7 +593,7 @@ class OrderController extends Controller
             $orderId = $orderMeals->order_id; // Assuming you have the order ID from the request
 
             $orderMeals->orderMealsStatusUpdate(
-                ['status' => 'completed'],   // SET clause
+                ['status' => 'ready'],   // SET clause
                 ['order_id' => $orderId]            // WHERE clause
             );
                         
