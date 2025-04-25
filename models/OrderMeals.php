@@ -279,6 +279,60 @@ public static function findAllBookedMealTakeaway($where)
         }
     }
     
-    
+    public static function findFilteredMealOrders($startDate, $endDate, $branchId = null) {
+        $tableName = static::tableName();
+        
+        $sql = "SELECT 
+                    m.meal_id,
+                    m.meal_name,
+                    m.meal_price,
+                    SUM(om.quantity) AS total_quantity,
+                    SUM(om.quantity * m.meal_price) AS total_revenue
+                FROM $tableName om
+                JOIN meals m ON om.meal_id = m.meal_id
+                JOIN orders o ON om.order_id = o.order_id";
+        
+        // Add branch join if branch filter is applied
+        if ($branchId !== null) {
+            $sql .= " JOIN branches b ON o.branch_id = b.branch_id";
+        }
+        
+        $whereClauses = [];
+        $params = [];
+        
+        // Always filter by order status if needed (e.g., only completed orders)
+        // $whereClauses[] = "o.order_status = 'completed'";
+        
+        // Add date range condition
+        if ($startDate && $endDate) {
+            $whereClauses[] = "o.order_date BETWEEN :startDate AND :endDate";
+            $params[':startDate'] = $startDate;
+            $params[':endDate'] = $endDate;
+        }
+        
+        // Add branch condition if filter is applied
+        if ($branchId !== null) {
+            $whereClauses[] = "o.branch_id = :branchId";
+            $params[':branchId'] = $branchId;
+        }
+        
+        if (!empty($whereClauses)) {
+            $sql .= " WHERE " . implode(" AND ", $whereClauses);
+        }
+        
+        $sql .= " GROUP BY m.meal_id, m.meal_name, m.meal_price
+                  ORDER BY total_revenue DESC";
+
+        // $sql .= "WHERE o.reservation_id != NULL";
+        
+        $statement = self::prepare($sql);
+        
+        foreach ($params as $key => $value) {
+            $statement->bindValue($key, $value);
+        }
+        
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
 
 }

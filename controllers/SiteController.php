@@ -285,6 +285,18 @@ class SiteController extends Controller
         return $this->render('stewardMenu');
     }
 
+    public function unRegPayment(Request $request,Response $response)
+    {
+        $this->setLayout('dashboard');
+        return $this->render('unRegPayment');
+    }
+
+    public function paymentCollection(Request $request,Response $response)
+    {
+        $this->setLayout('dashboard');
+        return $this->render('paymentCollection');
+    }
+
     
 }
 ?>

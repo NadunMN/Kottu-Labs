@@ -1,21 +1,45 @@
-let expectedString = "ABC123"; // Initial value, though server response should dictate validation
-
+let expectedString = "ABC123";
 const inputField = document.getElementById('input-string');
 const verifyBtn = document.getElementById('verify-btn');
 const successMessage = document.getElementById('success-message');
 const errorMessage = document.getElementById('error-message');
-const pinForm = document.getElementById('container-mainwraaper'); // Ensure this ID matches your HTML
-const reservationModal = document.getElementById('reservationModal'); // Ensure this ID matches your HTML
+const pinForm = document.getElementById('container-mainwraaper');
+const reservationModal = document.getElementById('reservationModal');
 const reservationForm = document.getElementById('reservationConfirmationForm');
 const closeButton = document.querySelector('.close-button');
 
+let steward_branchId;
 
+// Fetch user data
+fetch('user/data')
+    .then(response => response.json())
+    .then(data => {
+        steward_branchId = data.branch_id;
+        console.log('Steward Branch ID:', steward_branchId);
+    })
+    .catch(error => {
+        console.error('Error fetching user data:', error);
+    });
 
-// Verify button click event
+// Function to highlight registration status
+const highlightRegistrationStatus = (isRegistered) => {
+  const statusElement = document.getElementById('type-user');
+  
+  // Remove any existing classes
+  statusElement.classList.remove('registered-user', 'unregistered-user');
+  
+  // Add appropriate class based on registration status
+  if (isRegistered) {
+    statusElement.classList.add('registered-user');
+  } else {
+    statusElement.classList.add('unregistered-user');
+  }
+};
+
+// Verification handler
 verifyBtn.addEventListener('click', async function () {
     const enteredString = inputField.value.trim();
 
-    // Reset messages and styles
     successMessage.style.display = 'none';
     errorMessage.style.display = 'none';
     inputField.style.borderColor = '';
@@ -27,354 +51,197 @@ verifyBtn.addEventListener('click', async function () {
         return;
     }
 
-    // Fetch validation from the server
-    fetch(`/menuaccess/pin?enterPin=${encodeURIComponent(enteredString)}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Network response was not ok: ${response.statusText}`);
+    try {
+        const response = await fetch(`/menuaccess/pin?enterPin=${encodeURIComponent(enteredString)}`);
+        if (!response.ok) throw new Error(`Network error: ${response.statusText}`);
+        
+        const data = await response.json();
+        if (data.error) throw new Error(data.error);
+
+        // Successful verification
+        successMessage.textContent = 'PIN verified successfully!';
+        successMessage.style.display = 'block';
+        inputField.style.borderColor = '#28a745';
+        expectedString = data.temp_id || expectedString;
+
+        pinForm.style.display = 'none';
+        reservationModal.style.display = 'flex'; // Changed to flex for centering
+        reservationModal.style.flexDirection = 'column';
+
+        // Common UI update function
+        const updateReservationUI = (userData, isRegisteredUser) => {
+            // Reset styles
+            document.getElementById('branch').style.color = '';
+            document.getElementById('reservationDate').style.color = '';
+
+            // Set basic info
+            document.getElementById('fullname').textContent = userData.reservation_name;
+            document.getElementById('reservationDate').textContent = userData.reservation_date;
+            document.getElementById('reservationTime').textContent = userData.reservation_time;
+            document.getElementById('numberOfGuests').textContent = userData.number_of_guests;
+            document.getElementById('type-user').textContent = isRegisteredUser ? 'Registered User' : 'UnRegistered User';
+            
+            // Apply registration status highlighting
+            highlightRegistrationStatus(isRegisteredUser);
+
+            // Branch info
+            const branch_id = Number(userData.branch_id);
+            const branchName = branch_id === 1 ? 'Wattala' : branch_id === 2 ? 'Kelaniya' : 'Kotahena';
+            document.getElementById('branch').textContent = branchName;
+
+            // Reservation type
+            const reservationType = userData.type;
+            const typeLabel = document.getElementById('reservationTypeLabel');
+            typeLabel.textContent = reservationType === 'dinein' ? 'Dine In' : 'Take Away';
+
+            // Date validation
+            const currentDate = new Date().toLocaleDateString('en-CA');
+            const isToday = userData.reservation_date === currentDate;
+            if (!isToday) {
+                document.getElementById('reservationDate').style.color = 'red';
             }
-            return response.json();
-        })
-        .then(async (data) => { // Mark callback as async to use await
-            if (data.error) {
-                // Server returned an error message
-                errorMessage.textContent = data.error;
-                errorMessage.style.display = 'block';
-                inputField.style.borderColor = '#dc3545';
-                inputField.style.animation = 'shake 0.5s';
-                setTimeout(() => inputField.style.animation = '', 500);
+
+            // Branch validation
+            if (branch_id !== steward_branchId) {
+                document.getElementById('branch').style.color = 'red';
+            }
+
+            // Show/hide confirmation button
+            const confirmButton = document.querySelector('.confirm-button');
+            if (userData.confirmation_status === 1  || branch_id !== steward_branchId) {
+                confirmButton.style.display = 'none';
+                document.querySelector('.confirmed-text').style.display = 'block';
+                // document.querySelector('.confirmed-text').textContent = 'Reservation Confirmed';
+                if(branch_id !== steward_branchId) {
+                    document.querySelector('.confirmed-text').textContent = 'DIfferent Branch Reservation';
+                    document.querySelector('.confirmed-text').style.color = 'red';
+
+
+                }
             } else {
-                // Server confirmed the PIN is correct
-                successMessage.textContent = 'PIN verified successfully!';
-                successMessage.style.display = 'block';
-                inputField.style.borderColor = '#28a745';
-
-                // Update expectedString if needed
-                expectedString = data.temp_id || expectedString;
-                console.log('Expected String:', expectedString); 
-
-                pinForm.style.display = 'none';
-                reservationModal.style.display = 'block';
-
-                if (data.data.temp_id === null) {
-                    const userData = data.data;
-                    console.log('User Type:', userData.reservation_name);
-
-                    // Update reservation details
-                    document.getElementById('fullname').textContent = userData.reservation_name;
-                    document.getElementById('reservationDate').textContent = userData.reservation_date;
-                    document.getElementById('reservationTime').textContent = userData.reservation_time;
-                    document.getElementById('numberOfGuests').textContent = userData.number_of_guests;
-
-                    const ReservationNo = userData.reservation_no; // Properly declared with const
-                    const status = userData.confirmation_status;
-                    const reservationType = userData.type;
-
-                    if (reservationType === 'takeaway') {
-                        document.querySelector('.table-assignment-section').style.display = 'none';
-                        document.getElementById('tableNumber').required = false;
-                        document.getElementById('numberOfGuests').parentElement.style.display = 'none';
-
-                        try {
-                            const orderResponse = await fetch(`/order/takeawayDetails?reservation_no=${ReservationNo}`);
-                            if (!orderResponse.ok) {
-                                throw new Error("Failed to fetch order details");
-                            }
-                            const orderData = await orderResponse.json();
-                    
-                            document.getElementById('orderNumber').textContent = orderData.order_number;
-                            document.getElementById('orderItems').textContent = orderData.items
-                                .map(item => `${item.meal_name} (x${item.quantity})`)
-                                .join(', ');
-                            document.getElementById('totalPrice').textContent = `$${orderData.total_price.toFixed(2)}`;
-                    
-                            document.getElementById('orderDetails').style.display = 'block';
-                        } catch (error) {
-                            console.error("Error fetching order details:", error);
-                        }
-                    } else {
-                        document.querySelector('.table-assignment-section').style.display = 'block';
-                        document.getElementById('tableNumber').required = true;
-                        document.getElementById('numberOfGuests').parentElement.style.display = 'block';
-                    }
-
-                    if (status === 1) {
-                        document.querySelector('.confirmed-text').style.display = 'block';
-                        document.querySelector('.confirm-button').style.display = 'none';
-                        document.getElementById('tableNumber').style.display = 'none';
-                    }
-
-                    const branch_id = Number(data.data.branch_id);
-                const reservationBranchInput = document.getElementById('branch');
-                const branchName = branch_id === 1 ? 'Wattala' : branch_id === 2 ? 'Kelaniya' : 'Kotahena';
-                document.getElementById('branch').textContent = branchName;
-
-                document.getElementById('type-user').textContent = 'Registered User'; // Set the user type label
-
-
-                // Set the text content of the labels and apply strike-through effect
-                
-                const reservationTypeLabel = document.getElementById('reservationTypeLabel'); // Use a single label element
-                reservationTypeLabel.textContent = reservationType === 'dinein' ? 'Dine In' : 'Take Away';
-
-                // check with the current date
-                const formattedCurrentDate = new Date().toLocaleDateString('en-CA');
-
-                const reservationDate = data.data.reservation_date;
-                const reservationDateInput = document.getElementById('reservationDate');
-                if (reservationDate != formattedCurrentDate) {
-                    reservationDateInput.style.color = 'red';
-                    document.querySelector('.confirm-button').style.display = 'none';
-                }
-                
-                // Reset the form and show the confirm button
-                reservationForm.reset();
-                reservationForm.style.display = 'block';
-
-                // Single submit event listener
-    reservationForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData.entries());
-        data.reservation_no = ReservationNo;
-
-        console.log('Form Data:', data); // Log the form data for debugging
-
-        const requestBody = JSON.stringify(data);
-        fetch("/reservation/addtable", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: requestBody,
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                confirmButton.style.display = 'block';
+                document.querySelector('.confirmed-text').style.display = 'none';
             }
-            return response.json();
-        })
-        .then(data => {
-            reservationForm.style.display = 'none';
-            successMessage.style.display = 'flex';
-            document.querySelector('.confirmation-box').style.display = 'none';
-            document.querySelector('#reservationModal .pin-topic').style.display = 'none'; // Hide the pin-topic
 
-            setTimeout(() => {
-                successMessage.style.display = 'none';
-                reservationModal.style.display = 'none';
-                pinEntrySection.style.display = 'block';
-                inputs.forEach(input => {
-                    input.value = '';
+            // Table section handling
+            const tableSection = document.querySelector('.table-assignment-section');
+            if (reservationType === 'takeaway') {
+                tableSection.style.display = 'none';
+                document.getElementById('tableNumber').required = false;
+                document.getElementById('numberOfGuests').parentElement.style.display = 'none';
+                
+                // Fetch order details for takeaway
+                fetch(`/order/takeawayDetails?reservation_no=${userData.reservation_no}`)
+                    .then(response => response.json())
+                    .then(orderData => {
+                        document.getElementById('orderNumber').textContent = orderData.order_number;
+                        document.getElementById('orderItems').textContent = orderData.items
+                            .map(item => `${item.meal_name} (x${item.quantity})`)
+                            .join(', ');
+                        document.getElementById('totalPrice').textContent = `$${orderData.total_price.toFixed(2)}`;
+                        document.getElementById('orderDetails').style.display = 'block';
+                    });
+            } else {
+                tableSection.style.display = 'block';
+                document.getElementById('tableNumber').required = true;
+                document.getElementById('numberOfGuests').parentElement.style.display = 'block';
+                document.getElementById('orderDetails').style.display = 'none';
+            }
+        };
+
+        if (data.data.temp_id === null) {
+            // Registered user flow
+            updateReservationUI(data.data, true);
+        } else {
+            // Unregistered user flow
+            updateReservationUI(data.data, false);
+        }
+
+        // Form submission handler
+        reservationForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(reservationForm);
+            const submissionData = Object.fromEntries(formData.entries());
+            submissionData.reservation_no = data.data.reservation_no;
+
+            try {
+                const response = await fetch("/reservation/addtable", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(submissionData)
                 });
-                inputs[0].focus();
-                document.querySelector('.confirmation-box').style.display = 'block';
-                document.querySelector('#reservationModal .pin-topic').style.display = 'block'; // Show the pin-topic again
-            }, 2000);
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("An error occurred while submitting your reservation. Please try again.");
-        });
-    });
-
-    // Close button handler
-    closeButton.addEventListener('click', function() {
-        reservationModal.style.display = 'none';
-        pinForm.style.display = 'block';
-        messageDiv.textContent = '';
-        });
-
-    // Reset form and modal when entering another PIN
-    function resetFormAndModal() {
-        reservationForm.reset();
-        reservationForm.style.display = 'block';
-        document.querySelector('.submit-button').style.display = 'block';
-        pinForm.style.display = 'block'; // Ensure confirmation box is shown
-    }
-
-    // Call resetFormAndModal when needed
-    successMessage.addEventListener('transitionend', resetFormAndModal);
                 
-    }else{
-
-                    // Handle other user types if needed
-                    console.log('User Type:', data.type);
-                    console.log('User Data:', data.data);
-
-                    const userData = data.data;
-
-
-                     // Update reservation details
-                     document.getElementById('fullname').textContent = userData.reservation_name;
-                     document.getElementById('reservationDate').textContent = userData.reservation_date;
-                     document.getElementById('reservationTime').textContent = userData.reservation_time;
-                     document.getElementById('numberOfGuests').textContent = userData.number_of_guests;
-
-                     const ReservationNo = userData.reservation_no;
-                    const status = userData.confirmation_status;
-                    const reservationType = userData.type;
-
-
-                    
-                        document.querySelector('.table-assignment-section').style.display = 'block';
-                        document.getElementById('tableNumber').required = true;
-                        document.getElementById('numberOfGuests').parentElement.style.display = 'block';
-                    
-
-                    if (status === 1) {
-                        document.querySelector('.confirmed-text').style.display = 'block';
-                        document.querySelector('.confirm-button').style.display = 'none';
-                        document.getElementById('tableNumber').style.display = 'none';
-                    }
-
-                    const branch_id = Number(data.data.branch_id);
-                const reservationBranchInput = document.getElementById('branch');
-                const branchName = branch_id === 1 ? 'Wattala' : branch_id === 2 ? 'Kelaniya' : 'Kotahena';
-                document.getElementById('branch').textContent = branchName;
-                document.getElementById('type-user').textContent = 'UnRegistered User'; // Set the user type label
-
-
-
-                // Set the text content of the labels and apply strike-through effect
+                if (!response.ok) throw new Error('Submission failed');
                 
-                const reservationTypeLabel = document.getElementById('reservationTypeLabel'); // Use a single label element
-                reservationTypeLabel.textContent = reservationType === 'dinein' ? 'Dine In' : 'Take Away';
-
-                // check with the current date
-                const formattedCurrentDate = new Date().toLocaleDateString('en-CA');
-
-                const reservationDate = data.data.reservation_date;
-                const reservationDateInput = document.getElementById('reservationDate');
-                if (reservationDate != formattedCurrentDate) {
-                    reservationDateInput.style.color = 'red';
-                    document.querySelector('.confirm-button').style.display = 'none';
-                }
+                reservationForm.style.display = 'none';
                 
-                // Reset the form and show the confirm button
-                reservationForm.reset();
-                reservationForm.style.display = 'block';
-
-                // Single submit event listener
-    reservationForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData.entries());
-        data.reservation_no = ReservationNo;
-
-        console.log('Form Data:', data); // Log the form data for debugging
-
-        const requestBody = JSON.stringify(data);
-        fetch("/reservation/addtable", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: requestBody,
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                // Show success message with animation
+                const successMsg = document.getElementById('successMessage');
+                successMsg.style.display = 'block';
+                successMsg.classList.add('show');
+                
+                setTimeout(() => {
+                    reservationModal.style.display = 'none';
+                    pinForm.style.display = 'block';
+                    inputField.value = '';
+                    successMsg.style.display = 'none';
+                    successMsg.classList.remove('show');
+                }, 2000);
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('Error submitting reservation. Please try again.');
             }
-            return response.json();
-        })
-        .then(data => {
-            reservationForm.style.display = 'none';
-            successMessage.style.display = 'flex';
-            document.querySelector('.confirmation-box').style.display = 'none';
-            document.querySelector('#reservationModal .pin-topic').style.display = 'none'; // Hide the pin-topic
+        };
 
-            setTimeout(() => {
-                successMessage.style.display = 'none';
-                reservationModal.style.display = 'none';
-                pinForm.style.display = 'block';
-                inputs.forEach(input => {
-                    input.value = '';
-                });
-                inputs[0].focus();
-                document.querySelector('.confirmation-box').style.display = 'block';
-                document.querySelector('#reservationModal .pin-topic').style.display = 'block'; // Show the pin-topic again
-            }, 2000);
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("An error occurred while submitting your reservation. Please try again.");
-        });
-    });
-
-    // Close button handler
-    closeButton.addEventListener('click', function() {
-        reservationModal.style.display = 'none';
-        pinForm.style.display = 'block';
-        messageDiv.textContent = '';
-        });
-
-    // Reset form and modal when entering another PIN
-    function resetFormAndModal() {
-        reservationForm.reset();
-        reservationForm.style.display = 'block';
-        document.querySelector('.submit-button').style.display = 'block';
-        pinForm.style.display = 'block'; // Ensure confirmation box is shown
+    } catch (error) {
+        errorMessage.textContent = error.message;
+        errorMessage.style.display = 'block';
+        inputField.style.borderColor = '#dc3545';
+        inputField.style.animation = 'shake 0.5s';
+        setTimeout(() => inputField.style.animation = '', 500);
     }
-
-    // Call resetFormAndModal when needed
-    successMessage.addEventListener('transitionend', resetFormAndModal);
-                
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    }
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            errorMessage.textContent = 'An error occurred. Please try again.';
-            errorMessage.style.display = 'block';
-            inputField.style.borderColor = '#dc3545';
-            inputField.style.animation = 'shake 0.5s';
-            setTimeout(() => inputField.style.animation = '', 500);
-        });
 });
 
-// Trigger verification on Enter key press
-inputField.addEventListener('keyup', function (event) {
-    if (event.key === 'Enter') {
-        verifyBtn.click();
-    }
+// Enter key handler
+inputField.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') verifyBtn.click();
 });
+
+// Close modal handler
+closeButton.addEventListener('click', () => {
+    reservationModal.style.display = 'none';
+    pinForm.style.display = 'block';
+    reservationForm.reset();
+    
+    // Reset success message if visible
+    const successMsg = document.getElementById('successMessage');
+    successMsg.style.display = 'none';
+    successMsg.classList.remove('show');
+});
+
+// Update date and time in the header (optional enhancement)
+const updateDateTime = () => {
+    const now = new Date();
+    const dateElement = document.getElementById('date');
+    const clockElement = document.getElementById('clock');
+    
+    if (dateElement) {
+        dateElement.textContent = now.toLocaleDateString('en-US', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+    }
+    
+    if (clockElement) {
+        clockElement.textContent = now.toLocaleTimeString('en-US', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        });
+    }
+};
+
+// Initialize date/time and update every minute
+updateDateTime();
+setInterval(updateDateTime, 60000);
