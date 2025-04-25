@@ -84,9 +84,9 @@ public static function findAllBookedMeal($where)
 
     if (!empty($attributes)) {
         $whereClauses = array_map(fn($attr) => "$tableName.$attr = :$attr", $attributes);
-        $sql .= " WHERE " . implode(" AND ", $whereClauses) . " AND o.order_status != 2";
+        $sql .= " WHERE " . implode(" AND ", $whereClauses) . " AND (o.order_status != 2 OR p.payment_status != 2)";
     } else {
-        $sql .= " WHERE o.order_status != 2";
+        $sql .= " WHERE o.order_status != 2 OR p.payment_status != 2 ";
     }
 
     $statement = self::prepare($sql);
