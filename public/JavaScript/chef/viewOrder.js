@@ -17,7 +17,7 @@ const mealDescriptions = {
     14: "Beverages"
 };
 
-async function fetchOrders(selectedDate = null, selectedTime = null) {
+async function fetchOrders() {
     try {
         // Fetch order data
         const response = await fetch("/order/data");
@@ -64,10 +64,9 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
         } catch (error) {
             console.error('Error fetching user data:', error);
         }
-
         const branchName = branch_id === 1 ? 'Wattala' : branch_id === 2 ? 'Kelaniya' : 'Kotahena';
-        const currentDate = selectedDate || new Date().toISOString().split('T')[0];
-        const todayOrders = data.filter(order => order.order_date === currentDate);
+        const currentDate = new Date().toLocaleDateString('en-CA');
+        const todayOrders = data;
 
         // Sort reservations - updated priority mapping for new status workflow
         // 0: Not Accepted, 1: Preparing, 2: Ready, 3: Completed
@@ -99,10 +98,10 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
                 };
                 groupedOrdersArray.push(ordersGroupedByOrderId[order.order_id]); // Maintain sorted order
             }
-            
+
             ordersGroupedByOrderId[order.order_id].meals.push({
-                meal_name: order.mealName,
-                quantity: order.quantity    
+                mealName: order.meal_name,
+                quantity: order.quantity
             });
         });
 
@@ -189,7 +188,7 @@ async function fetchOrders(selectedDate = null, selectedTime = null) {
             }
             
 
-            const mealsDropdown = order.meals.map((meal) => `<li>${mealDescriptions[meal.meal_name]} - ${meal.quantity}</li>`).join("");
+            const mealsDropdown = order.meals.map((meal) => `<li>${meal.mealName} - ${meal.quantity}</li>`).join("");
             
             row.innerHTML = `
                 <td class="order-id">${order.order_id}</td> 

@@ -278,12 +278,12 @@ async function handleBooking() {
 
 
     const orderData = {
-        order_date: new Date().toISOString().split('T')[0],
+        order_date: new Date().toLocaleDateString('en-CA'),
         order_status: 0,
         branch_id: branchId,
         reservation_no: reservationId,
         user_id: userId,
-        order_time: new Date().toTimeString().split(' ')[0],
+        order_time: new Date().toLocaleTimeString('en-GB'),
         order_price: cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2),
         temp_id: cartItems[0].tempId || null // Use the tempId of the first item in the cart
     };
@@ -348,6 +348,7 @@ async function handleBooking() {
         });
 
         console.log('Cart cleared successfully.');
+        window.location.reload();
 
     } catch (error) {
         console.error('Booking failed:', error);

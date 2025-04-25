@@ -140,22 +140,25 @@ class Order extends OrderModel
 
     public static function findOrdersByBranch($branch_id){
         $tableName = static::tableName();
+        $currentDate = date('Y-m-d');
         $statement = self::prepare("
             SELECT 
                 $tableName.*,
                 om.quantity,
                 meals.meal_name,
                 r.table_number,
+                r.type,
                 r.reservation_name
             FROM $tableName
             JOIN order_meals om ON $tableName.order_id = om.order_id
             JOIN meals ON om.meal_id = meals.meal_id
             JOIN reservations r ON $tableName.reservation_no = r.reservation_no
             JOIN branches ON $tableName.branch_id = branches.branch_id
-            WHERE branches.branch_id = :branch_id
+            WHERE branches.branch_id = :branch_id AND r.reservation_date = :current_date
         ");
 
         $statement->bindValue(":branch_id", $branch_id);
+        $statement->bindValue(":current_date", $currentDate);
 
         try {
             $statement->execute();
