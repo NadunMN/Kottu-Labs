@@ -101,7 +101,9 @@ async function fetchOrders() {
 
             ordersGroupedByOrderId[order.order_id].meals.push({
                 mealName: order.meal_name,
-                quantity: order.quantity
+                quantity: order.quantity,
+                meal_id: order.meal_id,
+                om_id: order.om_id,
             });
         });
 
@@ -188,16 +190,24 @@ async function fetchOrders() {
             }
             
 
-            const mealsDropdown = order.meals.map((meal) => `<li>${meal.mealName} - ${meal.quantity}</li>`).join("");
+            const mealsDropdown = order.meals.map((meal) => `
+                <li>
+                    ${meal.mealName} - ${meal.quantity}
+                    <button class="meal-done-btn" om-id="${meal.om_id}">Done</button>
+                    ${meal.meal_id}
+                </li>
+            `).join("");
             
             row.innerHTML = `
                 <td class="order-id">${order.order_id}</td> 
+
                 <td>
                     <details>
                         <summary>View Meals</summary>
                         <ul>${mealsDropdown}</ul>
                     </details>
                 </td>
+
                 <td>${order.type === 'dinein' ? order.table_number : 'Null'}</td>
                 <td>${order.type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
                 <td class="status">
@@ -338,6 +348,39 @@ async function fetchOrders() {
                 }
             });
         });
+
+
+
+        // Add event listener for meal Done buttons
+        
+            document.querySelectorAll(".meal-done-btn").forEach(button => {
+                button.addEventListener("click", async (event) => {
+                const omId = event.target.getAttribute("om-id");
+                console.log("Meal Done Payload:", { om_id: omId });
+
+                try {
+                    const response = await fetch(`/order/confirm/mealDone`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ om_id: omId })
+                    });
+
+                    if (response.ok) {
+                    showToast("Meal marked as done!", { type: 'success' });
+                    fetchOrders();
+                    } else {
+                    console.error("Failed to update meal status");
+                    alert("Error updating meal status. Please try again.");
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("Error updating meal status. Please try again.");
+                }
+                });
+            });
+      
 
     } catch (error) {
         console.error("Fetch error:", error);

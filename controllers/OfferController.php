@@ -141,6 +141,51 @@ class OfferController extends Controller
             }
         }
 
+        //get offer id for edit
+        public function getOfferDetailsOne($offerId)
+        {
+            $offer = Offer::findOfferOne(['offer_id' => $offerId]);
+            
+            if ($offer) {
+                echo json_encode($offer);
+            } else {
+                echo json_encode(['error' => 'Offer not found']);
+            }
+        }
+
+        //update offer
+        public function updateoffer()
+        {
+            $offer = new Offer();
+
+            try {
+                $offerId = Application::$app->request->getBody()['offer_id'] ?? null;
+                if (!$offerId) {
+                    throw new \Exception('Offer ID not provided');
+                }
+
+                $offer = Offer::findOne(['offer_id' => $offerId]);
+                if (!$offer) {
+                    throw new \Exception('Offer not found');
+                }
+
+                $offerData = Application::$app->request->getBody();
+                $offer->loadData($offerData);
+
+                if (!$offer->update()) {
+                    throw new \Exception('Failed to update offer');
+                }
+
+                // ✅ Success response
+                echo json_encode(['success' => true]);
+
+            } catch (\Exception $e) {
+                
+                error_log($e->getMessage());
+                echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+            }
+        }
+        
         //publish offer
         public function publishOffer()
         {

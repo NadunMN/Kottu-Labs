@@ -138,17 +138,17 @@
                                     <label for="offer-image" class="file-label">Select Branch</label>
                                     <div class="check-box-container">
                                         <div class="branch-group">
-                                            <input type="checkbox" id="wattala" name="branch1" value="1">
+                                            <input type="checkbox" id="wattala" name="1" value="1">
                                             <label for="wattala">Wattala</label>
                                         </div>
 
                                         <div class="branch-group">
-                                            <input type="checkbox" id="kelaniya" name="branch2" value="2">
+                                            <input type="checkbox" id="kelaniya" name="2" value="2">
                                             <label for="kelaniya">Kelaniya</label>
                                         </div>
 
                                         <div class="branch-group">
-                                            <input type="checkbox" id="kotahena" name="branch3" value="3">
+                                            <input type="checkbox" id="kotahena" name="3" value="3">
                                             <label for="kotahena">Kotahena</label>
                                         </div>
                                     </div>
