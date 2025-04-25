@@ -14,12 +14,18 @@ class OfferController extends Controller
    //add new offer
    public function addOffer(){
     $offer = new Offer();
-    $offer->load(Application::$app->request->getBody());
+    if (!$offer->load(Application::$app->request->getBody()) || !$offer->validate()) {
+        echo json_encode(['success' => false, 'errors' => $offer->errors, 'message' => 'Invalid offer data']);
+        return;
+    }
+    
     
     try {
         if ($offer->add()) {
 
             $offerId = $offer->offer_id;
+            // var_dump($offerId);
+            // exit;
             $branchOffer = new BranchOffer();
             $branchOffer->offer_id = $offerId;
 
@@ -40,9 +46,9 @@ class OfferController extends Controller
         if (count($branches) > 0) {
             foreach ($branches as $branchId) {
                 $branchOffer = new BranchOffer();
-                $branchOffer->offer_id = $offerId;
-                $branchOffer->branch_id = $branchId;
-
+                if (!$branchOffer->validate() || !$branchOffer->add()) {
+                    throw new \Exception('Failed to add branch offer for branch ' . $branchId . ': ' . json_encode($branchOffer->errors));
+                }
                 if (!$branchOffer->add()) {
                     throw new \Exception('Failed to add meal to branches_meal for branch ' . $branchId . ': ' . json_encode($branchOffer->errors));
                 }
@@ -67,9 +73,9 @@ class OfferController extends Controller
             foreach ($meals as $mealId) {
 
                 $mealOffer = new MealOffers();
-                $mealOffer->offer_id = $offerId;
-                $mealOffer->meal_id = $mealId;
-
+                if (!$mealOffer->validate() || !$mealOffer->add()) {
+                    throw new \Exception('Failed to add meal offer for meal ' . $mealId . ': ' . json_encode($mealOffer->errors));
+                }
                 if (!$mealOffer->add()) {
                     throw new \Exception('Failed to add offer to meal_offer for branch ' . $mealId . ': ' . json_encode($mealOffer->errors));
                 }

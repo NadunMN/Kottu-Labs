@@ -154,6 +154,7 @@ class Order extends OrderModel
                 meals.meal_name,
                 meals.meal_id,
                 om.om_id,
+                om.status,
                 r.table_number,
                 r.type,
                 r.reservation_name
