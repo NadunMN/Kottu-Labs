@@ -118,8 +118,7 @@ verifyBtn.addEventListener('click', async function () {
                 reservationTypeLabel.textContent = reservationType === 'dinein' ? 'Dine In' : 'Take Away';
 
                 // check with the current date
-                const currentDate = new Date();
-                const formattedCurrentDate = currentDate.toISOString().split('T')[0];
+                const formattedCurrentDate = new Date().toLocaleDateString('en-CA');
 
                 const reservationDate = data.data.reservation_date;
                 const reservationDateInput = document.getElementById('reservationDate');
@@ -244,8 +243,7 @@ verifyBtn.addEventListener('click', async function () {
                 reservationTypeLabel.textContent = reservationType === 'dinein' ? 'Dine In' : 'Take Away';
 
                 // check with the current date
-                const currentDate = new Date();
-                const formattedCurrentDate = currentDate.toISOString().split('T')[0];
+                const formattedCurrentDate = new Date().toLocaleDateString('en-CA');
 
                 const reservationDate = data.data.reservation_date;
                 const reservationDateInput = document.getElementById('reservationDate');
