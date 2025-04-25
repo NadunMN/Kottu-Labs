@@ -85,7 +85,28 @@ public function login(Request $request, Response $response)
         $loginForm->loadData($request->getBody());
 
         if($loginForm->validate() && $loginForm->login()){
-            $response->redirect('/');
+            $user = User::findOne(['email' => $loginForm->email]);
+
+            if($user->position == 'customer') {
+                // Check the user's position
+                $response->redirect('/');
+                return;
+            }else if($user->position == 'admin') {
+                // Check the user's position
+                $response->redirect('/profile');
+                return;
+            }else if($user->position == 'steward') {
+                // Check the user's position
+                $response->redirect('/profile');
+                return;
+            }else if($user->position == 'chef') {                // Check the user's position
+                $response->redirect('/profile');
+                return;
+            }else{
+                // Check the user's position
+                $response->redirect('/profile');
+                return;
+            }
             
             return;
         }

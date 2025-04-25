@@ -33,7 +33,7 @@ fetch("/managermenuitem/data")
 
       mealContent.innerHTML = `
 
-      <div class="view-branch-menu-section">
+      <div class="view-branch-menu-section new-menu-css">
                                             <div class="topic-bar">
                                                 <div>
                                                     <h2 style="margin:0;">Meals</h2>

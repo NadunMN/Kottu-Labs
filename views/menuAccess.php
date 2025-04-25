@@ -129,7 +129,7 @@ h1 {
 </head>
 <body>
 
-<div class="container-mainwraaper" id="container-mainwraaper">
+<div class="container-mainwraaper" id="container-mainwraaper" style="display: flex;">
     <div class="container-aa">
         <h1>Reservation Validation</h1>
         
@@ -203,7 +203,7 @@ h1 {
     </div>
 
     <div id="successMessage" class="success-pop">
-        <p>Reservation added successfully!</p>
+        <p>Table added successfully!</p>
     </div>
 
 
