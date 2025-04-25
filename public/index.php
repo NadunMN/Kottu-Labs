@@ -404,6 +404,7 @@ $app->router->post('/user/store', [$reservationController, 'userStore']);
 
 //admin routes for reports
 $app->router->get('/admin/reports/orders', [$adminController, 'orderReports']);
+$app->router->get('/admin/reports/meals', [$adminController, 'mealsReport']);
 
 
 
