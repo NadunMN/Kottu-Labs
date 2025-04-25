@@ -37,18 +37,42 @@ iframe {
 
 </head>
 <body>
+    
+
+
+
+
+
+
+    
     <div class="dashboard-container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- <h2>Dashboard</h2> -->
-            <ul>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="company-header">
+            <div class="company-name">Kottu Labs</div>
+            <div class="company-title">
+                <div class="logo">K</div>
+                <div class="name">Kottu Labs</div>
+            </div>
+        </div>
+        
+        <ul>
+            <li id="home" class="menu-item">
+                <img src="/Photo/icon/home.png" alt="Home">
+                <a href="/">Home</a>
+            </li>
+        </ul>
+
+        <div class="section-header">GENERAL</div>
+         <ul>
+                <?php use app\core\Application; ?>
                 <?php
                     $menuItems = [
                         ['id' => 'dashboard', 'icon' => '/Photo/icon/dahsboard.png', 'text' => 'DashBoard'],
-                        ['id' => 'staff', 'icon' => '/Photo/icon/group.png', 'text' => 'Update Staff'],
-                        ['id' => 'updatemenu', 'icon' => '/Photo/icon/menu.png', 'text' => 'Update Menu'],
-                        ['id' => 'updateoffers', 'icon' => '/Photo/icon/special-offer.png', 'text' => 'Update Offers'],
-                        ['id' => 'feedbacks', 'icon' => '/Photo/icon/ratings.png', 'text' => 'Feedbacks'],
+                        ['id' => 'staff', 'icon' => '/Photo/icon/manager.png', 'text' => 'Update Staff'],
+                        ['id' => 'updatemenu', 'icon' => '/Photo/icon/menu (1).png', 'text' => 'Update Menu'],
+                        ['id' => 'updateoffers', 'icon' => '/Photo/icon/offer.png', 'text' => 'Update Offers'],
+                        ['id' => 'feedbacks', 'icon' => '/Photo/icon/review (1).png', 'text' => 'Feedbacks'],
                     ];
                     foreach ($menuItems as $item) {
                         echo "<li id='{$item['id']}' class='menu-item'>
@@ -58,13 +82,39 @@ iframe {
                     }
                 ?>
             </ul>
-        </div>
+
+
+        <div class="section-header">SETTINGS</div>
+
+        <ul>
+
+            <?php if(Application::$app->user):?>
+                <li id="home" class="menu-item">
+                <img src="/Photo/icon/user-interface.png" alt="Home">
+                <a href="/logout">Logout</a>
+                </li>
+            <?php else: ?>
+            <li id="home" class="menu-item">
+                <img src="/Photo/icon/home.png" alt="Home">
+                <a href="/">Login</a>
+            </li>
+            <?php endif; ?>
+
+
+        </ul>
         
+
+    </div>
+    
+
+        <!-- Your main content here -->
+          
         <!-- Main Content -->
         <div class="main-content admin-main-content" id="main-content">
             <iframe id="dynamicIframe" src="/initialPage.html"></iframe>
         </div>
-    </div>
+
+</div>
 
     <script src="/JavaScript/adminDashboard.js"></script>
     

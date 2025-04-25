@@ -37,16 +37,41 @@ iframe {
 
 </head>
 <body>
+    
+
+
+
+
     <div class="dashboard-container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <ul>
-                <?php
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="company-header">
+            <div class="company-name">Kottu Labs</div>
+            <div class="company-title">
+                <div class="logo">K</div>
+                <div class="name">Kottu Labs</div>
+            </div>
+        </div>
+        
+        <ul>
+            <li id="home" class="menu-item">
+                <img src="/Photo/icon/home.png" alt="Home">
+                <a href="/">Home</a>
+            </li>
+        </ul>
+
+        <div class="section-header">GENERAL</div>
+        <ul>
+            <?php
+
+use app\core\Application;
+
                     $menuItems = [
-                        ['id' => 'viewDineInOrders', 'icon' => '/Photo/icon/clipboard.png', 'text' => 'Dine In Orders'],
-                        ['id' => 'viewTakeAwayOrders', 'icon' => '/Photo/icon/clipboard.png', 'text' => 'Take Away Orders'],
-                        ['id' => 'customerArrivals', 'icon' => '/Photo/icon/travel.png', 'text' => 'Customer Arrivals'],
-                        ['id' => 'customerPayments', 'icon' => '/Photo/icon/wallet (1).png', 'text' => 'Customer Payments']
+                        ['id' => 'viewDineInOrders', 'icon' => '/Photo/icon/dine.png', 'text' => 'Dine In Orders'],
+                        ['id' => 'viewTakeAwayOrders', 'icon' => '/Photo/icon/takeaway.png', 'text' => 'Take Away Orders'],
+                        ['id' => 'customerArrivals', 'icon' => '/Photo/icon/support.png', 'text' => 'Customer Arrivals'],
+                        ['id' => 'customerPayments', 'icon' => '/Photo/icon/payment.png', 'text' => 'Customer Payments'],
+                       
                     ];
                     foreach ($menuItems as $item) {
                         echo "<li id='{$item['id']}' class='menu-item'>
@@ -55,15 +80,123 @@ iframe {
                             </li>";
                     }
                 ?>
-            </ul>
-        </div>
+        </ul>
+
+
         
+        <div class="section-header">CUSTOMER</div>
+        <ul>
+            <?php
+                    $menuItems = [
+                       
+                        ['id' => 'enterpin', 'icon' => '/Photo/icon/customer.png', 'text' => 'Arival Confirmation'],
+                        ['id' => 'accessmenu', 'icon' => '/Photo/icon/menuaccess.png', 'text' => 'Menu Access'],
+                        ['id' => 'getpayment', 'icon' => '/Photo/icon/pay.png', 'text' => 'Get Payment'],
+                    ];
+                    foreach ($menuItems as $item) {
+                        echo "<li id='{$item['id']}' class='menu-item'>
+                                <img src='{$item['icon']}' alt='{$item['text']}'>
+                                <a href='#'>{$item['text']}</a>
+                            </li>";
+                    }
+                ?>
+        </ul>
+
+        <div class="section-header">SETTINGS</div>
+
+        <ul>
+
+            <?php if(Application::$app->user):?>
+                <li id="home" class="menu-item">
+                <img src="/Photo/icon/user-interface.png" alt="Home">
+                <a href="/logout">Logout</a>
+                </li>
+            <?php else: ?>
+            <li id="home" class="menu-item">
+                <img src="/Photo/icon/home.png" alt="Home">
+                <a href="/">Login</a>
+            </li>
+            <?php endif; ?>
+
+
+        </ul>
+        
+
+    </div>
+    
+
+        <!-- Your main content here -->
+          
         <!-- Main Content -->
         <div class="main-content admin-main-content" id="main-content">
             <iframe id="dynamicIframe" src="/initialPage.html"></iframe>
         </div>
-    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
+
 
     <script src="/JavaScript/stewardDashboard.js"></script>
+
+    <script>
+         // Add click handler to set selected item
+         document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove selected class from all items
+                document.querySelectorAll('.menu-item').forEach(el => {
+                    el.classList.remove('selected');
+                });
+                // Add selected class to clicked item
+                this.classList.add('selected');
+            });
+        });
+    </script>
 </body>
 </html>

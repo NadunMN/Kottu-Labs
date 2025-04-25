@@ -50,25 +50,25 @@ class SiteController extends Controller
 
     public function adminDashboard(Request $request,Response $response)
     {
-        $this->setLayout('dashboard');
+        $this->setLayout('auth');
         return $this->render('admindashboard');
     }
 
     public function stewardDashboard(Request $request,Response $response)
     {
-        $this->setLayout('dashboard');
+        $this->setLayout('auth');
         return $this->render('stewarddashboard');
     }
 
     public function managerDashboard(Request $request,Response $response)
     {
-        $this->setLayout('dashboard');
+        $this->setLayout('auth');
         return $this->render('managerDashboard');
     }
 
     public function chefdashboard(Request $request,Response $response)
     {
-        $this->setLayout('dashboard');
+        $this->setLayout('auth');
         return $this->render('chefdashboard');
     }
 
@@ -267,21 +267,21 @@ class SiteController extends Controller
 
     public function menuAccess(Request $request,Response $response)
     {
-        $this->setLayout('dashboard');
+        $this->setLayout('auth');
         return $this->render('menuAccess');
     }
 
 
     public function unRegMenu(Request $request,Response $response)
     {
-        $this->setLayout('dashboard');
+        $this->setLayout('auth');
         return $this->render('UnRegMenu');
     }
 
 
     public function stewardMenu(Request $request,Response $response)
     {
-        $this->setLayout('dashboard');
+        $this->setLayout('auth');
         return $this->render('stewardMenu');
     }
 
@@ -299,13 +299,13 @@ class SiteController extends Controller
 
     public function unRegPayment(Request $request,Response $response)
     {
-        $this->setLayout('dashboard');
+        $this->setLayout('auth');
         return $this->render('unRegPayment');
     }
 
     public function paymentCollection(Request $request,Response $response)
     {
-        $this->setLayout('dashboard');
+        $this->setLayout('auth');
         return $this->render('paymentCollection');
 
     }

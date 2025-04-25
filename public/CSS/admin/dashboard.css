@@ -249,7 +249,6 @@ th {
 .chart-card {
     background: white;
     border-radius: var(--border-radius);
-    box-shadow: var(--card-shadow);
     display: flex;
     height: 450px;
     flex-direction: column;
@@ -351,7 +350,6 @@ tr:hover td {
     padding: 20px;
     background: white;
     border-radius: var(--border-radius);
-    box-shadow: var(--card-shadow);
     margin-bottom: 20px;
     transition: transform 0.3s ease;
 }

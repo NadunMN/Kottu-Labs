@@ -131,7 +131,7 @@ h1 {
 
 <div class="container-mainwraaper" id="container-mainwraaper">
     <div class="container-aa">
-        <h1>String Validation</h1>
+        <h1>Menu Access</h1>
         
         <div class="setup-section">
             <input type="text" id="input-string" class="input-field" placeholder="Enter your string">

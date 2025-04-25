@@ -36,7 +36,7 @@
             <div class="drop-down">
                 <a href="#" onclick="toggleMenuprofile()"><img src="/Photo/icon/user.png" alt="Profile"></a>
                 <div class="dropdown-content">
-                    <a href="/profile"> <img class="drop-icon" src="/Photo/icon/dahsboard.png" alt=""> Dashboard </a>
+                    <a href="/profile"> <img class="drop-icon" src="/Photo/icon/activity.png" alt=""> Dashboard </a>
                     <!-- <hr style="width: 100%; border:0.5px solid black; background:black; margin: auto; "> -->
                     <a href="/offer"> <img class="drop-icon" src="/Photo/icon/special-offer.png" alt=""> Special Offers</a>
                     <?php if (\app\core\Application::$app->user !== null && \app\core\Application::$app->user->position === 'steward'): ?>

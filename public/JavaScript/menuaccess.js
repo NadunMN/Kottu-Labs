@@ -7,6 +7,7 @@ const pinForm = document.getElementById('container-mainwraaper');
 const reservationModal = document.getElementById('reservationModal');
 const reservationForm = document.getElementById('reservationConfirmationForm');
 const closeButton = document.querySelector('.close-button');
+const pinFormSuccess = document.getElementById('success-message');
 
 let steward_branchId;
 
@@ -173,20 +174,30 @@ verifyBtn.addEventListener('click', async function () {
                 
                 if (!response.ok) throw new Error('Submission failed');
                 
-                reservationForm.style.display = 'none';
+                reservationModal.style.display = 'none';
                 
                 // Show success message with animation
                 const successMsg = document.getElementById('successMessage');
+                pinForm.style.display = 'none';
                 successMsg.style.display = 'block';
                 successMsg.classList.add('show');
                 
                 setTimeout(() => {
                     reservationModal.style.display = 'none';
-                    pinForm.style.display = 'block';
+                    pinForm.style.display = 'flex';
                     inputField.value = '';
+                    inputField.style.border = '1px solid #ced4da';
+                    pinFormSuccess.style.display = 'none';
                     successMsg.style.display = 'none';
                     successMsg.classList.remove('show');
+                    reservationForm.reset(); // Reset the form after successful submission
+                    // pinForm.reset(); // Reset the form after successful submission
                 }, 2000);
+
+                // pinForm.reset(); // Reset the form after successful submission
+                // pinForm.style.display = 'block'; // Change border color to green
+
+
             } catch (error) {
                 console.error('Submission error:', error);
                 alert('Error submitting reservation. Please try again.');
@@ -210,11 +221,15 @@ inputField.addEventListener('keyup', (e) => {
 // Close modal handler
 closeButton.addEventListener('click', () => {
     reservationModal.style.display = 'none';
-    pinForm.style.display = 'block';
-    reservationForm.reset();
+    pinForm.style.display = 'flex';
     
+    reservationForm.reset();
     // Reset success message if visible
     const successMsg = document.getElementById('successMessage');
+    inputField.value = '';
+    inputField.style.border = '1px solid #ced4da';
+    pinFormSuccess.style.display = 'none';
+
     successMsg.style.display = 'none';
     successMsg.classList.remove('show');
 });
