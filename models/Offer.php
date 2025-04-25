@@ -295,7 +295,4 @@ class Offer extends OfferModel
     }
     
 
-    
-    
-
 }
