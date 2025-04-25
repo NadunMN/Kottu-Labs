@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Dashboard</title>
+    <title>Business Dashboard - Kottu-Labs</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <link rel="stylesheet" href="/CSS/admin/dashboard.css">
@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="card-container">
-                    <div class="chart-card ">
+                    <div class="chart-card">
                         <div class="chart-header">
                             <h2 class="chart-title">Registration Statistics</h2>
                             <p class="chart-description">Monthly registration numbers across all branches showing growth patterns.</p>
@@ -63,8 +63,6 @@
                             </div>
                         </div>
                     </div>
-
-                    
                 </div>
 
                 <div class="card-container">
@@ -79,9 +77,6 @@
                             </div>
                         </div>
                     </div>
-
-                   
-
                 </div>
             </div>
         </div>
@@ -95,7 +90,7 @@
                     <div class="activity-item">
                         <div class="activity-content">
                             <h3>Registrations</h3>
-                            <div class="value highlight" id="registrations">85</div>
+                            <div class="value highlight" id="registrations">0</div>
                         </div>
                         <div>
                             <img src="/Photo/icon/partners.png" alt="Registrations" style="width: 50px; height: 50px;">
@@ -114,133 +109,18 @@
                     </thead>
                     <tbody id="customerTableBody">
                         <tr>
-                            <td>Technology</td>
-                            <td>$89,500</td>
-                            <td class="highlight">+15%</td>
+                            <td colspan="3">Loading data...</td>
                         </tr>
-                       
                     </tbody>
                 </table>
             </div>
             <div class="section">
                 <h2 class="section-title">Reports</h2>
-                <button class="report-btn">Get Orders Report</button>
-                <button class="report-btn">Get Meals Report</button>
+                <button class="report-btn" onclick="window.location.href='/orderReport'">Get Orders Report</button>
+                <button class="report-btn" onclick="window.location.href='/mealReport'">Get Meals Report</button>
             </div>
         </div>
     </div>
-
-    <!-- Order Report Modal -->
-    <div id="orderReportModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Orders Report</h2>
-            
-            <!-- Enhanced Filter Controls -->
-            <div class="filter-controls">
-                <!-- Date Filter -->
-                <div class="filter-group">
-                    <label for="reportDate">Date:</label>
-                    <input type="date" id="reportDate" name="reportDate">
-                </div>
-                
-                <!-- Branch Filter -->
-                <div class="filter-group">
-                    <label for="branchFilter">Branch:</label>
-                    <select id="branchFilter">
-                        <option value="">All Branches</option>
-                        <option value="Wattala">Wattala</option>
-                        <option value="Kelaniya">Kelaniya</option>
-                        <option value="Kotahena">Kotahena</option>
-                    </select>
-                </div>
-                
-                <!-- Price Range Filter -->
-                <div class="filter-group">
-                    <label for="minPrice">Price Range:</label>
-                    <input type="number" id="minPrice" placeholder="Min" min="0">
-                    <span>to</span>
-                    <input type="number" id="maxPrice" placeholder="Max" min="0">
-                </div>
-                
-                <!-- Action Buttons -->
-                <div class="filter-actions">
-                    <button id="applyFilters" class="filter-btn">Apply Filters</button>
-                    <button id="resetFilters" class="filter-btn">Reset All</button>
-                </div>
-            </div>
-            
-            <div class="modal-body">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Date</th>
-                            <th>Customer</th>
-                            <th>Branch</th>
-                            <th>Type</th>
-                            <th>Total (Rs.)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="orderReportTableBody"></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- Meals Report Modal -->
-    <!-- Meals Report Modal -->
-    <div id="mealReportModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeMealModal">&times;</span>
-            <h2>Meals Report</h2>
-            
-            <!-- Enhanced Filter Controls for Meals -->
-            <div class="filter-controls">
-                <!-- Date Range -->
-                <div class="filter-group">
-                    <label for="mealStartDate">Start Date:</label>
-                    <input type="date" id="mealStartDate" name="mealStartDate">
-                </div>
-                <div class="filter-group">
-                    <label for="mealEndDate">End Date:</label>
-                    <input type="date" id="mealEndDate" name="mealEndDate">
-                </div>
-                
-                <!-- Branch Filter -->
-                <div class="filter-group">
-                    <label for="mealBranchFilter">Branch:</label>
-                    <select id="mealBranchFilter">
-                        <option value="">All Branches</option>
-                        <option value="1">Wattala</option>
-                        <option value="2">Kelaniya</option>
-                        <option value="3">Kotahena</option>
-                    </select>
-                </div>
-                
-                <!-- Action Buttons -->
-                <div class="filter-actions">
-                    <button id="applyMealFilters" class="filter-btn">Apply Filters</button>
-                    <button id="resetMealFilters" class="filter-btn">Reset</button>
-                </div>
-            </div>
-            
-            <div class="modal-body">
-                <table class="report-table">
-                    <thead>
-                        <tr>
-                            <th>Meal ID</th>
-                            <th>Meal Name</th>
-                            <th>Quantity Sold</th>
-                            <th>Total Revenue (Rs.)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="mealReportTableBody"></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
 
     <script src="/JavaScript/chart.js"></script>
     <script src="/JavaScript/admin/dashboard.js"></script>

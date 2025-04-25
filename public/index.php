@@ -427,6 +427,12 @@ $app->router->post('/payment/confirm/steward', [$paymentController, 'updateUnreg
 
 
 
+//report
+$app->router->get('/mealReport', [$siteController, 'mealReport']);
+$app->router->get('/orderReport', [$siteController, 'orderReport']);
+
+
+
 
 
 

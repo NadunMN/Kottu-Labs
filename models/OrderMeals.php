@@ -15,7 +15,7 @@ class OrderMeals extends DbModel
     public int $user_id;
     public string $status = '';
     
-
+    
     public static function tableName(): string
     {
         return 'order_meals';
@@ -297,11 +297,8 @@ public static function findAllBookedMealTakeaway($where)
             $sql .= " JOIN branches b ON o.branch_id = b.branch_id";
         }
         
-        $whereClauses = [];
+        $whereClauses = ["o.reservation_no IS NOT NULL"]; // Always enforce this condition
         $params = [];
-        
-        // Always filter by order status if needed (e.g., only completed orders)
-        // $whereClauses[] = "o.order_status = 'completed'";
         
         // Add date range condition
         if ($startDate && $endDate) {
@@ -316,14 +313,11 @@ public static function findAllBookedMealTakeaway($where)
             $params[':branchId'] = $branchId;
         }
         
-        if (!empty($whereClauses)) {
-            $sql .= " WHERE " . implode(" AND ", $whereClauses);
-        }
+        // Combine WHERE clauses (always includes reservation_no IS NOT NULL)
+        $sql .= " WHERE " . implode(" AND ", $whereClauses);
         
         $sql .= " GROUP BY m.meal_id, m.meal_name, m.meal_price
                   ORDER BY total_revenue DESC";
-
-        // $sql .= "WHERE o.reservation_id != NULL";
         
         $statement = self::prepare($sql);
         
