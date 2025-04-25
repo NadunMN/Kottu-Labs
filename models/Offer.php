@@ -123,6 +123,7 @@ class Offer extends OfferModel
         ];
     }
 
+
     public function add()
     {
     $tableName = static::tableName();
@@ -165,9 +166,50 @@ class Offer extends OfferModel
         return $statement->execute();
     }
 
+    
+
+
+    public static function findOfferOne($where)
+    {
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+    
+        // Construct WHERE clause if there are any conditions
+        $sql = $attributes ? " WHERE " . implode(" AND ", array_map(fn($attr) => "$tableName.$attr = :$attr", $attributes)) : "";
+    
+        $query = "
+            SELECT 
+                $tableName.*, 
+                b.*, 
+                m.*
+            FROM $tableName
+            JOIN branch_offers b ON $tableName.offer_id = b.offer_id
+            JOIN meal_offers m ON $tableName.offer_id = m.offer_id
+            $sql
+        ";
+    
+        try {
+            $statement = self::prepare($query);
+    
+            // Bind parameters safely
+            foreach ($where as $key => $value) {
+                $statement->bindValue(":$key", $value);
+            }
+    
+            $statement->execute();
+    
+            // Fetch one result only (if that's the intention from "findOfferOne")
+            return $statement->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            error_log("Database Error in findOfferOne: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+
+    //Edit offers
     public function update()
     {
-
         $tableName = static::tableName();
         $attributes = $this->attributes();
         $params = array_map(fn($attr) => "$attr = :$attr", $attributes);
@@ -194,6 +236,7 @@ class Offer extends OfferModel
             return false;
         }
     }
+
 
     public function updatePublish()
     {

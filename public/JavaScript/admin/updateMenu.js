@@ -215,7 +215,7 @@ fetch("/menuitem/data")
                                             </div>
                                         </td>
                                     `;
-
+                                                
         // Append the row directly to the table body
         document.getElementById("table-content").appendChild(row);
       });
