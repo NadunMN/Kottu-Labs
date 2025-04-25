@@ -39,12 +39,7 @@
                     <a href="/profile"> <img class="drop-icon" src="/Photo/icon/activity.png" alt=""> Dashboard </a>
                     <!-- <hr style="width: 100%; border:0.5px solid black; background:black; margin: auto; "> -->
                     <a href="/offer"> <img class="drop-icon" src="/Photo/icon/special-offer.png" alt=""> Special Offers</a>
-                    <?php if (\app\core\Application::$app->user !== null && \app\core\Application::$app->user->position === 'steward'): ?>
-                        <a href="/menuaccess"> <img class="drop-icon" src="/Photo/icon/enterpin.png" alt=""> Enter Pin</a>
-                        <a href="/unregmenu"> <img class="drop-icon" src="/Photo/icon/enterpin.png" alt=""> UnRegistered Menu</a>
-                        <a href="/unregpayment"> <img class="drop-icon" src="/Photo/icon/enterpin.png" alt=""> Payment Collection</a>
-
-                    <?php endif; ?>
+                 
                     <?php if (\app\core\Application::$app->user ==null): ?>
                         <a href="/login"> <img class="drop-icon" src="/Photo/icon/login.png" alt=""> Log In</a>
                         <?php else: ?>

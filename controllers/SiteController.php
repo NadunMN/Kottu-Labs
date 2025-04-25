@@ -296,6 +296,7 @@ class SiteController extends Controller
     {
         $this->setLayout('auth');
         return $this->render('orderReport');
+    }
 
     public function unRegPayment(Request $request,Response $response)
     {

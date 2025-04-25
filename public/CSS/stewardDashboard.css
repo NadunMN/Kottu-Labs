@@ -10,35 +10,19 @@ body {
 
 
 
-.main-content {
-    width:100%;
-    height: auto;
-    min-height: 100%;
-    /* height: fit-content; */
-    overflow-y: auto; /* Scrollable content */
-    overflow-x: hidden; /* Hide horizontal scrollbar */
-    flex: 1;
-    background-color: rgb(255, 255, 255);
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-top-right-radius: 10px;
-    padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-}
+
 
 
 .main-section {
     width: auto;
     height: auto;
     min-height: 100%;
-    overflow: hidden;
     flex: 1;
     background-color: rgb(255, 255, 255);
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
     border-top-right-radius: 10px;
     padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); 
 }
 
 .main-section table {
@@ -50,8 +34,6 @@ body {
 .main-section table th,
 .main-section table td {
     text-align: left;
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
 }
 
 .main-section table th {
