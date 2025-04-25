@@ -302,12 +302,65 @@ window.addEventListener("load", () => {
                                 });
 
                             }
+                            
+                            //Add an eventlistener to the edit buttons
+                            document.querySelectorAll(".edit-btn").forEach((button) => {
+                              button.addEventListener("click", async function () {
+                                try {
+                                  const offerId = button.getAttribute("offer-id");
+                                  console.log("Offer ID:", offerId);
+                                  const response = await fetch(`/offer/getOne?offerId=${offerId}`);
+                                  
+                                  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                                  
+                                  const data = await response.json();
 
 
-                            // Add event listeners to delete buttons
-      const deleteButtons = document.querySelectorAll(".delete-btn");
-      deleteButtons.forEach((button) => {
-      button.addEventListener("click", () => {
+                                  console.log("Fetched data:", data);
+                                  
+                                  document.getElementById("offer-name").value = data.offer_name || "";
+                                  document.getElementById("offer-price").value = data.offer_price || "";
+                                  document.getElementById("offer-description").value = data.offer_description || "";
+                            
+                                  addItemForm.classList.remove("hidden");
+                                  
+                                  // Handle update submission properly
+                                  addForm.onsubmit = (e) => handleUpdate(e, offerId);
+                                } catch (error) {
+                                  console.error("Fetch error:", error);
+                                }
+                              });
+                            });
+                            
+                            // Unified update handler
+                            async function handleUpdate(event, offerId) {
+                              event.preventDefault();
+                              const formData = new FormData(addForm);
+                              formData.append("offer_id", offerId);
+                            
+                              try {
+                                const response = await fetch("/offer/update", {
+                                  method: "POST",
+                                  body: formData
+                                });
+                            
+                                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                                
+                                const result = await response.json();
+                                console.log("Update success:", result);
+                                addItemForm.classList.add("hidden");
+                                addForm.reset();
+                              } catch (error) {
+                                console.error("Update failed:", error);
+                              }
+                            }
+          
+          
+          
+          // Add event listeners to delete buttons
+          const deleteButtons = document.querySelectorAll(".delete-btn");
+          deleteButtons.forEach((button) => {
+          button.addEventListener("click", () => {
           // const row = button.closest('tr');
           // row.remove();
 
@@ -410,15 +463,6 @@ publishButtons.forEach((button) => {
             
           });
       });
-
-
-
-
-
-
-
-
-
 
         })
         .catch((error) => {

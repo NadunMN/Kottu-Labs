@@ -25,12 +25,18 @@ class OrderController extends Controller
             try {
                 $branch_id = Application::$app->user->branch_id;
 
+                
+
                 if (!$branch_id) {
                 throw new \Exception("Branch ID is missing for the logged-in user.");
             }
 
                 $orders = Order::findOrdersByBranch($branch_id);
                 echo json_encode($orders);
+
+                // var_dump($orders); // Debugging line to check branch_id
+                // exit;
+
             } catch (\Exception $e) {
                 // Log the error and return a proper JSON response
                 error_log("Error fetching order data: " . $e->getMessage());
@@ -395,6 +401,7 @@ class OrderController extends Controller
     }
 
 
+
     //take away
 
         // Method to get cart data
@@ -500,6 +507,33 @@ class OrderController extends Controller
             }
         }
 
+        public function canceltakeawayBooking() {
+            $body = json_decode(file_get_contents('php://input'), true);
+        
+            if (!isset($body['reservation_id'])) {
+                http_response_code(400);
+                echo json_encode(['error' => 'Reservation ID is required']);
+                return;
+            }
+        
+            $reservationId = $body['reservation_id'];
+        
+            try {
+                // Delete booked orders associated with the reservation ID
+                $deleted = Order::deleteByReservationId($reservationId);
+                
+                if ($deleted) {
+                    echo json_encode(['success' => true]);
+                } else {
+                    echo json_encode(['error' => 'Failed to cancel booking']);
+                }
+            } catch (\Exception $e) {
+                error_log("Error canceling booking: " . $e->getMessage());
+                http_response_code(500);
+                echo json_encode(['error' => 'An error occurred while canceling the booking']);
+            }
+        }
+
     public function managerOrderHistory()
     {
         if (Application::$app->user) {
@@ -588,6 +622,7 @@ class OrderController extends Controller
         }
     }
 
+   
 
     public function getOrderDetails($reservationNo)
 {
@@ -701,6 +736,26 @@ public function getTakeAwayData()
         http_response_code(401); // Set HTTP status code to 401 (Unauthorized)
         echo json_encode(['error' => 'No user is logged in']);
     }
+}
+
+
+public function orderMealDone(){
+    if (Application::$app->user) {
+        $orderMeals = new OrderMeals();
+        $orderMeals->loadData(Application::$app->request->getBody());
+
+        $omId = $orderMeals->om_id; // Assuming you have the order ID from the request
+
+        // error_log("Order Meal Done called with om_id: " . $omId); // Log the function call for debugging
+        // exit;
+
+        $orderMeals->orderMealsStatusUpdate(
+            ['status' => 'completed'],   // SET clause
+            ['om_id' => $omId]            // WHERE clause
+        );
+                        
+    } else {
+        echo json_encode(['error' => 'No user is logged in']);}
 }
 
 

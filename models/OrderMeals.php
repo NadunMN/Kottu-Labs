@@ -7,7 +7,7 @@ use app\core\Model\OrderMealsModel;
 
 class OrderMeals extends DbModel
 {
-
+    public int $om_id;
     public int $order_id;
     public ?int $meal_id=null;
     public ?int $offer_id=null;
@@ -23,7 +23,7 @@ class OrderMeals extends DbModel
 
     public static function primaryKey(): string
     {
-        return 'order_id';
+        return 'om_id';
     }
 
     public function load($data)
@@ -84,9 +84,9 @@ public static function findAllBookedMeal($where)
 
     if (!empty($attributes)) {
         $whereClauses = array_map(fn($attr) => "$tableName.$attr = :$attr", $attributes);
-        $sql .= " WHERE " . implode(" AND ", $whereClauses) . " AND o.order_status != 2";
+        $sql .= " WHERE " . implode(" AND ", $whereClauses) . " AND (o.order_status != 2 OR p.payment_status != 2)";
     } else {
-        $sql .= " WHERE o.order_status != 2";
+        $sql .= " WHERE o.order_status != 2 OR p.payment_status != 2 ";
     }
 
     $statement = self::prepare($sql);
@@ -208,6 +208,17 @@ public static function findAllBookedMealTakeaway($where)
             return false;
         }
     }
+
+
+    // public function oneMealComplete($om_id, $meal_id)
+    // {
+    //     $tableName = static::tableName();
+    //     $sql = "UPDATE $tableName SET status = 1 WHERE order_id = :order_id AND meal_id = :meal_id";
+    //     $statement = self::prepare($sql);
+    //     $statement->bindValue(":order_id", $order_id);
+    //     $statement->bindValue(":meal_id", $meal_id);
+    //     return $statement->execute();
+    // }
 
     public function orderMealsStatusUpdate($set, $where)
     {

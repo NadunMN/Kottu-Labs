@@ -15,6 +15,7 @@ const urlParams = new URLSearchParams(window.location.search);
 // Retrieve the `id` parameter (or any other parameter)
 const reservationNo = urlParams.get('reservationNo');
 
+localStorage.setItem('reservationNo', reservationNo); // Store the reservation number in local storage
 // console.log("Temp ID:", reservationNo); // Log the temp_id for debugging
 
 

@@ -122,10 +122,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Change form action
             reservationForm.action = `/reservationNumber?random=${data2.success}`;
+            console.log(data2.success);
             
             // Submit the form programmatically after ensuring action is set
             setTimeout(() => {
-                reservationForm.submit(); 
+                reservationForm.submit();
+
             }, 100); // Add a slight delay to ensure `action` is set
     
             // Redirect only **after** form submission is processed
@@ -171,6 +173,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Change form action
         reservationForm.action = `/reservationNumber?random=${data.success}`;
+        console.log(data.success);
         
         // Submit the form programmatically after ensuring action is set
         setTimeout(() => {

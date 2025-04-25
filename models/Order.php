@@ -141,11 +141,19 @@ class Order extends OrderModel
     public static function findOrdersByBranch($branch_id){
         $tableName = static::tableName();
         $currentDate = date('Y-m-d');
+
+        // var_dump($currentDate);
+        // var_dump($branch_id);
+        // exit;
+
+
         $statement = self::prepare("
             SELECT 
                 $tableName.*,
                 om.quantity,
                 meals.meal_name,
+                meals.meal_id,
+                om.om_id,
                 r.table_number,
                 r.type,
                 r.reservation_name
@@ -162,6 +170,9 @@ class Order extends OrderModel
 
         try {
             $statement->execute();
+
+            // var_dump($statement->execute());
+            // exit;
             return $statement->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             echo "Error: " . $e->getMessage();
@@ -506,5 +517,44 @@ class Order extends OrderModel
             return false;
         }
     }
+
+
+    // public static function updateMealStatus($orderMealId, $status, $chefId = null) {
+    //     try {
+    //         $db = Database::getConnection(); // Adjust this to your DB class
+    //         if ($chefId !== null) {
+    //             $stmt = $db->prepare("UPDATE order_meals SET meal_status = ?, chef_id = ? WHERE id = ?");
+    //             $stmt->bind_param("iii", $status, $chefId, $orderMealId);
+    //         } else {
+    //             $stmt = $db->prepare("UPDATE order_meals SET meal_status = ? WHERE id = ?");
+    //             $stmt->bind_param("ii", $status, $orderMealId);
+    //         }
+    //         return $stmt->execute();
+    //     } catch (\Exception $e) {
+    //         error_log("Error updating meal status: " . $e->getMessage());
+    //         return false;
+    //     }
+    // }
+
+    public static function deleteByReservationId($reservationId) {
+        $tableName = static::tableName();
+        $sql = "
+            DELETE o
+            FROM $tableName o
+            JOIN payments p ON o.order_id = p.order_id
+            WHERE o.reservation_no = :reservation_no AND p.payment_status != 2
+        ";
+        $statement = self::prepare($sql);
+        $statement->bindValue(':reservation_no', $reservationId);
+    
+        try {
+            return $statement->execute();
+        } catch (\PDOException $e) {
+            error_log("Error deleting booked orders: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+
 
 }

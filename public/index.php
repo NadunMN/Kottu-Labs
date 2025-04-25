@@ -112,6 +112,7 @@ $app->router->post('/order/update-status', [$orderController, 'updateStatus']); 
 
 //maheshs routes
 $app->router->get('/payment',[$siteController, 'payment']);
+$app->router->get('/takeawaypayments',[$siteController, 'takeaway_payment']);
 $app->router->get('/cash_confirmation',[$siteController, 'cash_confirmation']);
 $app->router->get('/card_payment',[$siteController, 'card_payment']);
 
@@ -197,6 +198,13 @@ $app->router->get('/get/offer', function() use ($offerController) {
 });
 
 $app->router->post('/offer/delete', [$offerController, 'deleteOffer']);
+$app->router->post('/offer/update', [$offerController, 'updateOffer']);
+
+$app->router->get('/offer/getOne', function() use ($offerController) {
+    $offerNo = $_GET['offerId'];
+    $offerController->getOfferDetailsOne($offerNo);
+});
+
 
 
 $app->router->get('/reservation/otp', function() use ($reservationController) {
@@ -360,11 +368,12 @@ $app->router->get('/gettakeawayBookedData', function() use ($orderController) {
     $orderController->gettakeawayBookedData($userId);
 });
 
+$app->router->post('/order/cancelTakeawayBooking', [$orderController, 'canceltakeawaybooking']);
 
 //cheforder update
 $app->router->post('/order/confirm/orderMeals', [$orderController, 'orderMealsConfirmation']);
 $app->router->post('/order/confirm/orderMeals/accept', [$orderController, 'orderMealsAcceptance']);
-
+$app->router->post('/order/confirm/mealDone', [$orderController, 'orderMealDone']);
 
 //staff data get
 $app->router->get('/user/data/staff', function() use ($userController) {
