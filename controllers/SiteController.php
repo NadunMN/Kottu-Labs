@@ -285,6 +285,18 @@ class SiteController extends Controller
         return $this->render('stewardMenu');
     }
 
+    public function mealReport(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('mealReport');
+    }
+
+    public function orderReport(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('orderReport');
+    }
+
     
 }
 ?>

@@ -417,6 +417,12 @@ $app->router->get('/admin/reports/meals', [$adminController, 'mealsReport']);
 
 
 
+//report
+$app->router->get('/mealReport', [$siteController, 'mealReport']);
+$app->router->get('/orderReport', [$siteController, 'orderReport']);
+
+
+
 
 
 
