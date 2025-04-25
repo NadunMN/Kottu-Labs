@@ -97,6 +97,12 @@ class SiteController extends Controller
         return $this->render('payments');
     }
 
+    public function takeaway_payment(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('takeawaypayments');
+    }
+
     public function otp(Request $request,Response $response)
     {
         $this->setLayout('auth');

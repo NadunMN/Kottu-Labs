@@ -189,7 +189,7 @@ class PaymentController extends Controller
                 'merchant_id' => $merchant_id,
                 'return_url' => 'http://localhost:8080/payment/success',
                 'cancel_url' => 'http://localhost:8080/payment/cancel',
-                'notify_url' => 'http://localhost:8080/payment/notify',
+                'notify_url' => 'https://05fe-192-248-22-102.ngrok-free.app/payment/notify',
                 'order_id' => $payment['order_id'],
                 'items' => $items,
                 'amount' => number_format($totalAmount, 2, '.', ''),
@@ -226,17 +226,40 @@ class PaymentController extends Controller
         ));
 
         if ($localHash === $postData['md5sig'] && $postData['status_code'] == 2) {
-            // Payment successful
-            $orderId = $postData['order_id'];
-            $payment = Payment::findOneOriginal(['order_id' => $orderId]);
-
-            if ($payment) {
-                $payment->payment_status = 'Completed';
-                $payment->update();
+            try {
+                // Find the payment by ID
+                $payment = Payment::findOneOriginal(['payment_id' => $paymentId]);
+    
+                if (!$payment) {
+                    http_response_code(404); // Not Found
+                    echo json_encode(['error' => 'Payment not found']);
+                    return;
+                }
+    
+                // Retrieve the reservation number associated with the payment
+                $reservationNo = Payment::getReservationNoByPaymentId($paymentId);
+    
+                if (!$reservationNo) {
+                    http_response_code(404); // Not Found
+                    echo json_encode(['error' => 'Reservation not found for the payment']);
+                    return;
+                }
+    
+                // Update all payments
+                $updateResult = Payment::updatePaymentsByReservation($reservationNo, $newStatus, $paymentType);
+    
+                if ($updateResult) {
+                    http_response_code(200); // OK
+                    echo json_encode(['success' => 'Payment status updated successfully']);
+                } else {
+                    http_response_code(500); // Internal Server Error
+                    echo json_encode(['error' => 'Failed to update payment status']);
+                }
+            } catch (\Exception $e) {
+                error_log("Error updating payment status: " . $e->getMessage());
+                http_response_code(500); // Internal Server Error
+                echo json_encode(['error' => 'An error occurred', 'details' => $e->getMessage()]);
             }
-
-            http_response_code(200); // OK
-            echo "Payment verified successfully";
         } else {
             http_response_code(400); // Bad Request
             echo "Payment verification failed";

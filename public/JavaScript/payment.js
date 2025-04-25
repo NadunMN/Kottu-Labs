@@ -17,7 +17,7 @@ function getQueryParam(param) {
 
 // Get the reservationId from the URL
 const reservationId = getQueryParam('reservationId');
-console.log("Reservation ID:", reservationId);
+
 // Function to initiate PayHere payment
 function initiatePayHerePayment() {
   if (!reservationId) {

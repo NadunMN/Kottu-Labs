@@ -518,6 +518,7 @@ class Order extends OrderModel
         }
     }
 
+
     // public static function updateMealStatus($orderMealId, $status, $chefId = null) {
     //     try {
     //         $db = Database::getConnection(); // Adjust this to your DB class
@@ -534,5 +535,26 @@ class Order extends OrderModel
     //         return false;
     //     }
     // }
+
+    public static function deleteByReservationId($reservationId) {
+        $tableName = static::tableName();
+        $sql = "
+            DELETE o
+            FROM $tableName o
+            JOIN payments p ON o.order_id = p.order_id
+            WHERE o.reservation_no = :reservation_no AND p.payment_status != 2
+        ";
+        $statement = self::prepare($sql);
+        $statement->bindValue(':reservation_no', $reservationId);
+    
+        try {
+            return $statement->execute();
+        } catch (\PDOException $e) {
+            error_log("Error deleting booked orders: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+
 
 }

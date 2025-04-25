@@ -112,6 +112,7 @@ $app->router->post('/order/update-status', [$orderController, 'updateStatus']); 
 
 //maheshs routes
 $app->router->get('/payment',[$siteController, 'payment']);
+$app->router->get('/takeawaypayments',[$siteController, 'takeaway_payment']);
 $app->router->get('/cash_confirmation',[$siteController, 'cash_confirmation']);
 $app->router->get('/card_payment',[$siteController, 'card_payment']);
 
@@ -367,6 +368,7 @@ $app->router->get('/gettakeawayBookedData', function() use ($orderController) {
     $orderController->gettakeawayBookedData($userId);
 });
 
+$app->router->post('/order/cancelTakeawayBooking', [$orderController, 'canceltakeawaybooking']);
 
 //cheforder update
 $app->router->post('/order/confirm/orderMeals', [$orderController, 'orderMealsConfirmation']);
