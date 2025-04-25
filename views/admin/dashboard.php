@@ -188,6 +188,58 @@
         </div>
     </div>
 
+    <!-- Meals Report Modal -->
+    <!-- Meals Report Modal -->
+    <div id="mealReportModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeMealModal">&times;</span>
+            <h2>Meals Report</h2>
+            
+            <!-- Enhanced Filter Controls for Meals -->
+            <div class="filter-controls">
+                <!-- Date Range -->
+                <div class="filter-group">
+                    <label for="mealStartDate">Start Date:</label>
+                    <input type="date" id="mealStartDate" name="mealStartDate">
+                </div>
+                <div class="filter-group">
+                    <label for="mealEndDate">End Date:</label>
+                    <input type="date" id="mealEndDate" name="mealEndDate">
+                </div>
+                
+                <!-- Branch Filter -->
+                <div class="filter-group">
+                    <label for="mealBranchFilter">Branch:</label>
+                    <select id="mealBranchFilter">
+                        <option value="">All Branches</option>
+                        <option value="1">Wattala</option>
+                        <option value="2">Kelaniya</option>
+                        <option value="3">Kotahena</option>
+                    </select>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="filter-actions">
+                    <button id="applyMealFilters" class="filter-btn">Apply Filters</button>
+                    <button id="resetMealFilters" class="filter-btn">Reset</button>
+                </div>
+            </div>
+            
+            <div class="modal-body">
+                <table class="report-table">
+                    <thead>
+                        <tr>
+                            <th>Meal ID</th>
+                            <th>Meal Name</th>
+                            <th>Quantity Sold</th>
+                            <th>Total Revenue (Rs.)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mealReportTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 
     <script src="/JavaScript/chart.js"></script>
