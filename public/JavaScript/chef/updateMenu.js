@@ -190,7 +190,9 @@ fetch("/managermenuitem/data")
                                         <td class="meal-id" >${meal.meal_id}</td>
                                         <td>${meal.meal_name}</td>
                                         <td>${mealDescriptions[meal.meal_description]}</td>
-                                        <td>Rs.${meal.meal_price}</td>                                            
+                                        <td>Rs.${meal.meal_price}</td>    
+                                        
+                                        <td>
                                       
                                             <div class="action-buttons">
                                               <button class="status-btn ${meal.meal_status == 1
