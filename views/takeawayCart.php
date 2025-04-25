@@ -15,7 +15,7 @@
                 <h1>Shopping Cart</h1>
                 <div class="header-buttons">
                     <button class="btn btn-outline" id="clearCartBtn">Clear Cart</button>
-                    <button class="btn btn-dark" id="addItemBtn" onclick="window.location.href='/homeMenu'">Add Item</button>
+                    <button class="btn btn-dark" id="addItemBtn" onclick="window.location.href='/takeaway/menu'">Add Item</button>
                 </div>
             </div>
 
@@ -39,7 +39,6 @@
                     <span id="subtotal">Rs.0.00</span>
                 </div>
                 <button class="btn btn-dark btn-full" id="bookingBtn">Booking(0)</button>
-                <button class="btn btn-dark btn-full" id="payNowBtn">Pay Now</button>
             </div>
 
             <div class="booked-section">
@@ -52,5 +51,6 @@
     </div>
 
     <script src="/JavaScript/takeawayCart.js"></script>
+    <script src="https://www.payhere.lk/lib/payhere.js"></script>
 </body>
 </html>

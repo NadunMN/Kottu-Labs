@@ -507,6 +507,33 @@ class OrderController extends Controller
             }
         }
 
+        public function canceltakeawayBooking() {
+            $body = json_decode(file_get_contents('php://input'), true);
+        
+            if (!isset($body['reservation_id'])) {
+                http_response_code(400);
+                echo json_encode(['error' => 'Reservation ID is required']);
+                return;
+            }
+        
+            $reservationId = $body['reservation_id'];
+        
+            try {
+                // Delete booked orders associated with the reservation ID
+                $deleted = Order::deleteByReservationId($reservationId);
+                
+                if ($deleted) {
+                    echo json_encode(['success' => true]);
+                } else {
+                    echo json_encode(['error' => 'Failed to cancel booking']);
+                }
+            } catch (\Exception $e) {
+                error_log("Error canceling booking: " . $e->getMessage());
+                http_response_code(500);
+                echo json_encode(['error' => 'An error occurred while canceling the booking']);
+            }
+        }
+
     public function managerOrderHistory()
     {
         if (Application::$app->user) {
