@@ -1,0 +1,208 @@
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: #f7f9fc;
+    }
+
+    .payment-container-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 90vh;
+    }
+    
+    .payment-container {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      width: 100%;
+      max-width: 500px;
+      overflow: hidden;
+    }
+    
+    .payment-header {
+      background-color: #EE3E3F;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .payment-header h1 {
+      font-size: 22px;
+      font-weight: 600;
+    }
+    
+    .payment-body {
+      padding: 25px;
+    }
+    
+    .payment-summary {
+      background-color: #f8faff;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 25px;
+    }
+    
+    .payment-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    
+    .payment-description {
+      color: #6b7280;
+      font-size: 14px;
+    }
+    
+    .payment-method-selector {
+      margin-bottom: 20px;
+    }
+    
+    .payment-method-title {
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    
+    .payment-methods {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .method-option {
+      flex: 1;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .method-option.selected {
+      border-color: #EE3E3F;
+      background-color: #f0f4ff;
+    }
+    
+    .method-option:hover {
+      border-color: #EE3E3F;
+    }
+    
+    .method-option i {
+      font-size: 24px;
+      color: #EE3E3F;
+      margin-bottom: 8px;
+    }
+    
+    .method-name {
+      font-weight: 600;
+    }
+    
+    .payment-details {
+      margin-top: 20px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 15px;
+      transition: border 0.2s;
+    }
+    
+    input:focus, select:focus {
+      outline: none;
+      border-color: #EE3E3F;
+      box-shadow: 0 0 0 2px rgba(76, 114, 249, 0.1);
+    }
+    
+    .card-details {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .card-details .form-group {
+      flex: 1;
+    }
+    
+    .btn {
+      background-color: #EE3E3F;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 14px;
+      width: 100%;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    
+    .btn:hover {
+      background-color: #3a5cd8;
+    }
+    
+    .cash-payment {
+      text-align: center;
+      padding: 20px 0;
+    }
+    
+    .cash-icon {
+      font-size: 48px;
+      color: #EE3E3F;
+      margin-bottom: 15px;
+    }
+    
+    .cash-instructions {
+      color: #4b5563;
+      margin-bottom: 20px;
+    }
+    
+    /* Hide sections based on payment method */
+    .payment-form[data-method="card"] .cash-details,
+    .payment-form[data-method="cash"] .card-details {
+      display: none;
+    }
+
+    /* Icons */
+    .icon {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin-bottom: 8px;
+    }
+    
+    .icon-card {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23EE3E3F'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z'%3E%3C/path%3E%3C/svg%3E");
+    }
+    
+    .icon-cash {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23EE3E3F'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z'%3E%3C/path%3E%3C/svg%3E");
+    }
+    
+    .icon-large-cash {
+      width: 48px;
+      height: 48px;
+    }
+  
