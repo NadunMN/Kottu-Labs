@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>String Validation</title>
-    <!-- <link rel="stylesheet" href="/CSS/enterpin.css"> -->
+    <link rel="stylesheet" href="/CSS/enterpin.css">
 
     <style>
 
@@ -61,7 +61,7 @@ h1 {
 }
 
 .input-field:focus {
-  border-color: #3498db;
+  border-color: black;
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
 }
 
@@ -70,7 +70,7 @@ h1 {
 }
 
 .action-btn {
-  background-color: #3498db;
+  background-color: black;
   color: white;
   border: none;
   border-radius: 8px;
@@ -82,7 +82,7 @@ h1 {
 }
 
 .action-btn:hover {
-  background-color: #2980b9;
+  background-color: #EE3E3F;
 }
 
 .action-btn:active {

@@ -11,6 +11,7 @@ use app\models\Reservation;
 use app\models\Order;
 use app\models\User;
 use app\models\Payment;
+use Twilio\Rest\Microvisor\V1\AppList;
 
 class PaymentController extends Controller
 {
@@ -216,55 +217,55 @@ class PaymentController extends Controller
         }
     }
 
-    public function handleNotify(){
+    // public function handleNotify(){
 
-        $postData = $_POST;
+    //     $postData = $_POST;
 
-        $merchant_secret = "MjY1MjE1MTEzNTUxOTQ0MzEwMTg5ODU5NzI4MTMzMTUxMTczMDM="; // Replace with your Merchant Secret
-        $localHash = strtoupper(md5(
-            $postData['merchant_id'] . $postData['order_id'] . $postData['payhere_amount'] . $postData['payhere_currency'] . $postData['status_code'] . strtoupper(md5($merchant_secret))
-        ));
+    //     $merchant_secret = "MjY1MjE1MTEzNTUxOTQ0MzEwMTg5ODU5NzI4MTMzMTUxMTczMDM="; // Replace with your Merchant Secret
+    //     $localHash = strtoupper(md5(
+    //         $postData['merchant_id'] . $postData['order_id'] . $postData['payhere_amount'] . $postData['payhere_currency'] . $postData['status_code'] . strtoupper(md5($merchant_secret))
+    //     ));
 
-        if ($localHash === $postData['md5sig'] && $postData['status_code'] == 2) {
-            try {
-                // Find the payment by ID
-                $payment = Payment::findOneOriginal(['payment_id' => $paymentId]);
+    //     if ($localHash === $postData['md5sig'] && $postData['status_code'] == 2) {
+    //         try {
+    //             // Find the payment by ID
+    //             $payment = Payment::findOneOriginal(['payment_id' => $paymentId]);
     
-                if (!$payment) {
-                    http_response_code(404); // Not Found
-                    echo json_encode(['error' => 'Payment not found']);
-                    return;
-                }
+    //             if (!$payment) {
+    //                 http_response_code(404); // Not Found
+    //                 echo json_encode(['error' => 'Payment not found']);
+    //                 return;
+    //             }
     
-                // Retrieve the reservation number associated with the payment
-                $reservationNo = Payment::getReservationNoByPaymentId($paymentId);
+    //             // Retrieve the reservation number associated with the payment
+    //             $reservationNo = Payment::getReservationNoByPaymentId($paymentId);
     
-                if (!$reservationNo) {
-                    http_response_code(404); // Not Found
-                    echo json_encode(['error' => 'Reservation not found for the payment']);
-                    return;
-                }
+    //             if (!$reservationNo) {
+    //                 http_response_code(404); // Not Found
+    //                 echo json_encode(['error' => 'Reservation not found for the payment']);
+    //                 return;
+    //             }
     
-                // Update all payments
-                $updateResult = Payment::updatePaymentsByReservation($reservationNo, $newStatus, $paymentType);
+    //             // Update all payments
+    //             $updateResult = Payment::updatePaymentsByReservation($reservationNo, $newStatus, $paymentType);
     
-                if ($updateResult) {
-                    http_response_code(200); // OK
-                    echo json_encode(['success' => 'Payment status updated successfully']);
-                } else {
-                    http_response_code(500); // Internal Server Error
-                    echo json_encode(['error' => 'Failed to update payment status']);
-                }
-            } catch (\Exception $e) {
-                error_log("Error updating payment status: " . $e->getMessage());
-                http_response_code(500); // Internal Server Error
-                echo json_encode(['error' => 'An error occurred', 'details' => $e->getMessage()]);
-            }
-        } else {
-            http_response_code(400); // Bad Request
-            echo "Payment verification failed";
-        }
-    }
+    //             if ($updateResult) {
+    //                 http_response_code(200); // OK
+    //                 echo json_encode(['success' => 'Payment status updated successfully']);
+    //             } else {
+    //                 http_response_code(500); // Internal Server Error
+    //                 echo json_encode(['error' => 'Failed to update payment status']);
+    //             }
+    //         } catch (\Exception $e) {
+    //             error_log("Error updating payment status: " . $e->getMessage());
+    //             http_response_code(500); // Internal Server Error
+    //             echo json_encode(['error' => 'An error occurred', 'details' => $e->getMessage()]);
+    //         }
+    //     } else {
+    //         http_response_code(400); // Bad Request
+    //         echo "Payment verification failed";
+    //     }
+    // }
 
     public function handleReturn()
     {
@@ -312,6 +313,76 @@ class PaymentController extends Controller
             echo json_encode(['error' => 'Failed to fetch order details', 'details' => $e->getMessage()]);
         }
 
+    }
+
+
+    public function getpaymentDataUnreg($reservationNo)
+    {
+        if (Application::$app->user) {
+            try 
+            {
+                       
+                $payments = Payment::findPaymentsUnReg($reservationNo);
+                echo json_encode($payments);
+            }
+            catch (\Exception $e) 
+            {
+                // Log the error and return a proper JSON response
+                error_log("Error fetching payment data: " . $e->getMessage());
+                http_response_code(500); // Set HTTP status code to 500
+                echo json_encode(['error' => 'Failed to fetch payment data', 'details' => $e->getMessage()]);
+            }
+        }
+        else {
+            http_response_code(401); // Set HTTP status code to 401 (Unauthorized)
+            echo json_encode(['error' => 'No user is logged in']);
+        }
+       
+    }
+
+
+
+    public function updateUnregPaymentStatus()
+    {   
+        $requestBody = Application::$app->request->getBody();
+
+        $reservationNo = $requestBody['reservationNo'] ?? null;
+        $paymentType = $requestBody['method'] ?? null;
+        $stewardId = $requestBody['stewardId'] ?? null; // Optional field
+        $paymentStatus = 2;
+
+        $payments = Payment::findPaymentsUnReg($reservationNo);
+
+        if (!$payments) {
+            http_response_code(404); // Not Found
+            echo json_encode(['error' => 'No orders found for the reservation']);
+            return;
+        }
+
+        foreach ($payments as $payment) {
+            $paymentId = $payment['payment_id'] ?? null;
+            if ($paymentId) {
+                // Update the payment status
+                $updateResult = Payment::updatePaymentStatus($paymentId, $paymentType, $paymentStatus, $stewardId);
+
+                if (!$updateResult) {
+                    http_response_code(500); // Internal Server Error
+                    echo json_encode(['error' => 'Failed to update payment status']);
+                    return;
+                }
+
+                echo json_encode(['success' => 'Payment status updated successfully']);
+                return;
+            } else {
+                http_response_code(404); // Not Found
+                echo json_encode(['error' => 'Payment ID not found']);
+                return;
+            }
+        }
+
+
+
+        
     }
     
   }
