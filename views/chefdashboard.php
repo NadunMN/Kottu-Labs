@@ -39,15 +39,33 @@ iframe {
 
 </head>
 <body>
+
+    
     <div class="dashboard-container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- <h2>Dashboard</h2> -->
-            <ul>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="company-header">
+            <div class="company-name">Kottu Labs</div>
+            <div class="company-title">
+                <div class="logo">K</div>
+                <div class="name">Kottu Labs</div>
+            </div>
+        </div>
+        
+        <ul>
+            <li id="home" class="menu-item">
+                <img src="/Photo/icon/home.png" alt="Home">
+                <a href="/">Home</a>
+            </li>
+        </ul>
+
+        <div class="section-header">GENERAL</div>
+         <ul>
+                <?php use app\core\Application; ?>
                 <?php
                     $menuItems = [
-                        ['id' => 'viewOrder', 'icon' => '/Photo/icon/orderview.png', 'text' => 'View Order'],
-                        ['id' => 'updatemenu', 'icon' => '/Photo/icon/menu.png', 'text' => 'Update Menu'],
+                        ['id' => 'viewOrder', 'icon' => '/Photo/icon/history.png', 'text' => 'View Order'],
+                        ['id' => 'updatemenu', 'icon' => '/Photo/icon/menu (1).png', 'text' => 'Update Menu'],
                     ];
                     foreach ($menuItems as $item) {
                         echo "<li id='{$item['id']}' class='menu-item'>
@@ -57,14 +75,40 @@ iframe {
                     }
                 ?>
             </ul>
-        </div>
+
+
+        <div class="section-header">SETTINGS</div>
+
+        <ul>
+
+            <?php if(Application::$app->user):?>
+                <li id="home" class="menu-item">
+                <img src="/Photo/icon/user-interface.png" alt="Home">
+                <a href="/logout">Logout</a>
+                </li>
+            <?php else: ?>
+            <li id="home" class="menu-item">
+                <img src="/Photo/icon/home.png" alt="Home">
+                <a href="/">Login</a>
+            </li>
+            <?php endif; ?>
+
+
+        </ul>
         
+
+    </div>
+    
+
+        <!-- Your main content here -->
+          
         <!-- Main Content -->
         <div class="main-content admin-main-content" id="main-content">
-        <iframe id="dynamicIframe" src="/initialPage.html"></iframe>
-
+            <iframe id="dynamicIframe" src="/initialPage.html"></iframe>
         </div>
-    </div>
+
+</div>
+
 
     <script src="/JavaScript/chefdashboard.js"></script>
     

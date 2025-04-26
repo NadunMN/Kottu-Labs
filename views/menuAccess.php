@@ -61,7 +61,7 @@ h1 {
 }
 
 .input-field:focus {
-  border-color: #3498db;
+  border-color: black;
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
 }
 
@@ -70,7 +70,7 @@ h1 {
 }
 
 .action-btn {
-  background-color: #3498db;
+  background-color: black;
   color: white;
   border: none;
   border-radius: 8px;
@@ -82,7 +82,7 @@ h1 {
 }
 
 .action-btn:hover {
-  background-color: #2980b9;
+  background-color: #ee3e3f;
 }
 
 .action-btn:active {
@@ -129,7 +129,7 @@ h1 {
 </head>
 <body>
 
-<div class="container-mainwraaper" id="container-mainwraaper">
+<div class="container-mainwraaper" id="container-mainwraaper" style="display: flex;">
     <div class="container-aa">
         <h1>Reservation Validation</h1>
         
@@ -203,7 +203,7 @@ h1 {
     </div>
 
     <div id="successMessage" class="success-pop">
-        <p>Reservation added successfully!</p>
+        <p>Table added successfully!</p>
     </div>
 
 

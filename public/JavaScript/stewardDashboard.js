@@ -21,7 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
     viewDineInOrders: '/profile/dine-in-orders',
     viewTakeAwayOrders: '/profile/take-away-orders',
     customerArrivals: '/profile/customer-arrivals',
-    customerPayments: '/profile/customer-payments'
+    customerPayments: '/profile/customer-payments',
+    enterpin: '/menuaccess',
+    accessmenu: '/unregmenu',
+    getpayment: '/unregpayment',
   };
 
   menuItems.forEach(item => {

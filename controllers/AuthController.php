@@ -21,71 +21,36 @@ class AuthController extends Controller
     }
 
 
-//     public function login(Request $request, Response $response)
-// {
-//     $loginForm = new LoginForm();
-//     $user = new User();
-
-//     if ($request->isPost()) {
-//         $loginForm->loadData($request->getBody());
-
-//         $email = $loginForm->email;
-//         $mobile_number = $loginForm->mobile_number;
-
-//         $user = User::findOne(['email' => $email]);
-
-//         if ($user) {
-//             // Check the user's position
-//             if ($user->position !== 'customer' && !$loginForm->password) {
-//                 // Return the user's position if not a customer
-                
-//                 $this->setLayout('auth');
-//                 return $this->render('login', [
-//                     'model' => $loginForm,
-//                     'error' => $user->position // Pass the position as an error
-//                 ]);
-//             }else if ($user->position !== 'customer' && $loginForm->password) {
-//                 // Proceed with login if the user is a customer
-//                 if ($loginForm->validate() && $loginForm->login()) {
-//                     $response->redirect('/');
-//                     return;
-                    
-//                 }
-//                 $this->setLayout('auth');
-//                     return $this->render('login', [
-//                         'model' => $loginForm
-//                     ]);
-
-                
-//             }
-//         }
-
-//         // error_log("User found: " . print_r($loginForm, true));
-//         // exit;
-        
-//         // Proceed with login if the user is a customer
-//         if ($loginForm->validate() && $loginForm->login()) {
-//             $response->redirect('/');
-//             return;
-//         }
-//     }
-
-//     $this->setLayout('auth');
-//     return $this->render('login', [
-//         'model' => $loginForm
-//     ]);
-// }
-
-
-
 public function login(Request $request, Response $response)
 {
     $loginForm = new LoginForm();
+
     if($request->isPost()){
         $loginForm->loadData($request->getBody());
 
         if($loginForm->validate() && $loginForm->login()){
-            $response->redirect('/');
+            $user = User::findOne(['email' => $loginForm->email]);
+
+            if($user->position == 'customer') {
+                // Check the user's position
+                $response->redirect('/');
+                return;
+            }else if($user->position == 'admin') {
+                // Check the user's position
+                $response->redirect('/profile');
+                return;
+            }else if($user->position == 'steward') {
+                // Check the user's position
+                $response->redirect('/profile');
+                return;
+            }else if($user->position == 'chef') {                // Check the user's position
+                $response->redirect('/profile');
+                return;
+            }else{
+                // Check the user's position
+                $response->redirect('/profile');
+                return;
+            }
             
             return;
         }

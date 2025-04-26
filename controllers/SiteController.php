@@ -50,25 +50,25 @@ class SiteController extends Controller
 
     public function adminDashboard(Request $request,Response $response)
     {
-        $this->setLayout('dashboard');
+        $this->setLayout('auth');
         return $this->render('admindashboard');
     }
 
     public function stewardDashboard(Request $request,Response $response)
     {
-        $this->setLayout('dashboard');
+        $this->setLayout('auth');
         return $this->render('stewarddashboard');
     }
 
     public function managerDashboard(Request $request,Response $response)
     {
-        $this->setLayout('dashboard');
+        $this->setLayout('auth');
         return $this->render('managerDashboard');
     }
 
     public function chefdashboard(Request $request,Response $response)
     {
-        $this->setLayout('dashboard');
+        $this->setLayout('auth');
         return $this->render('chefdashboard');
     }
 
@@ -267,23 +267,24 @@ class SiteController extends Controller
 
     public function menuAccess(Request $request,Response $response)
     {
-        $this->setLayout('dashboard');
+        $this->setLayout('auth');
         return $this->render('menuAccess');
     }
 
 
     public function unRegMenu(Request $request,Response $response)
     {
-        $this->setLayout('dashboard');
+        $this->setLayout('auth');
         return $this->render('UnRegMenu');
     }
 
 
     public function stewardMenu(Request $request,Response $response)
     {
-        $this->setLayout('dashboard');
+        $this->setLayout('auth');
         return $this->render('stewardMenu');
     }
+
 
     public function mealReport(Request $request,Response $response)
     {
@@ -297,11 +298,26 @@ class SiteController extends Controller
         return $this->render('orderReport');
     }
 
+
     public function reservationReport(Request $request,Response $response)
     {
         $this->setLayout('auth');
         return $this->render('reservationReport');
     }
+
+    public function unRegPayment(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('unRegPayment');
+    }
+
+    public function paymentCollection(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('paymentCollection');
+
+    }
+
     
 }
 ?>

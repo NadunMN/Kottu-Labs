@@ -21,13 +21,15 @@ fetch(`/user/data`)
             // takeAwayButton.disabled = true;
 
             dineInButton.addEventListener('click', function() {
-                showToast("Reserve your seat at the feast — log in now", { type: 'info' });
+                // showToast("Reserve your seat at the feast — log in now", { type: 'info' });
                 window.location.href = '/dinein';
             });
+
+
             takeAwayButton.addEventListener('click', function() {
-                showToast("Reserve your seat at the feast — log in now", { type: 'info' });
+                showToast("Please register to place a takeaway order.", { type: 'info' });
                 // Optionally, you can also set the onclick for the takeAwayButton
-                window.location.href='/selectBranch';
+                // window.location.href='/selectBranch';
          
             });
            

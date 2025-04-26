@@ -307,61 +307,80 @@ class OrderController extends Controller
         }
     }
 
-    public function updateOrderStatus()
-    {
-        $body = json_decode(file_get_contents('php://input'), true);
+   
+public function updateOrderStatus()
+{
+    $body = json_decode(file_get_contents('php://input'), true);
 
-        if (!isset($body['order_id']) || !isset($body['order_status'])) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Invalid request data']);
-            return;
-        }
+    if (!isset($body['om_id']) && !isset($body['order_id'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Invalid request data']);
+        return;
+    }
 
-        $orderId = $body['order_id'];
-        $newStatus = $body['order_status'];
+    $response = [];
+    $success = true;
 
-        $stewardId = $body['steward_id'];
-        $chefId = $body['chef_id'];
+    if (isset($body['om_id'])) {
+        $orderMeals = OrderMeals::findOneOriginal(['om_id' => $body['om_id']]);
+        if ($orderMeals) {
+            $orderMeals->status = $body['meal_status'];
+            $orderMeals->steward_id = $body['steward_id'];
 
-
-        // Validate order status
-        if (!in_array($newStatus, [0, 1, 2])) { 
-            http_response_code(400);
-            echo json_encode(['error' => 'Invalid order status']);
-            return;
-        }
-
-        // Find the order by ID
-        $order = Order::findOneOriginal(['order_id' => $orderId]);
-
-        if (!$order) {
-            http_response_code(404);
-            echo json_encode(['error' => 'Order not found']);
-            return;
-        }
-
-        // Update the order status and steward ID
-        $order->order_status = $newStatus;
-
-        if ($chefId) {
-            $order->chef_id = $chefId;
-
-            $order->steward_id = null;
-
-        }
-
-        if ($stewardId) {
-            $order->steward_id = $stewardId;
-        }
-
-        if ($order->update()) {
-            http_response_code(200);
-            echo json_encode(['message' => 'Order status updated successfully']);
+            if ($orderMeals->update()) {
+                $orderId = $orderMeals->order_id;
+                $allMealsCompleted = OrderMeals::findOrdersWithAllMealsCompleted($orderId);
+            
+                if ($allMealsCompleted) {
+                    $order = Order::findOneOriginal(['order_id' => $orderId]);
+                    if ($order) {
+                        $order->order_status = 2; // Update order status to 2
+                        $order->update(); // Save the updated order status
+                    }
+                }
+            }
+            
         } else {
-            http_response_code(500);
-            echo json_encode(['error' => 'Failed to update order status']);
+            $success = false;
+            $response['error'] = 'Order meal not found';
         }
     }
+
+    if (isset($body['order_id'])) {
+        $orders = Order::findOneOriginal(['order_id' => $body['order_id']]);
+        
+        if ($orders) {
+            $orders->order_status = $body['order_status'] ?? $orders->order_status;
+            $orders->steward_id = $body['steward_id'] ?? $orders->steward_id;
+            $orderMeals = OrderMeals::findAllOriginal(['order_id' => $body['order_id']]);
+            foreach ($orderMeals as $meal) {
+                $meal->status = 'completed';
+                $meal->steward_id = $body['steward_id'] ?? $meal->steward_id;
+                if (!$meal->update()) {
+                    $success = false;
+                    $response['error'] = 'Failed to update order meal status for meal ID ' . $meal->om_id;
+                    break;
+                }
+            }
+
+            if (!$orders->update()) {
+                $success = false;
+                $response['error'] = 'Failed to update order status';
+            }
+        } else {
+            $success = false;
+            $response['error'] = 'Order not found';
+        }
+    }
+
+    if ($success) {
+        http_response_code(200);
+        echo json_encode(['message' => 'Order status updated successfully']);
+    } else {
+        http_response_code(500);
+        echo json_encode($response);
+    }
+}
 
     // Function to get order ID
     public function getOrderIdByReservation($reservationId) {
@@ -593,7 +612,7 @@ class OrderController extends Controller
             $orderId = $orderMeals->order_id; // Assuming you have the order ID from the request
 
             $orderMeals->orderMealsStatusUpdate(
-                ['status' => 'completed'],   // SET clause
+                ['status' => 'ready'],   // SET clause
                 ['order_id' => $orderId]            // WHERE clause
             );
                         

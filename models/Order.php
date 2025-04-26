@@ -154,6 +154,7 @@ class Order extends OrderModel
                 meals.meal_name,
                 meals.meal_id,
                 om.om_id,
+                om.status,
                 r.table_number,
                 r.type,
                 r.reservation_name
@@ -463,16 +464,21 @@ class Order extends OrderModel
         $statement = self::prepare("
             SELECT 
                 o.*,
-                om.quantity,
+                SUM(om.quantity) AS quantity,
                 m.meal_name,
                 r.table_number,
-                r.reservation_name
+                r.reservation_name,
+                om.status AS meal_status,
+                om.om_id
             FROM {$tableName} o
             JOIN order_meals om ON o.order_id = om.order_id
             JOIN meals m ON om.meal_id = m.meal_id
             JOIN reservations r ON o.reservation_no = r.reservation_no
             JOIN branches b ON o.branch_id = b.branch_id
             WHERE b.branch_id = :branch_id AND r.type = 'dinein' AND r.reservation_date = :current_date
+            GROUP BY om.meal_id, o.order_id
+
+            
         ");
 
         $statement->bindValue(":branch_id", $branch_id);
@@ -504,6 +510,7 @@ class Order extends OrderModel
             JOIN reservations r ON o.reservation_no = r.reservation_no
             JOIN branches b ON o.branch_id = b.branch_id
             WHERE b.branch_id = :branch_id AND r.type = 'takeaway' AND r.reservation_date = :current_date
+            GROUP BY om.meal_id, o.order_id
         ");
 
         $statement->bindValue(":branch_id", $branch_id);

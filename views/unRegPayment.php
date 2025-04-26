@@ -131,7 +131,7 @@ h1 {
 
 <div class="container-mainwraaper" id="container-mainwraaper">
     <div class="container-aa">
-        <h1>Menu Access</h1>
+        <h1>Get Payments</h1>
         
         <div class="setup-section">
             <input type="text" id="input-string" class="input-field" placeholder="Enter your string">
@@ -167,7 +167,7 @@ h1 {
         }
     </style>
 
-    <script src="/JavaScript/UnRegMenu.js"></script>
+    <script src="/JavaScript/unRegPayment.js"></script>
     <!-- <script src="/JavaScript/enterpin.js"></script> -->
 
 </body>

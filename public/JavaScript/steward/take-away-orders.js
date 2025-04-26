@@ -132,27 +132,28 @@ async function fetchOrders() {
 
             const mealsDropdown = order.meals.map((meal) => `<li>${meal.mealName} - ${meal.quantity}</li>`).join("");
             row.innerHTML = `
-                <td class="name">${order.reservation_name}</td>
-                <td class="order_id">${order.order_id}</td> 
-                <td>${order.order_time}</td>
+                <td class="name">${order.reservation_name ?? "Unknown"}</td>
+                <td class="order_id">${order.order_id ?? "N/A"}</td> 
+                <td>${order.order_time ?? "N/A"}</td>
                 <td>
                     <details>
                         <summary>View Meals</summary>
                         <ul>${mealsDropdown}</ul>
                     </details>
                 </td>
-                <td>${order.reservation_no}</td>
+                <td>${order.reservation_no ?? "N/A"}</td>
                 <td class="status">
-                    <span class="status-${order.order_status}">
+                    <span class="status-${order.order_status ?? "unknown"}">
                         ${order.order_status == 1 ? "Ready" : order.order_status == 2 ? "Completed" :  "Processing"}
                     </span>
                 </td>
-                <td class="status">
-                    <span class="status-${order.confirmation_status}">
-                        ${order.confirmation_status === 0 ? "NO" : "YES"}
-                    </span>
+                <td class="arrival">
+                <span class="status-${order.confirmation_status ?? "unknown"}">
+                            ${order.confirmation_status === 0 ? "NO" : "YES"}
+                        </span>
                     ${order.order_status === 1 && order.confirmation_status === 1 ? `<button class="confirm-btn" data-order-id="${order.order_id}">Confirm</button>` : ""}
                 </td>
+
             `;
             tableContent.appendChild(row);
         });
