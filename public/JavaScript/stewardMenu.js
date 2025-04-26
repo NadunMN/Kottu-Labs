@@ -16,7 +16,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const reservationNo = urlParams.get('reservationNo');
 
 localStorage.setItem('reservationNo', reservationNo); // Store the reservation number in local storage
-// console.log("Temp ID:", reservationNo); // Log the temp_id for debugging
+
 
 
 
@@ -39,6 +39,7 @@ localStorage.setItem('reservationNo', reservationNo); // Store the reservation n
 
     let userId = null;
     let tempId = null;
+    let branchId = null;
     
     try {
         // Fetch user data from the backend
@@ -49,8 +50,8 @@ localStorage.setItem('reservationNo', reservationNo); // Store the reservation n
             console.error(userData.error);
         } else {
             userId = userData.id;
+            branchId = userData.branch_id;
         }
-    
         // Fetch reservation data
         const reservationResponse = await fetch(`/reservartionData?reservationNo=${reservationNo}`);
         const reservationData = await reservationResponse.json();
@@ -60,19 +61,20 @@ localStorage.setItem('reservationNo', reservationNo); // Store the reservation n
         } else {
             if (reservationData.reservation.tempId !== null) {
                 tempId = reservationData.reservation.temp_id;
-                console.log("Temp ID:", tempId); // Log the temp_id for debugging
             } else {
                 userId = reservationData.reservation.user_id;
-                console.log("User ID:", userId); // Log the user_id for debugging
             }
+        }
+        // Call loadMeals only after branchId is set
+        if (branchId) {
+          loadMeals(branchId, searchSelection.value);
+        } else {
+            console.error("Branch ID is not set. Unable to load meals.");
         }
     } catch (error) {
         console.error('Error fetching data:', error);
     }
     
-    // Log the final values after both fetch requests are completed
-    console.log("Final User ID:", userId);
-    console.log("Final Temp ID:", tempId);
     
 
 
@@ -194,7 +196,7 @@ localStorage.setItem('reservationNo', reservationNo); // Store the reservation n
             const mealId = button.getAttribute('data-meal-id');
 
             const requestBody = JSON.stringify({ meal_id: mealId, user_id: userId, quantity: 1, temp_id: tempId });
-            console.log("Request Body:", requestBody);
+            
             
             fetch('/cart/add', {
                 method: 'POST',
@@ -206,7 +208,6 @@ localStorage.setItem('reservationNo', reservationNo); // Store the reservation n
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // alert('Added to cart successfully!');
 
                     fetch('/user/store', {
                       method:'POST',
@@ -229,11 +230,13 @@ localStorage.setItem('reservationNo', reservationNo); // Store the reservation n
 
 
                 } else {
+                  console.log(data.error);
                     // alert('Failed to add to cart: ' + (data.message || 'Please try again.'));
-                    showToast('Failed to add to cart: ' + (data.message || 'Please try again.'), { type: 'info' });
+                    showToast('Failed to add to cart: ', { type: 'info' });
                 }
             })
             .catch(error => {
+              console.log(data.error);
                 console.error('Error:', error);
                 // alert('An error occurred. Please try again.');
                 showToast('An error occurred. Please try again.', { type: 'error' });
