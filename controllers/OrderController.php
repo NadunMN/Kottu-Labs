@@ -13,6 +13,7 @@ use app\models\Cart;
 use app\models\OrderMeals;
 use app\models\Payment;
 use app\models\takeawayCart;
+use app\models\BranchMeal;
 use Error;
 use app\models\UnregUser;
 
@@ -120,20 +121,29 @@ class OrderController extends Controller
 
     //store order data in order table
     public function addToCart()
-    {
-        if (Application::$app->user) {
-            $cart = new Cart();
-            $cart->loadData(Application::$app->request->getBody());
+{
+    if (Application::$app->user) {
+        $cart = new Cart();
+        $cart->loadData(Application::$app->request->getBody());
 
+        // Check if the meal exists in branch_meals with status = 1
+        $mealId = $cart->meal_id; // Assuming meal_id is part of the request body
+        $branchId = Application::$app->user->branch_id; // Assuming branch_id is available for the logged-in user
+        $meal = BranchMeal::findOne(['meal_id' => $mealId, 'branch_id' => $branchId, 'meal_status' => 1]);
+        
+        if ($meal) {
             if ($cart->save()) {
                 echo json_encode(['success' => 'Meal Added successfully']);
             } else {
                 echo json_encode(['error' => 'Failed to add Meal']);
             }
         } else {
-            echo json_encode(['error' => 'No user is logged in']);
+            echo json_encode(['error' => 'Meal is not available or inactive']);
         }
+    } else {
+        echo json_encode(['error' => 'No user is logged in']);
     }
+}
 
     //delete order data in order table
     public function deleteCart()

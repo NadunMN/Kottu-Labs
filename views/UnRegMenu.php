@@ -134,7 +134,7 @@ h1 {
         <h1>Menu Access</h1>
         
         <div class="setup-section">
-            <input type="text" id="input-string" class="input-field" placeholder="Enter your string">
+            <input type="text" id="input-string" class="input-field" placeholder="Enter Reservation Number">
             <button id="verify-btn" class="action-btn">Verify</button>
         </div>
         

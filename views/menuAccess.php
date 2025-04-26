@@ -134,7 +134,7 @@ h1 {
         <h1>Reservation Validation</h1>
         
         <div class="setup-section">
-            <input type="text" id="input-string" class="input-field" placeholder="Enter your string">
+            <input type="text" id="input-string" class="input-field" placeholder="Enter Reservation Number">
             <button id="verify-btn" class="action-btn">Verify</button>
         </div>
         
@@ -184,6 +184,9 @@ h1 {
                                 <option value="5">5</option>
                                 <option value="6">6</option>
                                 <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
                             </select>
                         </div>
                     </div>

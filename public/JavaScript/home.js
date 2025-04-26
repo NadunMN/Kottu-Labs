@@ -50,6 +50,19 @@ fetch(`/user/data`)
                window.location.href='/selectBranch';
             };
         }
+
+        document.querySelector('.button1').addEventListener('click', function () {
+          const image = document.querySelector('.description-card-section-second img');
+          image.style.transition = 'none'; // Reset transition
+          image.style.transform = 'rotate(0deg)'; // Reset rotation
+      
+          // Trigger reflow to apply the reset styles
+          void image.offsetWidth;
+      
+          // Apply the rotation again
+          image.style.transition = 'transform 4s ease';
+          image.style.transform = 'rotate(360deg)';
+      });
     })
     .catch((error) => {
         console.error("Error fetching user data:", error);

@@ -44,7 +44,7 @@ verifyBtn.addEventListener('click', function () {
             } else {
                 // Server confirmed the PIN is correct
                 successMessage.textContent = 'PIN verified successfully!';
-                successMessage.style.display = 'block';
+                successMessage.style.display = 'none';
                 inputField.style.borderColor = '#28a745';
 
                 // Update expectedString if needed (e.g., for future checks)
@@ -61,7 +61,7 @@ verifyBtn.addEventListener('click', function () {
         })
         .catch(error => {
             console.error('Error:', error);
-            errorMessage.textContent = 'An error occurred. Please try again.';
+            errorMessage.textContent = 'Invalid Reservation Number.';
             errorMessage.style.display = 'block';
             inputField.style.borderColor = '#dc3545';
             inputField.style.animation = 'shake 0.5s';
