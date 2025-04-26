@@ -298,6 +298,13 @@ class SiteController extends Controller
         return $this->render('orderReport');
     }
 
+
+    public function reservationReport(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('reservationReport');
+    }
+
     public function unRegPayment(Request $request,Response $response)
     {
         $this->setLayout('auth');

@@ -1,6 +1,3 @@
-const orderReportModal = document.getElementById("orderReportModal");
-const orderReportButton = document.querySelector(".report-btn:first-of-type");
-const closeModal = document.querySelector(".close-modal");
 let allOrders = [];
 
 // Load orders data when page loads
