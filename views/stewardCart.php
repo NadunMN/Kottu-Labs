@@ -7,7 +7,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="/CSS/cart.css" rel="stylesheet">
 </head>
-<body>
+<body class="body-x">
     <div class="container-x">
         <!-- Left Column - Cart -->
         <div class="cart-section">
@@ -39,7 +39,7 @@
                     <span id="subtotal">Rs.0.00</span>
                 </div>
                 <button class="btn btn-dark btn-full" id="bookingBtn">Booking(0)</button>
-                <button class="btn btn-dark btn-full" id="payNowBtn">Pay Now</button>
+                <!-- <button class="btn btn-dark btn-full" id="payNowBtn">Pay Now</button> -->
             </div>
 
             

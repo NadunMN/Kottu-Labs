@@ -9,6 +9,7 @@ const reservationForm = document.getElementById('reservationConfirmationForm');
 const closeButton = document.querySelector('.close-button');
 const pinFormSuccess = document.getElementById('success-message');
 
+
 let steward_branchId;
 
 // Fetch user data
@@ -64,6 +65,8 @@ verifyBtn.addEventListener('click', async function () {
         successMessage.style.display = 'block';
         inputField.style.borderColor = '#28a745';
         expectedString = data.temp_id || expectedString;
+
+        // showToast('PIN verified  successfully!', { type: 'success', duration: 2000 });
 
         pinForm.style.display = 'none';
         reservationModal.style.display = 'flex'; // Changed to flex for centering
@@ -196,6 +199,7 @@ verifyBtn.addEventListener('click', async function () {
 
                 // pinForm.reset(); // Reset the form after successful submission
                 // pinForm.style.display = 'block'; // Change border color to green
+                // showToast('Welcome to the site!', { type: 'info' });
 
 
             } catch (error) {

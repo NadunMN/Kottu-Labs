@@ -52,21 +52,6 @@
     <div class="menu-items">
 
 
-      <div class="card">
-        <div class="card-lable">
-          <p>AVAILABLE</p>
-        </div>
-        <img src="/Photo/offers/AZEEZ RESTAURANT.jpg" alt="Product Image" class="card-image">
-        <div class="card-content">
-          <h2 class="card-title">Product Name</h2>
-          <div class="card-price">Rs. 1999/=</div>
-          <p class="card-description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
-          </p>
-          <button class="view-button" onclick="window.location.href='/offer/offerview'">VIEW DETAILS</button>
-        </div>
-      </div>
-
 
     </div>
   </div>

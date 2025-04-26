@@ -14,8 +14,10 @@ iframe {
     display: block;         /* Remove inline spacing issues */
     height: auto;           /* Allow dynamic height adjustment */
     transition: height 0.3s ease; /* Smooth height transition for dynamic resizing */
-    
-
+    /* background-image: url('/Photo/Untitled-2.jpg');
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat; Prevent repeating the background image */
 }
 
 /* Hide scrollbars in WebKit browsers (Chrome, Safari) */
@@ -92,7 +94,7 @@ use app\core\Application;
                         ['id' => 'enterpin', 'icon' => '/Photo/icon/customer.png', 'text' => 'Arival Confirmation'],
                         ['id' => 'accessmenu', 'icon' => '/Photo/icon/menuaccess.png', 'text' => 'Menu Access'],
                         ['id' => 'getpayment', 'icon' => '/Photo/icon/pay.png', 'text' => 'Get Payment'],
-                        ['id' => 'stewardcart', 'icon' => '/Photo/icon/cart.png', 'text' => 'Order Meals'],
+                        ['id' => 'stewardcart', 'icon' => '/Photo/icon/online-shopping.png', 'text' => 'Order Meals'],
                     ];
                     foreach ($menuItems as $item) {
                         echo "<li id='{$item['id']}' class='menu-item'>

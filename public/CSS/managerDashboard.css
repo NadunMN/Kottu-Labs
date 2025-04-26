@@ -158,6 +158,8 @@ body {
 .sidebar ul li.selected a {
     color: #EE3E3F;
     font-weight: 500;
+    background-color: #FFF3EE;
+
 }
 
 .sidebar ul li img {
@@ -235,12 +237,12 @@ body {
     overflow-y: auto; /* Scrollable content */
     overflow-x: hidden; /* Hide horizontal scrollbar */
     flex: 1;
-    background-color: rgb(255, 255, 255);
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
     border-top-right-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
 }
+
 
 .admin-main-content{
     width: auto;
@@ -248,10 +250,10 @@ body {
     min-height: 100%;
     overflow: hidden;
     flex: 1;
-    background-color: rgb(255, 255, 255);
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
     border-top-right-radius: 10px;
+    
 
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
 }
