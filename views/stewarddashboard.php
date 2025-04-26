@@ -92,6 +92,7 @@ use app\core\Application;
                         ['id' => 'enterpin', 'icon' => '/Photo/icon/customer.png', 'text' => 'Arival Confirmation'],
                         ['id' => 'accessmenu', 'icon' => '/Photo/icon/menuaccess.png', 'text' => 'Menu Access'],
                         ['id' => 'getpayment', 'icon' => '/Photo/icon/pay.png', 'text' => 'Get Payment'],
+                        ['id' => 'stewardcart', 'icon' => '/Photo/icon/cart.png', 'text' => 'Order Meals'],
                     ];
                     foreach ($menuItems as $item) {
                         echo "<li id='{$item['id']}' class='menu-item'>

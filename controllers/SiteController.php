@@ -311,6 +311,12 @@ class SiteController extends Controller
 
     }
 
+    public function stewardCart(Request $request,Response $response)
+    {
+        $this->setLayout('auth');
+        return $this->render('stewardCart');
+    }
+
     
 }
 ?>

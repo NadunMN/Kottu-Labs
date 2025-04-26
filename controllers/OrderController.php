@@ -312,6 +312,8 @@ public function updateOrderStatus()
 {
     $body = json_decode(file_get_contents('php://input'), true);
 
+    
+
     if (!isset($body['om_id']) && !isset($body['order_id'])) {
         http_response_code(400);
         echo json_encode(['error' => 'Invalid request data']);
@@ -347,9 +349,19 @@ public function updateOrderStatus()
     }
 
     if (isset($body['order_id'])) {
-        $orders = Order::findOneOriginal(['order_id' => $body['order_id']]);
+
+
         
+        
+        $orders = Order::findOneOriginal(['order_id' => $body['order_id']]);
+
+
+
+  
+
         if ($orders) {
+
+
             $orders->order_status = $body['order_status'] ?? $orders->order_status;
             $orders->steward_id = $body['steward_id'] ?? $orders->steward_id;
             $orderMeals = OrderMeals::findAllOriginal(['order_id' => $body['order_id']]);
@@ -363,10 +375,21 @@ public function updateOrderStatus()
                 }
             }
 
+            if($body['chef_id']){
+                $orders->chef_id = $body['chef_id'];
+
+                if (!$orders->update()) {
+                    $success = false;
+                    $response['error'] = 'Failed to update order status';
+                }
+
+            }
+
             if (!$orders->update()) {
                 $success = false;
                 $response['error'] = 'Failed to update order status';
             }
+
         } else {
             $success = false;
             $response['error'] = 'Order not found';
@@ -769,7 +792,7 @@ public function orderMealDone(){
         // exit;
 
         $orderMeals->orderMealsStatusUpdate(
-            ['status' => 'completed'],   // SET clause
+            ['status' => 'ready'],   // SET clause
             ['om_id' => $omId]            // WHERE clause
         );
                         

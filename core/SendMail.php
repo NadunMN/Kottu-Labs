@@ -21,7 +21,7 @@ class SendMail
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = "thiraniimanya@gmail.com"; // Your email
+            $mail->Username = "nadunmadusanka564@gmail.com"; // Your email
             $mail->Password = 'abag psvp ipmi fjxd'; // Your password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;

@@ -100,7 +100,10 @@ class Order extends OrderModel
         foreach ($where as $key => $item) {
             $statement->bindValue(":$key", $item);
         }
+
         $statement->execute();
+        
+      
         return $statement->fetchObject(static::class);
     }
 

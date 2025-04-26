@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     enterpin: '/menuaccess',
     accessmenu: '/unregmenu',
     getpayment: '/unregpayment',
+    stewardcart: '/stewardcart',
   };
 
   menuItems.forEach(item => {

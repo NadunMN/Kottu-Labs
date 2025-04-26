@@ -195,7 +195,7 @@
                         ${meal.mealName} - ${meal.quantity}
                        <button class="meal-done-btn" om-id="${meal.om_id}" 
                         data-order-id="${order.order_id}" 
-                        ${order.chef_id ? '' : 'disabled'}>
+                        ${order.chef_id && order.status !=='ready' ? '' : 'disabled'}>
                         Done
                         </button>
                         ${meal.meal_id}
@@ -211,7 +211,7 @@
                         
                     </td>
 
-                    <td>${order.type === 'dinein' ? order.table_number : 'Null'}</td>
+                    <td>${order.type === 'dinein' ? order.table_number : '__'}</td>
                     <td>${order.type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
                     <td class="status">
                         <span class="status-${order.order_status}">
