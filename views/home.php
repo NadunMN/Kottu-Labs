@@ -48,7 +48,7 @@
                         <button onclick="window.location.href='/register'">SIGN UP</button>
                         
                     <?php else: ?>
-                        <button onclick="window.location.href='#'">MENU</button>
+                        <button onclick="window.location.href='/homeMenu'">MENU</button>
                         
                         <?php endif; ?>
                     

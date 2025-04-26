@@ -307,7 +307,7 @@ ul li:hover {
 }
 
 /* Confirm button styling */
-.confirm-btn {
+.confirm-btn, .confirm-meal-btn {
   background-color: #4361ee;
   color: white;
   border: none;
@@ -315,17 +315,18 @@ ul li:hover {
   padding: 7px 14px;
   font-size: 13px;
   font-weight: 500;
+  align-items: center;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.confirm-btn:hover {
+.confirm-btn:hover, .confirm-meal-btn:hover  {
   background-color: #3249c2;
   transform: translateY(-1px);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.confirm-btn:active {
+.confirm-btn:active, .confirm-meal-btn:active  {
   transform: translateY(1px);
   box-shadow: none;
 }

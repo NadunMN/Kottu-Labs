@@ -17,7 +17,7 @@
         14: "Beverages"
     };
 
-    async function fetchOrders() {
+    async function fetchOrders(filterTableNo = null) {
         try {
             // Fetch order data
             const response = await fetch("/order/data");
@@ -118,6 +118,10 @@
                             <span>${currentDate}</span>
                             <h4>Available orders - ${availableOrders} &emsp; Ready orders - ${readyOrders}</h4>
                         </div>
+                        <div class="filter-section">
+                            <input type="text" id="tableFilter" placeholder="Enter Order No"/>
+                            <button id="filterBtn">Filter</button>
+                        </div>
                        
                     </div> 
                     
@@ -143,8 +147,15 @@
                 return;
             }
 
+            
             // Clear existing rows before appending new ones
             tableContent.innerHTML = "";
+
+            let ordersToRender = groupedOrdersArray;
+            if (filterTableNo) {
+                ordersToRender = groupedOrdersArray.filter(order => order.table_number.toString().includes(filterTableNo));
+            }
+            
 
             // Add CSS for status colors
             const styleElement = document.createElement('style');
@@ -163,7 +174,7 @@
             }
 
             // Render rows directly from the grouped orders
-            groupedOrdersArray.forEach(order => {
+            ordersToRender.forEach(order => {
                 const row = document.createElement("tr");
                 row.classList.add("order-item");
                 row.setAttribute("data-table-number", order.table_number);
@@ -245,6 +256,12 @@
                 `;
                 tableContent.appendChild(row);
             });
+
+            // Add event listener for the filter button
+document.getElementById("filterBtn").addEventListener("click", () => {
+    const filterTableNo = document.getElementById("tableFilter").value.trim();
+    fetchOrders(filterTableNo); // Pass the entered order number to fetchOrders
+});
 
             // Add event listener for Accept buttons
             document.querySelectorAll(".accept-btn").forEach(button => {
