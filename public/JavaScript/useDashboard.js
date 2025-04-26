@@ -162,3 +162,26 @@ fetch('/user/data')
            }
        )
        .catch(error => console.error('Error fetching user data:', error));
+
+
+let currentPath = window.location.pathname;
+console.log('Current Path:', currentPath);
+
+// Select the button element
+const button = document.getElementById("view-profile");
+
+// Check the current path and update the button accordingly
+if (currentPath === '/profile') {
+  button.textContent = "View Profile";
+  button.onclick = () => { window.location.href = '/myaccount'; };
+} else if (currentPath === '/myaccount') {
+  button.textContent = "View Dashboard";
+  button.onclick = () => { window.location.href = '/profile'; };
+}
+
+const button2 = document.getElementById("add-reservation");
+// Check the current path and update the button accordingly
+if (currentPath === '/profile') {
+  // button2.textContent = "View Profile";
+  button2.onclick = () => { window.location.href = '/#topic-head'; };
+}

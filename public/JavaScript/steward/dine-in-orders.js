@@ -82,12 +82,17 @@ async function fetchOrders() {
                 groupedOrdersArray.push(ordersGroupedByOrderId[order.order_id]); // Maintain sorted order
             }
 
-            ordersGroupedByOrderId[order.order_id].meals.push({
+            const meal = {
                 mealName: order.meal_name,
-                quantity: order.quantity
-            });
+                quantity: order.quantity,
+                status: order.meal_status,
+                meal_id: order.meal_id,
+                om_id: order.om_id
+            };
+        
+            ordersGroupedByOrderId[order.order_id].meals.push(meal);
         });
-
+        
         // Render order content
         orderContent.innerHTML = `
             <div class="main-section">
@@ -128,16 +133,24 @@ async function fetchOrders() {
             const row = document.createElement("tr");
             row.classList.add("order-item");
 
-            const mealsDropdown = order.meals.map((meal) => `<li>${meal.mealName} - ${meal.quantity}</li>`).join("");
+            const mealsList = order.meals.map((meal) => {
+                let actionElement = "";
+                if (meal.status === "ready" && order.order_status === 0) {
+                    actionElement = `<button class="confirm-meal-btn" data-order-id="${meal.om_id}">Confirm</button>`;
+                } else if (meal.status === "completed" && order.order_status === 0) {
+                    actionElement = `<span class="meal-done-text">Done</span>`;
+                }
+
+
+                return `<li>${meal.mealName} - ${meal.quantity} ${actionElement}</li>`;
+            }).join("");
+
             row.innerHTML = `
                 <td class="name">${order.reservation_name}</td>
                 <td class="order_id">${order.order_id}</td> 
 
                 <td>
-                    <details>
-                        <summary>View Meals</summary>
-                        <ul>${mealsDropdown}</ul>
-                    </details>
+                    <ul>${mealsList}</ul>
                 </td>
                 <td>${order.table_number}</td>
                 <td class="status">
@@ -151,6 +164,34 @@ async function fetchOrders() {
         });
 
         // Add event listener for confirm buttons
+        document.querySelectorAll(".confirm-meal-btn").forEach(button => {
+            button.addEventListener("click", async (event) => {
+                const omId = event.target.getAttribute("data-order-id");
+
+                if (!stewardId) {
+                    console.error("Steward ID is not available.");
+                    return;
+                }
+                
+                try {
+                    const response = await fetch(`/order/confirm`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ om_id: omId, meal_status: 'completed', steward_id: stewardId }) // Update status to 'Completed'
+                    });
+                    if (response.ok) {
+                        fetchOrders();
+                    } else {
+                        console.error("Failed to update order status");
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                }
+            });
+        });
+
         document.querySelectorAll(".confirm-btn").forEach(button => {
             button.addEventListener("click", async (event) => {
                 const orderId = event.target.getAttribute("data-order-id");
@@ -158,7 +199,6 @@ async function fetchOrders() {
                     console.error("Steward ID is not available.");
                     return;
                 }
-                console.log("Steward ID:", stewardId);
                 try {
                     const response = await fetch(`/order/confirm`, {
                         method: "POST",

@@ -79,7 +79,7 @@
             });
 
             const readyOrders = new Set(
-                todayOrders.filter(order => order.order_status == 2).map(order => order.order_id)
+                todayOrders.filter(order => order.order_status == 1).map(order => order.order_id)
             ).size;
             const uniqueAvailableOrders = new Set(
                 todayOrders.filter(order => order.order_status !== 3).map(order => order.order_id)
@@ -193,8 +193,11 @@
                 const mealsDropdown = order.meals.map((meal) => `
                     <li>
                         ${meal.mealName} - ${meal.quantity}
-                        <button class="meal-done-btn" om-id="${meal.om_id}" data-order-id="${order.order_id}"${order.chef_id ? '' : 'disabled'}>Done</button>
-
+                       <button class="meal-done-btn" om-id="${meal.om_id}" 
+                        data-order-id="${order.order_id}" 
+                        ${order.chef_id ? '' : 'disabled'}>
+                        Done
+                        </button>
                         ${meal.meal_id}
                     </li>
                 `).join("");
@@ -203,10 +206,9 @@
                     <td class="order-id">${order.order_id}</td> 
 
                     <td>
-                        <details>
-                            <summary>View Meals</summary>
+                        
                             <ul>${mealsDropdown}</ul>
-                        </details>
+                        
                     </td>
 
                     <td>${order.type === 'dinein' ? order.table_number : 'Null'}</td>
@@ -223,11 +225,12 @@
                                     ${order.chef_id ? 'disabled' : ''}>
                                 Accept
                             </button>
-                            <button class="done-btn" 
-                                    data-order-id="${order.order_id}"
-                                    ${order.order_status == 0 && order.chef_id ? '' : 'disabled'}>
-                                Done
-                            </button>
+                            
+                                <button class="done-btn" 
+                                        data-order-id="${order.order_id}"
+                                        ${order.order_status !== 0 ? 'disabled' : ''}>
+                                    Done
+                                </button>
                         ` : `
                             <button class="accept-btn" 
                                     data-order-id="${order.order_id}" 
@@ -264,7 +267,7 @@
                             },
                             body: JSON.stringify({ 
                                 order_id: orderId, 
-                                order_status: 1, // Update status to 'Preparing'
+                                order_status: 0, // Update status to 'Preparing'
                                 chef_id: chefId 
                             })
                         });
@@ -416,18 +419,33 @@
                             const remaining = Array.from(document.querySelectorAll(`.meal-done-btn[data-order-id="${orderId}"]`))
                                 .filter(btn => !btn.disabled);
                         
-                            if (remaining.length === 0) {
-                                // All meals done: update UI
-                                const mainDoneBtn = document.querySelector(`.done-btn[data-order-id="${orderId}"]`);
-                                if (mainDoneBtn) mainDoneBtn.disabled = true;
-                        
-                                const row = thisButton.closest("tr");
-                                const status = row.querySelector(".status span");
-                                if (status) {
-                                    status.textContent = "Ready";
-                                    status.className = "status-2";
+                                if (remaining.length === 0) {
+                                    // Update order status to Ready
+                                    const statusResponse = await fetch(`/order/confirm`, {
+                                        method: "POST",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify({ 
+                                            order_id: orderId, 
+                                            order_status: 1 
+                                        })
+                                    });
+                                    
+                                    if (statusResponse.ok) {
+                                        const mainDoneBtn = document.querySelector(`.done-btn[data-order-id="${orderId}"]`);
+                                        if (mainDoneBtn) mainDoneBtn.disabled = true;
+                                        
+                                        const row = thisButton.closest("tr");
+                                        const status = row.querySelector(".status span");
+                                        if (status) {
+                                            status.textContent = "Ready";
+                                            status.className = "status-2";
+                                        }
+                                        
+                                        document.querySelectorAll(`.meal-done-btn[data-order-id="${orderId}"]`)
+                                            .forEach(btn => btn.disabled = true);
+                                    }
                                 }
-                            }
+                                
                         }
                          else {
                             console.error("Failed to update meal status");
