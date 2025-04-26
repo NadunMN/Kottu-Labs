@@ -116,8 +116,9 @@
             </div>
             <div class="section">
                 <h2 class="section-title">Reports</h2>
-                <button class="report-btn" onclick="window.location.href='/orderReport'">Get Orders Report</button>
-                <button class="report-btn" onclick="window.location.href='/mealReport'">Get Meals Report</button>
+                <button class="report-btn">Get Orders Report</button>
+                <button class="report-btn">Get Meals Report</button>
+                <button class="report-btn">Get Reservations Report</button>
             </div>
         </div>
     </div>

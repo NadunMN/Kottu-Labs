@@ -554,6 +554,49 @@ class Order extends OrderModel
             return false;
         }
     }
+
+    public static function findOrdersByFilters($startDate = null, $endDate = null, $branch = null, $minPrice = null, $maxPrice = null) {
+        $sql = "SELECT o.*, b.branch_name as branchName, c.full_name as customer_name 
+                FROM orders o
+                LEFT JOIN branch b ON o.branch_id = b.branch_id
+                LEFT JOIN customer c ON o.customer_id = c.customer_id
+                WHERE 1=1"; // This allows us to conditionally add filters
+        
+        $params = [];
+        
+        // Add date range condition if provided
+        if ($startDate) {
+            $sql .= " AND o.order_date >= :startDate";
+            $params[':startDate'] = $startDate;
+        }
+        
+        if ($endDate) {
+            $sql .= " AND o.order_date <= :endDate";
+            $params[':endDate'] = $endDate . ' 23:59:59'; // Include the entire end date
+        }
+        
+        // Add branch filter if provided
+        if ($branch) {
+            $sql .= " AND b.branch_name = :branch";
+            $params[':branch'] = $branch;
+        }
+        
+        // Add price range filters if provided
+        if ($minPrice !== null) {
+            $sql .= " AND o.order_price >= :minPrice";
+            $params[':minPrice'] = $minPrice;
+        }
+        
+        if ($maxPrice !== null) {
+            $sql .= " AND o.order_price <= :maxPrice";
+            $params[':maxPrice'] = $maxPrice;
+        }
+        
+        // Order by date, newest first
+        $sql .= " ORDER BY o.order_date DESC";
+        
+        return Application::$app->database->queryObjects($sql, $params, static::class);
+    }
     
 
 

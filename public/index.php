@@ -414,13 +414,13 @@ $app->router->post('/user/store', [$reservationController, 'userStore']);
 //admin routes for reports
 $app->router->get('/admin/reports/orders', [$adminController, 'orderReports']);
 $app->router->get('/admin/reports/meals', [$adminController, 'mealsReport']);
-
+$app->router->get('/admin/reports/reservations', [$adminController, 'reservationReport']);
 
 
 //report
 $app->router->get('/mealReport', [$siteController, 'mealReport']);
 $app->router->get('/orderReport', [$siteController, 'orderReport']);
-
+$app->router->get('/reservationReport', [$siteController, 'reservationReport']);
 
 
 

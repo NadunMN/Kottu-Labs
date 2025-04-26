@@ -83,4 +83,11 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = '/mealReport';
         });
     }
+
+    const reservationButton = document.querySelector(".report-btn:nth-of-type(3)");
+    if (reservationButton) {
+      reservationButton.addEventListener('click', function() {
+            window.location.href = '/reservationReport';
+        });
+    }
 });

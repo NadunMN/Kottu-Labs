@@ -531,8 +531,47 @@ public static function findAllreservationUnReg($where)
         return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
     }
 
-
-
-
+    public static function findFilteredReservations($startDate, $endDate, $branchId = null) {
+        $tableName = static::tableName();
+        
+        $sql = "SELECT 
+                    r.reservation_no,
+                    r.reservation_date,
+                    r.reservation_time,
+                    r.number_of_guests,
+                    r.reservation_name,
+                    b.branch_name
+                FROM $tableName r
+                JOIN branches b ON r.branch_id = b.branch_id";
+        
+        
+        $whereClauses = ["r.confirmation_status != 0"]; // Always enforce this condition
+        $params = [];
+        
+        // Add date range condition
+        if ($startDate && $endDate) {
+            $whereClauses[] = "r.reservation_date BETWEEN :startDate AND :endDate";
+            $params[':startDate'] = $startDate;
+            $params[':endDate'] = $endDate;
+        }
+        
+        // Add branch condition if filter is applied
+        if ($branchId !== null) {
+            $whereClauses[] = "r.branch_id = :branchId";
+            $params[':branchId'] = $branchId;
+        }
+        
+        $sql .= " WHERE " . implode(" AND ", $whereClauses);
+        
+        $statement = self::prepare($sql);
+        
+        foreach ($params as $key => $value) {
+            $statement->bindValue($key, $value);
+        }
+        
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
 
 }
+
