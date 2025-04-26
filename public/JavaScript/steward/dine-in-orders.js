@@ -1,6 +1,6 @@
 let stewardId = null;
 
-async function fetchOrders() {
+async function fetchOrders(filterTableNumber = null) {
     try {
         // Fetch order data
         const response = await fetch("/order/dineInData");
@@ -79,7 +79,7 @@ async function fetchOrders() {
                     ...order,
                     meals: []
                 };
-                groupedOrdersArray.push(ordersGroupedByOrderId[order.order_id]); // Maintain sorted order
+                groupedOrdersArray.push(ordersGroupedByOrderId[order.order_id]);
             }
 
             const meal = {
@@ -92,7 +92,7 @@ async function fetchOrders() {
         
             ordersGroupedByOrderId[order.order_id].meals.push(meal);
         });
-        
+
         // Render order content
         orderContent.innerHTML = `
             <div class="main-section">
@@ -101,6 +101,10 @@ async function fetchOrders() {
                         <h2>Order Status - ${branchName} </h2>
                         <span>${currentDate}</span>
                         <h4>Available orders - ${availableOrders} &emsp; Ready orders - ${readyOrders}</h4>
+                    </div>
+                    <div class="filter-section">
+                        <input type="text" id="table-input" placeholder="Enter Table No" />
+                        <button id="filter-btn">Filter</button>
                     </div>
                 </div> 
                 
@@ -125,11 +129,18 @@ async function fetchOrders() {
             return;
         }
 
-        // Clear existing rows before appending new ones
         tableContent.innerHTML = "";
 
-        // Render rows directly from the grouped orders
-        groupedOrdersArray.forEach(order => {
+        // FILTER orders if table number provided
+        let ordersToRender = groupedOrdersArray;
+        if (filterTableNumber) {
+            ordersToRender = groupedOrdersArray.filter(order => 
+                order.table_number.toString() === filterTableNumber.toString()
+            );
+        }
+
+        // Render rows
+        ordersToRender.forEach(order => {
             const row = document.createElement("tr");
             row.classList.add("order-item");
 
@@ -141,21 +152,17 @@ async function fetchOrders() {
                     actionElement = `<span class="meal-done-text">Done</span>`;
                 }
 
-
                 return `<li>${meal.mealName} - ${meal.quantity} ${actionElement}</li>`;
             }).join("");
 
             row.innerHTML = `
                 <td class="name">${order.reservation_name}</td>
                 <td class="order_id">${order.order_id}</td> 
-
-                <td>
-                    <ul>${mealsList}</ul>
-                </td>
+                <td><ul>${mealsList}</ul></td>
                 <td>${order.table_number}</td>
                 <td class="status">
                     <span class="status-${order.order_status}">
-                        ${order.order_status == 1 ? "Ready" : order.order_status == 2 ? "Completed" :  "Processing"}
+                        ${order.order_status == 1 ? "Ready" : order.order_status == 2 ? "Completed" : "Processing"}
                     </span>
                     ${order.order_status === 1 ? `<button class="confirm-btn" data-order-id="${order.order_id}">Confirm</button>` : ""}
                 </td>
@@ -163,7 +170,7 @@ async function fetchOrders() {
             tableContent.appendChild(row);
         });
 
-        // Add event listener for confirm buttons
+        // Event listeners for Confirm buttons
         document.querySelectorAll(".confirm-meal-btn").forEach(button => {
             button.addEventListener("click", async (event) => {
                 const omId = event.target.getAttribute("data-order-id");
@@ -179,7 +186,7 @@ async function fetchOrders() {
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify({ om_id: omId, meal_status: 'completed', steward_id: stewardId }) // Update status to 'Completed'
+                        body: JSON.stringify({ om_id: omId, meal_status: 'completed', steward_id: stewardId })
                     });
                     if (response.ok) {
                         fetchOrders();
@@ -205,7 +212,7 @@ async function fetchOrders() {
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify({ order_id: orderId, order_status: 2, steward_id: stewardId }) // Update status to 'Completed'
+                        body: JSON.stringify({ order_id: orderId, order_status: 2, steward_id: stewardId })
                     });
                     if (response.ok) {
                         fetchOrders();
@@ -218,13 +225,19 @@ async function fetchOrders() {
             });
         });
 
+        // Add event listener for the Filter button
+        document.getElementById("filter-btn").addEventListener("click", () => {
+            const tableInput = document.getElementById("table-input").value.trim();
+            fetchOrders(tableInput);
+        });
+
     } catch (error) {
         console.error("Fetch error:", error);
         document.getElementById("main-content").innerHTML = "<p>Error loading reservations.</p>";
     }
 }
 
-// Refresh orders
+// Refresh orders every 30 seconds
 setInterval(() => {
     fetchOrders();
 }, 30000);
