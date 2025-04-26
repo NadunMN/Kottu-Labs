@@ -83,10 +83,11 @@ class AdminController extends Controller{
         $body = $request->getBody();
         $startDate = $body['startDate'] ?? '1970-01-01';
         $endDate = $body['endDate'] ?? date('Y-m-d');
+        $timeSlot = $body['timeSlot'] ?? null;
         $branchId = $body['branchId'] ?? null;
     
         // Get filtered reservation data
-        $reservationData = Reservation::findFilteredReservations($startDate, $endDate, $branchId);
+        $reservationData = Reservation::findFilteredReservations($startDate, $endDate, $timeSlot, $branchId);
         
         if ($reservationData === false) {
             header('Content-Type: application/json');

@@ -73,6 +73,19 @@
                 <label for="mealEndDate">End Date:</label>
                 <input type="date" id="mealEndDate" name="mealEndDate">
             </div>
+
+            <div class="filter-group">
+                <label for="timeFilter">Time Slot:</label>
+                <select id="timeFilter">
+                    <option value="">All</option>
+                    <option value="1">3:00PM - 4:00PM</option>
+                    <option value="2">4:00PM - 5:00PM</option>
+                    <option value="3">5:00PM - 6:00PM</option>
+                    <option value="3">6:00PM - 7:00PM</option>
+                    <option value="3">7:00PM - 8:00PM</option>
+                    <option value="3">8:00PM - 9:00PM</option>
+                </select>
+            </div>
             
             <!-- Branch Filter -->
             <div class="filter-group">

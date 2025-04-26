@@ -417,6 +417,17 @@ $app->router->get('/admin/reports/meals', [$adminController, 'mealsReport']);
 
 $app->router->get('/admin/reports/reservations', [$adminController, 'reservationReport']);
 
+//unregpayment
+$app->router->get('/unregpayment', [$siteController, 'unRegPayment']);
+$app->router->get('/paymentcollection', [$siteController, 'paymentCollection']);
+$app->router->get('/getpaymet/data', function() use ($paymentController) {
+    $reservationNo = $_GET['reservationNo'] ?? null;
+    $paymentController->getpaymentDataUnreg($reservationNo);
+});
+
+$app->router->post('/payment/confirm/steward', [$paymentController, 'updateUnregPaymentStatus']);
+
+
 
 //unregpayment
 $app->router->get('/unregpayment', [$siteController, 'unRegPayment']);

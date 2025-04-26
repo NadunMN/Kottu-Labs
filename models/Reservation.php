@@ -531,7 +531,7 @@ public static function findAllreservationUnReg($where)
         return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
     }
 
-    public static function findFilteredReservations($startDate, $endDate, $branchId = null) {
+    public static function findFilteredReservations($startDate, $endDate, $timeSlot, $branchId = null) {
         $tableName = static::tableName();
         
         $sql = "SELECT 
@@ -545,7 +545,7 @@ public static function findAllreservationUnReg($where)
                 JOIN branches b ON r.branch_id = b.branch_id";
         
         
-        $whereClauses = ["r.confirmation_status != 0"]; // Always enforce this condition
+        $whereClauses = ["r.confirmation_status != 0 AND r.type = 'dinein'"]; // Always enforce this condition
         $params = [];
         
         // Add date range condition
@@ -553,6 +553,23 @@ public static function findAllreservationUnReg($where)
             $whereClauses[] = "r.reservation_date BETWEEN :startDate AND :endDate";
             $params[':startDate'] = $startDate;
             $params[':endDate'] = $endDate;
+        }
+
+        if($timeSlot) {
+            // Map timeSlot IDs to actual time ranges
+            $timeMap = [
+                '1' => '15:00', // 3:00PM
+                '2' => '16:00', // 4:00PM
+                '3' => '17:00', // 5:00PM
+                '4' => '18:00', // 6:00PM
+                '5' => '19:00', // 7:00PM
+                '6' => '20:00', // 8:00PM
+            ];
+            
+            if(isset($timeMap[$timeSlot])) {
+                $whereClauses[] = "r.reservation_time = :timeSlot";
+                $params[':timeSlot'] = $timeMap[$timeSlot];
+            }
         }
         
         // Add branch condition if filter is applied
