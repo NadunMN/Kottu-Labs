@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if(userId === undefined) {
 
-            showToast("Please log in to make a reservation.", { type: 'info', duration: 5000 });
+            // showToast("Please log in to make a reservation.", { type: 'info', duration: 5000 });
 
 
             try {
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 console.log(data1.success);
-                showToast("Reservation successful!", "success");
+                // showToast("Reservation successful!", "success");
 
                 let temp_id = data1.success; // Get the temp_id from the response
                 console.log("Temporary ID:", temp_id); // Log the temporary ID for debugging
