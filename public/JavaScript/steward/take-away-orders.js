@@ -1,6 +1,6 @@
 let stewardId = null;
 
-async function fetchOrders() {
+async function fetchOrders(filterReservationNo = null) {
     try {
         // Fetch order data
         const response = await fetch("/order/takeAwayData");
@@ -97,6 +97,9 @@ async function fetchOrders() {
                         <span>${currentDate}</span>
                         <h4>Available orders - ${availableOrders} &emsp; Ready orders - ${readyOrders}</h4>
                     </div>
+                    <div class="filter-section">
+                        <input type="text" id="reservation-input" placeholder="Enter Reservation No" />
+                        <button id="filter-btn">Filter</button>
                 </div> 
                 
                 <table class="menu-table" id="menu-table">
@@ -125,8 +128,16 @@ async function fetchOrders() {
         // Clear existing rows before appending new ones
         tableContent.innerHTML = "";
 
-        // Render rows directly from the grouped orders
-        groupedOrdersArray.forEach(order => {
+        // FILTER orders if reservation number provided
+        let ordersToRender = groupedOrdersArray;
+        if (filterReservationNo) {
+            ordersToRender = groupedOrdersArray.filter(order => 
+                order.reservation_no && order.reservation_no.toString() === filterReservationNo.toString()
+            );
+        }
+
+         // Render rows directly from the grouped orders
+        ordersToRender.forEach(order => {
             const row = document.createElement("tr");
             row.classList.add("order-item");
 
@@ -184,6 +195,12 @@ async function fetchOrders() {
                     console.error("Error:", error);
                 }
             });
+        });
+
+        // Add event listener for the Filter button
+        document.getElementById("filter-btn").addEventListener("click", () => {
+            const reservationInput = document.getElementById("reservation-input").value.trim();
+            fetchOrders(reservationInput);
         });
 
     } catch (error) {
