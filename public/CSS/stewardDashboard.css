@@ -315,3 +315,16 @@ body {
     background: #4CAF50;
     color: white;
 }
+
+li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Optional: Adjust spacing between meal name and button */
+    margin-bottom: 5px; /* Optional: Add spacing between list items */
+}
+
+.confirm-meal-btn {
+    margin-left: 10px; /* Add some space between the meal name and the button */
+    background-color: #007bff; 
+    color: white;
+}

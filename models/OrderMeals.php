@@ -14,6 +14,7 @@ class OrderMeals extends DbModel
     public int $quantity;
     public int $user_id;
     public string $status = '';
+    public ?string $steward_id = null;
     
     
     public static function tableName(): string
@@ -38,7 +39,7 @@ class OrderMeals extends DbModel
 
     public function attributes(): array
     {
-        return ['order_id', 'meal_id','offer_id', 'quantity', 'user_id', 'status'];
+        return ['order_id', 'meal_id','offer_id', 'quantity', 'user_id', 'status', 'steward_id'];
     }
 
     public function rules(): array
@@ -121,7 +122,56 @@ public static function findAllBookedMealTakeaway($where)
     return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
 }
 
+public static function findOneOriginal($where)
+{
+    $tableName = static::tableName();
+    $attributes = array_keys($where);
+    $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+    $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
+    foreach ($where as $key => $item) {
+        $statement->bindValue(":$key", $item);
+    }
+    $statement->execute();
+    return $statement->fetchObject(static::class);
+}
 
+public static function findAllOriginal($where)
+{
+    $tableName = static::tableName();
+    $attributes = array_keys($where);
+
+    $sql = implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+    $statement = self::prepare("
+        SELECT *
+        FROM $tableName 
+        WHERE $sql
+    ");
+    foreach ($where as $key => $value) {
+        $statement->bindValue(":$key", $value);
+    }
+    $statement->execute();
+    return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
+}
+
+public static function findOrdersWithAllMealsCompleted($orderId)
+    {
+        $tableName = static::tableName();
+        $sql = "SELECT COUNT(*) AS total, 
+                       SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) AS completed 
+                FROM $tableName 
+                WHERE order_id = :order_id";
+
+        $statement = self::prepare($sql);
+        $statement->bindValue(':order_id', $orderId);
+        $statement->execute();
+        $result = $statement->fetch();
+
+        if ($result && $result['total'] == $result['completed']) {
+            return true; // All meals are completed
+        }
+
+        return false; // Not all meals are completed
+    }
 
 
 
@@ -136,6 +186,7 @@ public static function findAllBookedMealTakeaway($where)
             'quantity' => $this->quantity,
             'user_id' => $this->user_id,
             'status' => $this->status,
+            'steward_id' => $this->steward_id,
         ];
     }
 
