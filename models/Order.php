@@ -102,7 +102,7 @@ class Order extends OrderModel
         }
 
         $statement->execute();
-        
+
       
         return $statement->fetchObject(static::class);
     }
@@ -564,7 +564,6 @@ class Order extends OrderModel
             return false;
         }
     }
-    
 
 
 }

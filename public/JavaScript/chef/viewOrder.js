@@ -94,8 +94,10 @@
                 if (!ordersGroupedByOrderId[order.order_id]) {
                     ordersGroupedByOrderId[order.order_id] = {
                         ...order,
-                        meals: []
+                        meals: [],
+                        original_status: order.order_status
                     };
+
                     groupedOrdersArray.push(ordersGroupedByOrderId[order.order_id]); // Maintain sorted order
                 }
 
@@ -116,11 +118,7 @@
                             <span>${currentDate}</span>
                             <h4>Available orders - ${availableOrders} &emsp; Ready orders - ${readyOrders}</h4>
                         </div>
-                        <div class="filter-section">
-                            <input type="text" id="tableFilter" placeholder="Filter by Table No...">
-                            <button onclick="filterOrders()">Filter</button>
-                            <button onclick="resetFilter()">Reset</button>
-                        </div>
+                       
                     </div> 
                     
                     <table class="menu-table" id="menu-table">
@@ -172,7 +170,7 @@
 
                 // Get the status text based on order_status
                 let statusText;
-                switch (order.order_status) {
+                switch (order.original_status) {
                     case 0:
                         // If order_status is 0 and chef is not assigned, show "Not Accepted"
                         if (!order.chef_id) {
@@ -227,10 +225,10 @@
                             </button>
                             
                                 <button class="done-btn" 
-                                        data-order-id="${order.order_id}"
-                                        ${order.order_status !== 0 ? 'disabled' : ''}>
-                                    Done
-                                </button>
+        data-order-id="${order.order_id}"
+        ${order.order_status !== 0 ? 'disabled' : ''}>
+    Done
+</button>
                         ` : `
                             <button class="accept-btn" 
                                     data-order-id="${order.order_id}" 
@@ -300,7 +298,7 @@
                             
                                 // Enable meal-done buttons
                                 document.querySelectorAll(`.meal-done-btn[data-order-id="${orderId}"]`)
-                                    .forEach(btn => btn.disabled = false);
+                                .forEach(btn => btn.disabled = false);
                             
                                 // Enable main Done button
                                 const doneBtn = document.querySelector(`.done-btn[data-order-id="${orderId}"]`);
@@ -420,29 +418,46 @@
                                 .filter(btn => !btn.disabled);
                         
                                 if (remaining.length === 0) {
-                                    // Update order status to Ready
-                                    const statusResponse = await fetch(`/order/confirm`, {
-                                        method: "POST",
-                                        headers: { "Content-Type": "application/json" },
-                                        body: JSON.stringify({ 
-                                            order_id: orderId, 
-                                            order_status: 1 
-                                        })
-                                    });
-                                    
-                                    if (statusResponse.ok) {
-                                        const mainDoneBtn = document.querySelector(`.done-btn[data-order-id="${orderId}"]`);
-                                        if (mainDoneBtn) mainDoneBtn.disabled = true;
-                                        
-                                        const row = thisButton.closest("tr");
-                                        const status = row.querySelector(".status span");
-                                        if (status) {
-                                            status.textContent = "Ready";
-                                            status.className = "status-2";
+                                    try {
+                                        // Update order status to Ready
+                                        const statusResponse = await fetch(`/order/confirm`, {
+                                            method: "POST",
+                                            headers: { "Content-Type": "application/json" },
+                                            body: JSON.stringify({ 
+                                                order_id: orderId, 
+                                                order_status: 1 
+                                            })
+                                        });
+                                
+                                        if (statusResponse.ok) {
+                                            // Update local order status
+                                            const orderIndex = groupedOrdersArray.findIndex(o => o.order_id == orderId);
+                                            if (orderIndex > -1) {
+                                                groupedOrdersArray[orderIndex].original_status = 1;
+                                            }
+                                
+                                            // Update UI elements
+                                            const mainDoneBtn = document.querySelector(`.done-btn[data-order-id="${orderId}"]`);
+                                            if (mainDoneBtn) {
+                                                mainDoneBtn.disabled = true;
+                                                mainDoneBtn.closest('tr').querySelector('.accept-btn').disabled = true;
+                                            }
+                                
+                                            const row = thisButton.closest("tr");
+                                            const status = row.querySelector(".status span");
+                                            if (status) {
+                                                status.textContent = "Ready";
+                                                status.className = "status-2";
+                                            }
+                                
+                                            // Disable all meal buttons
+                                            document.querySelectorAll(`.meal-done-btn[data-order-id="${orderId}"]`)
+                                                .forEach(btn => btn.disabled = true);
+                                
+                                            showToast("All meals completed! Order marked as Ready", { type: 'success' });
                                         }
-                                        
-                                        document.querySelectorAll(`.meal-done-btn[data-order-id="${orderId}"]`)
-                                            .forEach(btn => btn.disabled = true);
+                                    } catch (error) {
+                                        console.error("Error updating order status:", error);
                                     }
                                 }
                                 

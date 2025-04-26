@@ -1,4 +1,4 @@
-let allMealsData = [];
+let allReservationData = [];
 
 // Load meals data when page loads
 document.addEventListener('DOMContentLoaded', function() {
@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set up event listeners for filter buttons
     document.getElementById('applyMealFilters').addEventListener('click', applyFilters);
     document.getElementById('resetMealFilters').addEventListener('click', resetFilters);
-    document.getElementById('printMealReportBtn').addEventListener('click', printMealReport);
+    document.getElementById('printMealReportBtn').addEventListener('click', printReservationReport);
 });
 
 /**
@@ -17,11 +17,11 @@ function loadMealsData() {
     // Show loading indicator
     document.getElementById('applyMealFilters').classList.add("loading");
     
-    fetch("/admin/reports/meals")
+    fetch("/admin/reports/reservations")
         .then((response) => response.json())
         .then((data) => {
-            allMealsData = data;
-            renderMealTable(allMealsData);
+            allReservationData = data;
+            renderReservationTable(allReservationData);
             document.getElementById('applyMealFilters').classList.remove("loading");
         })
         .catch((error) => {
@@ -31,9 +31,10 @@ function loadMealsData() {
         });
 }
 
-document.getElementById('applyMealFilters').addEventListener('click', function() {
+function applyFilters() {
     const startDate = document.getElementById('mealStartDate').value;
     const endDate = document.getElementById('mealEndDate').value;
+    const timeSlot = document.getElementById('timeFilter').value;
     const branchId = document.getElementById('mealBranchFilter').value;
     
     // Build query parameters
@@ -41,51 +42,54 @@ document.getElementById('applyMealFilters').addEventListener('click', function()
     
     if (startDate) params.append('startDate', startDate);
     if (endDate) params.append('endDate', endDate);
+    if (timeSlot) params.append('timeSlot', timeSlot);
     if (branchId) params.append('branchId', branchId);
     
     // Show loading state
-    this.classList.add("loading");
+    document.getElementById('applyMealFilters').classList.add("loading");
     
-    fetch(`/admin/reports/meals?${params.toString()}`)
+    fetch(`/admin/reports/reservations?${params.toString()}`)
         .then((response) => response.json())
         .then((data) => {
-            renderMealTable(data);
-            this.classList.remove("loading");
+            renderReservationTable(data);
+            document.getElementById('applyMealFilters').classList.remove("loading");
         })
         .catch((error) => {
             console.error("Error fetching filtered data:", error);
-            this.classList.remove("loading");
+            document.getElementById('applyMealFilters').classList.remove("loading");
             alert("Failed to apply filters. Please try again");
         });
-});
+}
 
 // Function to render the meal table
-function renderMealTable(meals) {
+function renderReservationTable(reservations) {
     const tbody = document.getElementById('mealReportTableBody');
     tbody.innerHTML = "";
     
-    let totalRevenue = 0;
-    let totalQuantity = 0;
-    
-    if (meals.length === 0) {
+    let noOfReservations = 0;
+    let totalGuests = 0;
+
+    if (reservations.length === 0) {
         const row = document.createElement('tr');
-        row.innerHTML = `<td colspan="4" style="text-align: center;">No meals data available for the selected filters</td>`;
+        row.innerHTML = `<td colspan="6" style="text-align: center;">No reservation data available for the selected filters</td>`;
         tbody.appendChild(row);
         return;
     }
     
-    meals.forEach((meal) => {
+    reservations.forEach((reservation) => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${meal.meal_id}</td>
-            <td>${meal.meal_name}</td>
-            <td>${meal.total_quantity}</td>
-            <td>${Number(meal.total_revenue).toFixed(2)}</td>
+            <td>${reservation.reservation_no}</td>
+            <td>${reservation.reservation_date}</td>
+            <td>${reservation.reservation_time}</td>
+            <td>${reservation.branch_name}</td>
+            <td>${reservation.reservation_name}</td>
+            <td>${reservation.number_of_guests}</td>
         `;
         tbody.appendChild(row);
         
-        totalRevenue += Number(meal.total_revenue) || 0;
-        totalQuantity += Number(meal.total_quantity) || 0;
+        noOfReservations++;
+        totalGuests += parseInt(reservation.number_of_guests) || 0;
     });
     
     // Add total row
@@ -93,20 +97,22 @@ function renderMealTable(meals) {
     totalRow.style.fontWeight = "bold";
     totalRow.style.backgroundColor = "rgba(230, 57, 70, 0.1)";
     totalRow.innerHTML = `
-        <td colspan="2" style="text-align: right;">Total:</td>
-        <td>${totalQuantity}</td>
-        <td>Rs.${totalRevenue.toFixed(2)}</td>
+        <td colspan="4" style="text-align: right;">Total:</td>
+        <td>${noOfReservations} reservations</td>
+        <td>${totalGuests} guests</td>
     `;
     tbody.appendChild(totalRow);
 }
 
-function printMealReport() {
+function printReservationReport() {
     const startDate = document.getElementById('mealStartDate').value;
     const endDate = document.getElementById('mealEndDate').value;
+    const timeSlot = document.getElementById('timeFilter').value;
+    const timeSlotText = timeSlot ? document.getElementById('timeFilter').options[document.getElementById('timeFilter').selectedIndex].text : '';
     const branchId = document.getElementById('mealBranchFilter').value;
-    const branchText = document.getElementById('mealBranchFilter').options[document.getElementById('mealBranchFilter').selectedIndex].text;
+    const branchText = branchId ? document.getElementById('mealBranchFilter').options[document.getElementById('mealBranchFilter').selectedIndex].text : 'All Branches';
     
-    createMealPrintElements(startDate, endDate, branchId, branchText);
+    createPrintElements(startDate, endDate, timeSlot, timeSlotText, branchId, branchText);
     
     const printBtn = document.getElementById('printMealReportBtn');
     printBtn.disabled = true;
@@ -118,12 +124,12 @@ function printMealReport() {
         setTimeout(() => {
             printBtn.disabled = false;
             printBtn.classList.remove('print-btn-disabled');
-            removeMealPrintElements();
+            removePrintElements();
         }, 1000);
     }, 200);
 }
 
-function createMealPrintElements(startDate, endDate, branchId, branchText) {
+function createPrintElements(startDate, endDate, timeSlot, timeSlotText, branchId, branchText) {
     const printContainer = document.createElement('div');
     printContainer.className = 'print-only';
     printContainer.id = 'mealPrintContainer';
@@ -135,7 +141,7 @@ function createMealPrintElements(startDate, endDate, branchId, branchText) {
     header.className = 'print-header';
     
     const title = document.createElement('h1');
-    title.textContent = 'Meals Sales Report';
+    title.textContent = 'Reservations Report';
     header.appendChild(title);
     
     const dateElement = document.createElement('div');
@@ -146,7 +152,7 @@ function createMealPrintElements(startDate, endDate, branchId, branchText) {
     printContainer.appendChild(header);
     
     // Create filter summary
-    if (startDate || endDate || branchId) {
+    if (startDate || endDate || timeSlot || branchId) {
         const filterSummary = document.createElement('div');
         filterSummary.className = 'print-filters';
         
@@ -158,6 +164,10 @@ function createMealPrintElements(startDate, endDate, branchId, branchText) {
             filterText += ' to ';
             if (endDate) filterText += endDate;
             filterText += ' | ';
+        }
+
+        if (timeSlot) {
+            filterText += 'Time Slot: ' + timeSlotText + ' | ';
         }
         
         if (branchId) {
@@ -191,30 +201,31 @@ function createMealPrintElements(startDate, endDate, branchId, branchText) {
 
 
 // Reset filters for meals report
-document.getElementById('resetMealFilters').addEventListener('click', function() {
-  // Clear all filter inputs
-  document.getElementById('mealStartDate').value = '';
-  document.getElementById('mealEndDate').value = '';
-  document.getElementById('mealBranchFilter').value = '';
+function resetFilters() {
+    // Clear all filter inputs
+    document.getElementById('mealStartDate').value = '';
+    document.getElementById('mealEndDate').value = '';
+    document.getElementById('timeFilter').value = '';
+    document.getElementById('mealBranchFilter').value = '';
   
-  // Show loading state
-  this.classList.add("loading");
+    // Show loading state
+    document.getElementById('resetMealFilters').classList.add("loading");
   
-  // Fetch all data again (unfiltered)
-  fetch("/admin/reports/meals")
-      .then((response) => response.json())
-      .then((data) => {
-          renderMealTable(data);
-          this.classList.remove("loading");
-      })
-      .catch((error) => {
-          console.error("Error fetching data:", error);
-          this.classList.remove("loading");
-          alert("Failed to reset filters. Please try again");
-      });
-});
+    // Fetch all data again (unfiltered)
+    fetch("/admin/reports/reservations")
+        .then((response) => response.json())
+        .then((data) => {
+            renderReservationTable(data);
+            document.getElementById('resetMealFilters').classList.remove("loading");
+        })
+        .catch((error) => {
+            console.error("Error fetching data:", error);
+            document.getElementById('resetMealFilters').classList.remove("loading");
+            alert("Failed to reset filters. Please try again");
+        });
+}
 
-function removeMealPrintElements() {
+function removePrintElements() {
     const printContainer = document.getElementById('mealPrintContainer');
     if (printContainer) {
         printContainer.remove();
