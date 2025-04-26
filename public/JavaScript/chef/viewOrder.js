@@ -43,7 +43,18 @@
 
             const orderContent = document.getElementById("main-content");
             if (!data || data.length === 0) {
-                orderContent.innerHTML = "<p>No orders available</p>";
+                orderContent.innerHTML = `<div id="orderContent" class="empty-state">
+        <div class="icon-container">
+            <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+            </div>
+        </div>
+        <h2>No Orders Yet</h2>
+        <p>It looks like Branch haven't any orders yet.</p>
+        
+    </div>`;
                 return;
             }
 
@@ -200,17 +211,15 @@
                 
 
                 const mealsDropdown = order.meals.map((meal) => `
-                    <li>
-                        ${meal.mealName} - ${meal.quantity}
-                       <button class="meal-done-btn" om-id="${meal.om_id}" 
-                        data-order-id="${order.order_id}" 
-                        ${order.chef_id && order.status !=='ready' ? '' : 'disabled'}>
-                        Done
-                        </button>
-                        ${meal.meal_id}
-                    </li>
-                `).join("");
-                
+                                    <li>
+                                        ${meal.mealName} - ${meal.quantity}
+                                        <button class="meal-done-btn" om-id="${meal.om_id}" 
+                                            data-order-id="${order.order_id}" 
+                                            ${order.chef_id && order.original_status !== 1 ? '' : 'style="display:none;"'}>
+                                            Done
+                                        </button>
+                                    </li>
+                                `).join("");    
                 row.innerHTML = `
                     <td class="order-id">${order.order_id}</td> 
 

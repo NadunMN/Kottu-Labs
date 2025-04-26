@@ -11,9 +11,7 @@
         /* Main styling */
 .view-branch-menu-section {
   padding: 20px;
-  background-color: #f8f9fa;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -24,26 +22,80 @@
 
 /* Topic bar styling */
 .topic-bar {
+  background-image: url('/Photo/700f5af3-b1b6-417b-bb47-ee21ac8fb270.webp');
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  color: white;
+  padding: 16px 24px;
+  position: relative;
+}
+
+.topic-bar-text {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #e0e0e0;
+  flex-direction: column;
 }
 
+/* Heading styles */
 .topic-bar h2 {
-  margin: 0;
-  color: #2c3e50;
+  margin: 0 0 4px 0;
   font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  color: white;
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+
 }
 
-.topic-bar h5 {
-  color: #7f8c8d;
+.topic-bar span {
   font-size: 14px;
-  margin: 5px 0;
-  font-weight: normal;
+  opacity: 0.9;
+  margin-bottom: 12px;
+  color: white;
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.75));
 }
+
+.topic-bar h4 {
+  margin: 8px 0 0 0;
+  font-weight: 500;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.06);
+  padding: 8px 12px;
+  border-radius: 4px;
+  display: inline-block;
+  color: white;
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+}
+
+/* Add a subtle accent border */
+.topic-bar::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, black, #EE3E3F);
+}
+
+/* Media query for responsive design */
+@media (max-width: 768px) {
+  .topic-bar {
+    padding: 12px 16px;
+  }
+  
+  .topic-bar h2 {
+    font-size: 20px;
+  }
+  
+  .topic-bar h4 {
+    font-size: 14px;
+  }
+}
+
+/* Table styling */
 
 /* Table styling */
 .menu-table {
