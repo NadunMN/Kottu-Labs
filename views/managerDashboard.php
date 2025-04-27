@@ -76,6 +76,7 @@
           
         <!-- Main Content -->
         <div class="main-content admin-main-content" id="main-content">
+        <div id="branchDisplay" class="branch-display"></div>
         </div>
 
 </div>
