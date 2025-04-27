@@ -509,21 +509,37 @@ public function updateOrderStatus()
     public function addToTakeawayCart()
     {
         if (Application::$app->user) {
+                    $data = Application::$app->request->getBody();
+
+                    $branch_id = $data['branch_id'];
+        $selectBranch = $data['selectBranchId'];
+
             $cart = new takeawayCart();
             $cart->loadData(Application::$app->request->getBody());
 
+                    // Check if the meal exists in branch_meals with status = 1
+        $mealId = $cart->meal_id; // Assuming meal_id is part of the request body
+        $mealStatus =1;
+        // $meal =  // Adjust the method to check for status = 1
+        if($branch_id == $selectBranch){
+            // $mealStatus = 1;
+        
+        if (BranchMeal::findOnemeal($mealId, $branch_id, $mealStatus)) {
             if ($cart->save()) {
                 echo json_encode(['success' => 'Meal Added successfully']);
             } else {
                 echo json_encode(['error' => 'Failed to add Meal']);
             }
         } else {
+            echo json_encode(['error' => 'Meal is not available or inactive']);
+        }
+        } else {
             echo json_encode(['error' => 'No user is logged in']);
         }
     }
 
-
-    // Method to get cart data
+    }
+    
     public function gettakeawayCartData($user_id)
     {
         if (Application::$app->user) {
