@@ -102,25 +102,37 @@ public static function findAllBookedMeal($where)
 
 
 
+
 public static function findAllBookedMealTakeaway($where)
 {
     $tableName = static::tableName();
     $attributes = array_keys($where);
-    $sql = "SELECT $tableName.*, m.*, f.*
-    FROM $tableName
-    LEFT JOIN meals m ON $tableName.meal_id = m.meal_id
-    LEFT JOIN offers f ON $tableName.offer_id = f.offer_id";
+
+    $sql = "SELECT $tableName.*, m.*, f.*, o.order_status, p.payment_status
+            FROM $tableName
+            LEFT JOIN meals m ON $tableName.meal_id = m.meal_id
+            LEFT JOIN offers f ON $tableName.offer_id = f.offer_id
+            JOIN orders o ON $tableName.order_id = o.order_id
+            LEFT JOIN payments p ON o.order_id = p.order_id";
 
     if (!empty($attributes)) {
-        $sql .= " WHERE " . implode(" AND ", array_map(fn($attr) => "$attr = :$attr", $attributes));
+        $whereClauses = array_map(fn($attr) => "$tableName.$attr = :$attr", $attributes);
+        $sql .= " WHERE " . implode(" AND ", $whereClauses) . " AND (o.order_status != 2 OR p.payment_status != 2)";
+    } else {
+        $sql .= " WHERE o.order_status != 2 OR p.payment_status != 2 ";
     }
+
     $statement = self::prepare($sql);
     foreach ($where as $key => $item) {
         $statement->bindValue(":$key", $item);
     }
+
     $statement->execute();
     return $statement->fetchAll(\PDO::FETCH_CLASS, static::class);
 }
+
+
+
 
 public static function findOneOriginal($where)
 {
