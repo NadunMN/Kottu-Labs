@@ -436,9 +436,24 @@
                             <input type="date" id="pickupDate" class="form-control" required>
                         </div>
                         
+                        <!-- filepath: c:\Users\LENOVO\OneDrive\Desktop\My projects\Kottu-Labs\views\selectBranch.php -->
                         <div class="form-group">
                             <label for="pickupTime">Pickup Time</label>
-                            <input type="time" id="pickupTime" class="form-control" required>
+                            <select id="pickupTime" name="pickup_time" class="form-control" required>
+                                <option value="">Select a time slot</option>
+                                <optgroup label="Evening">
+                                    <option value="15:00">3:00 PM - 4:00 PM</option>
+                                    <option value="16:00">4:00 PM - 5:00 PM</option>
+                                    <option value="17:00">5:00 PM - 6:00 PM</option>
+                                    <option value="18:00">6:00 PM - 7:00 PM</option>
+                                </optgroup>
+                                <optgroup label="Night">
+                                    <option value="19:00">7:00 PM - 8:00 PM</option>
+                                    <option value="20:00">8:00 PM - 9:00 PM</option>
+                                    <option value="21:00">9:00 PM - 10:00 PM</option>
+                                    <option value="22:00">10:00 PM - 11:00 PM</option>
+                                </optgroup>
+                            </select>
                         </div>
                     </div>
                     

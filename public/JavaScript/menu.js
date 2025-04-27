@@ -129,6 +129,9 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 userId = data.id;  // Store user ID
                 console.log('User:', userId);
+                // Populate the form fields with user data
+                document.getElementById('fullName').value = `${data.firstname} ${data.lastname}`;
+                document.getElementById('email').value = data.email;
             }
         })
         .catch(error => console.error('Error fetching user data:', error));
