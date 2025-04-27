@@ -40,11 +40,19 @@ fetch('/user/data')
             console.error(reservationData.error);
             return;
         }
+
+        if(reservationData[0].temp_id == null){
+            reservationId = reservationData[0].reservation_no;
+        }else{
+            reservationId = storedValue;
+        }
         
-        reservationId = storedValue || reservationData[0].reservation_no;
+
+
+
         branchId = reservationData[0].branch_id;
-        console.log('Branch ID:', branchId);
         console.log('Reservation ID:', reservationId);
+        console.log('Branch ID:', branchId);
         
         
     })

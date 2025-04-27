@@ -14,10 +14,10 @@ iframe {
     display: block;         /* Remove inline spacing issues */
     height: auto;           /* Allow dynamic height adjustment */
     transition: height 0.3s ease; /* Smooth height transition for dynamic resizing */
-    /* background-image: url('/Photo/Untitled-2.jpg');
+     background-image: url('/Photo/72bf1e6f-b04e-45b8-a986-23aeb03c4a58.jpg');
     background-size: cover; 
     background-position: center;
-    background-repeat: no-repeat; Prevent repeating the background image */
+    background-repeat: no-repeat;
 }
 
 /* Hide scrollbars in WebKit browsers (Chrome, Safari) */

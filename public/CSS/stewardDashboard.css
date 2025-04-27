@@ -17,7 +17,6 @@ body {
     height: auto;
     min-height: 100%;
     flex: 1;
-    background-color: rgb(255, 255, 255);
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -28,7 +27,9 @@ body {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    border-radius: 10px;
 }
+
 
 .main-section table th,
 .main-section table td {

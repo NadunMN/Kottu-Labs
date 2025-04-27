@@ -16,6 +16,7 @@
   max-width: 1200px;
   margin: 0 auto;
   border-radius: 8px;
+  border-radius: 10px;
   /* overflow: hidden; */
 }
 

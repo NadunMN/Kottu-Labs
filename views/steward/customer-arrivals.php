@@ -22,6 +22,10 @@
   overflow: hidden;
 }
 
+.menu-table{
+  border-radius: 8px;
+}
+
 /* Topic bar styling */
 .topic-bar {
   background-image: url('/Photo/700f5af3-b1b6-417b-bb47-ee21ac8fb270.webp');
