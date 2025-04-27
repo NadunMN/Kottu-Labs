@@ -170,14 +170,52 @@ class m0001_initial
         ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);
 
-        // // order_items table
-        // $SQL = "CREATE TABLE order_items (
-        //     order_id INT NOT NULL,
-        //     order_details INT NOT NULL,
-        //     PRIMARY KEY (order_id, order_details),
-        //     FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE
-        // ) ENGINE=INNODB;";
-        // $db->pdo->exec($SQL);
+        //reservation status update
+        $SQL ="CREATE TABLE IF NOT EXISTS pending_reservation_updates (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            reservation_no INT NOT NULL,
+            update_time DATETIME NOT NULL
+        ) ENGINE=INNODB;";
+        $db->pdo->exec($SQL);
+
+
+        //trigger to update reservation table
+        $SQL = "
+            CREATE TRIGGER after_order_status_update
+            AFTER UPDATE ON orders
+            FOR EACH ROW
+            BEGIN
+                -- Only if the new status is 2 and old status is NOT 2
+                IF NEW.order_status = 2 AND OLD.order_status != 2 THEN
+                    INSERT INTO pending_reservation_updates (reservation_no, update_time)
+                    VALUES (NEW.reservation_no, DATE_ADD(NOW(), INTERVAL 2 HOUR));
+                END IF;
+            END;
+        ";
+        $db->pdo->exec($SQL);
+        // 1 MINUTE
+
+
+
+        //time to do that tigger
+        $SQL="SET GLOBAL event_scheduler = ON;";
+        $db->pdo->exec($SQL);
+
+        $SQL="CREATE EVENT IF NOT EXISTS update_reservation_status
+        ON SCHEDULE EVERY 1 MINUTE
+        DO
+        BEGIN
+            -- Update reservations where 2 hours have passed
+            UPDATE reservations r
+            JOIN pending_reservation_updates p ON r.reservation_no = p.reservation_no
+            SET r.confirmation_status = 2
+            WHERE p.update_time <= NOW();
+
+            -- Remove processed updates
+            DELETE FROM pending_reservation_updates
+            WHERE update_time <= NOW();
+        END;";
+        $db->pdo->exec($SQL);
     }
 
     public function down()
