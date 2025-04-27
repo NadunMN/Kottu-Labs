@@ -224,6 +224,7 @@ public static function findOneRegOrUnReg($where)
             JOIN branches ON $tableName.branch_id = branches.branch_id
             WHERE branches.branch_id = :branch_id
             AND $tableName.reservation_date = :currentDate
+            ORDER BY $tableName.confirmation_status ASC
         ");
 
         $statement->bindValue(":branch_id", $branch_id);
