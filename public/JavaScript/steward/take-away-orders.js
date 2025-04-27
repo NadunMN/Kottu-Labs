@@ -111,7 +111,8 @@ async function fetchOrders(filterReservationNo = null) {
                     <div class="filter-section">
                         <input type="text" id="reservation-input" placeholder="Enter Reservation No" />
                         <button id="filter-btn">Filter</button>
-                </div> 
+                    </div> 
+                </div>
                 
                 <table class="menu-table" id="menu-table">
                     <thead>
