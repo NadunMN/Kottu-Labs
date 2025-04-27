@@ -8,6 +8,7 @@ use app\models\Meal;
 use app\models\Reservation;
 use app\models\BranchMeal;
 
+
 class ManagerController extends Controller
 {
     public function addmenuItems() {
@@ -144,6 +145,7 @@ class ManagerController extends Controller
         $manager = Application::$app->user;
 
         if ($manager) {
+            
             $branchName = $manager->branchName();  
             echo json_encode(['branchName' => $branchName]);  
         } else {

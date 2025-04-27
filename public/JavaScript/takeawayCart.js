@@ -324,9 +324,29 @@ async function handleBooking() {
         const mealResult = await responseMeal.json();
         console.log('Order meals result:', mealResult);
 
-        
-          // Navigate to the payments page if an order exists
-          initiatePayHerePayment(reservationId);
+
+
+
+
+
+          const paymentInitiated = initiatePayHerePayment(reservationId);
+            if (paymentInitiated) {
+                console.log("Payment completed:", orderId);
+            } else {
+                console.log("Payment dismissed by user.");
+            }
+
+
+
+
+
+
+
+
+
+
+
+
 
     } catch (error) {
         console.error('Booking failed:', error);
@@ -521,138 +541,137 @@ document.getElementById('payNowBtn').addEventListener('click', async () => {
 });
 
 function initiatePayHerePayment(reservationId) {
-  if (!reservationId) {
-      alert("Reservation ID is missing!");
-      return;
-  }
+    if (!reservationId) {
+        alert("Reservation ID is missing!");
+        return false;
+    }
 
-  let orderIdM; // Use the reservation ID as the order ID
+    // Fetch order details for the reservation
+    fetch(`/payment/getCardPaymentDetails?reservationId=${reservationId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+                return false;
+            }
 
-  // Fetch order details for the reservation
-  fetch(`/payment/getCardPaymentDetails?reservationId=${reservationId}`)
-      .then(response => response.json())
-      .then(data => {
-          if (data.error) {
-              alert(data.error);
-              return;
-          }
+            // PayHere payment configuration
+            const payment = {
+                sandbox: true,
+                merchant_id: data.merchant_id,
+                return_url: data.return_url,
+                cancel_url: data.cancel_url,
+                notify_url: data.notify_url,
+                order_id: data.order_id,
+                items: Array.isArray(data.items) ? data.items.map(item => `${item.meal_name} x ${item.quantity}`).join(', ') : data.items,
+                amount: data.amount,
+                currency: data.currency,
+                first_name: data.first_name,
+                last_name: data.last_name,
+                email: data.email,
+                phone: data.phone,
+                address: data.address,
+                city: data.city,
+                country: data.country,
+                hash: data.hash,
+            };
 
-          // PayHere payment configuration
-          const payment = {
-              sandbox: true, // Set to false for production
-              merchant_id: data.merchant_id,
-              return_url: data.return_url,
-              cancel_url: data.cancel_url,
-              notify_url: data.notify_url,
-              order_id: data.order_id,
-              items: Array.isArray(data.items) ? data.items.map(item => `${item.meal_name} x ${item.quantity}`).join(', ') : data.items,
-              amount: data.amount,
-              currency: data.currency,
-              first_name: data.first_name,
-              last_name: data.last_name,
-              email: data.email,
-              phone: data.phone,
-              address: data.address,
-              city: data.city,
-              country: data.country,
-              hash: data.hash,
-          };
+            let paymentStatus = false;
 
             payhere.onCompleted = function onCompleted(orderId) {
-            console.log("Payment completed:", orderId);
-            orderIdM = orderId;
-        
-            // Use an IIFE (Immediately Invoked Function Expression) to handle async operations
-            (async () => {
-                try {
-                    const response = await fetch('/payment/confirm', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            payment_id: orderId, // Use the correct payment_id
-                            payment_status: 2,  // Status 2 indicates success
-                            payment_type: 'card', // Payment type (e.g., 'card', 'cash')
-                        }),
-                    });
-        
-                    const result = await response.json();
-                    if (result.success) {
-                        // Clear cart
-                        cartItems.length = 0;
-                        renderCartItems();
-                        updateSubtotal();
-        
-                        await fetch('/cleartakeawayCart', {
+                console.log("Payment completed:", orderId);
+                
+                (async () => {
+                    try {
+                        const response = await fetch('/payment/confirm', {
                             method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ user_id: userId }),
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({
+                                payment_id: orderId,
+                                payment_status: 2,
+                                payment_type: 'card',
+                            }),
                         });
-        
-                        console.log('Cart cleared successfully.');
+
+                        const result = await response.json();
+                        if (result.success) {
+                            // Clear cart
+                            cartItems.length = 0;
+                            renderCartItems();
+                            updateSubtotal();
+
+                            const clearResponse = await fetch('/cleartakeawayCart', {
+                                method: 'POST',
+                                headers: {'Content-Type': 'application/json'},
+                                body: JSON.stringify({ user_id: userId }),
+                            });
+
+                            const clearResult = await clearResponse.json();
+                            
+                            if (clearResult.success) {
+                                paymentStatus = true;
+                                window.location.href = '/takeaway/cart'; // Redirect on success
+                            } else {
+                                showToast('Payment succeeded but cart clearance failed', {type: 'error'});
+                            }
+                        }
+                    } catch (error) {
+                        console.error("Error:", error);
+                        alert("Payment processing failed");
                     }
-                } catch (error) {
-                    console.error("Error updating payment status:", error);
-                    alert("An error occurred while updating payment status.");
-                }
-            })();
-        };
+                })();
+            };
 
-        payhere.onError = function onError(error) {
-            console.error("Payment error:", error);
-            fetch('/order/cancelTakeawayBooking', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ reservation_id: reservationId }),
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.success) {
-                    showToast('Payment failed. Booking canceled successfully.', { type: 'error' });
-                    window.location.href = '/takeaway/cart'; // Redirect to cart
-                } else {
-                    console.error("Failed to cancel booking:", result.error);
-                }
-            })
-            .catch(error => {
-                console.error("Error canceling booking:", error);
-            });
-        };
+            payhere.onError = function onError(error) {
+                console.error("Payment error:", error);
+                paymentStatus = false;
+                fetch('/order/cancelTakeawayBooking', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ reservation_id: reservationId }),
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        showToast('Payment failed. Booking canceled.', { type: 'error' });
+                        window.location.href = '/takeaway/cart';
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+            };
 
-          // Handle payment dismissal (cancelation)
-        payhere.onDismissed = function onDismissed() {
-            console.log("Payment dismissed by user.");
-            fetch('/order/cancelTakeawayBooking', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ reservation_id: reservationId }),
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.success) {
-                    showToast('Booking canceled successfully.', { type: 'info' });
-                    window.location.href = '/takeaway/cart'; // Redirect to cart
-                } else {
-                    console.error("Failed to cancel booking:", result.error);
-                }
-            })
-            .catch(error => {
-                console.error("Error canceling booking:", error);
-            });
-        };
+            payhere.onDismissed = function onDismissed() {
+                console.log("Payment dismissed");
+                paymentStatus = false;
+                fetch('/order/cancelTakeawayBooking', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ reservation_id: reservationId }),
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        showToast('Booking canceled.', { type: 'info' });
+                        window.location.href = '/takeaway/cart';
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+            };
 
-        // Initialize PayHere payment
-        payhere.startPayment(payment);
-      })
-      .catch(error => {
-          console.error("Error initiating payment:", error);
-      });
+            // Start payment
+            payhere.startPayment(payment);
+            return true;
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            return false;
+        });
+
+    return true;
 }
+
+
+
 
 
 

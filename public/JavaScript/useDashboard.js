@@ -87,7 +87,7 @@ fetch('/user/data')
                           row.innerHTML = `
                             <td class="meal-id" >
                                 <div class="staff-created" data-position="2">
-                                    ${reservation.confirmation_number}
+                                  RKL0 - ${reservation.reservation_no}
                                 </div>
                             </td>
                             <td>${reservation.reservation_name}</td>

@@ -193,6 +193,8 @@
               if (data.error) {
                   console.error(data.error);
               } else {
+                  document.getElementById('user-name').textContent = `${data.firstname} ${data.lastname}`;
+                  document.getElementById('user-email').textContent = data.email;
                   document.getElementById('gender').value = data.gender;
                   document.getElementById('nationality').value = data.nationality;
                   document.getElementById('accountc').value = data.created_at;
