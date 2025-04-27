@@ -105,7 +105,7 @@ async function fetchReservations() {
             ${
           reservation.confirmation_status === 2
             ? 'Reservation Complete'
-            : reservation.confirmation_status === 1 && reservation.confirmation_pin === 0
+            : reservation.confirmation_status === 1
             ? 'Confirmed'
             : 'Pending'
             }
