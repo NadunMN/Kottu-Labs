@@ -200,10 +200,10 @@ $app->router->get('/get/offer', function() use ($offerController) {
 $app->router->post('/offer/delete', [$offerController, 'deleteOffer']);
 $app->router->post('/offer/update', [$offerController, 'updateOffer']);
 
-$app->router->get('/offer/getOne', function() use ($offerController) {
-    $offerNo = $_GET['offerId'];
-    $offerController->getOfferDetailsOne($offerNo);
-});
+// $app->router->get('/offer/getOne', function() use ($offerController) {
+//     $offerNo = $_GET['offerId'];
+//     $offerController->getOfferDetailsOne($offerNo);
+// });
 
 
 
@@ -258,6 +258,7 @@ $app->router->post('/reservation/addtable', [$reservationController, 'addtableRe
 
 //cart
 $app->router->post('/cart/add', [$orderController, 'addToCart']);
+$app->router->post('/cart/add/unreg', [$orderController, 'addToCartUnreg']);
 
 $app->router->get('/getMealscart', function() use ($orderController) {
     $userId = $_GET['userId'] ?? null;

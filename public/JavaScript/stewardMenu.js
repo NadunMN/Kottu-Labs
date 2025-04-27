@@ -198,7 +198,7 @@ localStorage.setItem('reservationNo', reservationNo); // Store the reservation n
             const requestBody = JSON.stringify({ meal_id: mealId, user_id: userId, quantity: 1, temp_id: tempId });
             
             
-            fetch('/cart/add', {
+            fetch('/cart/add/unreg', {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
@@ -236,7 +236,7 @@ localStorage.setItem('reservationNo', reservationNo); // Store the reservation n
                 }
             })
             .catch(error => {
-              console.log(data.error);
+              // console.log(data.error);
                 console.error('Error:', error);
                 // alert('An error occurred. Please try again.');
                 showToast('An error occurred. Please try again.', { type: 'error' });

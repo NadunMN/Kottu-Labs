@@ -123,15 +123,20 @@ class PaymentController extends Controller
                 return;
             }
 
+            error_log("Update result: " . json_encode($reservationNo)); // Log the update result
+        
+
+            // exit;
             // Update all payments
             $updateResult = Payment::updateCashPayments($reservationNo, $newStatus, $stewardId);
+
 
             if ($updateResult) {
                 http_response_code(200);
                 echo json_encode(['success' => 'Payment status updated successfully']);
             } else {
                 http_response_code(500); // Internal Server Error
-                echo json_encode(['error' => 'Failed to update payment status']);
+                echo json_encode(['error' => 0]);
             }
         } catch (\Exception $e) {
             error_log("Error updating payment status: " . $e->getMessage());

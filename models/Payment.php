@@ -404,23 +404,22 @@ public static function updateCashPayments($reservationNo, $newStatus, $stewardId
     if ($newStatus === 1) {
         // First confirm: allow update and assign steward
         $sql = "
-            UPDATE $tableName
-            SET payment_status = :status, steward_id = :steward_id
-            WHERE payment_id IN (
+            UPDATE $tableName AS main
+            INNER JOIN (
                 SELECT p.payment_id
                 FROM $tableName p
                 JOIN orders o ON p.order_id = o.order_id
                 WHERE o.reservation_no = :reservation_no
                 AND p.payment_type = 'cash'
                 AND p.payment_status = 0
-            )
+            ) AS sub ON main.payment_id = sub.payment_id
+            SET main.payment_status = :status, main.steward_id = :steward_id
         ";
     } else if ($newStatus === 2) {
         // Second confirm: allow only if steward_id matches
         $sql = "
-            UPDATE $tableName
-            SET payment_status = :status
-            WHERE payment_id IN (
+            UPDATE $tableName AS main
+            INNER JOIN (
                 SELECT p.payment_id
                 FROM $tableName p
                 JOIN orders o ON p.order_id = o.order_id
@@ -428,9 +427,9 @@ public static function updateCashPayments($reservationNo, $newStatus, $stewardId
                 AND p.payment_type = 'cash'
                 AND p.payment_status = 1
                 AND p.steward_id = :steward_id
-            )
+            ) AS sub ON main.payment_id = sub.payment_id
+            SET main.payment_status = :status
         ";
-
     } else {
         return false;
     }
@@ -442,17 +441,12 @@ public static function updateCashPayments($reservationNo, $newStatus, $stewardId
 
     try {
         $executed = $statement->execute();
-        if ($executed && $statement->rowCount() > 0) {
-            return true; // At least one row was updated
-        } else {
-            return false; // No rows matched the conditions
-        }
+        return $executed && $statement->rowCount() > 0;
     } catch (\PDOException $e) {
         error_log("DB Error: " . $e->getMessage());
         return false;
     }
 }
-
 
 public static function findPaymentsUnReg($reservationNo)
 {

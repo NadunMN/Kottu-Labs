@@ -118,6 +118,24 @@ class OrderController extends Controller
         }
     }
 
+        //store order data in order table
+        public function addToCartUnreg()
+        {
+            if (Application::$app->user) {
+                $cart = new Cart();
+                $cart->loadData(Application::$app->request->getBody());
+    
+                if ($cart->save()) {
+                    echo json_encode(['success' => 'Meal Added successfully']);
+                } else {
+                    echo json_encode(['error' => 'Failed to add Meal']);
+                }
+            } else {
+                echo json_encode(['error' => 'No user is logged in']);
+            }
+        }
+        
+
 
     //store order data in order table
     //store order data in order table

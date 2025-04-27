@@ -156,14 +156,14 @@ async function fetchPayments() {
                             payment_id: paymentId,
                             payment_status: nextStatus,
                             steward_id: stewardId,    
-                        }),
+                        }), 
                     });
   
                     const result = await response.json();
   
                     if (result.success) {
                         fetchPayments();
-                    } else if (result.error === 'Failed to update payment status') {
+                    } else if (result.error === 0) {
                         alert("You are not allowed to confirm this payment.");
                     } else {
                         console.error("Failed to update payment status:", result.error);
