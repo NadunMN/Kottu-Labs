@@ -88,12 +88,12 @@ class m0001_initial
             temp_id INT DEFAULT NULL,
             FOREIGN KEY (branch_id) REFERENCES branches(branch_id) ON DELETE CASCADE,
             FOREIGN KEY (temp_id) REFERENCES unreguser(temp_id) ON DELETE CASCADE,
-            FOREIGN KEY (reservation_no) REFERENCES reservations(reservation_no) ON DELETE SET NULL,
+            FOREIGN KEY (reservation_no) REFERENCES reservations(reservation_no) ON DELETE RESTRICT,
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
         ) ENGINE=INNODB;";
         $db->pdo->exec($SQL);
 
-        // payments table
+        // payments table~
         $SQL = "CREATE TABLE IF NOT EXISTS payments (
             payment_id INT AUTO_INCREMENT PRIMARY KEY,
             payment_date DATE NOT NULL,

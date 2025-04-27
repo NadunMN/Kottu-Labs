@@ -174,7 +174,29 @@ class BranchMeal extends BranchMealModel
         ]);
     }
 
-
+    public static function findOnemeal($meal_id, $branch_id, $meal_status)
+    {
+        $tableName = static::tableName();
+        $sql = "SELECT * FROM $tableName WHERE meal_id = :meal_id AND branch_id = :branch_id AND meal_status = :meal_status";
+        $statement = self::prepare($sql);
+        $statement->bindValue(':meal_id', $meal_id);
+        $statement->bindValue(':branch_id', $branch_id);
+        $statement->bindValue(':meal_status', $meal_status);
+    
+        try {
+            $statement->execute();
+            $meal = $statement->fetchObject(static::class);
+            
+            if ($meal) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            Application::$app->session->setFlash('error', 'Error fetching meal: ' . $e->getMessage());
+            return false;
+        }
+    }
     
     
 

@@ -14,18 +14,12 @@ class OfferController extends Controller
    //add new offer
    public function addOffer(){
     $offer = new Offer();
-    if (!$offer->load(Application::$app->request->getBody()) || !$offer->validate()) {
-        echo json_encode(['success' => false, 'errors' => $offer->errors, 'message' => 'Invalid offer data']);
-        return;
-    }
-    
+    $offer->load(Application::$app->request->getBody());
     
     try {
         if ($offer->add()) {
 
             $offerId = $offer->offer_id;
-            // var_dump($offerId);
-            // exit;
             $branchOffer = new BranchOffer();
             $branchOffer->offer_id = $offerId;
 
@@ -46,9 +40,9 @@ class OfferController extends Controller
         if (count($branches) > 0) {
             foreach ($branches as $branchId) {
                 $branchOffer = new BranchOffer();
-                if (!$branchOffer->validate() || !$branchOffer->add()) {
-                    throw new \Exception('Failed to add branch offer for branch ' . $branchId . ': ' . json_encode($branchOffer->errors));
-                }
+                $branchOffer->offer_id = $offerId;
+                $branchOffer->branch_id = $branchId;
+
                 if (!$branchOffer->add()) {
                     throw new \Exception('Failed to add meal to branches_meal for branch ' . $branchId . ': ' . json_encode($branchOffer->errors));
                 }
@@ -73,9 +67,9 @@ class OfferController extends Controller
             foreach ($meals as $mealId) {
 
                 $mealOffer = new MealOffers();
-                if (!$mealOffer->validate() || !$mealOffer->add()) {
-                    throw new \Exception('Failed to add meal offer for meal ' . $mealId . ': ' . json_encode($mealOffer->errors));
-                }
+                $mealOffer->offer_id = $offerId;
+                $mealOffer->meal_id = $mealId;
+
                 if (!$mealOffer->add()) {
                     throw new \Exception('Failed to add offer to meal_offer for branch ' . $mealId . ': ' . json_encode($mealOffer->errors));
                 }
@@ -147,51 +141,6 @@ class OfferController extends Controller
             }
         }
 
-        //get offer id for edit
-        public function getOfferDetailsOne($offerId)
-        {
-            $offer = Offer::findOfferOne(['offer_id' => $offerId]);
-            
-            if ($offer) {
-                echo json_encode($offer);
-            } else {
-                echo json_encode(['error' => 'Offer not found']);
-            }
-        }
-
-        //update offer
-        public function updateoffer()
-        {
-            $offer = new Offer();
-
-            try {
-                $offerId = Application::$app->request->getBody()['offer_id'] ?? null;
-                if (!$offerId) {
-                    throw new \Exception('Offer ID not provided');
-                }
-
-                $offer = Offer::findOne(['offer_id' => $offerId]);
-                if (!$offer) {
-                    throw new \Exception('Offer not found');
-                }
-
-                $offerData = Application::$app->request->getBody();
-                $offer->loadData($offerData);
-
-                if (!$offer->update()) {
-                    throw new \Exception('Failed to update offer');
-                }
-
-                // ✅ Success response
-                echo json_encode(['success' => true]);
-
-            } catch (\Exception $e) {
-                
-                error_log($e->getMessage());
-                echo json_encode(['success' => false, 'message' => $e->getMessage()]);
-            }
-        }
-        
         //publish offer
         public function publishOffer()
         {

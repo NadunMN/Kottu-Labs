@@ -22,11 +22,11 @@ class SendMail
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
             $mail->Username = "nadunmadusanka564@gmail.com"; // Your email
-            $mail->Password = 'abag psvp ipmi fjxd'; // Your password
+            $mail->Password = 'nwie djtb fuxe mrdi'; // Your password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
-            $mail->setFrom("thiraniimanya@gmail.com", "Kottu Labs");
+            $mail->setFrom("nadunmadusanka564@gmail.com", "Kottu Labs");
             $mail->addAddress($email, $name);
 
             // HTML Email Body

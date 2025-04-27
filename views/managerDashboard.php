@@ -76,7 +76,6 @@
           
         <!-- Main Content -->
         <div class="main-content admin-main-content" id="main-content">
-            <iframe id="dynamicIframe" src="/initialPage.html"></iframe>
         </div>
 
 </div>

@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const defaultOption = document.getElementById("update-menu");
   defaultOption.classList.add("selected");
 
+  // Trigger the logic for the default option
+  loadUpdateMenuContent();
+
   // Fetch the branch name from the serve
   let branchName='';
   fetch('/manager/branch')  // URL of the PHP controller
@@ -39,7 +42,401 @@ document.addEventListener("DOMContentLoaded", () => {
 
       switch (optionId) {
         case "update-menu":
-          fetch("/managermenuitem/data")
+          loadUpdateMenuContent();
+
+          break;
+
+        case "view-reservations":
+            fetch("/reservation/data")
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              if (!Array.isArray(data)) {
+                console.error("Data is not an array");
+                document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
+                return;
+              }
+          
+              const reservationContent = document.getElementById("main-content");
+          
+              if (!data || data.length === 0) {
+                reservationContent.innerHTML = "<p>No reservations available</p>";
+                return;
+              }
+          
+              // Clear the content and build the table structure
+              reservationContent.innerHTML = `
+                <div class="view-branch-menu-section">
+                  <div class="topic-bar">
+                    <div>
+                      <h2 style="margin:0;">${branchName}</h2>
+                      <h5>${data.length} reservations available</h5>
+                    </div>
+                  </div>
+                  <table class="menu-table" id="menu-table">
+                    <thead>
+                      <tr>
+                        <th>Reservation No</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Customer Name</th>
+                        <th>No. Guests</th>
+                        <th>Contact Number</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="table-content"></tbody>
+                  </table>
+                </div>
+              `;
+          
+              const tableContent = document.getElementById("table-content");
+          
+              if (!tableContent) {
+                console.error("Table content element not found.");
+                return;
+              }
+          
+              // Populate the table with reservation data
+              data.forEach((reservation) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                  <td class="reservation-id">${reservation.confirmation_number}</td>
+                  <td>${reservation.reservation_date}</td>
+                  <td>${reservation.reservation_time}</td>
+                  <td>${reservation.userName}</td>
+                  <td>${reservation.number_of_guests}</td>
+                  <td>${reservation.mobile_number}</td>
+                  <td>
+                    <div class="action-buttons">
+                      <button class="delete-btn" reservation-no='${reservation.reservation_no}'>Delete</button>
+                    </div>
+                  </td>
+                `;
+                tableContent.appendChild(row);
+              });
+          
+            
+              // Handle delete button click
+              document.querySelectorAll(".delete-btn").forEach((button) => {
+                button.addEventListener("click", () => {
+                  if (confirm("Are you sure you want to delete this reservation? This action cannot be undone.")) {
+                    const reservationNo = button.getAttribute("reservation-no");
+          
+                    const requestBody = JSON.stringify({ reservation_no: reservationNo });
+                    console.log("Request Body:", requestBody);
+          
+                    fetch("/reservation/delete", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: requestBody,
+                    })
+                      .then((response) => {
+                        if (!response.ok) {
+                          throw new Error("Network response was not ok");
+                        }
+                        return response.json();
+                      })
+                      .then((data) => {
+                        if (data.success) {
+                          alert("The reservation has been deleted.");
+                          button.closest("tr").remove();
+                        } else {
+                          alert("There was an error deleting the reservation: " + data.message);
+                          console.error("Error:", data.message);
+                        }
+                      })
+                      .catch((error) => {
+                        console.error("Error:", error);
+                        alert("Failed to delete the reservation.");
+                      });
+                  }
+                });
+              });
+            })
+            .catch((error) => {
+              console.error("Fetch error:", error);
+              document.getElementById("main-content").innerHTML = "<p>Error loading reservations.</p>";
+            });
+          
+         break;
+
+        case "feedbacks":
+          fetch("/feedback/get")
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.error) {
+                    console.error("Error:", data.error);
+                } else {
+                    // Get the meal content container
+                    const mealContent = document.getElementById("main-content");
+
+                    if (data == null || data.length === 0) {
+                        mealContent.innerHTML = "No Reviews available"; // Show a message if there are no meals
+                    } else {
+                        mealContent.innerHTML = ""; // Clear previous content if data is available
+                    }
+
+                    mealContent.innerHTML = `
+                        <div class="view-branch-menu-section">
+                            <div class="topic-bar">
+                                <div>
+                                    <h2 style="margin:0;">Customer Reviews</h2>
+                                    <h5 style="margin:0;">${data.length} review available</h5>
+                                </div>
+                            </div>
+                            <div id="add-item-form" class="add-item-form hidden"></div>
+                            <table class="menu-table" id="menu-table">
+                                <thead>
+                                    <tr>
+                                        <th>Rating</th>
+                                        <th>Review</th>
+                                        <th>Customer Name</th>
+                                        <th>Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-content"></tbody>
+                            </table>
+                        </div>
+                    `;
+
+                    let reviewId;
+                    // Dynamically generate review elements
+                    data.forEach((review) => {
+                        // Create a new table row
+                        const row = document.createElement("tr");
+
+                        // Populate row HTML
+                        row.innerHTML = `
+                            <td class="review-id">${review.rating}/5</td>
+                            <td class="description-review" style= "text-align: left;">${review.review}</td>
+                            <td >${review.userName}</td>
+                            <td>${review.created_at}</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="delete-btn" review-id='${review.review_id}'>Delete</button>
+                                </div>
+                            </td>
+                        `;
+
+                        // Append the row directly to the table body
+                        document.getElementById("table-content").appendChild(row);
+                    });
+
+                    // Add event listeners to delete buttons
+                    const deleteButtons = document.querySelectorAll(".delete-btn");
+                    deleteButtons.forEach((button) => {
+                        button.addEventListener("click", () => {
+                            if (confirm("Are you sure you want to delete this review? This action cannot be undone.")) {
+                                const reviewId = button.getAttribute("review-id");
+
+                                const requestBody = JSON.stringify({ review_id: reviewId });
+                                console.log("Request Body:", requestBody);
+
+                                fetch("/feedback/delete", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                    },
+                                    body: requestBody,
+                                })
+                                    .then((response) => response.json())
+                                    .then((data) => {
+                                        if (data.success) {
+                                            alert("The review has been deleted.");
+                                            button.closest("tr").remove();
+                                        } else {
+                                            alert("There was an error deleting the review: " + data.message);
+                                            console.error("Error:", data.message);
+                                        }
+                                    })
+                                    .catch((error) => console.error("Error:", error));
+                            }
+                        });
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching review:", error);
+            });
+
+
+          break;
+
+          case "order-history":
+            fetch("/manager/order/history?branch_id=${branchId}")
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.error) {
+                  console.error("Error:", data.error);
+                } else {
+                  // Get the meal content container
+                  const mealContent = document.getElementById("main-content");
+
+                  if (data == null || data.length === 0) {
+                    mealContent.innerHTML = "No Orders available"; // Show a message if there are no orders
+                  } else {
+                    mealContent.innerHTML = ""; // Clear previous content if data is available
+                  }
+
+                  mealContent.innerHTML = `
+                    <div class="view-branch-menu-section">
+                        <div class="topic-bar">
+                            <div>
+                                <h2 style="margin:0;">${branchName}</h2>
+                                <h5 style="margin:0;">${data.length} orders available</h5>
+                            </div>
+                        </div>
+                        <table class="menu-table" id="menu-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>                          
+                                    <th>Order Date</th>
+                                    <th>Order Time</th>
+                                    <th>Customer Name</th>
+                                    <th>Total Amount</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-content"></tbody>
+                        </table>
+                    </div>
+
+                    <div id="order-details-form" class="add-item-form hidden">
+                        <form id="details-form">
+                            <h3>Order Details</h3>
+                            <h4 id="detail-order-id"></h4>
+                            
+                            <div class="form-group-main">
+                                <table class="menu-table" id="details-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Meal</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="details-content"></tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="button-group">
+                                <div class="form-group">
+                                    <button class="cancel-item-btn close-details-btn">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                  `;
+
+                  // Dynamically generate order elements
+                  data.forEach((order) => {
+                    // Create a new table row
+                    const row = document.createElement("tr");
+
+                    // Populate row HTML - removed status column
+                    row.innerHTML = `
+                        <td class="order-id">${order.order_id}</td>
+                        <td>${order.order_date}</td>
+                        <td>${order.order_time}</td>
+                        <td>${order.customer_name}</td>
+                        <td>Rs.${order.total_amount}</td>
+                        <td><button class="view-btn" order-id="${order.order_id}">View Details</button></td>
+                    `;
+
+                    // Append the row directly to the table body
+                    document.getElementById("table-content").appendChild(row);
+                  });
+
+                  // Add event listeners to view buttons
+                  const viewButtons = document.querySelectorAll(".view-btn");
+                  viewButtons.forEach((button) => {
+                    button.addEventListener("click", () => {
+                      const orderId = button.getAttribute("order-id");
+                      const orderDetailsForm = document.getElementById("order-details-form");
+                      
+                      // Show the details form
+                      orderDetailsForm.classList.remove("hidden");
+                      
+                      // Fetch order details using the order ID
+                      fetch(`/manager/order/details?orderId=${orderId}`)
+                        .then((response) => response.json())
+                        .then((orderDetails) => {
+                          const detailsContent = document.getElementById("details-content");
+                          document.getElementById("detail-order-id").innerText = `Order ID: ${orderId}`;
+                          detailsContent.innerHTML = ""; // Clear previous content
+
+                          // Create a meal map to consolidate identical meals
+                          const mealMap = new Map();
+                          
+                          // Group items by meal name and sum their quantities
+                          orderDetails.items.forEach((item) => {
+                            const mealName = item.meal_name;
+                            
+                            if (mealMap.has(mealName)) {
+                              // Update existing entry
+                              const existingItem = mealMap.get(mealName);
+                              existingItem.quantity += parseInt(item.quantity);
+                              existingItem.totalPrice += parseFloat(item.total_price);
+                            } else {
+                              // Create new entry
+                              mealMap.set(mealName, {
+                                meal_name: item.meal_name,
+                                quantity: parseInt(item.quantity),
+                                meal_price: parseFloat(item.meal_price),
+                                totalPrice: parseFloat(item.total_price)
+                              });
+                            }
+                          });
+                          
+                          // Add consolidated items to the table
+                          mealMap.forEach((item) => {
+                            const detailRow = document.createElement("tr");
+                            detailRow.innerHTML = `
+                              <td>${item.meal_name}</td>
+                              <td>${item.quantity}</td>
+                              <td>Rs.${(item.meal_price * item.quantity).toFixed(2)}</td>
+                            `;
+                            detailsContent.appendChild(detailRow);
+                          });
+                        })
+                        .catch((error) => {
+                          console.error("Error fetching order details:", error);
+                        });
+                    });
+                  });
+
+                  // Add close button functionality
+                  document.querySelector(".close-details-btn").addEventListener("click", (event) => {
+                    event.preventDefault();
+                    document.getElementById("order-details-form").classList.add("hidden");
+                  });
+                }
+              })
+              .catch((error) => {
+                console.error("Error fetching order history:", error);
+              });
+            break;
+
+        default:
+          mainContent.innerHTML = `<h2>${optionId.replace(
+            "-",
+            " "
+          )}</h2><p>Content for this section will go here.</p>`;
+          break;
+      }
+    });
+  });
+
+function loadUpdateMenuContent(){
+  fetch("/managermenuitem/data")
             .then((response) => response.json())
             .then((data) => {
               const mealContent = document.getElementById("main-content");
@@ -441,395 +838,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
               }
             });
-
-          break;
-
-        case "view-reservations":
-            fetch("/reservation/data")
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Network response was not ok");
-              }
-              return response.json();
-            })
-            .then((data) => {
-              if (!Array.isArray(data)) {
-                console.error("Data is not an array");
-                document.getElementById("main-content").innerHTML = "<p>Error: Invalid data format</p>";
-                return;
-              }
-          
-              const reservationContent = document.getElementById("main-content");
-          
-              if (!data || data.length === 0) {
-                reservationContent.innerHTML = "<p>No reservations available</p>";
-                return;
-              }
-          
-              // Clear the content and build the table structure
-              reservationContent.innerHTML = `
-                <div class="view-branch-menu-section">
-                  <div class="topic-bar">
-                    <div>
-                      <h2 style="margin:0;">${branchName}</h2>
-                      <h5>${data.length} reservations available</h5>
-                    </div>
-                  </div>
-                  <table class="menu-table" id="menu-table">
-                    <thead>
-                      <tr>
-                        <th>Reservation No</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Customer Name</th>
-                        <th>No. Guests</th>
-                        <th>Contact Number</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody id="table-content"></tbody>
-                  </table>
-                </div>
-              `;
-          
-              const tableContent = document.getElementById("table-content");
-          
-              if (!tableContent) {
-                console.error("Table content element not found.");
-                return;
-              }
-          
-              // Populate the table with reservation data
-              data.forEach((reservation) => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                  <td class="reservation-id">${reservation.confirmation_number}</td>
-                  <td>${reservation.reservation_date}</td>
-                  <td>${reservation.reservation_time}</td>
-                  <td>${reservation.userName}</td>
-                  <td>${reservation.number_of_guests}</td>
-                  <td>${reservation.mobile_number}</td>
-                  <td>
-                    <div class="action-buttons">
-                      <button class="delete-btn" reservation-no='${reservation.reservation_no}'>Delete</button>
-                    </div>
-                  </td>
-                `;
-                tableContent.appendChild(row);
-              });
-          
-            
-              // Handle delete button click
-              document.querySelectorAll(".delete-btn").forEach((button) => {
-                button.addEventListener("click", () => {
-                  if (confirm("Are you sure you want to delete this reservation? This action cannot be undone.")) {
-                    const reservationNo = button.getAttribute("reservation-no");
-          
-                    const requestBody = JSON.stringify({ reservation_no: reservationNo });
-                    console.log("Request Body:", requestBody);
-          
-                    fetch("/reservation/delete", {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      body: requestBody,
-                    })
-                      .then((response) => {
-                        if (!response.ok) {
-                          throw new Error("Network response was not ok");
-                        }
-                        return response.json();
-                      })
-                      .then((data) => {
-                        if (data.success) {
-                          alert("The reservation has been deleted.");
-                          button.closest("tr").remove();
-                        } else {
-                          alert("There was an error deleting the reservation: " + data.message);
-                          console.error("Error:", data.message);
-                        }
-                      })
-                      .catch((error) => {
-                        console.error("Error:", error);
-                        alert("Failed to delete the reservation.");
-                      });
-                  }
-                });
-              });
-            })
-            .catch((error) => {
-              console.error("Fetch error:", error);
-              document.getElementById("main-content").innerHTML = "<p>Error loading reservations.</p>";
-            });
-          
-         break;
-
-        case "feedbacks":
-          fetch("/feedback/get")
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.error) {
-                    console.error("Error:", data.error);
-                } else {
-                    // Get the meal content container
-                    const mealContent = document.getElementById("main-content");
-
-                    if (data == null || data.length === 0) {
-                        mealContent.innerHTML = "No Reviews available"; // Show a message if there are no meals
-                    } else {
-                        mealContent.innerHTML = ""; // Clear previous content if data is available
-                    }
-
-                    mealContent.innerHTML = `
-                        <div class="view-branch-menu-section">
-                            <div class="topic-bar">
-                                <div>
-                                    <h2 style="margin:0;">Customer Reviews</h2>
-                                    <h5 style="margin:0;">${data.length} review available</h5>
-                                </div>
-                            </div>
-                            <div id="add-item-form" class="add-item-form hidden"></div>
-                            <table class="menu-table" id="menu-table">
-                                <thead>
-                                    <tr>
-                                        <th>Rating</th>
-                                        <th>Review</th>
-                                        <th>Customer Name</th>
-                                        <th>Date</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="table-content"></tbody>
-                            </table>
-                        </div>
-                    `;
-
-                    let reviewId;
-                    // Dynamically generate review elements
-                    data.forEach((review) => {
-                        // Create a new table row
-                        const row = document.createElement("tr");
-
-                        // Populate row HTML
-                        row.innerHTML = `
-                            <td class="review-id">${review.rating}/5</td>
-                            <td class="description-review" style= "text-align: left;">${review.review}</td>
-                            <td >${review.userName}</td>
-                            <td>${review.created_at}</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="delete-btn" review-id='${review.review_id}'>Delete</button>
-                                </div>
-                            </td>
-                        `;
-
-                        // Append the row directly to the table body
-                        document.getElementById("table-content").appendChild(row);
-                    });
-
-                    // Add event listeners to delete buttons
-                    const deleteButtons = document.querySelectorAll(".delete-btn");
-                    deleteButtons.forEach((button) => {
-                        button.addEventListener("click", () => {
-                            if (confirm("Are you sure you want to delete this review? This action cannot be undone.")) {
-                                const reviewId = button.getAttribute("review-id");
-
-                                const requestBody = JSON.stringify({ review_id: reviewId });
-                                console.log("Request Body:", requestBody);
-
-                                fetch("/feedback/delete", {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                    },
-                                    body: requestBody,
-                                })
-                                    .then((response) => response.json())
-                                    .then((data) => {
-                                        if (data.success) {
-                                            alert("The review has been deleted.");
-                                            button.closest("tr").remove();
-                                        } else {
-                                            alert("There was an error deleting the review: " + data.message);
-                                            console.error("Error:", data.message);
-                                        }
-                                    })
-                                    .catch((error) => console.error("Error:", error));
-                            }
-                        });
-                    });
-                }
-            })
-            .catch((error) => {
-                console.error("Error fetching review:", error);
-            });
+}
 
 
-          break;
-
-          case "order-history":
-            fetch("/manager/order/history?branch_id=${branchId}")
-              .then((response) => response.json())
-              .then((data) => {
-                if (data.error) {
-                  console.error("Error:", data.error);
-                } else {
-                  // Get the meal content container
-                  const mealContent = document.getElementById("main-content");
-
-                  if (data == null || data.length === 0) {
-                    mealContent.innerHTML = "No Orders available"; // Show a message if there are no orders
-                  } else {
-                    mealContent.innerHTML = ""; // Clear previous content if data is available
-                  }
-
-                  mealContent.innerHTML = `
-                    <div class="view-branch-menu-section">
-                        <div class="topic-bar">
-                            <div>
-                                <h2 style="margin:0;">${branchName}</h2>
-                                <h5 style="margin:0;">${data.length} orders available</h5>
-                            </div>
-                        </div>
-                        <table class="menu-table" id="menu-table">
-                            <thead>
-                                <tr>
-                                    <th>Order ID</th>                          
-                                    <th>Order Date</th>
-                                    <th>Order Time</th>
-                                    <th>Customer Name</th>
-                                    <th>Total Amount</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="table-content"></tbody>
-                        </table>
-                    </div>
-
-                    <div id="order-details-form" class="add-item-form hidden">
-                        <form id="details-form">
-                            <h3>Order Details</h3>
-                            <h4 id="detail-order-id"></h4>
-                            
-                            <div class="form-group-main">
-                                <table class="menu-table" id="details-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Meal</th>
-                                            <th>Quantity</th>
-                                            <th>Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="details-content"></tbody>
-                                </table>
-                            </div>
-                            
-                            <div class="button-group">
-                                <div class="form-group">
-                                    <button class="cancel-item-btn close-details-btn">Cancel</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                  `;
-
-                  // Dynamically generate order elements
-                  data.forEach((order) => {
-                    // Create a new table row
-                    const row = document.createElement("tr");
-
-                    // Populate row HTML - removed status column
-                    row.innerHTML = `
-                        <td class="order-id">${order.order_id}</td>
-                        <td>${order.order_date}</td>
-                        <td>${order.order_time}</td>
-                        <td>${order.customer_name}</td>
-                        <td>Rs.${order.total_amount}</td>
-                        <td><button class="view-btn" order-id="${order.order_id}">View Details</button></td>
-                    `;
-
-                    // Append the row directly to the table body
-                    document.getElementById("table-content").appendChild(row);
-                  });
-
-                  // Add event listeners to view buttons
-                  const viewButtons = document.querySelectorAll(".view-btn");
-                  viewButtons.forEach((button) => {
-                    button.addEventListener("click", () => {
-                      const orderId = button.getAttribute("order-id");
-                      const orderDetailsForm = document.getElementById("order-details-form");
-                      
-                      // Show the details form
-                      orderDetailsForm.classList.remove("hidden");
-                      
-                      // Fetch order details using the order ID
-                      fetch(`/manager/order/details?orderId=${orderId}`)
-                        .then((response) => response.json())
-                        .then((orderDetails) => {
-                          const detailsContent = document.getElementById("details-content");
-                          document.getElementById("detail-order-id").innerText = `Order ID: ${orderId}`;
-                          detailsContent.innerHTML = ""; // Clear previous content
-
-                          // Create a meal map to consolidate identical meals
-                          const mealMap = new Map();
-                          
-                          // Group items by meal name and sum their quantities
-                          orderDetails.items.forEach((item) => {
-                            const mealName = item.meal_name;
-                            
-                            if (mealMap.has(mealName)) {
-                              // Update existing entry
-                              const existingItem = mealMap.get(mealName);
-                              existingItem.quantity += parseInt(item.quantity);
-                              existingItem.totalPrice += parseFloat(item.total_price);
-                            } else {
-                              // Create new entry
-                              mealMap.set(mealName, {
-                                meal_name: item.meal_name,
-                                quantity: parseInt(item.quantity),
-                                meal_price: parseFloat(item.meal_price),
-                                totalPrice: parseFloat(item.total_price)
-                              });
-                            }
-                          });
-                          
-                          // Add consolidated items to the table
-                          mealMap.forEach((item) => {
-                            const detailRow = document.createElement("tr");
-                            detailRow.innerHTML = `
-                              <td>${item.meal_name}</td>
-                              <td>${item.quantity}</td>
-                              <td>Rs.${(item.meal_price * item.quantity).toFixed(2)}</td>
-                            `;
-                            detailsContent.appendChild(detailRow);
-                          });
-                        })
-                        .catch((error) => {
-                          console.error("Error fetching order details:", error);
-                        });
-                    });
-                  });
-
-                  // Add close button functionality
-                  document.querySelector(".close-details-btn").addEventListener("click", (event) => {
-                    event.preventDefault();
-                    document.getElementById("order-details-form").classList.add("hidden");
-                  });
-                }
-              })
-              .catch((error) => {
-                console.error("Error fetching order history:", error);
-              });
-            break;
-
-        default:
-          mainContent.innerHTML = `<h2>${optionId.replace(
-            "-",
-            " "
-          )}</h2><p>Content for this section will go here.</p>`;
-          break;
-      }
-    });
-  });
 });

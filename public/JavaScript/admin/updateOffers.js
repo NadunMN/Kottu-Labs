@@ -1,491 +1,427 @@
 window.addEventListener("load", () => {
-    console.log("Page loaded");
-    const form = document.getElementById("update-form");
+  console.log("Page loaded");
+  const form = document.getElementById("update-form");
 
-    
+  
 
-    // Retrieve selectedMeals from localStorage
-    const selectedMealsJSON = localStorage.getItem("selectedMeals");
-    const selectedMeals = JSON.parse(selectedMealsJSON);
+  // Retrieve selectedMeals from localStorage
+  const selectedMealsJSON = localStorage.getItem("selectedMeals");
+  const selectedMeals = JSON.parse(selectedMealsJSON);
 
-    if (selectedMeals && selectedMeals.length > 0) {
-        // console.log("Selected Meal IDs:", selectedMeals);
+  if (selectedMeals && selectedMeals.length > 0) {
+      // console.log("Selected Meal IDs:", selectedMeals);
 
-        fetch("/menuitem/data")
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.error) {
-                    console.error("Error:", data.error);
-                    return;
-                }
-
-                // Filter data to only include items with matching IDs in selectedMeals
-                const matchingItems = data.filter(item => selectedMeals.includes(item.meal_id));
-
-                // console.log("Matching Menu Items:", matchingItems);
-
-                const container = document.querySelector("#selected-meals-container");
-                container.innerHTML = ""; // Clear previous content
-
-                matchingItems.forEach(item => {
-                    const mealElement = document.createElement("div");
-                    mealElement.classList.add("meal-item");
-                    mealElement.innerHTML = `
-                        <div class="meal-name">${item.meal_name}</div>
-                    `;
-                    container.appendChild(mealElement);
-                });
-
-            })
-            .catch((error) => {
-                console.error("Error fetching menu item data:", error);
-            });
-    } // Close the if statement
-
-    form.addEventListener("submit", async (event) => {
-        
-
-        // Show confirmation dialog
-        const isConfirmed = confirm("Are you sure you want to submit the form?");
-
-        if (isConfirmed) {
-            // Create an object to hold form data
-            const fileInput = document.getElementById("offer_photo");
-            const formData = new FormData(form);
-
-            if (fileInput.files[0]) {
-                formData.append(
-                  "offer_photo",
-                  "/Photo/offers/" + fileInput.files[0].name
-                );
+      fetch("/menuitem/data")
+          .then((response) => response.json())
+          .then((data) => {
+              if (data.error) {
+                  console.error("Error:", data.error);
+                  return;
               }
 
-            const formObject = Object.fromEntries(formData.entries());
+              // Filter data to only include items with matching IDs in selectedMeals
+              const matchingItems = data.filter(item => selectedMeals.includes(item.meal_id));
 
-            // Combine form data and selectedMeals into one object
-            const requestBody = {
-                ...formObject,
-                ...selectedMeals.reduce((acc, mealId, index) => {
-                    acc[`meal${index + 1}`] = mealId; // Add meal keys at the root level
-                    return acc;
-                }, {})
-            };
+              // console.log("Matching Menu Items:", matchingItems);
 
-            console.log(requestBody);
+              const container = document.querySelector("#selected-meals-container");
+              container.innerHTML = ""; // Clear previous content
 
-            try {
-                const response = await fetch("/offer/add", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(requestBody),
-                });
+              matchingItems.forEach(item => {
+                  const mealElement = document.createElement("div");
+                  mealElement.classList.add("meal-item");
+                  mealElement.innerHTML = `
+                      <div class="meal-name">${item.meal_name}</div>
+                  `;
+                  container.appendChild(mealElement);
+              });
 
-                const result = await response.json();
+          })
+          .catch((error) => {
+              console.error("Error fetching menu item data:", error);
+          });
+  } // Close the if statement
 
-                if (response.ok) {
-                    // Clear localStorage after successful form submission
-                    localStorage.removeItem("selectedMeals");
-                    document.getElementById("response-message").innerText = "Offer added successfully!";
-                } else {
-                    document.getElementById("response-message").innerText = "Error: " + result.message;
-                }
-            } catch (error) {
-                console.error("Error submitting form:", error);
-                document.getElementById("response-message").innerText = "Failed to connect to server.";
+  form.addEventListener("submit", async (event) => {
+      
+
+      // Show confirmation dialog
+      const isConfirmed = confirm("Are you sure you want to submit the form?");
+
+      if (isConfirmed) {
+          // Create an object to hold form data
+          const fileInput = document.getElementById("offer_photo");
+          const formData = new FormData(form);
+
+          if (fileInput.files[0]) {
+              formData.append(
+                "offer_photo",
+                "/Photo/offers/" + fileInput.files[0].name
+              );
             }
-        } else {
-            // User clicked "Cancel", do nothing or provide feedback
-            console.log("Form submission cancelled by user.");
-        }
-    });
 
-    fetch("/offer/get")
-        .then((response) => response.json())
-        .then((data) => {
-            if (data.error) {
-                console.error("Error:", data.error);
-            } else {
-                // Get the meal content container
-                const mealContent = document.getElementById("offers-container");
+          const formObject = Object.fromEntries(formData.entries());
 
-                if (data == null || data.length === 0) {
-                    mealContent.innerHTML = "No offer available"; // Show a message if there are no meals
-                } else {
-                    mealContent.innerHTML = ""; // Clear previous content if data is available
-                }
+          // Combine form data and selectedMeals into one object
+          const requestBody = {
+              ...formObject,
+              ...selectedMeals.reduce((acc, mealId, index) => {
+                  acc[`meal${index + 1}`] = mealId; // Add meal keys at the root level
+                  return acc;
+              }, {})
+          };
 
-                mealContent.innerHTML = `
+          console.log(requestBody);
 
-                                    <div class="view-branch-menu-section">
-                                            <div class="topic-bar">
-                                                <div>
-                                                    <h1 style="margin:0;">Offers</h1>
-                                                    <h5 style="margin:0;">${data.length} meals available</h5>
-                                                </div>
+          try {
+              const response = await fetch("/offer/add", {
+                  method: "POST",
+                  headers: {
+                      "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(requestBody),
+              });
 
-                                                <div>
-                                                    <button class="add-item-btn">Add New Item</button>
-                                                </div>
+              const result = await response.json();
 
-                                                
+              if (response.ok) {
+                  // Clear localStorage after successful form submission
+                  localStorage.removeItem("selectedMeals");
+                  alert("Offer added successfully!");
+                  // document.getElementById("response-message").innerText = "Offer added successfully!";
+              } else {
+                  document.getElementById("response-message").innerText = "Error: " + result.message;
+              }
+          } catch (error) {
+              console.error("Error submitting form:", error);
+              document.getElementById("response-message").innerText = "Failed to connect to server.";
+          }
+      } else {
+          // User clicked "Cancel", do nothing or provide feedback
+          console.log("Form submission cancelled by user.");
+      }
+  });
 
-                                            </div>
+  fetch("/offer/get")
+      .then((response) => response.json())
+      .then((data) => {
+          if (data.error) {
+              console.error("Error:", data.error);
+          } else {
+              // Get the meal content container
+              const mealContent = document.getElementById("offers-container");
 
-                                            <div id="add-item-form" class="add-item-form hidden" style="display: none;">
-    <form id="add-form" action="">
-        <h3>Add New Menu Item</h3>
-        <div class="form-group-main">
-        
-        <div>
-        <div class="form-group">
-            <label for="item-name">Meal Name</label>
-            <input type="text" id="item-name" name="meal_name" placeholder="Enter item name">
-        </div>
+              if (data == null || data.length === 0) {
+                  mealContent.innerHTML = "No offer available"; // Show a message if there are no meals
+              } else {
+                  mealContent.innerHTML = ""; // Clear previous content if data is available
+              }
 
-        <div class="form-group">
-            <label for="item-price">Meal Price</label>
-            <input type="number" id="item-price" name="meal_price" placeholder="Enter price" min="0" step="0.01">
-        </div>
+              mealContent.innerHTML = `
 
+                                  <div class="view-branch-menu-section">
+                                          <div class="topic-bar">
+                                              <div>
+                                                  <h1 style="margin:0;">Offers</h1>
+                                                  <h5 style="margin:0;">${data.length} meals available</h5>
+                                              </div>
 
-        <div class="form-group">
-            <label for="meal_description">Description</label>
-            <textarea id="meal_description" name="meal_description" placeholder="Enter description"></textarea>
-           
-        </div>
+                                              <div>
+                                                  <button class="add-item-btn">Add New Item</button>
+                                              </div>
 
-        <div class="check-box-container">
-          <div class="branch-group">
-              <input type="checkbox" id="wattala" name="branch1" value="1">
-              <label for="wattala">Wattala</label>
-          </div>
+                                              
 
-          <div class="branch-group">
-              <input type="checkbox" id="kelaniya" name="branch2" value="2">
-              <label for="kelaniya">Kelaniya</label>
-          </div>
-
-          <div class="branch-group">
-              <input type="checkbox" id="kotahena" name="branch3" value="3">
-              <label for="kotahena">Kotahena</label>
-          </div>
-    </div>
-
-
-        </div>
-
-
-        <!-- Image Upload Section -->
-
-        
-        <div class="form-group">
-            <label for="meal_photo">Item Image</label>
-            <div class="image-upload-container">
-                <div class="image-preview" id="imagePreview">
-                    <img src="placeholder.jpg" alt="Preview" id="preview-image">
-                    <div class="upload-placeholder">
-                        <i class="upload-icon">📸</i>
-                        <span>Click or drag image here</span>
-                    </div>
-                </div>
-                <input type="file" 
-                       id="meal_photo" 
-                       name="item_photo" 
-                       accept="image/*"
-                       class="image-input">
-            </div>
-            <span class="image-help-text">Recommended: 500x500px, Max size: 2MB</span>
-        </div>
-
-        </div>
-
-        <div class="button-group">
-
-          <div class="form-group">
-              <button class="cancel-item-btn">Cancel</button>
-          </div>
-
-          <div class="form-group">
-              <input type="submit" name="submit" class="save-item-btn" placeholder="Submit">
-          </div>
-
-        </div>
-    </form>
-</div>
-                                               
-                                            <table class="menu-table" id="menu-table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Offer ID</th>
-                                                        <th>Photo</th>
-                                                        <th>Name</th>
-                                                        <th>Description</th>
-                                                        <th>Price</th>
-                                                        <th>Branch</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="table-content"></tbody>
-                                            </table>
-                                        </div>
-
-                                `;
-
-                                const imageInput = document.getElementById("meal_photo");
-                                const imagePreview = document.getElementById("imagePreview");
-                                const previewImage = document.getElementById("preview-image");
-                                const newPlaceHolder = document.querySelectorAll(".upload-placeholder");
-                          
-                                imageInput.addEventListener("change", function (event) {
-                                  const file = event.target.files[0]; // Get the selected file
-                                  if (file) {
-                                    newPlaceHolder.forEach((placeholder) =>
-                                      placeholder.classList.add("hidden-img")
-                                    ); // Hide the placeholder
-                                    const reader = new FileReader(); // Create a FileReader to read the file
-                          
-                                    reader.onload = function (e) {
-                                      let imageURL = e.target.result;
-                                      previewImage.src = imageURL; // Set the src of the img to the file content
-                                      imagePreview.classList.add("has-image"); // Add a class to indicate the image is loaded
-                          
-                                      // window.uploadedImage = imageURL;
-                                    };
-                          
-                                    reader.readAsDataURL(file); // Read the file as a data URL
-                                  }
-                                });
-                          
-                                let offerId;
-                                // Dynamically generate meal elements
-                                data.forEach((offer) => {
-                                  // console.log(meal.branch_ids);
-                                  // Create a new table row
-                                  const row = document.createElement("tr");
-                          
-                                  // Populate row HTML
-                                    row.innerHTML = `
-                                        <td class="offer-id">${offer.offer_id}</td>
-                                        <td >
-                                          <div class="staff-photo-container" style="width:65px; height:65px; border-radius:50%; overflow:hidden; position:relative;">
-                                          <img src="${offer.offer_photo}" alt="Staff Photo" style="width:100%; height:100%; object-fit:cover;" class="staff-photo">
                                           </div>
-                                        </td>
-                                        <td>${offer.offer_name}</td>
-                                        <td class="description-offer" style= "text-align: left; width:40%;">${offer.offer_description}</td>
-                                        <td>Rs.${offer.offer_price}</td>
-                                        <td>${
-                                            offer.branch_ids == "1" ? "Wattala" 
-                                            : offer.branch_ids == "2" ? "Kelaniya" 
-                                            : offer.branch_ids == "3" ? "Kotahena"
-                                            : offer.branch_ids == '1,2' ? "Wattala, Kelaniya" 
-                                            : offer.branch_ids == '1,3' ? "Wattala, Kotahena" 
-                                            : offer.branch_ids == '2,3' ? "Kelaniya, Kotahena" 
-                                            : "All Branches"
-                                        }</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button class="publish-btn" offer-id="${offer.offer_id}" publish-id="${offer.publish_status}">
-                                                    ${offer.publish_status == '1' ? 'Published' : 'Publish'}
-                                                </button>
-                                                <button class="edit-btn" offer-id="${offer.offer_id}">Edit</button>
-                                                <button class="delete-btn" offer-id="${offer.offer_id}">Delete</button>
-                                            </div>
-                                        </td>
-                                    `;
 
-                          
-                                  // Append the row directly to the table body
-                                  document.getElementById("table-content").appendChild(row);
-                                });
+                                          <div id="add-item-form" class="add-item-form hidden" style="display: none;">
+  <form id="add-form" action="">
+      <h3>Add New Menu Item</h3>
+      <div class="form-group-main">
+      
+      <div>
+      <div class="form-group">
+          <label for="item-name">Meal Name</label>
+          <input type="text" id="item-name" name="meal_name" placeholder="Enter item name">
+      </div>
 
-                            }
-                            
-                            //Add an eventlistener to the edit buttons
-                            document.querySelectorAll(".edit-btn").forEach((button) => {
-                              button.addEventListener("click", async function () {
-                                try {
-                                  const offerId = button.getAttribute("offer-id");
-                                  console.log("Offer ID:", offerId);
-                                  const response = await fetch(`/offer/getOne?offerId=${offerId}`);
-                                  
-                                  if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                                  
-                                  const data = await response.json();
+      <div class="form-group">
+          <label for="item-price">Meal Price</label>
+          <input type="number" id="item-price" name="meal_price" placeholder="Enter price" min="0" step="0.01">
+      </div>
 
 
-                                  console.log("Fetched data:", data);
-                                  
-                                  document.getElementById("offer-name").value = data.offer_name || "";
-                                  document.getElementById("offer-price").value = data.offer_price || "";
-                                  document.getElementById("offer-description").value = data.offer_description || "";
-                            
-                                  addItemForm.classList.remove("hidden");
-                                  
-                                  // Handle update submission properly
-                                  addForm.onsubmit = (e) => handleUpdate(e, offerId);
-                                } catch (error) {
-                                  console.error("Fetch error:", error);
+      <div class="form-group">
+          <label for="meal_description">Description</label>
+          <textarea id="meal_description" name="meal_description" placeholder="Enter description"></textarea>
+         
+      </div>
+
+      <div class="check-box-container">
+        <div class="branch-group">
+            <input type="checkbox" id="wattala" name="branch1" value="1">
+            <label for="wattala">Wattala</label>
+        </div>
+
+        <div class="branch-group">
+            <input type="checkbox" id="kelaniya" name="branch2" value="2">
+            <label for="kelaniya">Kelaniya</label>
+        </div>
+
+        <div class="branch-group">
+            <input type="checkbox" id="kotahena" name="branch3" value="3">
+            <label for="kotahena">Kotahena</label>
+        </div>
+  </div>
+
+
+      </div>
+
+
+      <!-- Image Upload Section -->
+
+      
+      <div class="form-group">
+          <label for="meal_photo">Item Image</label>
+          <div class="image-upload-container">
+              <div class="image-preview" id="imagePreview">
+                  <img src="placeholder.jpg" alt="Preview" id="preview-image">
+                  <div class="upload-placeholder">
+                      <i class="upload-icon">📸</i>
+                      <span>Click or drag image here</span>
+                  </div>
+              </div>
+              <input type="file" 
+                     id="meal_photo" 
+                     name="item_photo" 
+                     accept="image/*"
+                     class="image-input">
+          </div>
+          <span class="image-help-text">Recommended: 500x500px, Max size: 2MB</span>
+      </div>
+
+      </div>
+
+      <div class="button-group">
+
+        <div class="form-group">
+            <button class="cancel-item-btn">Cancel</button>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" name="submit" class="save-item-btn" placeholder="Submit">
+        </div>
+
+      </div>
+  </form>
+</div>
+                                             
+                                          <table class="menu-table" id="menu-table">
+                                              <thead>
+                                                  <tr>
+                                                      <th>Offer ID</th>
+                                                      <th>Photo</th>
+                                                      <th>Name</th>
+                                                      <th>Description</th>
+                                                      <th>Price</th>
+                                                      <th>Branch</th>
+                                                      <th>Actions</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody id="table-content"></tbody>
+                                          </table>
+                                      </div>
+
+                              `;
+
+                              const imageInput = document.getElementById("meal_photo");
+                              const imagePreview = document.getElementById("imagePreview");
+                              const previewImage = document.getElementById("preview-image");
+                              const newPlaceHolder = document.querySelectorAll(".upload-placeholder");
+                        
+                              imageInput.addEventListener("change", function (event) {
+                                const file = event.target.files[0]; // Get the selected file
+                                if (file) {
+                                  newPlaceHolder.forEach((placeholder) =>
+                                    placeholder.classList.add("hidden-img")
+                                  ); // Hide the placeholder
+                                  const reader = new FileReader(); // Create a FileReader to read the file
+                        
+                                  reader.onload = function (e) {
+                                    let imageURL = e.target.result;
+                                    previewImage.src = imageURL; // Set the src of the img to the file content
+                                    imagePreview.classList.add("has-image"); // Add a class to indicate the image is loaded
+                        
+                                    // window.uploadedImage = imageURL;
+                                  };
+                        
+                                  reader.readAsDataURL(file); // Read the file as a data URL
                                 }
                               });
-                            });
-                            
-                            // Unified update handler
-                            async function handleUpdate(event, offerId) {
-                              event.preventDefault();
-                              const formData = new FormData(addForm);
-                              formData.append("offer_id", offerId);
-                            
-                              try {
-                                const response = await fetch("/offer/update", {
-                                  method: "POST",
-                                  body: formData
-                                });
-                            
-                                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                                
-                                const result = await response.json();
-                                console.log("Update success:", result);
-                                addItemForm.classList.add("hidden");
-                                addForm.reset();
-                              } catch (error) {
-                                console.error("Update failed:", error);
-                              }
-                            }
-          
-          
-          
-          // Add event listeners to delete buttons
-          const deleteButtons = document.querySelectorAll(".delete-btn");
-          deleteButtons.forEach((button) => {
-          button.addEventListener("click", () => {
-          // const row = button.closest('tr');
-          // row.remove();
+                        
+                              let offerId;
+                              // Dynamically generate meal elements
+                              data.forEach((offer) => {
+                                // console.log(meal.branch_ids);
+                                // Create a new table row
+                                const row = document.createElement("tr");
+                        
+                                // Populate row HTML
+                                  row.innerHTML = `
+                                      <td class="offer-id">${offer.offer_id}</td>
+                                      <td >
+                                        <div class="staff-photo-container" style="width:65px; height:65px; border-radius:50%; overflow:hidden; position:relative;">
+                                        <img src="${offer.offer_photo}" alt="Staff Photo" style="width:100%; height:100%; object-fit:cover;" class="staff-photo">
+                                        </div>
+                                      </td>
+                                      <td>${offer.offer_name}</td>
+                                      <td class="description-offer" style= "text-align: left; width:40%;">${offer.offer_description}</td>
+                                      <td>Rs.${offer.offer_price}</td>
+                                      <td>${
+                                          offer.branch_ids == "1" ? "Wattala" 
+                                          : offer.branch_ids == "2" ? "Kelaniya" 
+                                          : offer.branch_ids == "3" ? "Kotahena"
+                                          : offer.branch_ids == '1,2' ? "Wattala, Kelaniya" 
+                                          : offer.branch_ids == '1,3' ? "Wattala, Kotahena" 
+                                          : offer.branch_ids == '2,3' ? "Kelaniya, Kotahena" 
+                                          : "All Branches"
+                                      }</td>
+                                      <td>
+                                          <div class="action-buttons">
+                                              <button class="publish-btn" offer-id="${offer.offer_id}" publish-id="${offer.publish_status}">
+                                                  ${offer.publish_status == '1' ? 'Published' : 'Publish'}
+                                              </button>
+                                              <button class="delete-btn" offer-id="${offer.offer_id}">Delete</button>
+                                          </div>
+                                      </td>
+                                  `;
 
-          if (
-            confirm(
-              "Are you sure you want to delete this offer? This action cannot be undone."
-            )
-          ) {
-            const offerId = button.getAttribute("offer-id");
+                        
+                                // Append the row directly to the table body
+                                document.getElementById("table-content").appendChild(row);
+                              });
 
-            const requestBody = JSON.stringify({ offer_id: offerId });
-            console.log("Request Body:", requestBody);
+                          }
 
-            fetch("/offer/delete", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: requestBody,
+
+                          // Add event listeners to delete buttons
+    const deleteButtons = document.querySelectorAll(".delete-btn");
+    deleteButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        // const row = button.closest('tr');
+        // row.remove();
+
+        if (
+          confirm(
+            "Are you sure you want to delete this offer? This action cannot be undone."
+          )
+        ) {
+          const offerId = button.getAttribute("offer-id");
+
+          const requestBody = JSON.stringify({ offer_id: offerId });
+          console.log("Request Body:", requestBody);
+
+          fetch("/offer/delete", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: requestBody,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success) {
+                alert("The offer has been deleted.");
+                button.closest("tr").remove();
+              } else {
+                alert(
+                  "There was an error deleting the offer: " + data.message
+                );
+                console.error("Error:", data.message);
+              }
             })
-              .then((response) => response.json())
-              .then((data) => {
-                if (data.success) {
-                  alert("The offer has been deleted.");
-                  button.closest("tr").remove();
-                } else {
-                  alert(
-                    "There was an error deleting the offer: " + data.message
-                  );
-                  console.error("Error:", data.message);
-                }
-              })
-              .catch((error) => console.error("Error:", error));
-          }
-        });
+            .catch((error) => console.error("Error:", error));
+        }
       });
+    });
 
 
 // Add event listeners to publish buttons
 const publishButtons = document.querySelectorAll(".publish-btn");
 publishButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    if (confirm("Are you sure you want to publish this offer?")) {
-      const offerId = button.getAttribute("offer-id");
-      let publishId = button.getAttribute("publish-id");
+button.addEventListener("click", () => {
+  if (confirm("Are you sure you want to publish this offer?")) {
+    const offerId = button.getAttribute("offer-id");
+    let publishId = button.getAttribute("publish-id");
 
-      // Toggle publish status
-      publishId = publishId === '1' ? '0' : '1';
+    // Toggle publish status
+    publishId = publishId === '1' ? '0' : '1';
 
-      const requestBody = JSON.stringify({ offer_id: offerId, publish_status: publishId });
-      console.log("Request Body:", requestBody);
+    const requestBody = JSON.stringify({ offer_id: offerId, publish_status: publishId });
+    console.log("Request Body:", requestBody);
 
-      fetch("/offer/publish", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: requestBody,
+    fetch("/offer/publish", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: requestBody,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert("The offer has been published.");
+
+          // Update button text and attribute
+          button.setAttribute("publish-id", publishId);
+          button.innerHTML = publishId === '1' ? 'Published' : 'Publish';
+        } else {
+          alert("There was an error publishing the offer: " + data.message);
+          console.error("Error:", data.message);
+        }
       })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.success) {
-            alert("The offer has been published.");
-
-            // Update button text and attribute
-            button.setAttribute("publish-id", publishId);
-            button.innerHTML = publishId === '1' ? 'Published' : 'Publish';
-          } else {
-            alert("There was an error publishing the offer: " + data.message);
-            console.error("Error:", data.message);
-          }
-        })
-        .catch((error) => console.error("Error:", error));
-    }
-  });
+      .catch((error) => console.error("Error:", error));
+  }
+});
 });
 
 
 
-      // form hide and show 
-      const buttons = document.querySelectorAll(".add-item-btn");
-      const addItemForm = document.querySelector(".add-new-offer");
-      const closeBtn = document.getElementById("cancel");
-      const addForm = document.getElementById("update-form");
+    // form hide and show 
+    const buttons = document.querySelectorAll(".add-item-btn");
+    const addItemForm = document.querySelector(".add-new-offer");
+    const closeBtn = document.getElementById("cancel");
+    const addForm = document.getElementById("update-form");
 
-      // Open the Popup
-      buttons.forEach((button) => {
-          button.addEventListener("click", () => {
-              addItemForm.classList.remove("hidden");
-              addItemForm.classList.add("show");
-              // resetForm();
-          });
-      });
-
-      // Open the Popup
-      closeBtn.forEach((button) => {
-          button.addEventListener("click", (event) => {
-              addItemForm.classList.remove("show");
-              addItemForm.classList.add("hidden");
-            
-          });
-      });
-
-        })
-        .catch((error) => {
-            console.error("Error fetching menu item data:", error);
+    // Open the Popup
+    buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+            addItemForm.classList.remove("hidden");
+            addItemForm.classList.add("show");
+            // resetForm();
         });
+    });
+
+    // Open the Popup
+    closeBtn.forEach((button) => {
+        button.addEventListener("click", (event) => {
+            addItemForm.classList.remove("show");
+            addItemForm.classList.add("hidden");
+          
+        });
+    });
+
+
+
+
+
+
+
+
+
+
+      })
+      .catch((error) => {
+          console.error("Error fetching menu item data:", error);
+      });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

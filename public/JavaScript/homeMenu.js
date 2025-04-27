@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let flag = 0;
 
     let userId = null;
+    let branchId=null;
 
     const mealDescriptions = {
         1: "All",
@@ -46,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 
                 if (reservationData.length > 0) {
                     flag = 1;
+                    branchId=reservationData[0].branch_id;
                 } else {
                     flag = 0;
                     console.log(flag);
@@ -179,9 +181,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             
             const mealId = button.getAttribute('data-meal-id');
+            const branchIdselect = parseInt(branchSelect.value, 10);
 
-            const requestBody = JSON.stringify({ meal_id: mealId, user_id: userId, quantity: 1 });
-            console.log("Request Body:", requestBody);
+            const requestBody = JSON.stringify({ meal_id: mealId, user_id: userId, quantity: 1, branch_id: parseInt(branchId,10), selectBranchId: branchIdselect });
+                        console.log("Request Body:", requestBody);
             
             fetch('/cart/add', {
                 method: 'POST',
