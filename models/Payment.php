@@ -333,7 +333,8 @@ public static function getReservationNoByPaymentId($paymentId)
 
     try {
         $statement->execute();
-        return $statement->fetchColumn();
+        $result = $statement->fetchColumn();
+        return $result;
     } catch (\PDOException $e) {
         error_log("Error fetching reservation number: " . $e->getMessage());
         return false;

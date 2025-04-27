@@ -58,9 +58,15 @@ class PaymentController extends Controller
         $newStatus = $requestBody['payment_status'];
         $paymentType = $requestBody['payment_type'] ?? null; // Optional field
 
+    
+
         try {
             // Find the payment by ID
             $payment = Payment::findOneOriginal(['payment_id' => $paymentId]);
+
+
+
+
 
             if (!$payment) {
                 http_response_code(404); // Not Found
@@ -70,6 +76,7 @@ class PaymentController extends Controller
 
             // Retrieve the reservation number associated with the payment
             $reservationNo = Payment::getReservationNoByPaymentId($paymentId);
+
 
             if (!$reservationNo) {
                 http_response_code(404); // Not Found
