@@ -27,8 +27,8 @@ if (!$result) {
     // Prepare the user data
     $users = [
         ['admin@gmail.com', 'Nadun', 'Madusanka', 1, 'admin','+94764659122', 1, '/Photo/Staff/admin1.jpg', 'admin123'],
-        ['customer@gmail.com', 'Ranuga', 'Lekawasam', 0, 'customer','+94764659123', 2, 'none', 'customer123'],
-        ['steward@gmail.com', 'Mahesh', 'Kumara', 0, 'steward','+94764659124', 3, '/Photo/Staff/steward.jpg', 'steward123'],
+        ['customer@gmail.com', 'Ranuga', 'Lekawasam', 0, 'customer','+94764659123', 1, 'none', 'customer123'],
+        ['steward@gmail.com', 'Mahesh', 'Kumara', 0, 'steward','+94764659124', 1, '/Photo/Staff/steward.jpg', 'steward123'],
         ['manager@gmail.com', 'Thirani', 'Athukorala', 0, 'manager','+94764659125', 1, '/Photo/Staff/manager3.jpg', 'manager123'],
         ['chef@gmail.com', 'Eraji', 'Thenuwara', 0, 'chef','+94764659126', 1, '/Photo/Staff/chef1.jpg', 'chef123'],
     ];
