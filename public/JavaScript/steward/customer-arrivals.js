@@ -101,9 +101,15 @@ async function fetchReservations() {
         <td>${reservation.number_of_guests}</td>
         <td>${reservation.type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
         <td class="status">
-            <span class="status-${reservation.confirmation_status}">
-                ${reservation.confirmation_status === 1 ? 'Confirmed' : 'pending'}
-            </span>
+        <span class="status-${reservation.confirmation_status}">
+            ${
+          reservation.confirmation_status === 2
+            ? 'Reservation Complete'
+            : reservation.confirmation_status === 1 && reservation.confirmation_pin === 0
+            ? 'Confirmed'
+            : 'Pending'
+            }
+        </span>
         </td>
         <td>${reservation.table_number === 0 ? 'Null' : reservation.table_number}</td>
       `;

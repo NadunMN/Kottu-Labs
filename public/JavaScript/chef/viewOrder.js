@@ -143,6 +143,7 @@
                                 <th>Meal Name</th>
                                 <th>Table No</th>
                                 <th>Type</th>
+                                <th>Order Time</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -215,55 +216,63 @@
                                         ${meal.mealName} - ${meal.quantity}
                                         <button class="meal-done-btn" om-id="${meal.om_id}" 
                                             data-order-id="${order.order_id}" 
-                                            ${order.chef_id && order.original_status !== 1 ? '' : 'style="display:none;"'}>
+                                            ${order.chef_id && order.original_status == 0 ? '' : 'style="display:none;"'}>
                                             Done
                                         </button>
                                     </li>
                                 `).join("");    
                 row.innerHTML = `
-                    <td class="order-id">${order.order_id}</td> 
+                                                    <td class="order-id">${order.order_id}</td> 
 
-                    <td>
-                        
-                            <ul>${mealsDropdown}</ul>
-                        
-                    </td>
+                                                    <td>
+                                                        
+                                                            <ul>${mealsDropdown}</ul>
+                                                        
+                                                    </td>
 
-                    <td>${order.type === 'dinein' ? order.table_number : '__'}</td>
-                    <td>${order.type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
-                    <td class="status">
-                        <span class="status-${order.order_status}">
-                            ${statusText}
-                        </span>
-                    </td>
-                    <td class="action-buttons">
-                        ${order.order_status < 2 ? `
-                            <button class="accept-btn" 
-                                    data-order-id="${order.order_id}" 
-                                    ${order.chef_id ? 'disabled' : ''}>
-                                Accept
-                            </button>
-                            
-                                <button class="done-btn" 
-        data-order-id="${order.order_id}"
-        ${order.order_status !== 0 ? 'disabled' : ''}>
-    Done
-</button>
-                        ` : `
-                            <button class="accept-btn" 
-                                    data-order-id="${order.order_id}" 
-                                    disabled>
-                                Accept
-                            </button>
-                            <button class="done-btn" 
-                                    data-order-id="${order.order_id}"
-                                    disabled>
-                                Done
-                            </button>
-                        `}
-                    </td>
-                `;
-                tableContent.appendChild(row);
+                                                    <td>${order.type === 'dinein' ? order.table_number : '__'}</td>
+                                                    <td>${order.type === 'dinein' ? 'Dine In' : 'Take Away'}</td>
+                                                    <td>${convertTo12HourFormat(order.order_time)}</td>
+                                                    <td class="status">
+                                                        <span class="status-${order.order_status}">
+                                                            ${statusText}
+                                                        </span>
+                                                    </td>
+                                                    <td class="action-buttons">
+                                                        ${order.order_status < 2 ? `
+                                                            <button class="accept-btn" 
+                                                                    data-order-id="${order.order_id}" 
+                                                                    ${order.chef_id ? 'disabled' : ''}>
+                                                                Accept
+                                                            </button>
+                                                            
+                                                                <button class="done-btn" 
+                                        data-order-id="${order.order_id}"
+                                        ${order.order_status !== 0 ? 'disabled' : ''}>
+                                    Done
+                                </button>
+                                                        ` : `
+                                                            <button class="accept-btn" 
+                                                                    data-order-id="${order.order_id}" 
+                                                                    disabled>
+                                                                Accept
+                                                            </button>
+                                                            <button class="done-btn" 
+                                                                    data-order-id="${order.order_id}"
+                                                                    disabled>
+                                                                Done
+                                                            </button>
+                                                        `}
+                                                    </td>
+                                                `;
+
+                // Helper function to convert 24-hour time to 12-hour format
+                function convertTo12HourFormat(time) {
+                    const [hours, minutes] = time.split(":");
+                    const period = +hours >= 12 ? "PM" : "AM";
+                    const adjustedHours = +hours % 12 || 12; // Convert 0 to 12 for 12-hour format
+                    return `${adjustedHours}:${minutes} ${period}`;
+                }    tableContent.appendChild(row);
             });
 
             // Add event listener for the filter button
