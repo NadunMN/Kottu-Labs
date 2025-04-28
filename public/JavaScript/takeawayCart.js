@@ -267,7 +267,7 @@ async function handleBooking() {
         return;
     }
 
-    showToast('Booking in progress...', { type: 'info' });
+    // showToast('Booking in progress...', { type: 'info' });
 
 
     const orderData = {
@@ -301,7 +301,7 @@ async function handleBooking() {
         const result = await response.json();
         const orderId = result.order_id; // Expect backend to return { order_id: xx }
 
-        showToast('Order placed successfully!', { type: 'success' });
+        // showToast('Order placed successfully!', { type: 'success' });
         console.log('Order placed with ID:', orderId);
 
         const bookedItems = cartItems.map(item => ({

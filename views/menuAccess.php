@@ -206,7 +206,7 @@ h1 {
     </div>
 
     <div id="successMessage" class="success-pop">
-        <p>Table added successfully!</p>
+        <p>Arrival Confirmed!</p>
     </div>
 
 
