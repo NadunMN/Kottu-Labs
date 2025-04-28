@@ -282,7 +282,7 @@
 
       <div class="ezy__team-card">
         <img 
-          src="https://cdn.easyfrontend.com/pictures/team/team_square_2.jpeg" 
+          src="/Photo/Staff/manager3.jpg" 
           alt="Raima Ray" 
           class="ezy__team-card-image"
         >
@@ -296,7 +296,7 @@
       
       <div class="ezy__team-card">
         <img 
-          src="https://cdn.easyfrontend.com/pictures/team/team_square_4.jpeg" 
+          src="/Photo/Staff/manager1.avif" 
           alt="Sarah Johnson" 
           class="ezy__team-card-image"
         >
