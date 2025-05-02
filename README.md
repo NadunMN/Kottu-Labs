@@ -179,20 +179,6 @@ Kottu Labs follows an MVC structure:
 
 ---
 
-## 📄 License
-
-_This project is licensed under [Your License Here]_
-
----
-
-## 📬 Contact
-
-For issues, feature requests, or support:  
-**Email**: [your.email@example.com]  
-**GitHub**: [https://github.com/NadunMN/Kottu-Labs](https://github.com/NadunMN/Kottu-Labs)
-
----
-
 ## 🙏 Acknowledgements
 
 Thanks to all contributors and libraries that made this system possible.
