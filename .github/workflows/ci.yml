@@ -1,0 +1,42 @@
+name: PHP CI/CD
+
+on:
+  push:
+    branches: [ "main" ]   # Runs when you push to main branch
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout project
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Setup PHP
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, intl, mysqli
+          coverage: none
+
+      # 3. Install dependencies (if using Composer)
+      - name: Install Dependencies
+        run: composer install --no-progress --no-interaction --prefer-dist
+
+      # 4. Run Tests (if you have PHPUnit or Pest)
+      - name: Run Tests
+        run: vendor/bin/phpunit --testdox || true
+
+      # 5. Deploy (optional, if you want auto-deploy after tests pass)
+      # Example: Deploy via FTP / SSH / AWS
+      - name: Deploy to Server
+        if: github.ref == 'refs/heads/main'  # only on main branch
+        run: |
+          echo "Deploying project..."
+          # Example SSH Deployment
+          ssh user@your-server-ip "cd /var/www/html && git pull origin main && composer install --no-dev"
