@@ -14,30 +14,30 @@ use app\models\OrderMeals;
 
 class AdminController extends Controller{
 
-    public function orderReports(Request $request, Response $response) {
-        if (!Application::$app->user) {
-            echo json_encode(['error' => 'No user is logged in']);
-            return;
-        }
+    // public function orderReports(Request $request, Response $response) {
+    //     if (!Application::$app->user) {
+    //         echo json_encode(['error' => 'No user is logged in']);
+    //         return;
+    //     }
         
-        // Get filter parameters from the request
-        $startDate = $request->getBody()['startDate'] ?? null;
-        $endDate = $request->getBody()['endDate'] ?? null;
-        $branch = $request->getBody()['branch'] ?? null;
-        $minPrice = $request->getBody()['minPrice'] ?? null;
-        $maxPrice = $request->getBody()['maxPrice'] ?? null;
+    //     // Get filter parameters from the request
+    //     $startDate = $request->getBody()['startDate'] ?? null;
+    //     $endDate = $request->getBody()['endDate'] ?? null;
+    //     $branch = $request->getBody()['branch'] ?? null;
+    //     $minPrice = $request->getBody()['minPrice'] ?? null;
+    //     $maxPrice = $request->getBody()['maxPrice'] ?? null;
         
-        // Apply server-side filtering if parameters are provided
-        // This can improve performance by reducing data sent to the client
-        if ($startDate || $endDate || $branch || $minPrice || $maxPrice) {
-            $orders = Order::findOrdersByFilters($startDate, $endDate, $branch, $minPrice, $maxPrice);
-        } else {
-            // Original behavior - get all orders if no filters
-            $orders = Order::findAllOrders();
-        }
+    //     // Apply server-side filtering if parameters are provided
+    //     // This can improve performance by reducing data sent to the client
+    //     if ($startDate || $endDate || $branch || $minPrice || $maxPrice) {
+    //         $orders = Order::findOrdersByFilters($startDate, $endDate, $branch, $minPrice, $maxPrice);
+    //     } else {
+    //         // Original behavior - get all orders if no filters
+    //         $orders = Order::findAllOrders();
+    //     }
         
-        echo json_encode($orders);
-    }
+    //     echo json_encode($orders);
+    // }
 
     public function mealsReport(Request $request, Response $response) {
         if (!Application::$app->user) {
